@@ -1,0 +1,1992 @@
+{
+    "17405": {
+        "question": "How should Enhance Miracles affect Chests?",
+        "responses": [
+            "It is fine, don't touch it",
+            "You should apply the multiplier",
+            "You should apply the square root of the multiplier",
+            "Just increase the rewards!"
+        ],
+        "votes": [
+            1093,
+            1431,
+            541,
+            2533
+        ],
+        "comment": "A new poll to decide the new rewards will be held in the future"
+    },
+    "17406": {
+        "question": "How much time should a Season last? (Check forum)",
+        "responses": [
+            "1 Month",
+            "2 Months",
+            "3 Months",
+            "6 Months"
+        ],
+        "votes": [
+            2888,
+            1131,
+            1642,
+            481
+        ]
+    },
+    "17407": {
+        "question": "What rewards do you want for the end of Season 1?",
+        "responses": [
+            "Universe Marbles",
+            "Followers",
+            "Prana Gems",
+            "Heroes",
+            "Keys"
+        ],
+        "votes": [
+            1450,
+            517,
+            1868,
+            1626,
+            743
+        ],
+        "comment": "Rewards will consist in Prana Gems, Heroes and Universe Marbles"
+    },
+    "17408": {
+        "question": "How many followers should we give on Tournaments?",
+        "responses": [
+            "Fixed (current one)",
+            "Random",
+            "Your Followers",
+            "I don't care"
+        ],
+        "votes": [
+            2038,
+            1294,
+            945,
+            1855
+        ]
+    },
+    "17409": {
+        "question": "What Tournament format do you prefer?",
+        "responses": [
+            "Single Elimination (current one)",
+            "Swiss (current one)",
+            "Multiple Elimination",
+            "Random Swiss",
+            "Round Robin (with small groups)"
+        ],
+        "votes": [
+            2053,
+            949,
+            946,
+            664,
+            1422
+        ]
+    },
+    "17410": {
+        "question": "Do you want \"Your Heroes\" as a Hero option?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't mind"
+        ],
+        "votes": [
+            2904,
+            920,
+            2045
+        ]
+    },
+    "17411": {
+        "question": "What Hero mode do you prefer (Top 4 will be chosen)?",
+        "responses": [
+            "All [lvl 99](No OTO and event heroes)",
+            "Only Common[lvl 1] \/ Rare[lvl 1] \/ Legendary[lvl 1]",
+            "No Heroes",
+            "Element Air[lvl 1] \/ Earth[lvl 1] \/ Fire[lvl 1] \/ Water[lvl 1]",
+            "One Hero Per Line using commons lvl99 rares lvl50 legendaries lvl15"
+        ],
+        "votes": [
+            178,
+            95,
+            174,
+            91,
+            151
+        ]
+    },
+    "17412": {
+        "question": "What Follower setup do you prefer?",
+        "responses": [
+            "50.000 \/ Random[50k-50M] \/ 50.000.000",
+            "100.000 \/ 3.000.000 \/ 100.000.000",
+            "10.000 \/ 1.000.000 \/ 100.000.000",
+            "Random[100k-1M] \/ Random[10M-20M] \/ Random[80M-120M]",
+            "500.000 \/ 9.000.000 \/ 80.000.000"
+        ],
+        "votes": [
+            1272,
+            708,
+            1112,
+            1706,
+            547
+        ]
+    },
+    "17413": {
+        "question": "What Hero mode do you prefer (Top 3 will be chosen)?",
+        "responses": [
+            "All [lvl 99](No OTO and event heroes)",
+            "Super Common Heroes [lvl 1.000]",
+            "Only Rares [lvl 99]",
+            "Only Legendaries [lvl 50] (No OTO and event heroes)",
+            "One Hero Per Line using commons lvl99 rares lvl50 legendaries lvl15"
+        ],
+        "votes": [
+            1740,
+            932,
+            617,
+            848,
+            1588
+        ]
+    },
+    "17414": {
+        "question": "How many followers should chests give (Common\/Rare\/Legendary)?",
+        "responses": [
+            "400 \/ 2.000 \/ 5.000",
+            "250 \/ 1.500 \/ 7.500",
+            "200 \/ 1.000 \/ 10.000",
+            "750 \/ 1.500 \/ 4.500",
+            "I want even more!"
+        ],
+        "votes": [
+            1151,
+            515,
+            1136,
+            1085,
+            2091
+        ]
+    },
+    "17415": {
+        "question": "Which dev is more cool?",
+        "responses": [
+            "GaiaByte",
+            "Aoyukii",
+            "SpykeRel04D",
+            "I would be a cooler dev!"
+        ],
+        "votes": [
+            3155,
+            579,
+            373,
+            1830
+        ]
+    },
+    "17416": {
+        "question": "lt-udg9zQSE",
+        "responses": [
+            "xd6",
+            "jgtb",
+            "1zd"
+        ],
+        "votes": [
+            1821,
+            2216,
+            1853
+        ]
+    },
+    "17418": {
+        "question": "Which feature should have more priority?",
+        "responses": [
+            "New Dimensions",
+            "New Milestones",
+            "New Quests",
+            "New Challenges",
+            "New MiniGames"
+        ],
+        "votes": [
+            1705,
+            607,
+            624,
+            458,
+            1953
+        ]
+    },
+    "17419": {
+        "question": "Choose one options for the MiniGame?",
+        "responses": [
+            "Rework Quantum Gambling",
+            "Make a new MiniGame and remove Quantum Gabling"
+        ],
+        "votes": [
+            1421,
+            4094
+        ]
+    },
+    "17420": {
+        "question": "What game genre is your favourite?",
+        "responses": [
+            "Arcade",
+            "Board",
+            "Shooter",
+            "Puzzle",
+            "Strategy"
+        ],
+        "votes": [
+            598,
+            382,
+            767,
+            1325,
+            2953
+        ]
+    },
+    "17421": {
+        "question": "Do you want to level One Time Offer Heroes? (James excluded)",
+        "responses": [
+            "Yes",
+            "No"
+        ],
+        "votes": [
+            3368,
+            2622
+        ]
+    },
+    "17422": {
+        "question": "What option do you fancy more?",
+        "responses": [
+            "New One Time Offer pack worth 50$",
+            "New One Time Offers worth 1.000\/2.000\/5.000 UM",
+            "Don't add new purchase options",
+            "I don't care"
+        ],
+        "votes": [
+            323,
+            1081,
+            1830,
+            2785
+        ]
+    },
+    "17423": {
+        "question": "How many followers should chests give (Common\/Rare\/Legendary)?",
+        "responses": [
+            "200 \/ 1.000 \/ 10.000",
+            "Max of 400 or 0.01% player followers  \/ 2.000 or 0.05% \/ 5.000 or 0.15% player followers",
+            "I don't care"
+        ],
+        "votes": [
+            1994,
+            2749,
+            1286
+        ]
+    },
+    "17424": {
+        "question": "Do you like a TD game as a substitute for the Quantum Gambling?",
+        "responses": [
+            "Yes",
+            "No"
+        ],
+        "votes": [
+            5105,
+            825
+        ]
+    },
+    "17425": {
+        "question": "How are you feeling today?",
+        "responses": [
+            "Meh",
+            "Could be better...",
+            "Good!",
+            "I'm going to beat the Tournament today!!!"
+        ],
+        "votes": [
+            1238,
+            1638,
+            2261,
+            443
+        ]
+    },
+    "17426": {
+        "question": "How hard is to obtain a Legendary Hero?",
+        "responses": [
+            "1 [Easy]",
+            "2",
+            "3",
+            "4",
+            "5 [Hard]"
+        ],
+        "votes": [
+            211,
+            145,
+            886,
+            1494,
+            2922
+        ]
+    },
+    "17428": {
+        "question": "Select your favourite Chest Reward?",
+        "responses": [
+            "Followers",
+            "Energy Multiplier",
+            "Heroes",
+            "Universe Marbles",
+            "Disaster Multiplier"
+        ],
+        "votes": [
+            381,
+            494,
+            3431,
+            1108,
+            474
+        ]
+    },
+    "17429": {
+        "question": "Do you think Tournaments are worth the entry fee?",
+        "responses": [
+            "Yes",
+            "No"
+        ],
+        "votes": [
+            1656,
+            4178
+        ]
+    },
+    "17433": {
+        "question": "How should we deal with Tournament errors?",
+        "responses": [
+            "Refound the entry fee (Keeping points and rewards)",
+            "Re-play the Tournament (Keeping points and rewards)",
+            "I don't know\/care"
+        ],
+        "votes": [
+            2473,
+            1034,
+            1640
+        ]
+    },
+    "17437": {
+        "question": "What option do you prefer when recieving rewards?",
+        "responses": [
+            "Get more than the player under you",
+            "Get the same than the players near you",
+            "All players get the same",
+            "Only the top performers get amazing rewards"
+        ],
+        "votes": [
+            1871,
+            1473,
+            1860,
+            224
+        ]
+    },
+    "17438": {
+        "question": "Should we increase the daily quest max level?",
+        "responses": [
+            "Yes",
+            "No"
+        ],
+        "votes": [
+            3605,
+            1748
+        ]
+    },
+    "17439": {
+        "question": "Today's update will be delayed...",
+        "responses": [
+            "GO TO WORK!",
+            "As expected...",
+            "Sleep is overrated"
+        ],
+        "votes": [
+            1479,
+            1357,
+            2282
+        ]
+    },
+    "17443": {
+        "question": "Season 3 is coming, what must be changed (from season 2)?",
+        "responses": [
+            "Rewards (UM and Prana Gems",
+            "Draw system (Highest damage wins)",
+            "Lineups (5 rows of 6 monsters)",
+            "Entry fees (50, 100 and 200 UM",
+            "Timetable (00:00 GMT)"
+        ],
+        "votes": [
+            2461,
+            721,
+            548,
+            1418,
+            567
+        ]
+    },
+    "17444": {
+        "question": "Regarding Rewards in Tournaments. Choose your favourite:",
+        "responses": [
+            "Universe Marbles",
+            "Prana Gems",
+            "Heroes",
+            "Followers",
+            "Keys"
+        ],
+        "votes": [
+            1333,
+            2140,
+            1348,
+            281,
+            597
+        ]
+    },
+    "17445": {
+        "question": "What Entry Fee do you prefer",
+        "responses": [
+            "500 UM",
+            "200 UM",
+            "100 UM",
+            "50 UM",
+            "10 UM"
+        ],
+        "votes": [
+            510,
+            143,
+            861,
+            1114,
+            2963
+        ]
+    },
+    "17446": {
+        "question": "From Monday to Sunday, what option do you prefer?",
+        "responses": [
+            "100,50,100,50,100,500,500 UM",
+            "100,50,10,50,100,500,500 UM",
+            "100,50,100,50,100,200,500 UM",
+            "100,50,100,50,100,200,200 UM",
+            "100,50,10,50,100,200,200 UM"
+        ],
+        "votes": [
+            1556,
+            490,
+            606,
+            677,
+            1823
+        ]
+    },
+    "17447": {
+        "question": "Do you like the random followers conditions?",
+        "responses": [
+            "Yes",
+            "No",
+            "Don't care"
+        ],
+        "votes": [
+            1777,
+            950,
+            2563
+        ]
+    },
+    "17448": {
+        "question": "Regarding Heroes for Tournaments what is your favourite?",
+        "responses": [
+            "Super Commons (Common lvl 1000)",
+            "All lvl 99",
+            "Random setups each tournaments",
+            "Custom lineups picked by Spyke,Aoyuki,GaiaByte",
+            "One Hero per line ONLY"
+        ],
+        "votes": [
+            847,
+            982,
+            1639,
+            564,
+            1683
+        ]
+    },
+    "17449": {
+        "question": "What Tournament matching do you prefer?",
+        "responses": [
+            "Single Elimination",
+            "Multiple Elimination",
+            "Round Robin",
+            "X lives, random rounds",
+            "20 rounds of elo matches (PvP like)"
+        ],
+        "votes": [
+            1547,
+            1001,
+            1242,
+            879,
+            980
+        ]
+    },
+    "17450": {
+        "question": "Do you think that Tournaments are fair?",
+        "responses": [
+            "Yes",
+            "No",
+            "Never played one"
+        ],
+        "votes": [
+            1372,
+            1710,
+            2510
+        ]
+    },
+    "17451": {
+        "question": "What changes does Energy Orbs(TD) require?",
+        "responses": [
+            "Increase energy rewards",
+            "Add new towers",
+            "Speed up the orbs",
+            "Make it work while not focused",
+            "Reduce the amount of clicking"
+        ],
+        "votes": [
+            1148,
+            505,
+            679,
+            2208,
+            997
+        ]
+    },
+    "17452": {
+        "question": "How many days (after rewards anouncement) should Season 3 start?",
+        "responses": [
+            "1 day",
+            "2 days",
+            "3 days",
+            "4 days",
+            "5 days"
+        ],
+        "votes": [
+            1841,
+            712,
+            1291,
+            214,
+            1348
+        ]
+    },
+    "17453": {
+        "question": "Which came first?",
+        "responses": [
+            "The chicken",
+            "The egg"
+        ],
+        "votes": [
+            2213,
+            2809
+        ]
+    },
+    "17455": {
+        "question": "Do you prefer single or double elimination?",
+        "responses": [
+            "Double (2 losses and out)",
+            "Single (1 loss and out)",
+            "I don't care"
+        ],
+        "votes": [
+            2442,
+            608,
+            2182
+        ]
+    },
+    "17456": {
+        "question": "b3Q4LW1kNDctd2FpDQo=",
+        "responses": [
+            "98 49 101 45 111 56 122 109 45 104 103 98 13 10",
+            "79 70 72 2d 34 6f 39 7a 2d 31 39 67 0d 0a",
+            "6cr-e37n-mrb",
+            "01110100 01100100 01110101 00101101 00110111 01101111 01100110 01100001",
+            "00101101 01111000 01101011 01100001 00001101 00001010 00001101 00001010"
+        ],
+        "votes": [
+            821,
+            658,
+            1666,
+            1432,
+            892
+        ]
+    },
+    "17457": {
+        "question": "How do you want us to include Season heroes to the game?",
+        "responses": [
+            "I want to buy them with kreds!",
+            "Make them appear on chests",
+            "Give a random one to the winner of each tournament",
+            "Don't include them, they are a unique reward for being there",
+            "I don't care"
+        ],
+        "votes": [
+            215,
+            3011,
+            327,
+            812,
+            1173
+        ]
+    },
+    "17458": {
+        "question": "Did you like the Season 2 rewards?",
+        "responses": [
+            "Yes!",
+            "No",
+            "I didn't get any reward"
+        ],
+        "votes": [
+            2603,
+            367,
+            2575
+        ]
+    },
+    "17459": {
+        "question": "What is the game missing?",
+        "responses": [
+            "Narrative",
+            "Gameplay",
+            "Cooperative mechanics",
+            "Graphics",
+            "Just more content"
+        ],
+        "votes": [
+            1250,
+            1102,
+            825,
+            217,
+            2085
+        ]
+    },
+    "17461": {
+        "question": "Regarding repeated heroes in chests, which option do you prefer?",
+        "responses": [
+            "That hero should get +1 level",
+            "I should get the equivalent Prana Gems to level the hero",
+            "I don't know"
+        ],
+        "votes": [
+            2012,
+            2625,
+            533
+        ]
+    },
+    "17462": {
+        "question": "When you should be able to reset Daily Quest?",
+        "responses": [
+            "Every 12:00 hours (Current mode)",
+            "Every 11:45 hours",
+            "Every 23:45 hours",
+            "I don't care"
+        ],
+        "votes": [
+            2450,
+            1345,
+            418,
+            1396
+        ]
+    },
+    "17463": {
+        "question": "What should we work on?",
+        "responses": [
+            "More Quests",
+            "More Daily Quest Levels",
+            "More PvP modes",
+            "More Minigames",
+            "More Energy Orbs collectors"
+        ],
+        "votes": [
+            1244,
+            448,
+            428,
+            2116,
+            1272
+        ]
+    },
+    "17464": {
+        "question": "How to make polls more fair?",
+        "responses": [
+            "Charge 10 UM per vote",
+            "Player votes have different weights",
+            "Make them multiple choice",
+            "Only players that play in tournaments can vote"
+        ],
+        "votes": [
+            750,
+            1194,
+            3054,
+            426
+        ]
+    },
+    "17465": {
+        "question": "How to make polls more fair (2)?",
+        "responses": [
+            "Player vote is increased based on tournaments joined",
+            "Players can choose to get 10 UM or to vote",
+            "Polls are multiple choice"
+        ],
+        "votes": [
+            781,
+            1551,
+            3042
+        ]
+    },
+    "17466": {
+        "question": "Are you scared of multi-dimensional ghosts?",
+        "responses": [
+            "Yes",
+            "I ain't afraid of multi-dimensional ghosts",
+            "What?"
+        ],
+        "votes": [
+            751,
+            2934,
+            1637
+        ]
+    },
+    "17467": {
+        "question": "How many levels should Daily Quest have?",
+        "responses": [
+            "35 (current)",
+            "50",
+            "Infinite levels",
+            "Less levels with more rewards",
+            "More levels with less rewards"
+        ],
+        "votes": [
+            780,
+            826,
+            1431,
+            1667,
+            143
+        ]
+    },
+    "17470": {
+        "question": "Halloween is here!!!",
+        "responses": [
+            "A new disaster will give you UM (Spider)",
+            "You'll be able to obtain amazing heroes after earning UM",
+            "All UM gained with the disaster will count",
+            "All UM purchased will also count (One Time Offers included)",
+            "Check the shop BUY UNIVERSE MARBLES for more information"
+        ],
+        "votes": [
+            3033,
+            822,
+            734,
+            212,
+            549
+        ]
+    },
+    "17471": {
+        "question": "Do you care about tournament follower ranges?",
+        "responses": [
+            "Yes low,mid,high follower count is important",
+            "As long as it's random I don't care",
+            "I couldn't care less"
+        ],
+        "votes": [
+            1420,
+            1374,
+            2390
+        ]
+    },
+    "17472": {
+        "question": "Whould you replace Your Heroes for Your Common,Rare,Legendary?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            2262,
+            945,
+            2116
+        ]
+    },
+    "17473": {
+        "question": "For Hero options in Tournament what option do you like?",
+        "responses": [
+            "Single element (Example: Water Heroes only)",
+            "Dual element (Example: Water and Earth only)",
+            "All but one Element (Example: Water,Earth,Air only)",
+            "None of them",
+            "I don't care"
+        ],
+        "votes": [
+            929,
+            720,
+            563,
+            646,
+            2384
+        ]
+    },
+    "17474": {
+        "question": "Should Friday Tournament entry fee cost 200 Universe Marbles?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            789,
+            2423,
+            1729
+        ]
+    },
+    "17475": {
+        "question": "What do you think about random Heroes?",
+        "responses": [
+            "I like them a lot!",
+            "I hate them",
+            "They should be more random",
+            "They should happen more times"
+        ],
+        "votes": [
+            1593,
+            793,
+            1084,
+            2178
+        ]
+    },
+    "17476": {
+        "question": "What option do you prefer?",
+        "responses": [
+            "Prana Gems can only be obtained through Tournaments",
+            "Prana Gems can be purchased at a High Cost 500 UM",
+            "Prana Gems can be purchased at an inceasing cost (100,200,...)",
+            "None of the above"
+        ],
+        "votes": [
+            938,
+            1222,
+            1651,
+            1987
+        ]
+    },
+    "17477": {
+        "question": "What option do you prefer for tournament variables?",
+        "responses": [
+            "2 match modes, 3 follower modes, 5 hero modes (current one)",
+            "3 match modes, 5 follower modes, 11 hero modes",
+            "2 match modes, 1 follower mode, 3 hero modes",
+            "3 match modes, 1 follower mode, 5 hero modes",
+            "5 match modes, 3 follower modes, 11 hero modes"
+        ],
+        "votes": [
+            2549,
+            960,
+            990,
+            578,
+            1218
+        ]
+    },
+    "17478": {
+        "question": "Which one is your Favourite Matching algorithm?",
+        "responses": [
+            "Elimination (KO after loss)",
+            "Round Robin (All fight all the best remain)",
+            "League (Winners get up losers get down)",
+            "Win % (the players that wins the most players is the winner)",
+            "Swiss + Elimination (20 round swiss + top 32 elimination)"
+        ],
+        "votes": [
+            1207,
+            1467,
+            1427,
+            1370,
+            977
+        ]
+    },
+    "17479": {
+        "question": "What Hero Mode do you prefer?",
+        "responses": [
+            "All lvl 99",
+            "All lvl 1",
+            "Common Only",
+            "Rare Only",
+            "Other"
+        ],
+        "votes": [
+            2079,
+            1114,
+            744,
+            879,
+            1720
+        ]
+    },
+    "17480": {
+        "question": "Would you like any of these conditions in tournaments?",
+        "responses": [
+            "One random unit starts dead",
+            "+50% counter-element bonus is doubled to +100%",
+            "+50% counter-element bonus is reduced to +25%",
+            "Rows are randomized at the start of each fight",
+            "Don't add conditions"
+        ],
+        "votes": [
+            990,
+            1122,
+            589,
+            1661,
+            2029
+        ]
+    },
+    "17482": {
+        "question": "Regarding Hero modes in Tournaments pick your best option?",
+        "responses": [
+            "Only Quest Heroes at max level",
+            "Only Key Heroes at max level",
+            "Event + Reward Heroes at max level",
+            "All heroes random levels",
+            "Other"
+        ],
+        "votes": [
+            1000,
+            603,
+            891,
+            1773,
+            1633
+        ]
+    },
+    "17483": {
+        "question": "Which one is your favourite cooperative mechanic?",
+        "responses": [
+            "Guilds",
+            "Chat",
+            "All fight vs 1 boss",
+            "Some fight vs some players",
+            "Some fight vs some monsters"
+        ],
+        "votes": [
+            1343,
+            669,
+            2785,
+            451,
+            1304
+        ]
+    },
+    "17485": {
+        "question": "Do you agree with this Hero modes for Tournaments?",
+        "responses": [
+            "Your commons, Your rares, Your Legendaries",
+            "Air Only, Water Only, Earth Only, Fire Only",
+            "Random Heroes Random LvL, All Heroes Random LvL, Random Heroes LvL 99",
+            "All LvL 99",
+            "I don't agree!!!"
+        ],
+        "votes": [
+            1340,
+            1096,
+            1580,
+            1646,
+            1234
+        ]
+    },
+    "17486": {
+        "question": "Do you want to lvl up (Spyke, Aoyuki and GaiaByte) at 1000 UM per lvl?",
+        "responses": [
+            "Yes, but I want a PG refund",
+            "Yes, but cheaper",
+            "Yes",
+            "No"
+        ],
+        "votes": [
+            1011,
+            2690,
+            636,
+            1582
+        ]
+    },
+    "17487": {
+        "question": "Regarding Element Only Hero modes what do you prefer?",
+        "responses": [
+            "All lvl 99",
+            "Common lvl 99, Rare lvl 50, Legendary lvl 15",
+            "Random LvL",
+            "None of the above"
+        ],
+        "votes": [
+            1634,
+            1590,
+            1442,
+            1298
+        ]
+    },
+    "17488": {
+        "question": "Select your prefered matching option:",
+        "responses": [
+            "Round Robin + League",
+            "Round Robin + Win %",
+            "Round Robin + Double Elimination (Current)",
+            "League + Win %",
+            "Win % + Double Elimination"
+        ],
+        "votes": [
+            1202,
+            1193,
+            1555,
+            1092,
+            1109
+        ]
+    },
+    "17489": {
+        "question": "Season 3 will end sometime soon, what prize option do you prefer?",
+        "responses": [
+            "Rewards based on Points (Season 2 rewards)",
+            "Rewards based on Placement (Season 1 rewards)",
+            "Equal rewards",
+            "No rewards"
+        ],
+        "votes": [
+            2066,
+            923,
+            2088,
+            442
+        ]
+    },
+    "17490": {
+        "question": "To make room for No Heroes option what option should we remove?",
+        "responses": [
+            "Random Heroes Random LvL",
+            "All Heroes Random LvL",
+            "Random Heroes LvL 99",
+            "All LvL 99",
+            "No Heroes"
+        ],
+        "votes": [
+            1571,
+            1008,
+            920,
+            1105,
+            1500
+        ]
+    },
+    "17491": {
+        "question": "What random follower values do you prefer?",
+        "responses": [
+            "T1-T5, T6-T10, T11-T15",
+            "[T1,T2,T3,T4,T5],[T6,T7,T8,T9,T10],[T11,T12,T13,T14,T15]",
+            "50k-1.5M\/5-25M\/50-125M",
+            "T1-T15",
+            "Current One"
+        ],
+        "votes": [
+            1011,
+            1080,
+            1244,
+            602,
+            2193
+        ]
+    },
+    "17492": {
+        "question": "Should we give an extra prize to top10 players by win% in Tournaments?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            1752,
+            1458,
+            2083
+        ]
+    },
+    "17493": {
+        "question": "Have you ever visited the forum?",
+        "responses": [
+            "Yes",
+            "No"
+        ],
+        "votes": [
+            1964,
+            2891
+        ]
+    },
+    "17494": {
+        "question": "Did you enjoy the new Quests?",
+        "responses": [
+            "Yes",
+            "Yes, but they were too easy",
+            "Meh",
+            "No, they were too hard",
+            "No"
+        ],
+        "votes": [
+            1970,
+            294,
+            1747,
+            835,
+            393
+        ]
+    },
+    "17495": {
+        "question": "What prize should the top 10 playes by win% in Tournaments recieve?",
+        "responses": [
+            "PG",
+            "Random Tournament Hero",
+            "UM",
+            "CC",
+            "Keys"
+        ],
+        "votes": [
+            1214,
+            1543,
+            1052,
+            496,
+            1533
+        ]
+    },
+    "17496": {
+        "question": "How long have you been playing?",
+        "responses": [
+            "1 day",
+            "1 week",
+            "1 month",
+            "6 month",
+            "9 month"
+        ],
+        "votes": [
+            486,
+            525,
+            1104,
+            1660,
+            1440
+        ]
+    },
+    "17497": {
+        "question": "Which is your favourite part of the fights?",
+        "responses": [
+            "Strategy without random factors",
+            "Simplicity",
+            "Variety of Heroes",
+            "Progression",
+            "Depth of Tactics"
+        ],
+        "votes": [
+            1544,
+            1501,
+            965,
+            1473,
+            778
+        ]
+    },
+    "17499": {
+        "question": "Season end will be a bit delayed",
+        "responses": [
+            "Tournament Join is disabled until the new version is live",
+            "We expect ~1 hours but could be more",
+            "Be patient",
+            "Rewards will come after"
+        ],
+        "votes": [
+            1048,
+            875,
+            2472,
+            2253
+        ]
+    },
+    "17500": {
+        "question": "Each one of them is 100 PG, Good Luck!",
+        "responses": [
+            "ez7-9rga-7de02dc5af9a7f8a5023fef3be2c8a77",
+            "8wb-7446e5d086f82e60ccf12953f288c887",
+            "qiy9MQAT\/TLNpgZyaDTllg==",
+            "fRDBxHhg",
+            "111101001001011000000001000001101110011000"
+        ],
+        "votes": [
+            1521,
+            1557,
+            1692,
+            1492,
+            2673
+        ]
+    },
+    "17501": {
+        "question": "What do you expect from Christmas?",
+        "responses": [
+            "A lot of rewards",
+            "OP heroes",
+            "New challenges",
+            "New puzzles",
+            "Fire GaiaByte"
+        ],
+        "votes": [
+            2968,
+            1095,
+            1036,
+            1257,
+            880
+        ]
+    },
+    "17503": {
+        "question": "Are you ready?",
+        "responses": [
+            "Yes",
+            "Maybe",
+            "No"
+        ],
+        "votes": [
+            3096,
+            1473,
+            554
+        ]
+    },
+    "17504": {
+        "question": "Pick your preferred option for Tournaments?",
+        "responses": [
+            "Double PG rewards, but reduce the Prize Pool (70%->50%)",
+            "Increase PG rewards for the bottom players",
+            "Scale PG rewards based on entry fee",
+            "I don't care"
+        ],
+        "votes": [
+            1072,
+            2086,
+            1065,
+            1813
+        ]
+    },
+    "17505": {
+        "question": "Pick your favourite\/s?",
+        "responses": [
+            "Isaac Asimov",
+            "Philip K. Dick",
+            "Arthur C. Clarke",
+            "H. G. Wells",
+            "Frank Herbert"
+        ],
+        "votes": [
+            2363,
+            1143,
+            1246,
+            1693,
+            1045
+        ]
+    },
+    "17506": {
+        "question": "Pick your favourite\/s?",
+        "responses": [
+            "Charles Babbage",
+            "Nikola Tesla",
+            "Thomas Alva Edison",
+            "Alan Turing",
+            "Alexander Bell"
+        ],
+        "votes": [
+            777,
+            3302,
+            776,
+            1648,
+            829
+        ]
+    },
+    "17507": {
+        "question": "Pick your favourite\/s?",
+        "responses": [
+            "Albert Einstein",
+            "Max Planck",
+            "Werner Heisenberg",
+            "Erwin Schrodinger",
+            "Stephen Hawking"
+        ],
+        "votes": [
+            2673,
+            1185,
+            1051,
+            1568,
+            1701
+        ]
+    },
+    "17508": {
+        "question": "Do you like complaining?",
+        "responses": [
+            "Yes",
+            "No",
+            "This poll sucks!",
+            "I don't care"
+        ],
+        "votes": [
+            1700,
+            1271,
+            1562,
+            1033
+        ]
+    },
+    "17509": {
+        "question": "How do you feel about the new DQ?",
+        "responses": [
+            "It's good",
+            "It's boring",
+            "Rewards are worse",
+            "Enemies are too strong",
+            "Bring back the old system"
+        ],
+        "votes": [
+            2679,
+            421,
+            830,
+            674,
+            437
+        ]
+    },
+    "17510": {
+        "question": "In order to improve the DQ what option do you prefer?",
+        "responses": [
+            "Bring back the milestone rewards",
+            "Make enemies easier",
+            "Improve current rewards",
+            "Don't touch anything",
+            "I don't care"
+        ],
+        "votes": [
+            1195,
+            1006,
+            1885,
+            740,
+            868
+        ]
+    },
+    "17512": {
+        "question": "no poll today",
+        "responses": [
+            "BAAH",
+            "BEEH",
+            "BIIH",
+            "BOOH",
+            "BUUH"
+        ],
+        "votes": [
+            1979,
+            1231,
+            1143,
+            1794,
+            1348
+        ]
+    },
+    "17513": {
+        "question": "How often do you want to attack World bosses",
+        "responses": [
+            "Once per Hour",
+            "Once every 4 hours",
+            "Once every 8 hours",
+            "Once every 24 hours",
+            "Let me hit him as long as I spend UM"
+        ],
+        "votes": [
+            1626,
+            811,
+            939,
+            1726,
+            638
+        ]
+    },
+    "17514": {
+        "question": "One attack every 24 hours, what options fits your needs the best?",
+        "responses": [
+            "Fixed reset (Like Tournaments)",
+            "Energy system with 1 charge per day with a limit of 7",
+            "Timer Reset (24 hours) after attack",
+            "Remember: less attacks = more rewards for low players"
+        ],
+        "votes": [
+            1323,
+            1818,
+            1080,
+            1656
+        ]
+    },
+    "17515": {
+        "question": "How world boss rewards should be distributed?",
+        "responses": [
+            "Favouring high damage",
+            "Favouring participation",
+            "Favouring killing blows",
+            "Favouring n\u00ba of attacks"
+        ],
+        "votes": [
+            1632,
+            2632,
+            612,
+            1106
+        ]
+    },
+    "17516": {
+        "question": "Is the top10 win ratio prizes fair for all players?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care",
+            "More players should be included",
+            "More prizes should be rewarded"
+        ],
+        "votes": [
+            743,
+            934,
+            1273,
+            1875,
+            736
+        ]
+    },
+    "17517": {
+        "question": "Are you enjoying the new Hero modes, which one is the best?",
+        "responses": [
+            "Elemental Heroes(Air,Earth,Fire,Water only)",
+            "Random Heroes (Random lvl, Random Heroes)",
+            "Your Heroes (Your Common, Your Rare, Your Legendary)",
+            "No Heroes",
+            "None of them"
+        ],
+        "votes": [
+            1391,
+            1270,
+            1073,
+            803,
+            964
+        ]
+    },
+    "17518": {
+        "question": "What option do you prefer for extra reward in world bosses?",
+        "responses": [
+            "Give 1 AS to the lowest 100 players in damage dealt",
+            "Reward the 3\/4 percentile in damage",
+            "Reward a random attacker",
+            "Reward the killing blow",
+            "No lucky extra reward"
+        ],
+        "votes": [
+            1751,
+            1565,
+            1140,
+            945,
+            895
+        ]
+    },
+    "17519": {
+        "question": "What setup of world bosses do you prefer?",
+        "responses": [
+            "1 attack per day, x24 rewards, x1 hp",
+            "24 attacks per day, x1 rewards, x25 hp",
+            "12 attacks per day, x2 rewards, x10 hp",
+            "2 attacks per day, x12 rewards, x2 hp",
+            "I don't care"
+        ],
+        "votes": [
+            1730,
+            577,
+            705,
+            1198,
+            1414
+        ]
+    },
+    "17520": {
+        "question": "What do you expect for 2018?",
+        "responses": [
+            "WW3",
+            "Zombie Apocalypse",
+            "Catalonia Independence",
+            "Skynet's Awakening",
+            "42"
+        ],
+        "votes": [
+            1482,
+            840,
+            912,
+            1157,
+            1860
+        ]
+    },
+    "17521": {
+        "question": "How many days can GaiaByte employees take for Christmas Vacations?",
+        "responses": [
+            "1",
+            "7",
+            "14",
+            "21",
+            "30"
+        ],
+        "votes": [
+            827,
+            1339,
+            1244,
+            385,
+            1389
+        ]
+    },
+    "17522": {
+        "question": "Which day is your favourite holiday?",
+        "responses": [
+            "25th december",
+            "31th december",
+            "1st January",
+            "6th January",
+            "I don't care"
+        ],
+        "votes": [
+            1725,
+            875,
+            754,
+            344,
+            1502
+        ]
+    },
+    "17528": {
+        "question": "If you could choose, would you want to be?",
+        "responses": [
+            "Male",
+            "Female",
+            "Transgender",
+            "Alien",
+            "God"
+        ],
+        "votes": [
+            1258,
+            558,
+            268,
+            1156,
+            2161
+        ]
+    },
+    "17531": {
+        "question": "What makes you happier than playing CQ?",
+        "responses": [
+            "Playing other games",
+            "Eating",
+            "Sleeping",
+            "Travelling",
+            "Making Gaiabyte suffer"
+        ],
+        "votes": [
+            1345,
+            1163,
+            1539,
+            767,
+            1020
+        ]
+    },
+    "17532": {
+        "question": "If you could choose any timeline to live in, would it be?",
+        "responses": [
+            "The Prehistory",
+            "The Dark Ages",
+            "The Industrial Revolution",
+            "The 50's-70's",
+            "The 80'-2000"
+        ],
+        "votes": [
+            643,
+            668,
+            572,
+            702,
+            2219
+        ]
+    },
+    "17533": {
+        "question": "Where did you spend New Year's eve?",
+        "responses": [
+            "At home with family",
+            "At the pub\/club with friends",
+            "In bed with my beloved",
+            "In a great public place with thousands of strangers",
+            "Behind a computer playing CQ"
+        ],
+        "votes": [
+            2454,
+            763,
+            584,
+            301,
+            1230
+        ]
+    },
+    "17534": {
+        "question": "Wouldn't you like to have Treasure Chests available in real life?",
+        "responses": [
+            "Yes",
+            "No",
+            "Maybe",
+            "Definitively",
+            "Why would a god need TCs?"
+        ],
+        "votes": [
+            2378,
+            419,
+            641,
+            957,
+            1035
+        ]
+    },
+    "17535": {
+        "question": "How many followers is enough?",
+        "responses": [
+            "1",
+            "1.000",
+            "1.000.000",
+            "1.000.000.000",
+            "1.000.000.000.000"
+        ],
+        "votes": [
+            772,
+            187,
+            420,
+            798,
+            2876
+        ]
+    },
+    "17539": {
+        "question": "How important is to add new Monsters (follower creatures)?",
+        "responses": [
+            "Do it fast",
+            "Take your time",
+            "I want them now!!!",
+            "Don't add them",
+            "I don't care"
+        ],
+        "votes": [
+            706,
+            2248,
+            528,
+            381,
+            1056
+        ]
+    },
+    "17541": {
+        "question": "What World Boss mode do you prefer?",
+        "responses": [
+            "No Heroes",
+            "Heroes allowed",
+            "I don't know"
+        ],
+        "votes": [
+            1153,
+            2290,
+            1172
+        ]
+    },
+    "17542": {
+        "question": "So Season 5 is comming what need to be changed the most?",
+        "responses": [
+            "Hero modes",
+            "Follower modes",
+            "Match modes",
+            "Costs",
+            "Tournament Rewards"
+        ],
+        "votes": [
+            934,
+            873,
+            739,
+            1854,
+            1162
+        ]
+    },
+    "17544": {
+        "question": "Regarding Tournament costs?",
+        "responses": [
+            "Add more 500 UM days",
+            "Add more 200 UM days",
+            "Remove 50 UM days",
+            "Don't do anything",
+            "Add 1 free day"
+        ],
+        "votes": [
+            386,
+            255,
+            278,
+            1092,
+            2510
+        ]
+    },
+    "17545": {
+        "question": "Should we scale PG rewards on tournaments based on entry fee?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            1852,
+            922,
+            1383
+        ]
+    },
+    "17546": {
+        "question": "Should Ascended Heroes be included in Tournaments?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            1511,
+            1317,
+            1721
+        ]
+    },
+    "17547": {
+        "question": "Did you like the Tournament follower modes for the current Season?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            1470,
+            693,
+            2350
+        ]
+    },
+    "17548": {
+        "question": "What do you prefer as Season 4 rewards?",
+        "responses": [
+            "Universe Marbles",
+            "Prana Gems",
+            "Ascension Spheres",
+            "Chest Keys",
+            "Heroes"
+        ],
+        "votes": [
+            1236,
+            2114,
+            889,
+            1013,
+            1413
+        ]
+    },
+    "17549": {
+        "question": "Should Double Elimination be removed for a less random method?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            1604,
+            730,
+            2170
+        ]
+    },
+    "17550": {
+        "question": "How should we rank you in Tournaments?",
+        "responses": [
+            "20 round league based on ELO",
+            "Use win ratio against everyone",
+            "10 round swiss and then Single Elimination of top players",
+            "Random fights 5 lives",
+            "Find more options"
+        ],
+        "votes": [
+            1136,
+            1283,
+            860,
+            871,
+            1367
+        ]
+    },
+    "17551": {
+        "question": "Which Hero mode is your Favourite?",
+        "responses": [
+            "Elemental Heroes",
+            "Random Heroes",
+            "User Heroes",
+            "No Heroes",
+            "I don't know"
+        ],
+        "votes": [
+            927,
+            1118,
+            705,
+            546,
+            1345
+        ]
+    },
+    "17552": {
+        "question": "Should Win rate ranking award better prizes?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            2097,
+            611,
+            1421
+        ]
+    },
+    "17553": {
+        "question": "Should Heroes cost Followers in Tournaments?",
+        "responses": [
+            "Yes",
+            "No",
+            "I don't care"
+        ],
+        "votes": [
+            1118,
+            2031,
+            1281
+        ]
+    },
+    "17554": {
+        "question": "Select your preferred Hero Modes",
+        "responses": [
+            "Random Common\/Rare\/Legendary",
+            "Dual elements (Fire\/water, earth\/air)",
+            "Your Ascended",
+            "Kraide Heroes",
+            "Super levels (Level 1000)"
+        ],
+        "votes": [
+            1900,
+            1119,
+            588,
+            729,
+            1271
+        ]
+    },
+    "17555": {
+        "question": "Season 5 is tomorrow. Are you ready?",
+        "responses": [
+            "Yes",
+            "No",
+            "Increase the rewards",
+            "I don't care"
+        ],
+        "votes": [
+            1567,
+            771,
+            1836,
+            798
+        ]
+    },
+    "17557": {
+        "question": "What do you prefer, for Tournaments?",
+        "responses": [
+            "Add a new Match Mode",
+            "Add a new Heroes Mode",
+            "Remove a Heroes Mode",
+            "I don't care"
+        ],
+        "votes": [
+            987,
+            821,
+            537,
+            2231
+        ]
+    },
+    "17559": {
+        "question": "What option do you prefer for World Bosses?",
+        "responses": [
+            "Keep them as they were",
+            "Change rewards to by position instead of damage",
+            "One player can only deal 10% of hp",
+            "A Boss must be alive at least 12 hours",
+            "Buff World Boss damage"
+        ],
+        "votes": [
+            0,
+            1,
+            0,
+            0,
+            0
+        ]
+    },
+    "17560": {
+        "question": "What option do you prefer for World Bosses?",
+        "responses": [
+            "Keep them as they were",
+            "Change rewards to by position instead of damage",
+            "One player can only deal 10% of hp",
+            "A Boss must be alive at least 12 hours",
+            "Buff World Boss damage"
+        ],
+        "votes": [
+            1592,
+            789,
+            1315,
+            829,
+            586
+        ]
+    },
+    "17561": {
+        "question": "What new Match Mode should be added?",
+        "responses": [
+            "Single Elimination",
+            "Double Elimination",
+            "5 lives random matches(no repetition)",
+            "Perfect win ratio",
+            "Other"
+        ],
+        "votes": [
+            809,
+            601,
+            1523,
+            602,
+            1282
+        ]
+    },
+    "17567": {
+        "question": "Heroes are scarce in Season 5 should we increase the amount?",
+        "responses": [
+            "Yes, add more hero choice to Hero modes",
+            "No, the current amount is fine",
+            "I don't care"
+        ],
+        "votes": [
+            1494,
+            1268,
+            1476
+        ]
+    },
+    "17568": {
+        "question": "When is the 1 Year aniversary of Cosmos Quest?",
+        "responses": [
+            "17\/02\/2018",
+            "2018\/02\/18",
+            "02\/17\/2018",
+            "17th of Februrary 2018",
+            "Who cares..."
+        ],
+        "votes": [
+            1168,
+            600,
+            842,
+            1616,
+            1085
+        ]
+    },
+    "17569": {
+        "question": "How did you feel seeing the Falcon Heavy Launch?",
+        "responses": [
+            "History",
+            "Proud of Human Race",
+            "Finally something worth",
+            "Omg He did it!",
+            "I was playing Cosmos Quest..."
+        ],
+        "votes": [
+            995,
+            864,
+            556,
+            854,
+            1749
+        ]
+    },
+    "17570": {
+        "question": "Rate from 1(unfair) to 5(fair) the season 5 Tournaments?",
+        "responses": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+        ],
+        "votes": [
+            852,
+            496,
+            1986,
+            732,
+            618
+        ]
+    },
+    "17579": {
+        "question": "Happy 1 Year Anniversary!!",
+        "responses": [
+            "Congratulations!",
+            "It's been a great time",
+            "Thank you for making this game"
+        ],
+        "votes": [
+            2561,
+            1143,
+            1931
+        ]
+    }
+}

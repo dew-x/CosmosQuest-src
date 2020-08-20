@@ -1,0 +1,2194 @@
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+<head>
+    <!--<meta content="/logos/doodles/2016/holidays-2016-day-2-6356741311692800-hp.gif" itemprop="image">
+    <meta content="Bon Nadal! #GoogleDoodle" property="og:description">
+    <meta content="http://www.google.com/logos/doodles/2016/holidays-2016-day-2-6356741311692800-thp.png" property="og:image">
+    <meta content="450" property="og:image:width">
+    <meta content="200" property="og:image:height">
+    <meta content="http://www.google.com/logos/doodles/2016/holidays-2016-day-2-6356741311692800-hp2x.gif" property="og:url">
+    <meta content="video.other" property="og:type">
+    <meta content="origin" id="mref" name="referrer">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf-8" />
+    <link href="favicon.ico" rel="shortcut icon">
+    <title>Cosmos Quest</title>
+    <style>
+        body,html {
+            background: black;
+            margin: 0px;
+            padding: 0px;
+            pointer-events: none;
+            width: 100%;
+        }
+        #canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 1024px;
+            height: 640px;
+            pointer-events: auto;
+            z-index: -1;
+        }
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        #popup {
+            position: absolute;
+            width: 400px;
+            height: 250px;
+            display: block;
+            right: 312px;
+            top: 195px;
+            z-index: 1000;
+            text-align: center;
+            background: url("img/WINDOW.png");
+            display: none;
+        }
+        #dataloc {
+            margin: 10px;
+            width: 370px;
+            height: 170px;
+            border: none;
+            padding: 5px;
+            pointer-events: auto;
+            background: transparent;
+        }
+        .databut {
+            width: 80px;
+            height: 30px;
+            padding: 5px;
+            pointer-events: auto;
+            margin: 0 auto;
+        }
+        #kong {
+            position: absolute;
+            width: 267px;
+            height: 40px;
+            right: 40px;
+            top: 560px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        #playgroundbg {
+            background: #e5bd6c;
+            border-style: solid;
+            position: absolute;
+            width: 400px;
+            height: 200px;
+            left: 50%;
+            margin-left: -200px;
+            top: 320px;
+            margin-top: -100px;
+            display: block;
+            z-index: 1000;
+            text-align: center;
+            display: none;
+            line-height: 75%;
+        }
+        #level {
+            width: 100px;
+            height: 20px;
+            border-style: solid;
+            pointer-events: auto;
+            background: transparent;
+            resize: none;
+            vertical-align: top;
+            font-size: 16px;
+            text-align: center;
+        }
+        #promotion {
+            width: 100px;
+            height: 20px;
+            border-style: solid;
+            pointer-events: auto;
+            background: transparent;
+            resize: none;
+            vertical-align: top;
+            font-size: 16px;
+            text-align: center;
+        }
+        .mycontainer {
+            vertical-align: middle;
+        }
+        .mycontainer label {
+            font-size: 28px;
+        }
+        #donebut {
+            width: 80px;
+            height: 30px;
+            pointer-events: auto;
+        }
+        #levelwb {
+            position: absolute;
+            width: 200px;
+            height: 20;
+            left: 58.9%;
+            margin-left: -200px;
+            top: 510px;
+            margin-top: -100px;
+            display: block;
+            z-index: 1000;
+            text-align: center;
+            display: none;
+            line-height: 75%;
+        }
+        #wblvl {
+            width: 100px;
+            height: 20px;
+            border-style: solid;
+            pointer-events: auto;
+            background: transparent;
+            resize: none;
+            vertical-align: top;
+            font-size: 16px;
+            text-align: center;
+        }
+        #slidecontainer {
+            position: absolute;
+            width: 500px; /* Width of the outside container */
+            left: 42.20%;
+            top: 375px;
+            pointer-events: auto;
+            z-index: 1000;
+            display: none;
+        }
+        #adventureRange {
+            width: 300px;
+        }
+        #cqmbl {
+            position: absolute;
+            width: 832px;
+            height: 513px;
+            display: block;
+            right: 96px;
+            top: 63px;
+            z-index: 1000;
+            text-align: center;
+            background: url("img/promo3.png");
+            background-size: contain;
+            display: none;
+        }
+        .close {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            width: 32px;
+            height: 32px;
+            opacity: 0.8;
+            font-weight: 400;
+            text-shadow: 2px 2px #000000;
+        }
+        .close:hover {
+            opacity: 1;
+        }
+        .close:before, .close:after {
+            position: absolute;
+            left: 15px;
+            content: ' ';
+            height: 33px;
+            width: 2px;
+            background-color: #333;
+        }
+        .close:before {
+            transform: rotate(45deg);
+        }
+        .close:after {
+            transform: rotate(-45deg);
+        }
+
+        #herosearch {
+            position: absolute;
+            background-color: rgb(199,185,147);
+            width: 140px;
+            height: 25px;
+            left: 580px;
+            top: 516px;
+            display: none;
+            pointer-events: auto;
+            resize: none;
+            font-size: 18px;
+            z-index: 5;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lacquer" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas" rel="stylesheet">
+</head>
+<body oncontextmenu="return false;">
+    <canvas id="canvas" width="1024px" height="640px">
+    </canvas>
+    <textarea id="herosearch"></textarea>
+    <div id="popup">
+        <textarea id="dataloc" onfocus="SelectAll('dataloc');"></textarea><br>
+        <button id="databut" class="databut">Close</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="closebut" onclick="hideBut()" class="databut">Close</button>
+    </div>
+    <div id="levelwb">
+        <textarea id="wblvl" rows="1">1</textarea>
+    </div>
+    <div id="cqmbl">
+        <span class="close"></span>
+    </div>
+    <div id="slidecontainer">
+        <input type="range" min="1" max="100" value="50" id="adventureRange">
+    </div>
+    <div id="playgroundbg">
+        <h2>Set the level and promotion</h2>
+        <h3>(Level must be 1-99 or multiple of 1000)</h3>
+        <div class="mycontainer">
+            <label for="level">Level:</label>
+            <textarea id="level" rows="1">1</textarea>
+        </p>        
+        <p class="mycontainer">
+            <label for="promotion">Promotion:</label>
+            <textarea id="promotion" rows="1">0</textarea>
+        </p>    
+        <button id="donebut" onclick="hideBut()">Done</button>
+    </div>
+    
+    
+    
+    
+    <img src="img/kongregate_red.png" id="kong">
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/presentation.js"></script>
+    <script src="js/loading.js"></script>
+    <script src="js/texer.js"></script>
+    <script src="js/cosmosquest.js"></script>
+    <script src="js/gfx.js"></script>
+    <script src="js/lzf.js"></script>
+    <script src="js/GA.js"></script>
+    <script src="js/batsim.js"></script>
+    <script src="js/solver.js"></script>
+    <script>
+        var DAY = 24*60*60*1000;
+        var dlvl=1;
+        var fols=7500000000000000;
+        var initd=undefined;
+        function workDaily() {
+            var TYPES = [3,0,1,2];
+            var N = [
+                [2,1,3,0],
+                [3,2,0,1],
+                [0,3,1,2],
+                [1,0,2,3]
+            ];
+            var PVEHERO = Array(HERO.length).fill(1);
+            function hval(hid,lvl) {
+                var hp=HERO[hid].hp;
+                var atk=HERO[hid].atk;
+                var points = lvl - 1;
+                if (HERO[hid].rarity==1) points *= 2;
+                else if (HERO[hid].rarity==2) points *= 6;
+                var nhp = HERO[hid].hp+Math.round(points*hp/(hp+atk));
+                var natk = HERO[hid].atk+Math.round(points*atk/(hp+atk));
+                var score = nhp*natk;
+                if (HERO[hid].skill.type=="pierce") score*=HERO[hid].skill.value/2;
+                else if (HERO[hid].skill.type=="buff") score*=HERO[hid].skill.value*2;
+                return score*Math.sqrt(score);
+            }
+
+            function doDaily(lvl) {
+                var target=Math.pow(1.3-0.6*(1-(175+lvl)/(175+lvl*2)),lvl-1)*10000;
+                var root=[Math.floor(Math.random()*4),-1,-1,-1,-1,-1];
+                for (var i=1; i<5; ++i) {
+                    root[i]=N[root[i-1]%4][Math.floor(Math.pow(Math.random()*2,2))];
+                }
+                var hero=PVEHERO.slice();
+                var bcost=0;
+                for (var i=0; i<5; ++i) {
+                    if (bcost<target) {
+                        var fam=root[i];
+                        var avgleft=(target-bcost)/(5-i);
+                        while (fam+4<MONSTERS.length && MONSTERS[fam+4].cost<avgleft) {
+                            fam+=4;
+                        }
+                        root[i]=fam;
+                        bcost+=MONSTERS[root[i]].cost;
+                    }
+                }
+                // pick 2 commons, 2 rares, 2 legendaries
+                var ignore=[20,51,52,53,55,56,57,58];
+                var picks=[];
+                while (picks.length<9) {
+                    var hid=Math.floor(Math.random()*HERO.length);
+                    if (picks.length<3) {
+                        if (HERO[hid].rarity==0 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+                    } else if (picks.length<6) {
+                        if (HERO[hid].rarity==1 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+                    } else {
+                        if (HERO[hid].rarity==2 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+                    }
+                }
+                var placed=[];
+                for (var pos=0; pos<=4; ++pos) {
+                    var todo=target-(bcost-MONSTERS[root[pos]].cost);
+                    var bestid=-1;
+                    var bestlvl=0;
+                    for (var i=0;i<picks.length;++i) {
+                        if (placed.indexOf(picks[i])===-1) {
+                            if (hval(picks[i],1)<todo) {
+                                var lvl=1;
+                                while (lvl<1000 && hval(picks[i],lvl<99?lvl+1:1000)<todo) {
+                                    lvl=lvl<99?lvl+1:1000;
+                                }
+                                if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl)) {
+                                    bestid=i;
+                                    bestlvl=lvl;
+                                }
+                            }
+                        }
+                    }
+                    if (bestid!=-1 && hval(picks[bestid],bestlvl)>1.5*MONSTERS[root[pos]].cost) {
+                        bcost-=MONSTERS[root[pos]].cost;
+                        bcost+=hval(picks[bestid],bestlvl);
+                        placed.push(picks[bestid]);
+                        root[pos]=-(2+picks[bestid]);
+                        hero[picks[bestid]]=bestlvl;
+                    }
+                }
+                /*if (Math.random()<0.5) {
+                    bcost-=MONSTERS[root[0]].cost;
+                    root[0]=-1;
+                }
+                var pos=0;
+                while (pos<=4 && bcost<target && (target-bcost>Math.max(400000,target*0.15) || root[pos]==-1)) {
+                    if (root[pos]!==-1) bcost-=MONSTERS[root[pos]].cost;
+                    var hid=Math.floor(Math.random()*HERO.length);
+                    if (target-bcost>3500000) {
+                        while (HERO[hid].rarity!==2) hid=(hid+1)%HERO.length;
+                    } else if (target-bcost>400000) {
+                        while (HERO[hid].rarity<1) hid=(hid+1)%HERO.length;
+                    } else {
+                        while (HERO[hid].rarity>1) hid=(hid+1)%HERO.length;
+                    }
+                    root[pos]=-(2+hid);
+                    while (hero[hid]<99 && bcost+hval(hid,hero[hid]+1)<target) {
+                        ++hero[hid];
+                    }
+                    bcost+=hval(hid,hero[hid]);
+                    ++pos;
+                }*/
+                return {
+                    setup:root,
+                    hero:hero
+                };
+            }
+            /*function eval1(setup) {
+                var start=Date.now();
+                var todo=[{p:0,c:0}];
+                // do setup length steps
+                var sols=Array(setup.length).fill(-1);
+                for (var i=0; i<setup.length; ++i) {
+                    var next=[];
+                    // perform all open points
+                    for (var j=0; j<todo.length; ++j) {
+                        // do all monsters
+                        var P=todo[j].p;
+                        var MID=0;
+                        while (setup[MID]==-1) ++MID;
+                        var MHP=MONSTERS[setup[MID]].hp;
+                        while (P>MHP) {
+                            P-=MHP;
+                            ++MID;
+                            while (setup[MID]==-1) ++MID;
+                            MHP=MONSTERS[setup[MID]].hp;
+                        }
+                        MHP-=P;
+                        //console.log(MONSTERS[setup[MID]].hp,MID,MHP);
+                        for (var k=0; k<MONSTERS.length; ++k) {
+                            var CID=MID;
+                            var CHP=MHP;
+                            var CAT=MONSTERS[setup[MID]].atk; // current atk
+                            var CTY=MONSTERS[setup[MID]].type;
+                            var EHP=MONSTERS[k].hp; // monster hp
+                            var EAT=MONSTERS[k].atk; // monster atk
+                            var ETY=MONSTERS[k].type;
+                            var dmg=0;
+                            while (EHP>0 && CID<setup.length) {
+                                var ex=TYPES[ETY]==CTY?1.5:1;
+                                var cx=TYPES[CTY]==ETY?1.5:1;
+                                var et=Math.ceil(CHP/(EAT*ex));
+                                var ct=Math.ceil(EHP/(CAT*cx));
+                                var t=Math.min(et,ct);
+                                EHP-=t*(CAT*cx);
+                                dmg+=Math.min(CHP,t*(EAT*ex));
+                                CHP-=t*(EAT*ex);
+                                if (CHP<=0) {
+                                    ++CID;
+                                    while (setup[CID]==-1) ++CID;
+                                    if (CID<setup.length) {
+                                        CHP=MONSTERS[setup[CID]].hp; // current hp
+                                        CAT=MONSTERS[setup[CID]].atk; // current atk
+                                        CTY=MONSTERS[setup[CID]].type;
+                                    }
+                                }
+                            }
+                            if (CID<setup.length) {
+                                next.push({
+                                    c:todo[j].c+MONSTERS[k].cost,
+                                    p:todo[j].p+dmg
+                                })
+                            } else if (EHP>0) {
+                                if (sols[i]==-1 || sols[i]>todo[j].c+MONSTERS[k].cost) sols[i]=todo[j].c+MONSTERS[k].cost;
+                            } else if (EHP<=0 && i+1<setup.length) {
+                                if (sols[i+1]==-1 || sols[i+1]>todo[j].c+MONSTERS[k].cost+1000) sols[i+1]=todo[j].c+MONSTERS[k].cost+1000;
+                            }
+                        }
+                    }
+                    next.sort(function (b,a) {
+                        var rest=a.p-b.p;
+                        if (rest==0) return a.c-b.c;
+                        else return rest;
+                    });
+                    if (next.length>0) {
+                        todo=[next[0]];
+                        var best=next[0].c;
+                        for (var j=1; j<next.length; ++j) {
+                            if (next[j].c<best) {
+                                todo.push(next[j]);
+                                best=next[j].c;
+                            }
+                        }
+                    }
+                }
+                console.log(sols);
+                console.log(Date.now()-start);
+            }*/
+            if (initd===undefined) initd=Date.now()+60*60*1000;
+            else {
+                ++dlvl;
+                if (initd<Date.now()) {
+                    dlvl=1;
+                    initd=Date.now()+60*60*1000;
+                }
+            }
+            var ret=doDaily(dlvl);
+            return {
+                setup: ret.setup,
+                timer: initd,
+                spawn: Date.now(),
+                lvl: dlvl,
+                hero: ret.hero
+            }
+        }
+        var ERATE = 0.01;
+        function SelectAll(id) {
+            document.getElementById(id).focus();
+            document.getElementById(id).select();
+        }
+        function hideBut() {
+            document.getElementById("popup").style.display="none";
+            document.getElementById("playgroundbg").style.display="none";
+            document.getElementById("levelwb").style.display="none";
+        }
+        window.pfdata = true;
+        window.pfdata=undefined;
+        window.kid = 1;
+        window.PFfixed=true;
+        simdata=undefined;
+        function cdata(mode,param,param1,param2,param3) {
+            if (simdata==undefined) {
+                simdata={
+                    roulette: Date.now()-1000,
+                    now:Date.now(),
+                    mlvl:2,
+                    followers:fols,
+                    miracles:[Date.now()+Math.random()*bn(1,6),Date.now()+Math.random()*bn(1,6),Date.now()+Math.random()*bn(1,6),Date.now()+Math.random()*bn(1,6),Date.now(),Date.now(),Date.now(),Date.now(),Date.now()],
+                    tm:0,
+                    log: [
+  {
+    "ts": 1552656011490,
+    "msg": "Rewarded 146 AS for dealing 57720 TOP: 30"
+  },
+  {
+    "ts": 1552673216146,
+    "msg": "Fight World Boss for 302749081224040 damage"
+  },
+  {
+    "ts": 1552685856699,
+    "msg": "[CHEST] 171889 followers"
+  },
+  {
+    "ts": 1552695503132,
+    "msg": "Rewarded 18 PG"
+  },
+  {
+    "ts": 1552695503181,
+    "msg": "Rewarded 105482 SD"
+  },
+  {
+    "ts": 1552728801825,
+    "msg": "Registered to tournament paying 200 UM"
+  },
+  {
+    "ts": 1552733406402,
+    "msg": "Rewarded 212 AS for dealing 302749081224040 TOP: 12"
+  },
+  {
+    "ts": 1552762969273,
+    "msg": "Fight World Boss for 367798688258 damage"
+  },
+  {
+    "ts": 1552770684337,
+    "msg": "Bid 227 UM for 153"
+  },
+  {
+    "ts": 1552773382650,
+    "msg": "[CHEST] 20 UM"
+  },
+  {
+    "ts": 1552781647425,
+    "msg": "Registered to flash tournament paying 100 UM"
+  },
+  {
+    "ts": 1552781874595,
+    "msg": "Rewarded 50 PG"
+  },
+  {
+    "ts": 1552781874647,
+    "msg": "Rewarded 6 PK"
+  },
+  {
+    "ts": 1552781874695,
+    "msg": "Rewarded 1071959 SD"
+  },
+  {
+    "ts": 1552800776493,
+    "msg": "Registered to flash tournament paying 100 UM"
+  },
+  {
+    "ts": 1552805994704,
+    "msg": "[SEASONPASS] 1400 UM"
+  },
+  {
+    "ts": 1552806172781,
+    "msg": "Fight World Boss for 367798688258 damage"
+  },
+  {
+    "ts": 1552823104418,
+    "msg": "Rewarded 303 AS for dealing 735597376516 TOP: 2"
+  },
+  {
+    "ts": 1552826188542,
+    "msg": "Fight World Boss for 302749081224040 damage"
+  },
+  {
+    "ts": 1552851923296,
+    "msg": "Fight World Boss for 302749081224040 damage"
+  },
+  {
+    "ts": 1552864830056,
+    "msg": "Registered to tournament paying 500 UM"
+  },
+  {
+    "ts": 1552868176428,
+    "msg": "Rewarded 40 PG"
+  },
+  {
+    "ts": 1552868176483,
+    "msg": "Rewarded 184915 SD"
+  },
+  {
+    "ts": 1552878003634,
+    "msg": "Rewarded 301 AS for dealing 605498162448080 TOP: 3"
+  },
+  {
+    "ts": 1552880512156,
+    "msg": "Fight World Boss for 3916320026673 damage"
+  },
+  {
+    "ts": 1552923303188,
+    "msg": "Rewarded 684 AS for dealing 3916320026673 TOP: 3"
+  },
+  {
+    "ts": 1552934432925,
+    "msg": "Fight World Boss for 21654 damage"
+  },
+  {
+    "ts": 1552934442204,
+    "msg": "Fight World Boss for 21654 damage"
+  },
+  {
+    "ts": 1552941546733,
+    "msg": "Registered to tournament paying 100 UM"
+  },
+  {
+    "ts": 1552954938639,
+    "msg": "Rewarded 12 PG"
+  },
+  {
+    "ts": 1552954938685,
+    "msg": "Rewarded 39601 SD"
+  },
+  {
+    "ts": 1552957503392,
+    "msg": "Rewarded 643 AS for dealing 43308 TOP: 3"
+  },
+  {
+    "ts": 1552959792995,
+    "msg": "[CHEST] HERO lvl 99 got 3 PG"
+  },
+  {
+    "ts": 1552968704482,
+    "msg": "Fight World Boss for 3916320026673 damage"
+  },
+  {
+    "ts": 1552998866942,
+    "msg": "Registered to tournament paying 100 UM"
+  },
+  {
+    "ts": 1553007604345,
+    "msg": "Rewarded 620 AS for dealing 3916320026673 TOP: 3"
+  },
+  {
+    "ts": 1553040971436,
+    "msg": "Rewarded 40 PG"
+  },
+  {
+    "ts": 1553040971488,
+    "msg": "Rewarded 5 PK"
+  },
+  {
+    "ts": 1553040971540,
+    "msg": "Rewarded 554059 SD"
+  },
+  {
+    "ts": 1553057432103,
+    "msg": "[CHEST] 2631789 followers"
+  },
+  {
+    "ts": 1553071877773,
+    "msg": "Fight World Boss for 24798 damage"
+  },
+  {
+    "ts": 1553071882251,
+    "msg": "Fight World Boss for 24798 damage"
+  },
+  {
+    "ts": 1553093166735,
+    "msg": "[LUCKY FOLLOWERS] Got 25000 followers"
+  },
+  {
+    "ts": 1553093168298,
+    "msg": "[LUCKY FOLLOWERS] Got 1000 followers"
+  },
+  {
+    "ts": 1553093168981,
+    "msg": "[LUCKY FOLLOWERS] Got 150 followers"
+  },
+  {
+    "ts": 1553124898751,
+    "msg": "Registered to tournament paying 0 UM"
+  },
+  {
+    "ts": 1553125833764,
+    "msg": "Fight World Boss for 24798 damage"
+  },
+  {
+    "ts": 1553127594812,
+    "msg": "Rewarded 10 PG"
+  },
+  {
+    "ts": 1553127594856,
+    "msg": "Rewarded 8692 SD"
+  },
+  {
+    "ts": 1553137804739,
+    "msg": "Rewarded 322 AS for dealing 74394 TOP: 1"
+  },
+  {
+    "ts": 1553161312643,
+    "msg": "Registered to tournament paying 100 UM"
+  },
+  {
+    "ts": 1553213771870,
+    "msg": "Rewarded 40 PG"
+  },
+  {
+    "ts": 1553213771922,
+    "msg": "Rewarded 6 PK"
+  },
+  {
+    "ts": 1553213771971,
+    "msg": "Rewarded 703148 SD"
+  },
+  {
+    "ts": 1553213916455,
+    "msg": "Fight World Boss for 15466 damage"
+  },
+  {
+    "ts": 1553213922728,
+    "msg": "Fight World Boss for 15466 damage"
+  },
+  {
+    "ts": 1553233365184,
+    "msg": "[CHEST] 20 UM"
+  },
+  {
+    "ts": 1553249440403,
+    "msg": "Registered to tournament paying 100 UM"
+  },
+  {
+    "ts": 1553253903859,
+    "msg": "Rewarded 557 AS for dealing 30932 TOP: 3"
+  },
+  {
+    "ts": 1553257574289,
+    "msg": "Fight World Boss for 3916320026673 damage"
+  },
+  {
+    "ts": 1553300116013,
+    "msg": "Rewarded 15 PG"
+  },
+  {
+    "ts": 1553300116071,
+    "msg": "Rewarded 67694 SD"
+  },
+  {
+    "ts": 1553329205572,
+    "msg": "Rewarded 276 AS for dealing 3916320026673 TOP: 6"
+  },
+  {
+    "ts": 1553330752012,
+    "msg": "[CHEST] 176185 followers"
+  },
+  {
+    "ts": 1553333063568,
+    "msg": "Fight World Boss for 3916320026673 damage"
+  },
+  {
+    "ts": 1553352206150,
+    "msg": "Registered to tournament paying 200 UM"
+  },
+  {
+    "ts": 1553386554060,
+    "msg": "Rewarded 20 PG"
+  },
+  {
+    "ts": 1553386554115,
+    "msg": "Rewarded 104351 SD"
+  },
+  {
+    "ts": 1553417104347,
+    "msg": "Rewarded 275 AS for dealing 3916320026673 TOP: 6"
+  },
+  {
+    "ts": 1553422075666,
+    "msg": "[CHEST] HERO lvl 99 got 1 PG"
+  },
+  {
+    "ts": 1553424846196,
+    "msg": "Registered to tournament paying 500 UM"
+  },
+  {
+    "ts": 1553428357216,
+    "msg": "Fight World Boss for 367798689607 damage"
+  },
+  {
+    "ts": 1553428365198,
+    "msg": "Fight World Boss for 367798689607 damage"
+  },
+  {
+    "ts": 1553472921300,
+    "msg": "Rewarded 54 PG"
+  },
+  {
+    "ts": 1553472921352,
+    "msg": "Rewarded 3 PK"
+  },
+  {
+    "ts": 1553472921484,
+    "msg": "Rewarded 717229 SD"
+  },
+  {
+    "ts": 1553500202770,
+    "msg": "Rewarded 298 AS for dealing 735597379214 TOP: 2"
+  },
+  {
+    "ts": 1553509319698,
+    "msg": "[CHEST] 50 UM"
+  },
+  {
+    "ts": 1553511604514,
+    "msg": "Fight World Boss for 15513 damage"
+  },
+  {
+    "ts": 1553511755203,
+    "msg": "Fight World Boss for 16203 damage"
+  },
+  {
+    "ts": 1553513012404,
+    "msg": "Registered to flash tournament paying 100 UM"
+  },
+  {
+    "ts": 1553514746774,
+    "msg": "Registered to flash tournament paying 100 UM"
+  },
+  {
+    "ts": 1553530571650,
+    "msg": "Registered to tournament paying 100 UM"
+  },
+  {
+    "ts": 1553558704092,
+    "msg": "Rewarded 267 AS for dealing 31716 TOP: 5"
+  },
+  {
+    "ts": 1553559348572,
+    "msg": "Rewarded 15 PG"
+  },
+  {
+    "ts": 1553559348626,
+    "msg": "Rewarded 65679 SD"
+  },
+  {
+    "ts": 1553582371615,
+    "msg": "Fight World Boss for 16203 damage"
+  },
+  {
+    "ts": 1553582379197,
+    "msg": "Fight World Boss for 16203 damage"
+  },
+  {
+    "ts": 1553602203735,
+    "msg": "Rewarded 302 AS for dealing 32406 TOP: 4"
+  },
+  {
+    "ts": 1553615641048,
+    "msg": "Fight World Boss for 302749081224040 damage"
+  },
+  {
+    "ts": 1553615887432,
+    "msg": "Fight World Boss for 666047978673452 damage"
+  },
+  {
+    "ts": 1553637302468,
+    "msg": "Rewarded 358 AS for dealing 968797059897492 TOP: 1"
+  },
+  {
+    "ts": 1553692351440,
+    "msg": "[CHEST] HERO lvl 99 got 3 PG"
+  },
+  {
+    "ts": 1553694691636,
+    "msg": "Registered to tournament paying 0 UM"
+  },
+  {
+    "ts": 1553712025383,
+    "msg": "Fight World Boss for 16086 damage"
+  },
+  {
+    "ts": 1553712030985,
+    "msg": "Fight World Boss for 16086 damage"
+  },
+  {
+    "ts": 1553732484471,
+    "msg": "Rewarded 25 PG"
+  },
+  {
+    "ts": 1553732484518,
+    "msg": "Rewarded 6 PK"
+  },
+  {
+    "ts": 1553732484576,
+    "msg": "Rewarded 71481 SD"
+  },
+  {
+    "ts": 1553785338701,
+    "msg": "Rewarded 18 AS for dealing 32172 TOP: 402"
+  },
+  {
+    "ts": 1553786909633,
+    "msg": "[CHEST] 180561 followers"
+  }
+],
+                    tm: 0,
+                    tickets: {
+                        start: undefined,
+                        end: undefined,
+                        value: [10,50,100,500],
+                        currency: "Gears",
+                        currentEvent: 0
+                    },
+                    city: {
+                        space: {
+                            week: 10,
+                            start: Date.now(),
+                            end: 1594591200000,
+                            gears: 10000,
+                            hyperloop: 5,
+                            upgrades: [0,0,0,0,0],
+                            current: {
+                                mission: -1,
+                                timer: Date.now()+360000,
+                            },
+                            last: {
+                                mission: 1,
+                                asteroids: 10,
+                                gears: 50,
+                            }
+                        },
+                        games: {
+                            week: 14,
+                            maxFavour: 0,
+                            day: Math.floor(Date.now()/(24*60*60*1000)),
+                            start: Date.now()-(6*(24*60*60*1000)),
+                            end: 1595800799000,
+                            lastDefense: 0,
+                            stamina: 50,
+                            automatic: {
+                                tickValue: 2000,
+                                lastClaim: Date.now() - 1410000
+                            },
+                            activities: {
+                                instant: 0,
+                                points: 20,
+                                timer: Date.now()+12000,
+                                activity: 1,
+                            },
+                            upgrades: [2,0,0],
+                            defenses: [Date.now()+86400000,Date.now(),Date.now()],
+                            victim: [Date.now(),Date.now()+86400000,Date.now()],
+                            rolls: [10,10,10],
+                            activityFlag: false,
+                        },
+                        eternals : {
+                            orbs: 20,
+                        },
+                        pvp: {
+                            attacks: 3,
+                            next: Date.now(),
+                            lasts: [
+                                {
+                                    name: "top2",
+                                    date: Date.now(),
+                                }
+                            ],
+                        },
+                        mclaims: [1,2,3,4,5,6,7,8,9],
+                        flash:Date.now()-3540000,
+                        pass: {
+                            id: 2,
+                            isSilver:0,
+                            isGold:0,
+                            claim: 2,
+                            sclaim: 1,
+                            gclaim: 1,
+                            wb: 60,
+                            chest: 40,
+                            miracles: 100,
+                            tournaments: 11,
+                            ftournaments: 11,
+                            pvp: 100,
+                            quests: 0,
+                        },
+                        WC:1,
+                        hllwn: {
+                            UM: 400,
+                            gain: 30000,
+                            next: 17830
+                        },
+                        easter:  {
+                            cclaimable: 27, //Starts on -1
+                            points: 126000,
+                            claimed: 27, //Starts on -1
+                            questsolver: 1,
+                            dailysolver: 0,
+                            dungeonsolver: 0,
+                            wbsolver: 1,
+                            flashsolver: 1,
+                            tournamentsolver: 1,
+                            freep4: 0,
+                            doubleem: 0,
+                            ccdispenser: 0,
+                            pgdispenser: 0,
+                            asdispenser: 0,
+                            umdispenser: 0,
+                            freesilver: -1,
+                            wbtimer: 60*60*1000,
+                            miracles: 0.05,
+                        },
+                        halloween: {
+                            hero: Array(HERO.length).fill(1),
+                            dailyClaimed: 18199,
+                        },
+                        easter20: {
+                            points: 600,
+                        },
+                        stGeorge: {
+                            scraps: 2000,
+                            attacks: [2000,1200,1100,2000,1200,1000,1000,1000,1000,1000,1000,1000,900,1000],
+                            damage: 0,
+                            stamina: 5,
+                        },
+                        setup: Array(36).fill(-1),
+                        quests: Array(180).fill(7),
+                        result: [1000,1000,1000],
+                        hero: Array(HERO.length).fill(99),
+                        promo: Array(HERO.length).fill(0),
+                        herowb: Array(HERO.length).fill(1),
+                        training: {
+                            time: -1,
+                            hid: -1,
+                        },
+                        promotokens: {
+                            promo4: 1,
+                            promo6: 1,
+                        },
+                        dungeon: {
+                            lvl: 98,
+                            setup: [10,31,31,10,31,10],
+                        },
+                        recycle: {
+                            next: Date.now()+1500000000,
+                            stage: 3,
+                        },
+                        adventure: {
+                            time: Date.now()+10000,
+                            kind: 1,
+                            prize: -1,
+                            perc: 50,
+                        },
+                        anniversary: 2,
+                        daily: {
+                            lvl: 98,
+                            setup: [-40,31,31,-10,20],
+                            timer2: Date.now()+480000,
+                            hero: [
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    40,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1,
+                                    1
+                                    ],
+                        },
+                        log: [
+                            {
+      "result": -1,
+      "enemy": "Kraide",
+      "date": 1499274016809,
+      "earn": 6,
+      "rank": 2589,
+      "rankd": -15,
+      "setup": [
+        -205,-204,-205,-205,
+      ], 
+      "shero": Array(HERO.length).fill(99),
+      "player":[
+       -187,-187,-187,-187,-187,-187
+      ],
+      "phero": Array(HERO.length).fill(99),
+      "spromo": Array(HERO.length).fill(6),
+      "ppromo":Array(HERO.length).fill(6),
+    },{
+        "result": -1,
+        "enemy": "matmicash",
+        "date": 1499274016809,
+        "earn": 6,
+        "rank": 2589,
+        "rankd": -15,
+        "setup":[
+          -185,-184,-183
+        ], 
+        "shero": Array(HERO.length).fill(99),
+        "player": [
+        -185,-184,-183
+        ],
+        "phero": Array(HERO.length).fill(99),
+        "spromo": Array(HERO.length).fill(1),
+        "ppromo":Array(HERO.length).fill(2),
+      },{
+        "result": -1,
+        "enemy": "matmicash",
+        "date": 1499274016809,
+        "earn": 6,
+        "rank": 2589,
+        "rankd": -15,
+        "setup":[
+            -68,-123,-131,68,68,68
+        ], 
+        "shero": Array(HERO.length).fill(99),
+        "player": [
+            -132
+        ],
+        "phero": Array(HERO.length).fill(99),
+        "spromo": Array(HERO.length).fill(1),
+        "ppromo":Array(HERO.length).fill(2),
+      },{
+                                result: 0,
+                                enemy: "dummy",
+                                date: Date.now(),
+                                earn: 5,
+                                rank: 1000,
+                                rankd: 1,
+                                setup: [0,0,4,3,-1,-1],
+                                player: [0,0,0,0,-1,-1],
+                            },{
+                                result: 0,
+                                enemy: "dummy",
+                                date: Date.now(),
+                                earn: 5,
+                                rank: 1000,
+                                rankd: 1,
+                                setup: [0,0,0,0,-1,-1],
+                                player: [0,0,0,0,-1,-1],
+                            },{
+                                result: 0,
+                                enemy: "dummy",
+                                date: Date.now(),
+                                earn: 5,
+                                rank: 1000,
+                                rankd: 1,
+                                setup: [0,0,0,0,-1,-1],
+                                player: [0,0,0,0,-1,-1],
+                            },{
+                                result: 0,
+                                enemy: "dummy",
+                                date: Date.now(),
+                                earn: 5,
+                                rank: 1000,
+                                rankd: 1,
+                                setup: [0,0,0,0,-1,-1],
+                                player: [0,0,0,0,-1,-1],
+                            }
+                        ],
+                        tour: [
+                            /*{
+                                tid: Math.floor(Date.now()/(24*60*60*1000)),
+                                top: -1,
+                                amount: 10000
+                            },*/{
+                                tid: 17472,
+                                top: 100,
+                                amount: 10000,
+                                wr: 1
+                            },{
+                                tid: 111115,
+                                top: 1001,
+                                amount: 10000
+                            },{
+                                tid: 111113,
+                                top: 1,
+                                amount: 10000,
+                                wr: 0.2
+                            }
+                        ],
+                        xmas: {
+                            advent: [77,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                            pool:100,
+                        },
+                        xmas2: {
+                            advent: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                            pool:100,
+                            time: Date.now(),
+                        },
+                        WB: {
+                            next:Date.now()+60*1000,
+                            atks:2,
+                            log: [
+                                /*{
+                                    top10: [
+                                        ["aaa",9999],
+                                        ["bbb",8888],
+                                        ["ccc",7777],
+                                        ["ddd",6666],
+                                        ["eee",5555],
+                                        ["fff",4444],
+                                        ["ggg",3333],
+                                        ["hhh",2222],
+                                        ["iii",1111],
+                                        ["jjj",1000]
+                                    ],
+                                    name:"TEST",
+                                    spawn:Date.now()/1000-1000,
+                                    killed:Date.now()/1000,
+                                    dealt: 10000,
+                                    mode: 0,
+                                    level: 1,
+                                    top: 1,
+                                    AS: 100
+                                }*/
+                            ]
+                        }
+                    }
+                }
+                /*simdata.city.hero[5]=80;
+                simdata.city.hero[6]=1;
+                simdata.city.hero[8]=1;
+                simdata.city.hero[10]=49;
+                simdata.city.hero[11]=12;
+                simdata.city.hero[15]=1;
+                simdata.city.hero[9]=99;
+                simdata.city.hero[42]=10;
+                simdata.city.hero[65]=50;
+                simdata.city.hero[75]=6;
+                simdata.city.hero[119]=65;*/
+                /*simdata.city.hero[15]=50;
+                simdata.city.hero[18]=20;*/
+                /*simdata.city.hero[5]=1000;
+                simdata.city.hero[3]=6;
+                simdata.city.hero[7]=10;
+                simdata.city.hero[26]=99;
+                simdata.city.hero[70]=0;*/
+                /*simdata.city.hero[5]=0;
+                simdata.city.hero[6]=0;
+                simdata.city.hero[19]=0;
+                simdata.city.hero[20]=0;
+                simdata.city.hero[2]=0;
+                simdata.city.setup[0]=-2;*/
+                /*simdata.city.hero[42]=0;
+                simdata.city.hero[43]=0;
+                simdata.city.hero[44]=0;
+                simdata.city.hero[48]=0;
+                simdata.city.hero[49]=0;
+                simdata.city.hero[50]=1;
+                simdata.city.hero[59]=0;
+                simdata.city.hero[61]=0;
+                simdata.city.hero[65]=0;
+                simdata.city.hero[66]=0;
+                simdata.city.hero[67]=0;
+                simdata.city.hero[68]=0;
+                simdata.city.hero[69]=70;
+                simdata.city.hero[70]=72;
+                simdata.city.hero[71]=0;
+                simdata.city.hero[83]=0;
+                simdata.city.hero[85]=0;
+                simdata.city.hero[96]=0;
+                simdata.city.hero[99]=1;
+                simdata.city.hero[101]=0;*/
+                /*simdata.city.hero[107]=0;
+                simdata.city.hero[0]=0;
+                simdata.city.hero[109]=20;
+                simdata.city.hero[73]=30;
+                simdata.city.hero[118]=50;
+                simdata.city.hero[130]=0;
+                simdata.city.hero[66] = 0;*/
+                simdata.city.hero[81] = 10;
+                simdata.city.promo[7] = 3;
+                simdata.city.promo[8] = 4;
+                simdata.city.promo[9] = 5;
+                simdata.city.promo[10] = 5;
+                simdata.city.promo[11] = 5;
+                simdata.city.promo[12] = 6;
+                simdata.city.promo[118] = 5;
+                simdata.city.hero[149] = 99;
+                simdata.city.promo[149] = 6;
+                simdata.city.hero[113] = 0;
+                simdata.city.hero[20] = 0;
+                simdata.city.hero[96] = 0;
+                simdata.city.hero[42] = 0;
+                simdata.city.hero[43] = 0;
+                simdata.city.hero[44] = 0;
+                simdata.city.hero[131] = 0;
+                simdata.city.hero[142] = 0;
+                simdata.city.hero[175] = 0;
+                simdata.city.hero[226] = 0;
+                simdata.city.hero[227] = 5;
+                simdata.city.hero[228] = 0;
+                simdata.city.hero[198] = 1;
+                simdata.city.halloween.hero[96]=0;
+                simdata.city.halloween.hero[72]=0;
+                simdata.city.halloween.hero[87]=0;
+                simdata.city.halloween.hero[106]=0;
+                simdata.city.halloween.hero[126]=0;
+                simdata.city.halloween.hero[186]=0;
+                //simdata.city.halloween.hero[195] = 0;
+                //simdata.city.halloween.hero[196] = 0;
+                //simdata.city.halloween.hero[197] = 0;
+                //simdata.city.halloween.hero[198] = 0;
+                simdata.city.hero[199] = 1;
+                simdata.city.hero[200] = 1;
+                simdata.city.hero[201] = 1;
+                simdata.city.hero[202] = 1;
+                simdata.city.hero[203] = 1;
+                simdata.city.hero[206] = 0;
+                simdata.city.promo[32] = 6;
+                simdata.city.promo[185] = 5;
+                simdata.city.hero[207] = 1;
+                simdata.city.hero[0] = 0;
+            }
+            if (mode=="CLAIM") {
+                simdata.miracles[param]=Date.now()+60*1000;
+                simdata.followers+=100;
+            } else if (mode=="ROULETTE") {
+                simdata.followers+=100;
+                simdata.roulette=Date.now()+25*1000;
+                if (simdata.city!==undefined) {
+                    simdata.city.rlog=[100,Date.now()];
+                }
+            } else if (mode=="PLACE") {
+                simdata.city.setup[param]=param1;
+            } else if (mode=="SWAP") {
+                simdata.city.setup[param]=param3;
+                simdata.city.setup[param2]=param1;
+            } else if (mode=="FIGHT") {
+                simdata.city.nextfight=Date.now()+25*1000;
+            } else if (mode=="CLAIMALL") {
+                for (var i=0; i<simdata.miracles.length; ++i) {
+                    simdata.miracles[i]=Date.now()+10000;
+                }
+            } else if (mode=="CLEARALL") {
+                simdata.city.setup=Array(36).fill(-1);
+            } else if (mode=="PVE") {
+                while (simdata.city.quests.length<=param) simdata.city.quests.push(0);
+                if (simdata.city.quests[param]==0) simdata.city.quests[param]=1;
+                else if (simdata.city.quests[param]==1) simdata.city.quests[param]=3;
+                else if (simdata.city.quests[param]==3) simdata.city.quests[param]=7;
+            } else if (mode=="PVED") {
+                simdata.city.daily=workDaily();
+                console.log(simdata.city.daily);
+            } else if (mode=="UPDATEAUCTION") {
+                auctionArray=[{hero : 51,timer : Date.now()+20000-Date.now(),bid : 1500,bidname : "Son Goku"},{hero : 51,timer : Date.now()+20000-Date.now(),bid : 1500,bidname : "Son Goku"},{hero : 51,timer : Date.now()+20000-Date.now(),bid : 1500,bidname : "Son Goku"},{hero : 51,timer : Date.now()+20000-Date.now(),bid : 1500,bidname : "Son Goku"}];
+            } else if (mode=="BUYLOT") {
+                console.log(simdata.lottery.length);
+                simdata.lottery.push("00"+simdata.lottery.length);
+            }
+            simdata.now=Date.now();
+            return simdata;
+        }
+        window.kongregate = {
+            services: {
+                isGuest: function () {return false},
+                getGameAuthToken: function () {return ""},
+                getUserId: function () {return 1},
+                showRegistrationBox: function () {console.log("KONG REGI")},
+                addEventListener: function (event) {console.log("KONG EVENT",event)},
+                getUsername : function () {return "Mr_Ozzy"},
+            },
+            mtx: {
+                purchaseItems: function (items) {console.log("KONG PUR",items)},
+                addEventListener: function (event) {console.log("KONG EVENT",event)},
+                initializeIncentivizedAds: function () {console.log("INIT KONG ADS")},
+                requestUserItemList: function () {console.log("KONG REQUEST ITEM LIST")},
+            },
+            stats: {
+                submit: function (stat,val) {console.log("KONG STATS",stat,val)}
+            }
+        }
+        var BKZERO = true;
+        window.PlayFab = {
+            settings: {
+                titleId:"bluf",
+            },
+            ClientApi: {
+                GetUserData:function () {},
+                GetUserInventory: function (params,cb) {
+                    console.log("PFGUI");
+                    setTimeout(function () {cb({
+                        code:200,
+                        status:"OK",
+                        data: {
+                            "Inventory": [
+                                {
+                                    "ItemId": "MUL",
+                                    "ItemInstanceId": "9879843",
+                                    "ItemClass": "shields",
+                                    "CatalogVersion": "5",
+                                    "UnitPrice": 0,
+                                    "RemainingUses": 1,
+                                },
+                                {
+                                    "ItemId": "FOL",
+                                    "ItemInstanceId": "3854637",
+                                    "ItemClass": "boosts",
+                                    "RemainingUses": 1,
+                                    "CatalogVersion": "5",
+                                    "UnitPrice": 0
+                                }
+                            ],
+                            "VirtualCurrency": {
+                                "UM": 50000,
+                                "PK": 120,
+                                "BK": 0,
+                                "KU": 1120,
+                                "PG": 5000,
+                                "CC": 500,
+                                "AS": 5000,
+                                "SD": 1000000,
+                                "CS": 20,
+                                "SG": 12345,
+                                "CZ": 21,
+                                "ET": 1250,
+                            },
+                            "VirtualCurrencyRechargeTimes": {
+                                "BK": {
+                                    "SecondsToRecharge": 500,
+                                    "RechargeTime": "2014-01-01T12:00:00Z",
+                                    "RechargeMax": 1
+                                }
+                            }
+                        }
+                    })
+                    BKZERO = false;
+                },1000);
+                },
+                PurchaseItem: function (params,cb) {
+                    console.log("PFPI",params.ItemId);
+                    setTimeout(function () {cb({
+                        code:200,
+                        status:"OK",
+                        data: {
+                            "Items": [
+                                {
+                                    "ItemId": params.ItemId,
+                                    "ItemInstanceId": "123456789ABC",
+                                    "PurchaseDate": "2014-03-07T00:00:00Z",
+                                    "CatalogVersion": "5",
+                                    "DisplayName": "Level 5 Shield",
+                                    "UnitCurrency": "GV",
+                                    "UnitPrice": 25,
+                                    "RemainingUses":1,
+                                }
+                            ]
+                        }
+                    })},1000);
+                },
+                ConsumeItem: function (params,cb) {
+                    console.log("PFCI",params.ItemInstanceId);
+                    setTimeout(function () {cb({
+                        code:200,
+                        status:"OK",
+                        data: {
+                            "ItemInstanceId": "123456789ABC",
+                            "RemainingUses": 4
+                        }
+                    })},1000);
+                },
+                UpdateUserData: function () {console.log("PFAB UUD")},
+                LoginWithCustomID: function (params,cb) {
+                    console.log("PFAB LOG");
+                    setTimeout(function () {
+                        if (Math.random()>ERATE) {
+                            cb({
+                                code:200,
+                                status:"OK",
+                                data: {
+                                    "PlayFabId": "10931252888739651332",
+                                }
+                            });
+                        } else {
+                            cb({
+                                code:400,
+                                status:"BAD",
+                                data: {
+                                    lol:0,
+                                }
+                            });
+                        }
+                    },1000);
+                },
+                ExecuteCloudScript: function (params,cb) {
+                    console.log("PFCS",params);
+                    setTimeout(function () {
+                        if (params.FunctionName=="status"||params.FunctionName=="fstatus") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata()
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="claim") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("CLAIM",params.FunctionParameter.id),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="roulette") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("ROULETTE"),
+                                        result: Math.floor(Math.random()*16),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="place") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("PLACE",params.FunctionParameter.pos,params.FunctionParameter.id),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="swap") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("SWAP",params.FunctionParameter.pos0,params.FunctionParameter.id0,params.FunctionParameter.pos1,params.FunctionParameter.id1),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="fight") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("FIGHT"),
+                                        battle: {
+                                            result: 0,
+                                            enemy: "dummy",
+                                            date: Date.now(),
+                                            earn: 5,
+                                            rank: 1000,
+                                            rankd: 1,
+                                            setup: [0,0,0,0,-1,-1],
+                                            player: [0,0,0,0,-1,-1],
+                                        }
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="pve") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("PVE",params.FunctionParameter.id),
+                                        battle: {
+                                            enemy: "Quest "+(params.FunctionParameter.id+1),
+                                            date: Date.now(),
+                                            setup: params.FunctionParameter.setup,
+                                            player: PVE[params.FunctionParameter.id].setup,
+                                            shero: cdata("PVE",params.FunctionParameter.id).city.hero,
+                                            phero: Array(HERO.length).fill(1000),
+                                            spromo: cdata("PVE",params.FunctionParameter.id).city.promo,
+                                            ppromo: Array(HERO.length).fill(0)
+                                        }
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="pved") {
+                            var tmp=cdata("PVED");
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: tmp,
+                                        battle: {
+                                            enemy: "Daily Fight",
+                                            date: Date.now(),
+                                            setup: params.FunctionParameter.setup,
+                                            player: tmp.city.daily.setup,
+                                            phero: tmp.city.daily.hero,
+                                        }
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="claimall") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("CLAIMALL"),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="clearall") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("CLEARALL"),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="open") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata(),
+                                        result: Math.floor(Math.random()*12),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="open10") {
+                            var arr10=[];
+                            for (var i=0; i<10; ++i) {
+                                arr10.push(Math.floor(Math.random()*12));
+                            }
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata(),
+                                        result: arr10,
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="gift") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata(),
+                                        result: Math.floor(Math.random()*6),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="resetpve") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata(),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="panic") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        energy: Math.pow(10,150),
+                                        omega: Math.pow(10,10),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="vote") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="buylot") {
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        data: cdata("BUYLOT"),
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="keyevent") {
+                            cb({
+                                code:200,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true,
+                                        value: Math.random()>0.5?1:0,
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="discard") {
+                            var startTid=17866;
+                            var tid=Math.floor(Date.now()/(24*60*60*1000));
+                            simdata.city.xmas.advent[tid-startTid] = (0|(Math.floor(Math.random()*3)+1)<<3);
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="pickAdv") {
+                            var values = [[200,100,20],[50,25,5],[27,18,9],[3,2,1],[200,100,20],[500,250,50],[100,50,10],[200,100,20],[50,25,5],[27,18,9],[3,2,1],[200,100,20],[500,250,50],[100,50,10],[200,100,20],[50,25,5],[27,18,9],[3,2,1],[200,100,20],[500,250,50],[100,50,10],[200,100,20],[50,25,5],[27,18,9]];
+                            var order = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+                            var startTid=17866;
+                            var tid=Math.floor(Date.now()/(24*60*60*1000));
+                            var cell = params.FunctionParameter.cell + 1;
+
+                            if (simdata.city.xmas.advent[tid-startTid] === 0) simdata.city.xmas.advent[tid-startTid] = simdata.city.xmas.advent[tid-startTid]|(Math.floor(Math.random()*5)+0);
+                            else {
+                                var minPos = ((simdata.city.xmas.advent[tid-startTid]>>3)&3) - 1;
+                                var possible = [];
+                                for (var i=0; i<order.length; ++i) if (order[i][minPos]===2) possible.push(i);
+                                simdata.city.xmas.advent[tid-startTid] = simdata.city.xmas.advent[tid-startTid]|(Math.random() < 0.5 ? possible[0] : possible[1]);
+                            }
+                            simdata.city.xmas.advent[tid-startTid] = simdata.city.xmas.advent[tid-startTid]|(cell<<5);
+                            var _order = (simdata.city.xmas.advent[tid-startTid]&7);
+
+                            cb({
+                                code:Math.random()>ERATE?200:400,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        ok:true
+                                    }
+                                }
+                            })
+                        } else if (params.FunctionName=="promotion") {
+                            var price = [[125,500,1500,3000],[250,1000,3000,6000],[375,1500,4500,9000],[500,2000,6000,12000],[625,2500,7500,15000]];
+                            var obj = [[25,100,300,600],["QUEST","QUEST","QUEST","QUEST"],[50,200,600,1200],["WB","WB","WB","WB"],[100,400,1200,2400]];
+                            var curr = ["CC",undefined,"PG",undefined,"AS"];
+                            if (params.FunctionParameter.um) {
+                                simdata.city.promo[params.FunctionParameter.hid] = simdata.city.promo[params.FunctionParameter.hid] + 1;
+                                cb({
+                                    code:Math.random()>ERATE?200:400,
+                                    status:"OK",
+                                    data: {
+                                        FunctionResult: {
+                                            ok:true,
+                                            data: simdata,
+                                        }
+                                    }
+                                })
+                            } else {
+
+                            }      
+                        } else if (params.FunctionName=="training") {
+                            simdata.city.training.hid = 185;
+                            simdata.city.training.time = Date.now()+41000000;
+                            simdata.city.hero[185] = 0;
+                            cb({
+                                    code:Math.random()>ERATE?200:400,
+                                    status:"OK",
+                                    data: {
+                                        FunctionResult: {
+                                            ok:true,
+                                            data: simdata,
+                                        }
+                                    }
+                                })
+                        } else if (params.FunctionName=="stGeorge") {
+                            var dmgPointsRange = [4800,13200,25600,42400];
+                            if (simdata.city.stGeorge !== undefined) {
+                                if (params.FunctionParameter.clicks !== undefined) {
+                                    var maxReachable = ((30000+(simdata.city.stGeorge.stamina*3000)) / 1000)*4;
+                                    if (params.FunctionParameter.clicks > maxReachable) return { ok: false, err: "Imposible Amount of Clicks"};
+                                    else {
+                                        var clicksToDamage = (params.FunctionParameter.clicks*(10+(simdata.city.stGeorge.damage*1)));
+                                        simdata.city.stGeorge.attacks.push(clicksToDamage);
+                                        simdata.city.stGeorge.attacks.sort((a, b) => b - a);
+                                        if (simdata.city.stGeorge.attacks.length > 14) simdata.city.stGeorge.attacks.pop();
+                                        var totalDamage = simdata.city.stGeorge.attacks.reduce((a, b) => a + b, 0);
+                                        if (totalDamage >= dmgPointsRange[0] && simdata.city.hero[214] == 0 && simdata.city.training.hid !== 214) simdata.city.hero[214] = 1;
+                                        if (totalDamage >= dmgPointsRange[1] && simdata.city.hero[215] == 0 && simdata.city.training.hid !== 215) simdata.city.hero[215] = 1;
+                                        if (totalDamage >= dmgPointsRange[2] && simdata.city.hero[216] == 0 && simdata.city.training.hid !== 216) simdata.city.hero[216] = 1;
+                                        if (totalDamage >= dmgPointsRange[3] && simdata.city.hero[217] == 0 && simdata.city.training.hid !== 217) simdata.city.hero[217] = 1;
+                                        cb({
+                                            code:Math.random()>ERATE?200:400,
+                                            status:"OK",
+                                            data: {
+                                                FunctionResult: {
+                                                    ok:true,
+                                                    data: simdata,
+                                                }
+                                            }
+                                        })
+                                    }
+                                }  
+                            }
+                        } else if (params.FunctionName=="upGeorge") {
+                            var prices = [250,500,750,1000,1250,1500];
+                            if (params.FunctionParameter.mode=="stamina" || params.FunctionParameter.mode=="damage") {
+                                if (params.FunctionParameter.mode=="stamina" && simdata.city.stGeorge.stamina < 6) {
+                                    if (simdata.city.stGeorge.scraps >= prices[simdata.city.stGeorge.stamina]) {
+                                        simdata.city.stGeorge.scraps-=prices[simdata.city.stGeorge.stamina];
+                                        simdata.city.stGeorge.stamina+=1;
+                                        cb({
+                                            code:Math.random()>ERATE?200:400,
+                                            status:"OK",
+                                            data: {
+                                                FunctionResult: {
+                                                    ok:true,
+                                                    data: simdata,
+                                                }
+                                            }
+                                        })
+                                    }
+                                } else if (params.FunctionParameter.mode=="damage" && simdata.city.stGeorge.damage < 6) {
+                                    if (simdata.city.stGeorge.scraps >= prices[simdata.city.stGeorge.damage]) {
+                                        simdata.city.stGeorge.scraps-=prices[simdata.city.stGeorge.damage];
+                                        simdata.city.stGeorge.damage+=1;
+                                        cb({
+                                            code:Math.random()>ERATE?200:400,
+                                            status:"OK",
+                                            data: {
+                                                FunctionResult: {
+                                                    ok:true,
+                                                    data: simdata,
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
+                            }
+                        } else if (params.FunctionName=="ggclaim") {
+                            if (simdata.city.games !== undefined && simdata.city.games.week !== undefined  && currentSpecialEvent() == "G.A.M.E.S") {
+                                if (simdata.city.games.activities !== undefined && simdata.city.games.activities.timer !== -1 && simdata.city.games.activities.activity !== -1 && simdata.city.games.activities.timer < Date.now()) {
+                                    if (simdata.city.games.activities.activity == 0) {
+                                        if (Date.now() < simdata.city.games.victim[1]) simdata.city.games.stamina+=25;
+                                        else simdata.city.games.stamina+=50;
+                                        simdata.city.games.activities.tickValue+=100;
+                                    } else if (simdata.city.games.activities.activity == 1) {
+                                        if (Date.now() < simdata.city.games.victim[1]) simdata.city.games.stamina+=55;
+                                        else simdata.city.games.stamina+=110;
+                                    } else if (simdata.city.games.activities.activity == 2) {
+                                        if (Date.now() < simdata.city.games.victim[2]) simdata.city.games.activities.tickValue+=(200+(200*10*simdata.city.games.upgrades[0]/100));
+                                        else simdata.city.games.activities.tickValue+=(400+(400*10*simdata.city.games.upgrades[0]/100));
+                                    }
+                                    simdata.city.games.activities.timer = -1;
+                                    simdata.city.games.activities.activity = -1;
+                                    var retAction = undefined;
+                                    if ((simdata.city.games.start + DAY) <= Date.now() && (simdata.city.games.start + DAY + ((DAY/4)*simdata.city.games.lastDefense) + (DAY/4)) <=  Date.now()) {
+                                        var totalTime = (Date.now() - (simdata.city.games.start + DAY + ((DAY/4)*simdata.city.games.lastDefense)));
+                                        var timeRanges = Math.floor(totalTime / (DAY/4));
+                                        retAction = { action: "DEFENSES", claimed: timeRanges, defended: [0,0,0]};
+                                        for (var i = 0; i < timeRanges; ++i) {
+                                            for (var j = 0; j < 3; ++j) {
+                                                if (Date.now() >= simdata.city.games.defenses[j] && Date.now() >= simdata.city.games.victim[j]) {
+                                                    if (randInt(1,100) <= simdata.city.games.rolls[j]) {
+                                                        simdata.city.games.victim[j] = Date.now()+DAY;
+                                                        if (j == 1) activityFlag = true;
+                                                        retAction.defended[j]+=1;
+                                                        simdata.city.games.rolls[j]=10;
+                                                    } else simdata.city.games.rolls[j]+=10;
+                                                }
+                                            }
+                                            ++simdata.city.games.lastDefense;
+                                        }
+                                    }
+                                    cb({
+                                        code:Math.random()>ERATE?200:400,
+                                        status:"OK",
+                                        data: {
+                                            FunctionResult: {
+                                                ok:true,
+                                                data: simdata,
+                                                log: retAction,
+                                            }
+                                        }
+                                    })
+                                } 
+                            } 
+                        } else if (params.FunctionName=="ggactivity") {
+                            if (simdata.city.games !== undefined && simdata.city.games.week !== undefined && currentSpecialEvent() == "G.A.M.E.S") {
+                                if (params.FunctionParameter.activity !== undefined && params.FunctionParameter.activity >= 0 && params.FunctionParameter.activity <= 2) {
+                                    if (simdata.city.games.activities !== undefined && simdata.city.games.activities.timer == -1 && simdata.city.games.activities.activity == -1) {
+                                        if (simdata.city.games.activities.points > 0 || simdata.city.games.activities.instant > 0) {
+                                            if (params.FunctionParameter.activity == 2 && simdata.city.games.stamina < 110) return { ok: false, err: "Not enough stamina"};
+                                            if (simdata.city.games.activities.instant > 0) {
+                                                simdata.city.games.activities.timer = 0;
+                                                simdata.city.games.activities.activity = params.FunctionParameter.activity;
+                                                simdata.city.games.activities.instant-=1;
+                                                if (params.FunctionParameter.activity == 2) simdata.city.games.stamina-=110;
+                                                ExecuteCloudScript({
+                                                    "RevisionSelection":PFMODE,
+                                                    "FunctionName": "ggclaim",
+                                                });
+                                            } else {
+                                                var times = [90000,180000,360000];
+                                                simdata.city.games.activities.timer = Date.now()+times[params.FunctionParameter.activity];
+                                                simdata.city.games.activities.activity = params.FunctionParameter.activity;
+                                                simdata.city.games.activities.points-=1;
+                                                if (params.FunctionParameter.activity == 2) simdata.city.games.stamina-=110;
+                                                cb({
+                                                    code:Math.random()>ERATE?200:400,
+                                                    status:"OK",
+                                                    data: {
+                                                        FunctionResult: {
+                                                            ok:true,
+                                                            data: simdata,
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (params.FunctionName=="ggupgrade") {
+                            if (simdata.city.games !== undefined && simdata.city.games.week !== undefined && currentSpecialEvent() == "G.A.M.E.S") {
+                                if (simdata.city.games.upgrades !== undefined && simdata.city.games.upgrades[params.FunctionParameter.upgrade] < 10 && params.FunctionParameter.upgrade >= 0 && params.FunctionParameter.upgrade < 3) {
+                                    var currentFavour=500000;
+                                    var price = 15000 + (simdata.city.games.upgrades[params.FunctionParameter.upgrade] * 15000);
+                                    if (currentFavour !== undefined && currentFavour >= price) {
+                                        simdata.city.games.upgrades[params.FunctionParameter.upgrade]+=1;
+                                        cb({
+                                            code:Math.random()>ERATE?200:400,
+                                            status:"OK",
+                                            data: {
+                                                FunctionResult: {
+                                                    ok:true,
+                                                    data: simdata,
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
+                            }
+                        } else if (params.FunctionName=="createCaptcha") {
+                            cb({
+                                code:200,
+                                status:"OK",
+                                data: {
+                                    FunctionResult: {
+                                        id: 1,
+                                        ok:true,
+                                    }
+                                }
+                            })
+                        }
+                    },1000);
+                },
+                GetLeaderboard: function (params,cb) {
+                    console.log("PFL10")
+                    setTimeout(function () {
+                        var lb=[];
+                        var test= ["Knynye","jaker34","msvej","xenos3","Mr_Ozzy","EndoGames","waterskis","lollerblade1","Icewizard263","req4mor","sylvain89","Kraide"];
+                        for (var i=0; i<test.length; ++i) {
+                            lb.push({
+                                "PlayFabId": Math.random()>0.1?"10931252888739651331":"10931252888739651332",
+                                //"DisplayName": "top"+(i+1),
+                                "DisplayName": test[i],
+                                "StatValue": 20000-(i*10),
+                                "Position": i
+                            })
+                        }
+                        cb({
+                            code:Math.random()>ERATE?200:400,
+                            status:"OK",
+                            data: {
+                                Leaderboard: lb
+                            }
+                        });
+                    },1000);
+                },
+                GetLeaderboardAroundPlayer: function (params,cb) {
+                    console.log("PFLAP")
+                    setTimeout(function () {
+                        var lb=[];
+                        var test= ["Knynye","jaker34","msvej","xenos3","Mr_Ozzy","EndoGames","waterskis","lollerblade1","Icewizard263","req4mor","sylvain89","Kraide"];
+                        for (var i=0; i<100; ++i) {
+                            lb.push({
+                                "PlayFabId": Math.random()>0.1?"10931252888739651331":"10931252888739651332",
+                                "DisplayName": "top"+(i+1),
+                                //"DisplayName": test[i],
+                                "StatValue": 500000-(i*10),
+                                "Position": i
+                            })
+                        }
+                        cb({
+                            code:Math.random()>ERATE?200:400,
+                            status:"OK",
+                            data: {
+                                Leaderboard: lb
+                            }
+                        });
+                    },1000);
+                },
+                GetTitleData: function (param,cb) {
+                    console.log("PFTD")
+                    setTimeout(function () {
+                        cb({
+                            code:Math.random()>ERATE?200:400,
+                            status:"OK",
+                            data: {
+                                Data: {
+                                    hof: '{"alltime":{"surv":{"enemy":"Knynye","score":2189937136,"phero":[99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,5,99,99,99,99,99,99,99,99,1,1,1,99,99,99,1,4,99,99,99,99,99,99,99,99,99,5,2,2,99,99,99,99,99,99,99,99,99,99,0,99,45,51,99,99,99,99,99,99,99,99,99,99,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,6,2,99,0,99,99,99,99,99,99,99,1,1,99,1,1,99,1,99,99,99,1,99,0,99,99,1,99,99,99,0,0,99,99,99,99,99,99,99,99,99,0,0,99,99,99,99,99,99,1,0,0,0,33,1,1,1,1],"player":[-69,-88,-83,116,118,-73],"date":1552924952333,"spromo":[3,3,0,2,2,2,2,2,0,0,2,3,0,2,0,0,2,3,0,0,0,2,4,0,3,0,0,0,0,0,2,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,2,3,0,0,5,0,5,4,5,0,0,3,0,0,4,3,4,0,2,4,0,2,3,0,2,0,2,0,0,0,2,3,0,0,5,5,4,5,5,3,4,0,0,2,0,3,3,4,3,4,2,5,0,0,0,0,2,5,0,4,0,0,0,0,0,4,4,5,4,0,4,0,0,2,4,3,4,0,3,3,2,0,0,0,2,4,4,3,3,2,3,3,0,0,0,0,0,0,0],"setup":[-1,-1,-1,-98,-71,-1],"ppromo":[4,4,4,4,4,4,3,4,3,0,4,3,0,4,3,0,4,3,0,3,4,4,3,0,4,3,0,3,3,3,4,3,0,0,0,0,4,3,0,3,3,3,0,0,0,4,3,0,0,0,4,4,4,4,3,0,0,0,0,0,0,0,4,4,0,5,5,4,5,5,5,4,0,5,0,0,4,4,4,0,5,5,5,4,4,4,5,0,0,0,0,0,5,4,4,0,5,4,4,4,5,4,5,0,0,4,0,4,4,4,4,4,0,5,0,0,0,0,0,5,0,4,4,2,0,4,0,4,4,0,5,5,4,0,0,0,4,5,5,5,4,4,0,2,0,0,0,4,5,4,4,0,0,0,0,0,0,0,0,0,0],"shero":[99,99,1,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,11,4,2,99,99,99,99,99,99,99,1,99,99,99,99,1,4,3,99,99,99,99,99,99,99,99,3,2,1,99,99,99,92,99,0,99,99,99,0,0,99,48,14,99,99,99,99,99,99,0,99,99,0,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,6,0,99,0,99,99,99,99,99,99,99,1,1,1,1,99,99,27,99,27,61,27,26,0,99,99,99,99,70,99,0,0,99,99,99,99,60,99,99,99,1,0,0,99,99,99,99,99,99,99,99,0,0,0,1,1,1,1],"left":"jaker34"},"skin":{"enemy":"ukuparkja","score":39051.12643703379,"phero":[99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,0,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,7,4,4,99,99,99,99,99,0,99,99,99,0,0,99,99,12,99,99,99,99,0,99,99,99,99,99,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,87,0,0,99,0,99,99,99,99,99,99,99,99,99,99,1,99,99,1,99,1,73,1,1,0,99,99,99,99,85,0,0,0,99,0],"player":[119,-83,-88,-94,-121,1],"date":1544479207187,"setup":[-43,2,-1,-1,-1,-1],"shero":[99,0,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,99,1,99,99,99,2,4,6,99,99,99,1,99,1,99,4,99,99,99,99,4,5,11,99,99,99,1,99,99,99,99,40,32,20,99,99,99,0,99,0,99,73,99,0,0,99,78,25,99,99,99,99,0,99,0,99,99,99,81,0,1,99,1,1,75,99,99,99,99,99,99,99,99,99,76,0,0,1,0,99,0,0,99,99,99,99,1,1,1,1,99,99,1,99,1,1,0,0,0,99,99,99,65,64,0,0,0,99,0],"left":"sylvain89"},"blod":{"enemy":"ukuparkja","score":4142716803,"phero":[99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,0,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,7,4,4,99,99,99,99,99,0,99,99,99,0,0,99,99,24,99,99,99,99,0,99,99,99,99,99,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,89,0,0,99,0,99,99,99,99,99,99,99,99,99,99,1,99,99,1,99,1,79,1,1,0,99,99,99,99,86,0,0,0,99,27,67,29,10,99,99,33,0],"player":[-94,119,-88,-70,-68,-102],"date":1546135204411,"setup":[119,-104,119,-101,119,-84],"shero":[99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,0,99,99,99,99,99,99,99,99,99,99,0,0,99,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,0,0,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,99,1,1,0,99,99,0,1,1,37,0,99,0,99,99,99,99,99,99,99,1],"left":"Kraide"},"hero":{"enemy":"Knynye","score":2039678899,"phero":[99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,5,99,99,99,99,99,99,99,99,1,1,1,99,99,99,1,4,99,99,99,99,99,99,99,99,99,5,2,2,99,99,99,99,99,1,99,99,99,99,0,99,45,51,99,99,99,99,99,99,99,99,99,99,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,2,0,99,0,99,99,99,99,99,99,99,1,1,99,1,1,99,1,99,99,1,1,99,0,99,99,1,99,99,99,0,0,99,99,99,99,99,99,99,99,1,0,0,99,99,99,99,99,99],"player":[-82,117,119,-88,-83,-73],"date":1550631604439,"setup":[-67,-103,-86,-85,-150,-149],"shero":[99,99,1,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,11,4,2,99,99,99,99,99,99,99,1,99,99,99,99,1,4,3,99,99,99,99,99,99,99,99,3,2,1,99,99,99,70,99,0,99,99,99,0,0,51,33,14,99,99,99,99,83,99,0,99,99,0,75,0,99,99,99,99,84,99,99,99,99,99,99,99,99,99,99,0,0,99,0,99,99,99,99,99,99,99,1,1,1,1,99,99,27,99,27,61,27,26,0,99,99,99,99,70,99,0,0,99,27,99,99,60,99,99,99,1,0,0,99,99,99,99,99,99],"left":"jaker34"},"oppr":{"enemy":"sylvain89","score":7017.835666666667,"phero":[99,0,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,99,1,99,99,99,2,4,6,99,99,99,1,99,1,99,4,99,99,99,99,4,5,11,99,99,99,1,99,99,99,99,40,32,20,99,99,99,0,99,0,99,73,99,0,0,99,99,34,99,99,99,99,0,99,0,99,99,99,81,0,1,99,1,1,75,99,99,99,99,99,99,99,99,99,76,0,0,1,0,99,0,99,99,99,99,99,1,1,1,1,99,99,1,99,1,1,1,0,0,99,99,99,67,68,0,0,0,99,0,17,11,3],"player":[-1,-1,-1,-1,3,-46],"date":1545476404881,"setup":[0,2,2,2,2,2],"shero":[99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,0,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,7,4,4,99,99,99,99,99,0,99,99,99,0,0,99,99,24,99,99,99,99,0,99,99,99,99,99,99,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,89,0,0,99,0,99,99,99,99,99,99,99,99,99,99,1,99,99,1,99,1,79,1,1,0,99,99,99,99,86,0,0,0,99,0,32,15,2],"left":"ukuparkja"}},"daily":{"surv":{"enemy":"makuzou","score":442120956,"phero":[99,1,1,99,99,99,99,99,99,40,99,99,40,99,99,99,99,99,40,99,0,99,99,47,99,99,99,99,99,99,99,99,34,0,99,0,99,99,99,99,99,99,1,10,1,99,99,99,0,99,0,99,0,0,99,99,99,99,99,0,99,0,99,99,32,0,0,72,0,0,0,0,0,72,30,13,99,99,97,99,0,73,99,0,99,0,0,0,99,99,99,99,68,99,99,36,0,9,18,0,0,0,1,0,1,0,0,0,0,0,99,81,27,0,99,99,99,99,99,55,99,57,1,39,1,1,0,99,0,0,0,0,1,0,1,0,27,74,25,9,99,39,15,0,0,1,0,1,99,99,15,7,0,0,0,0,0,0,0,0,0],"player":[-36,-117,-93,-92,-119,-120],"date":1552946444512,"spromo":[5,0,5,4,4,4,4,4,0,0,4,0,0,4,0,0,4,0,0,4,0,4,0,0,4,0,0,4,4,0,4,0,0,0,0,0,4,0,0,4,4,5,0,0,0,4,0,0,0,0,0,4,4,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,5,0,0,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,5,5,5,0,0,5,0,0,0,0,0,5,0,5,5,0,0,5,0,0,0,0,4,0,4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,5,0,0,5,0,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,0],"setup":[-141,-25,-76,-4,-139,-78],"ppromo":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,2,0,5,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0],"shero":[99,8,99,99,99,99,99,99,74,28,99,80,17,99,71,22,99,68,24,99,1,99,68,31,99,58,26,99,99,1,99,88,27,1,0,1,99,82,27,99,99,99,1,1,0,99,68,34,1,1,1,99,99,0,99,1,1,1,1,2,39,1,99,99,28,0,0,0,0,0,0,0,0,99,45,9,99,99,76,27,7,0,0,2,1,9,0,0,1,1,4,1,0,99,72,26,99,99,99,0,0,99,91,4,3,1,0,99,1,99,99,86,22,99,1,1,1,1,99,1,99,88,6,7,1,1,0,99,1,1,20,0,10,0,0,0,18,99,67,23,99,70,25,0,0,1,0,7,99,99,37,17,1,0,0,0,0,1,0,0,0],"left":"Wujcz"},"skin":{"enemy":"makuzou","score":11.388160098278004,"phero":[99,1,1,99,99,99,99,99,99,40,99,99,40,99,99,99,99,99,40,99,0,99,99,47,99,99,99,99,99,99,99,99,34,0,99,0,99,99,99,99,99,99,1,10,1,99,99,99,0,99,0,99,0,0,99,99,99,99,99,0,99,0,99,99,32,0,0,72,0,0,0,0,0,72,30,13,99,99,97,99,0,73,99,0,99,0,0,0,99,99,99,99,68,99,99,36,0,9,18,0,0,0,1,0,1,0,0,0,0,0,99,81,27,0,99,99,99,99,99,55,99,57,1,39,1,1,0,99,0,0,0,0,1,0,1,0,27,74,25,9,99,39,15,0,0,1,0,1,99,99,15,7,0,0,0,0,0,0,0,0,0],"player":[-36,-117,-93,-92,-119,-120],"date":1552946444512,"spromo":[5,0,5,4,4,4,4,4,0,0,4,0,0,4,0,0,4,0,0,4,0,4,0,0,4,0,0,4,4,0,4,0,0,0,0,0,4,0,0,4,4,5,0,0,0,4,0,0,0,0,0,4,4,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,5,0,0,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,5,5,5,0,0,5,0,0,0,0,0,5,0,5,5,0,0,5,0,0,0,0,4,0,4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,5,0,0,5,0,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,0],"setup":[-141,-25,-76,-4,-139,-78],"ppromo":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,2,0,5,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0],"shero":[99,8,99,99,99,99,99,99,74,28,99,80,17,99,71,22,99,68,24,99,1,99,68,31,99,58,26,99,99,1,99,88,27,1,0,1,99,82,27,99,99,99,1,1,0,99,68,34,1,1,1,99,99,0,99,1,1,1,1,2,39,1,99,99,28,0,0,0,0,0,0,0,0,99,45,9,99,99,76,27,7,0,0,2,1,9,0,0,1,1,4,1,0,99,72,26,99,99,99,0,0,99,91,4,3,1,0,99,1,99,99,86,22,99,1,1,1,1,99,1,99,88,6,7,1,1,0,99,1,1,20,0,10,0,0,0,18,99,67,23,99,70,25,0,0,1,0,7,99,99,37,17,1,0,0,0,0,1,0,0,0],"left":"Wujcz"},"blod":{"enemy":"apostletdr","score":1088777764,"phero":[99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,99,99,99,99,99,99,99,99,99,99,99,99,0,7,99,99,99,99,99,99,99,6,1,29,99,99,99,0,1,0,99,99,99,99,99,99,99,99,0,1,0,99,99,99,0,0,0,0,99,11,0,0,73,41,13,99,99,99,99,70,65,78,99,99,0,56,0,99,99,99,99,51,99,99,99,99,99,18,9,0,99,26,1,1,0,0,0,0,99,99,99,99,0,99,99,99,51,99,99,77,93,1,22,1,0,0,99,0,0,9,0,51,0,99,0,99,29,16,6,99,99,99,0,0,1,0,0,99,99,99,99,0,0,0,0,0,0,0,0,0],"player":[-20,-93,-60,-88,-82,-123],"date":1552946435823,"spromo":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,4,4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"setup":[94,-34,-120,-91,-93,-51],"ppromo":[5,4,4,4,4,4,4,5,0,0,5,0,0,4,0,0,4,0,0,0,0,4,0,0,4,0,0,0,0,0,4,0,0,0,0,0,4,0,0,0,0,0,0,0,0,5,0,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4,0,0,0,0,0,0,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,4,0,0,0,5,0,0,0,0,0,0,0,4,5,0,0,0,0,0,0,0,0,0,0,0],"shero":[0,0,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,2,20,99,99,99,99,99,99,3,23,0,99,99,99,3,99,99,99,99,99,99,99,99,99,99,0,1,0,99,99,99,0,0,0,0,0,0,0,0,36,4,10,99,99,99,99,0,54,99,99,0,99,0,0,99,99,99,99,57,99,99,99,0,9,0,0,0,99,12,0,1,0,0,0,0,0,99,99,99,0,99,99,99,1,99,1,99,94,1,1,1,1,0,99,0,0,0,0,40,0,0,2,9,20,10,6,99,99,53,0,0,0,1,0,0,17,9,0,1,0,0,0,0,0,0,0,0],"left":"alto4"},"hero":{"enemy":"saruman","score":500788314,"phero":[3,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,1,99,99,99,99,99,99,33,99,99,99,99,99,0,0,99,99,99,99,99,99,99,3,1,1,99,99,99,0,1,0,99,0,99,99,99,99,99,99,0,99,0,99,99,99,0,0,0,0,99,56,0,0,56,42,15,99,99,99,99,0,59,48,0,99,99,47,0,99,99,99,99,50,99,99,99,0,0,9,0,0,99,87,0,1,0,0,1,0,0,99,99,99,0,99,99,99,99,99,99,58,16,55,1,0,0,0,99,0,0,0,0,0,0,10,0,99,33,10,7,99,99,99,0,0,1,0,0,99,99,99,99,7,0,0,0,0,0,0,0,0],"player":[-37,-121,-83,-17,-104,-78],"date":1552946420654,"spromo":[0,0,0,0,3,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,4,0,0,0,0,0,0,4,2,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,3,0,0,5,0,0,0,0,0,0,0,0,0,0,2,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,2,0,4,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0],"setup":[-1,-98,-1,-1,-71,-1],"ppromo":[0,4,2,3,3,3,3,4,0,0,3,4,0,4,0,2,4,0,2,0,0,4,0,0,3,4,4,0,0,0,3,0,2,0,0,2,4,0,2,0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,3,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4,0,0,0,0,0,0,4,4,0,0,0,0,0,0,4,4,0,0,2,0,0,2,0,4,4,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,4,0,4,0,0,0,0,0,2,2,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,4,0,0,0,4,3,4,0,0,0,0,0,5,4,0,2,0,0,0,0,0,0,0,0,0],"shero":[0,0,0,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,0,99,99,99,99,99,99,99,99,99,99,99,99,0,0,0,99,99,99,99,99,99,1,0,0,99,99,99,0,0,0,99,0,0,99,99,99,99,99,5,1,0,99,99,99,0,0,0,0,99,0,0,0,39,30,7,99,99,99,99,0,0,0,9,99,0,0,0,99,99,99,99,0,99,99,99,99,9,0,0,0,0,85,2,7,0,0,99,0,0,99,99,99,0,99,1,1,1,99,99,3,99,6,1,1,1,0,99,1,99,0,0,99,0,32,0,27,76,43,17,99,99,99,0,0,1,0,0,0,99,99,99,1,0,0,0,0,0,0,0,0],"left":"xWild"},"oppr":{"enemy":"thedoor2006","score":15.549706431561805,"player":[-50,-20,67,67,-60,-119],"date":1552946604112,"setup":[-53,-95,-129,-142,-134,-78],"ppromo":[0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"spromo":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"left":"boozejesus"}}}',
+                                    tour: '[{"tid":17972,"amount":358,"top10":["5uspekt","tony_yayo1748","potatopeppie","sylvain89","HauntedWaters","qqlala","PughHenson","jackfox1996","Ruessi","zonfry"]},{"tid":17971,"amount":407,"top10":["Knynye","Mr_Ozzy","jaker34","msvej","EndoGames","WtoTijuana","PughHenson","xenos3","goldboulder","monsenanna"]},{"tid":17970,"amount":566,"top10":["goldboulder","JaggedLightning","Zteuer","jackfox1996","zonfry","Avatar73","Nilloe","Icewizard263","Gunglufleg","DaveLukies"]},{"tid":17969,"amount":598,"top10":["stefanoos","goldboulder","Lukens","spikekiller399","xenos3","Alya_N","Mr_Ozzy","anonim89","sap001","kalibre2"]},{"tid":17968,"amount":944,"top10":["Knynye","xenos3","cooperhs","Icewizard263","Mr_Ozzy","matthy","RabbitShark","msvej","oliver4657","WtoTijuana"]},{"tid":17967,"amount":638,"top10":["WtoTijuana","jackfox1996","stefanoos","JaggedLightning","xenos3","JonahBlack","EndoGames","Iullius","DarkMato","laserpontiff"]},{"tid":17966,"amount":599,"top10":["championjs","ElHombre1","Icewizard263","Lukens","HauntedWaters","Smurf123","Jcsguy","nobody137","arst987","Hellbilly3"]}]'
+                                }
+                            }
+                        });
+                    },1000);
+                }
+            }
+        }
+        var cpyG=Game;
+        setTimeout("test()",1000);
+        function test() {
+            if (kongregate!==undefined) {
+                kid=kongregate.services.getUserId();
+                try {
+                    if (kid!=0) {
+                        PlayFab.ClientApi.LoginWithCustomID({
+                            TitleId: PlayFab.settings.titleId,
+                            CustomId: window.kid,
+                            CreateAccount: true
+                        }, function (res) {
+                            if (res && res.code && res.code==200 && res.status=="OK") {
+                                window.pfdata=res.data;
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            var dmyG=new cpyG();
+            var dmyD=mkdata();
+            dmyG.setData(dmyD);
+            var techSize=0;
+            var TECH=computeTECH();
+            for (var tid in TECH) {
+                ++techSize;
+            }
+            console.log("TECH SIZE: ",techSize);
+            var ICONS=[];
+            for (var spr in T.json.sprites) {
+                if (T.json.sprites[spr].w==104 && T.json.sprites[spr].h==104) {
+                    ICONS.push(spr);
+                }
+            }
+
+            for (var aid in ACH) {
+                var tmp=ACH[aid](dmyD,dmyG.pn);
+                var pos=ICONS.indexOf(tmp.icon);
+                if (pos===-1) console.log("BAD ICON",tmp.icon);
+                else ICONS.splice(pos,1);
+            }
+            console.log("UNUSED ICONS",ICONS);
+        }
+        
+    </script>
+</body>
+</html>
