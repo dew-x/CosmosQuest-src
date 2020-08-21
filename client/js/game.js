@@ -9094,7 +9094,7 @@ function Game() {
             if (CQW !== undefined && CQW.tour !== undefined) this.addZone("idr",idtrect,"idr");
         }
         else T.draw(ctx,"0di2",btx,bty-40);
-        text(ctx,"Tournament id: "+tournamentid,btx+T.width("0di2")*0.5,bty-40+T.height("0di2")*0.5,"50px"+FONT,"rgba(255,250,210,1)","center","middle");
+        text(ctx, "Tournament " + (tournamentid + 1),btx+T.width("0di2")*0.5,bty-40+T.height("0di2")*0.5,"50px"+FONT,"rgba(255,250,210,1)","center","middle");
 
         // Last tournaments results
         var ltrect = (new Rect(btx,bty+20,T.width("0di2"),T.height("0di2"))).small();
