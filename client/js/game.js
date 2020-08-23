@@ -21321,6 +21321,7 @@ function Game() {
         if (hide_prom==undefined) hide_prom=false;
         if (id>=0) {
             hp=bstats==undefined?MONSTERS[id].hp:bstats.hp;
+            atk=bstats==undefined?MONSTERS[id].atk:bstats.atk;
             var eSphere = ["03xz","0l2b","0cyo","0ckv"];
             var aura = ["fq9i","9b1q","ewf1","yrzo"];
             var peana = "0j89";
@@ -21333,8 +21334,8 @@ function Game() {
             ctx.restore();
             T.draw(ctx,eSphere[MONSTERS[id].type],x-T.width("03xz")*scale/2,y-16*scale,T.width("03xz")*scale,T.height("03xz")*scale);
 
-            text(ctx,MONSTERS[id].atk,x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,"white","center","middle");
-            text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==MONSTERS[id].hp?"white":(hp>MONSTERS[id].hp?"green":"red"),"center","middle");
+            text(ctx,atk,x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==MONSTERS[id].atk?"white":(atk>MONSTERS[id].atk?"lime":"red"),"center","middle");
+            text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==MONSTERS[id].hp?"white":(hp>MONSTERS[id].hp?"lime":"red"),"center","middle");
 
             if (id>=120) T.draw(ctx,"3i47",x-T.width("3i47")*scale/2,y-(T.height("3i47")+10)*scale,T.width("3i47")*scale,T.height("3i47")*scale);
             else if (id>=60) T.draw(ctx,aura[MONSTERS[id].type],x-T.width(aura[MONSTERS[id].type])*scale/2,y-(T.height(aura[MONSTERS[id].type])+10)*scale,T.width(aura[MONSTERS[id].type])*scale,T.height(aura[MONSTERS[id].type])*scale);
@@ -21399,14 +21400,14 @@ function Game() {
                     T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
                 }
                 if (HERO[hid].rarity == 3 && false) {
-                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":"lime","center","middle","yellow",2);
-                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"yellow":"red","center","middle","yellow",2);
-                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"yellow":"red","center","middle","yellow",2);
+                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":(atk>stats.atk?"lime":"red"),"center","middle","yellow",2);
+                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"yellow":(hp>stats.hp?"lime":"red"),"center","middle","yellow",2);
+                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"yellow":(hp>stats.hp?"lime":"red"),"center","middle","yellow",2);
                 }
                 else {
-                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"white":"lime","center","middle");
-                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"white":"red","center","middle");
-                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"green":"red"),"center","middle");
+                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"white":(atk>stats.atk?"lime":"red"),"center","middle");
+                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"lime":"red"),"center","middle");
+                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"lime":"red"),"center","middle");
                 }
                 if (level>=1000) {
                     var x1 = 0;
