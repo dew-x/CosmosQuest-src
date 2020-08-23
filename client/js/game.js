@@ -21321,6 +21321,7 @@ function Game() {
         if (hide_prom==undefined) hide_prom=false;
         if (id>=0) {
             hp=bstats==undefined?MONSTERS[id].hp:bstats.hp;
+            atk=bstats==undefined?MONSTERS[id].atk:bstats.atk;
             var eSphere = ["03xz","0l2b","0cyo","0ckv"];
             var aura = ["fq9i","9b1q","ewf1","yrzo"];
             var peana = "0j89";
@@ -21333,8 +21334,8 @@ function Game() {
             ctx.restore();
             T.draw(ctx,eSphere[MONSTERS[id].type],x-T.width("03xz")*scale/2,y-16*scale,T.width("03xz")*scale,T.height("03xz")*scale);
 
-            text(ctx,MONSTERS[id].atk,x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,"white","center","middle");
-            text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==MONSTERS[id].hp?"white":(hp>MONSTERS[id].hp?"green":"red"),"center","middle");
+            text(ctx,atk,x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==MONSTERS[id].atk?"white":(atk>MONSTERS[id].atk?"lime":"red"),"center","middle");
+            text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==MONSTERS[id].hp?"white":(hp>MONSTERS[id].hp?"lime":"red"),"center","middle");
 
             if (id>=120) T.draw(ctx,"3i47",x-T.width("3i47")*scale/2,y-(T.height("3i47")+10)*scale,T.width("3i47")*scale,T.height("3i47")*scale);
             else if (id>=60) T.draw(ctx,aura[MONSTERS[id].type],x-T.width(aura[MONSTERS[id].type])*scale/2,y-(T.height(aura[MONSTERS[id].type])+10)*scale,T.width(aura[MONSTERS[id].type])*scale,T.height(aura[MONSTERS[id].type])*scale);
