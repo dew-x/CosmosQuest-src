@@ -21399,14 +21399,14 @@ function Game() {
                     T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
                 }
                 if (HERO[hid].rarity == 3 && false) {
-                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":"lime","center","middle","yellow",2);
-                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"yellow":"red","center","middle","yellow",2);
-                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"yellow":"red","center","middle","yellow",2);
+                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":(atk>stats.atk?"lime":"red"),"center","middle","yellow",2);
+                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"yellow":(hp>stats.hp?"lime":"red"),"center","middle","yellow",2);
+                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"yellow":(hp>stats.hp?"lime":"red"),"center","middle","yellow",2);
                 }
                 else {
-                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"white":"lime","center","middle");
-                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"white":"red","center","middle");
-                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"green":"red"),"center","middle");
+                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"white":(atk>stats.atk?"lime":"red"),"center","middle");
+                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"lime":"red"),"center","middle");
+                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"lime":"red"),"center","middle");
                 }
                 if (level>=1000) {
                     var x1 = 0;
