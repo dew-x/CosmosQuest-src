@@ -10442,6 +10442,12 @@ function doTurn (A,D,turnA,turnD,side) {
                                     target:side?"you":"other",
                                     val:tmpArr,
                                 });
+                                gBattle.steps.push({
+                                    action:"DMG2",
+                                    target:side?"you":"other",
+                                    value:atkval,
+                                    pos:j
+                                });
                             }
                         }
                     } else if (D.setup[i].skill.type=="payback") {
