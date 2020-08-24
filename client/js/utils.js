@@ -1085,7 +1085,8 @@ function similarity(s1, s2) {
     if (longerLength == 0) {
       return 1.0;
     }
-    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+    var isSub = (longer.toLowerCase().indexOf(shorter.toLowerCase()) !== -1)?1:0; //check whether
+    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength) + isSub;
 }
 
 function editDistance(s1, s2) {
