@@ -22731,6 +22731,7 @@ function Game() {
     }
     this.skill2text = function (skill,lvl,wb,promote,plvl,value) {
         //var ttext="All";
+    	var stats = level2stats(skill.hid,lvl,plvl);
         lvl = Math.min(99,lvl);
         if (value===undefined) value=skill.value;
         if (promote!==undefined && plvl>=5 && wb!==true) value+=promote;
@@ -22816,7 +22817,7 @@ function Game() {
             }
         } else if (skill.type=="boom") {
             return {
-                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack on death",
+                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack ("+(stats.atk*value).toFixed(0)+") on death",
                 long: "AoE (Area of Effect) Revenge causes this unit to trigger an action upon death. This unit deals damage to all enemies (AoE) equal to a percentage of its attack upon death.",
             }
         } else if (skill.type=="buffatk") {
@@ -22983,7 +22984,7 @@ function Game() {
             }
         } else if (skill.type=="friend") {
             return {
-                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack ("+((level2stats(skill.hid,lvl,plvl).atk*(value*100))/100).toFixed(0)+") & Health ("+((level2stats(skill.hid,lvl,plvl).hp*(value*100))/100).toFixed(0)+") given to friendly units",
+                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack ("+((stats.atk*(value*100))/100).toFixed(0)+") & Health ("+((stats.hp*(value*100))/100).toFixed(0)+") given to friendly units",
                 long: "AoE (Area of Effect) causes this unit to trigger an action upon death. This unit will give all friendly units Attack & Health equal to the percentage displayed upon death.",
             }
         } else if (skill.type=="void") {
@@ -22993,7 +22994,7 @@ function Game() {
             }              
         } else if (skill.type=="bday") {
             return {
-                short: "Surprise! Targeted /nDeals "+(value*100).toFixed(0)+"% Attack ("+((level2stats(skill.hid,lvl,plvl).atk*(value*100))/100).toFixed(0)+") per turn to enemies last unit",
+                short: "Surprise! Targeted /nDeals "+(value*100).toFixed(0)+"% Attack ("+((stats.atk*(value*100))/100).toFixed(0)+") per turn to enemies last unit",
                 long: "Targeted causes this units skill to target another specific unit. This unit will deal a percentage of its attack as display, each turn, to the enemies last unit.",
             }
         } else if (skill.type=="infiltred") {
