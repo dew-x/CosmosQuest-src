@@ -12791,7 +12791,7 @@ function Game() {
         } else {
             var btw = W*0.2;
             var bth = H*0.125;
-            var kadvs = [{title:"Cosmic Coins",time:"04:30:00h",icon:"0ap1"},{title:"Prana Gems",time:"07:50:00h",icon:"0j14"},{title:"Ascended Spheres",time:"11:30:00h",icon:"08y7"}];
+            var kadvs = [{title:"Cosmic Coins",time:"04:30:00h",icon:"0ap1"},{title:"Prana Gems",time:"07:50:00h",icon:"0j14"},{title:"Ascension Spheres",time:"11:30:00h",icon:"08y7"}];
             for (var i = 0; i < 3; ++i) {
                 var brect = (new Rect(W*0.25-btw*0.5+W*0.25*i-2,H*0.35-bth*0.5-2,btw+4,bth+4)).small();
                 if (adventure.kind == i) {
@@ -12895,7 +12895,7 @@ function Game() {
 
         // Zones
         //var titles = ["4nak","il1i","n6uk","bqt5","veex","qarp"];
-        var titles = ["PRANA GEMS","COSMIC COINS","ASCENDED SPHERES","KEYS","HERO KEYS","ENHANCE MIRACLES"];
+        var titles = ["PRANA GEMS","COSMIC COINS","ASCENSION SPHERES","KEYS","HERO KEYS","ENHANCE MIRACLES"];
         var num=0;
         var initx=W*0.25;
         for (var i=0;i<2;++i) {
@@ -13562,7 +13562,7 @@ function Game() {
             {a: "Gold Season Pass: ",b: mdata.city.pass.isGold},
             {a: "Cosmic Coins Dispenser: ",b: mdata.city.easter.ccdispenser,d:true},
             {a: "Prana Gems Dispenser: ",b: mdata.city.easter.pgdispenser,d:true},
-            {a: "Ascender Spheres Dispenser: ",b: mdata.city.easter.asdispenser,d:true},
+            {a: "Ascension Spheres Dispenser: ",b: mdata.city.easter.asdispenser,d:true},
             {a: "Universe Marbles Dispenser: ",b: mdata.city.easter.umdispenser,d:true},
             {a: "Chests Dispenser: ",b: mdata.city.easter.freesilver},
             {a: "Free Promotion 4: ",b: mdata.city.easter.freep4},
@@ -13649,7 +13649,7 @@ function Game() {
                         if (c==11) text(ctx,(c+1)+") "+"Cosmic Coins Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                         else if (c==14) text(ctx,(c+1)+") "+"Prana Gems Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                         else if (c==16) text(ctx,(c+1)+") "+"Universe Marbles Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
-                        else if (c==22) text(ctx,(c+1)+") "+"Ascended Spheres Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
+                        else if (c==22) text(ctx,(c+1)+") "+"Ascension Spheres Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                         else text(ctx,(c+1)+") "+rewards[c].t+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                     }
                     ++c;

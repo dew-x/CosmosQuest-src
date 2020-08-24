@@ -2672,7 +2672,7 @@ function getEasterData() {
             },
             {
                 m: 1520000,
-                t: "Ascended Spheres x25",
+                t: "Ascension Spheres x25",
                 egg: "wmlk",
                 curr: "as",
                 q: 25,
@@ -2939,7 +2939,7 @@ function getEasterData() {
             },
             {
                 m: 48000,
-                t: "Ascended Spheres Dispenser: 30 AS during 60 days or 10 AS LifeTime",
+                t: "Ascension Spheres Dispenser: 30 AS during 60 days or 10 AS LifeTime",
                 egg: "0o1k",
                 d: "AS Dispenser",
                 e: "AS",
