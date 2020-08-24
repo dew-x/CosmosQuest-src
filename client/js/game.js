@@ -7610,12 +7610,13 @@ function Game() {
                 T.draw(ctx,elements[i],1024*0.125,640*(0.195+0.12*i));
                 this.addZone("sTab_"+i,(new Rect(1024*0.125,640*(0.195+0.12*i),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
             }
-
-            if (!searchTab) {
-                T.draw(ctx,tabOFF,1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
-                this.addZone("osearchTab",(new Rect(1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
-            } else {
-                T.draw(ctx,tabON,1024*0.125,H*(0.195+0.6),T.width(tabON)*5,T.height(tabON)*0.6);
+            if (mode!=="wb"||CQW.WB.mode==1) {
+	            if (!searchTab) {
+	                T.draw(ctx,tabOFF,1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
+	                this.addZone("osearchTab",(new Rect(1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
+	            } else {
+	                T.draw(ctx,tabON,1024*0.125,H*(0.195+0.6),T.width(tabON)*5,T.height(tabON)*0.6);
+	            }
             }
         } else if (mode=="halloween") {
             var fx=W*0.12-5;
