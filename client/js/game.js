@@ -9422,11 +9422,11 @@ function Game() {
                 ctx.closePath();
 
                 // Toggle
-                ctx.moveTo(W*0.665, H*0.195);
-                ctx.lineTo(W*0.665, H*0.28);
-                ctx.lineTo(W*0.915, H*0.28);
-                ctx.lineTo(W*0.915, H*0.195);
-                ctx.lineTo(W*0.665, H*0.195);
+                ctx.moveTo(W*0.665, H*0.225);
+                ctx.lineTo(W*0.665, H*0.31);
+                ctx.lineTo(W*0.915, H*0.31);
+                ctx.lineTo(W*0.915, H*0.225);
+                ctx.lineTo(W*0.665, H*0.225);
                 ctx.closePath();
 
                 // Rules
@@ -9477,10 +9477,10 @@ function Game() {
                 text(ctx,"Counter Elements Table",W*0.257+3,H*0.100-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
-                ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
+                ctx.fillRect(W*0.665-1,H*0.225-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
-                ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                ctx.fillRect(W*0.665,H*0.225-32-5,W*0.165,H*0.05);
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.225-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.670-1,H*0.39-32-5-1,W*0.14+2,H*0.05+2);
@@ -9522,7 +9522,7 @@ function Game() {
                 text(ctx,"* You will be able to join on the tournament until 23:50 GMT.",xleft,H*0.4+125,"32px"+FONT,"white","left","middle");
                 text(ctx,"* You can't edit your setup after joining the tournament.",xleft,H*0.4+150,"32px"+FONT,"white","left","middle");
                 text(ctx,"* All participants will be rewarded with Star Dust based on performance.",xleft,H*0.4+175,"32px"+FONT,"white","left","middle");
-                text(ctx,"* Wednesday FREE. Monday, Tuesday, Thursday, Friday 100 UM. Saturday 200, Sunday 500 UM",xleft,H*0.4+200,"28px"+FONT,"white","left","middle");
+                text(ctx,"* Wednesday FREE. Monday, Tuesday, Thursday, Friday 125 UM. Saturday 250, Sunday 400 UM",xleft,H*0.4+200,"28px"+FONT,"white","left","middle");
             } else {
                 // Log
                 ctx.moveTo(W*0.040, H*0.350);
@@ -9565,11 +9565,11 @@ function Game() {
                 ctx.closePath();
 
                 // Toggle
-                ctx.moveTo(W*0.665, H*0.195);
-                ctx.lineTo(W*0.665, H*0.28);
-                ctx.lineTo(W*0.915, H*0.28);
-                ctx.lineTo(W*0.915, H*0.195);
-                ctx.lineTo(W*0.665, H*0.195);
+                ctx.moveTo(W*0.665, H*0.225);
+                ctx.lineTo(W*0.665, H*0.31);
+                ctx.lineTo(W*0.915, H*0.31);
+                ctx.lineTo(W*0.915, H*0.225);
+                ctx.lineTo(W*0.665, H*0.225);
                 ctx.closePath();
 
                 // Top10
@@ -9614,16 +9614,16 @@ function Game() {
                 text(ctx,"Import Battle from Web",W*0.105+3,H*0.950-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
-                ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
+                ctx.fillRect(W*0.665-1,H*0.225-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
-                ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                ctx.fillRect(W*0.665,H*0.225-32-5,W*0.165,H*0.05);
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.225-16-5,"32px"+FONT,"white","left","middle");
 
-                ctx.fillStyle="rgba(255,255,255,0.95)";
+                /*ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
                 ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");*/
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.680-1,H*0.400-32-5-1,W*0.148+2,H*0.05+2);
