@@ -7167,25 +7167,27 @@ function Game() {
                 ctx.lineTo(0, 0);
                 ctx.closePath();
 
-                ctx.moveTo(W * 0.022, H * 0.135);
-                ctx.lineTo(W * 0.022, H * 0.19);
-                ctx.lineTo(W * 0.165, H * 0.19);
-                ctx.lineTo(W * 0.165, H * 0.135);
-                ctx.lineTo(W * 0.022, H * 0.135);
+                // Followers & Line Info
+                ctx.moveTo(W*0.024, H*0.100);
+                ctx.lineTo(W*0.024, H*0.195);
+                ctx.lineTo(W*0.160, H*0.195);
+                ctx.lineTo(W*0.160, H*0.100);
+                ctx.lineTo(W*0.024, H*0.100);
+                ctx.closePath();
+                
+                // Elements
+                ctx.moveTo(W*0.170, H*0.035);
+                ctx.lineTo(W*0.170, H*0.17);
+                ctx.lineTo(W*0.252, H*0.17);
+                ctx.lineTo(W*0.252, H*0.035);
+                ctx.lineTo(W*0.170, H*0.035);
                 ctx.closePath();
 
-                ctx.moveTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) + T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) + T.width("065i") / 2, (H * 0.101) + T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) + T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.closePath();
-
-                ctx.moveTo(px, py);
-                ctx.lineTo(px, py + ph);
-                ctx.lineTo(px + pw, py + ph);
-                ctx.lineTo(px + pw, py);
-                ctx.lineTo(px, py);
+                ctx.moveTo(px, py + 40);
+                ctx.lineTo(px, py + 40 + ph);
+                ctx.lineTo(px + pw, py + 40 + ph);
+                ctx.lineTo(px + pw, py + 40);
+                ctx.lineTo(px, py + 40);
                 ctx.closePath();
 
                 ctx.moveTo(16 + bx, 15 + by + 320);
@@ -7213,16 +7215,16 @@ function Game() {
                 ctx.fill();
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
-                ctx.fillRect(W * 0.28, H * 0.12, W * 0.2, H * 0.05);
-                text(ctx, "Counter elements table", (W * 0.28) + (W * 0.2) / 2, (H * 0.12) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
+                ctx.fillRect(W * 0.26, H * 0.12, W * 0.2, H * 0.05);
+                text(ctx, "Counter elements table", (W * 0.26) + (W * 0.2) / 2, (H * 0.12) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
                 ctx.fillRect(W * 0.024, H * 0.20, W * 0.2, H * 0.05);
-                text(ctx, "Available setup points", (W * 0.024) + (W * 0.2) / 2, (H * 0.20) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
+                text(ctx, "Followers & Line Info", (W * 0.024) + (W * 0.2) / 2, (H * 0.20) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
-                ctx.fillRect(px, py + ph, pw, ph);
-                text(ctx, "Click the Log to view the Battle", px + pw / 2, py + ph + ph / 2, "32px" + FONT, "white", "center", "middle");
+                ctx.fillRect(px, py + 40 + ph, pw, ph);
+                text(ctx, "Click the Log to view the Battle", px + pw / 2, py + 40 + ph + ph / 2, "32px" + FONT, "white", "center", "middle");
 
                 this.drawMonster(ctx, 0, bx + 136, by + 175);
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
