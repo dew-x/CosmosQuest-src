@@ -155,7 +155,7 @@ function Solver(ugrid,fols,uhero,upromo,setup,shero,spromo,mode) {
             });
         }
         this.known.sort(function(a,b) {
-            if (a.res==b.res) {
+            if (a.res==b.res || mode=="wb") {
                 if (a.res==1) {
                     var a1 = amountOf(a.row,-1);
                     var b1 = amountOf(b.row,-1);
