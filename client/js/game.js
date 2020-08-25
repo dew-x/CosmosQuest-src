@@ -6806,6 +6806,12 @@ function Game() {
             text(ctx,"Link to shop to buy more keys",W*0.043+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
+            ctx.fillRect(W*0.27-1,H*0.916+5-1,W*0.26+2,H*0.05+2);
+            ctx.fillStyle="rgba(36,36,36,0.95)";
+            ctx.fillRect(W*0.27,H*0.916+5,W*0.26,H*0.05);
+            text(ctx,"Hold ctrl to open 10 keys in one click",W*0.27+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
+
+            ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.66-1,H*0.615-32-5-1,W*0.31+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.66,H*0.615-32-5,W*0.31,H*0.05);
@@ -6852,7 +6858,7 @@ function Game() {
             text(ctx,"* Legendary Heroes: 1 Legendary Hero",c2,H*0.19+132,"32px"+FONT,"gold","left","middle");
         }
 
-        text(ctx,"* HINT: You can press ctrl to open 10 chests in one click!!",W*0.05,H*0.955,"24px"+FONT,"black","left","middle");
+        //text(ctx,"* HINT: You can press ctrl to open 10 chests in one click!!",W*0.05,H*0.955,"24px"+FONT,"black","left","middle");
 
         // Multiple Chest Pop-UP
         if (mulChestArray !== undefined) {
