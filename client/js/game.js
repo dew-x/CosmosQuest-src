@@ -11433,18 +11433,18 @@ function Game() {
             ctx.closePath();
 
             // Current Season
-            ctx.moveTo(W*0.22, H*0.185);
-            ctx.lineTo(W*0.22, H*0.253);
-            ctx.lineTo(W*0.33, H*0.253);
-            ctx.lineTo(W*0.33, H*0.185);
-            ctx.lineTo(W*0.22, H*0.185);
+            ctx.moveTo(W*0.222, H*0.185);
+            ctx.lineTo(W*0.222, H*0.253);
+            ctx.lineTo(W*0.336, H*0.253);
+            ctx.lineTo(W*0.336, H*0.185);
+            ctx.lineTo(W*0.222, H*0.185);
             ctx.closePath();
 
             // Season Pass
             ctx.moveTo(W*0.08, H*0.185);
             ctx.lineTo(W*0.08, H*0.253);
-            ctx.lineTo(W*0.21, H*0.253);
-            ctx.lineTo(W*0.21, H*0.185);
+            ctx.lineTo(W*0.215, H*0.253);
+            ctx.lineTo(W*0.215, H*0.185);
             ctx.lineTo(W*0.08, H*0.185);
             ctx.closePath();
 
