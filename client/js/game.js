@@ -2219,7 +2219,7 @@ function Game() {
         }
     }
     this.keyPress = function (code) {
-        if (!searchTab) {
+        if (!searchTab && document.getElementById("levelwb").style.display!="block" && document.getElementById("playgroundbg").style.display!="block") {
             if (code == 122) this.doAction("zPress");
             else if (code>=48 && code<=57) this.doAction("build",{target:code-48});
             else if (code==44) this.doAction("build",{target:10});
