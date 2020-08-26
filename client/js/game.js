@@ -6806,6 +6806,12 @@ function Game() {
             text(ctx,"Link to shop to buy more keys",W*0.043+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
+            ctx.fillRect(W*0.27-1,H*0.916+5-1,W*0.26+2,H*0.05+2);
+            ctx.fillStyle="rgba(36,36,36,0.95)";
+            ctx.fillRect(W*0.27,H*0.916+5,W*0.26,H*0.05);
+            text(ctx,"Hold ctrl to open 10 keys in one click",W*0.27+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
+
+            ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.66-1,H*0.615-32-5-1,W*0.31+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.66,H*0.615-32-5,W*0.31,H*0.05);
@@ -6852,7 +6858,7 @@ function Game() {
             text(ctx,"* Legendary Heroes: 1 Legendary Hero",c2,H*0.19+132,"32px"+FONT,"gold","left","middle");
         }
 
-        text(ctx,"* HINT: You can press ctrl to open 10 chests in one click!!",W*0.05,H*0.955,"24px"+FONT,"black","left","middle");
+        //text(ctx,"* HINT: You can press ctrl to open 10 chests in one click!!",W*0.05,H*0.955,"24px"+FONT,"black","left","middle");
 
         // Multiple Chest Pop-UP
         if (mulChestArray !== undefined) {
@@ -7167,25 +7173,27 @@ function Game() {
                 ctx.lineTo(0, 0);
                 ctx.closePath();
 
-                ctx.moveTo(W * 0.022, H * 0.135);
-                ctx.lineTo(W * 0.022, H * 0.19);
-                ctx.lineTo(W * 0.165, H * 0.19);
-                ctx.lineTo(W * 0.165, H * 0.135);
-                ctx.lineTo(W * 0.022, H * 0.135);
+                // Followers & Line Info
+                ctx.moveTo(W*0.024, H*0.100);
+                ctx.lineTo(W*0.024, H*0.195);
+                ctx.lineTo(W*0.160, H*0.195);
+                ctx.lineTo(W*0.160, H*0.100);
+                ctx.lineTo(W*0.024, H*0.100);
+                ctx.closePath();
+                
+                // Elements
+                ctx.moveTo(W*0.170, H*0.035);
+                ctx.lineTo(W*0.170, H*0.17);
+                ctx.lineTo(W*0.252, H*0.17);
+                ctx.lineTo(W*0.252, H*0.035);
+                ctx.lineTo(W*0.170, H*0.035);
                 ctx.closePath();
 
-                ctx.moveTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) + T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) + T.width("065i") / 2, (H * 0.101) + T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) + T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.closePath();
-
-                ctx.moveTo(px, py);
-                ctx.lineTo(px, py + ph);
-                ctx.lineTo(px + pw, py + ph);
-                ctx.lineTo(px + pw, py);
-                ctx.lineTo(px, py);
+                ctx.moveTo(px, py + 40);
+                ctx.lineTo(px, py + 40 + ph);
+                ctx.lineTo(px + pw, py + 40 + ph);
+                ctx.lineTo(px + pw, py + 40);
+                ctx.lineTo(px, py + 40);
                 ctx.closePath();
 
                 ctx.moveTo(16 + bx, 15 + by + 320);
@@ -7213,16 +7221,16 @@ function Game() {
                 ctx.fill();
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
-                ctx.fillRect(W * 0.28, H * 0.12, W * 0.2, H * 0.05);
-                text(ctx, "Counter elements table", (W * 0.28) + (W * 0.2) / 2, (H * 0.12) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
+                ctx.fillRect(W * 0.26, H * 0.12, W * 0.2, H * 0.05);
+                text(ctx, "Counter elements table", (W * 0.26) + (W * 0.2) / 2, (H * 0.12) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
                 ctx.fillRect(W * 0.024, H * 0.20, W * 0.2, H * 0.05);
-                text(ctx, "Available setup points", (W * 0.024) + (W * 0.2) / 2, (H * 0.20) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
+                text(ctx, "Followers & Line Info", (W * 0.024) + (W * 0.2) / 2, (H * 0.20) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
-                ctx.fillRect(px, py + ph, pw, ph);
-                text(ctx, "Click the Log to view the Battle", px + pw / 2, py + ph + ph / 2, "32px" + FONT, "white", "center", "middle");
+                ctx.fillRect(px, py + 40 + ph, pw, ph);
+                text(ctx, "Click the Log to view the Battle", px + pw / 2, py + 40 + ph + ph / 2, "32px" + FONT, "white", "center", "middle");
 
                 this.drawMonster(ctx, 0, bx + 136, by + 175);
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
@@ -9423,11 +9431,11 @@ function Game() {
                 ctx.closePath();
 
                 // Toggle
-                ctx.moveTo(W*0.665, H*0.195);
-                ctx.lineTo(W*0.665, H*0.28);
-                ctx.lineTo(W*0.915, H*0.28);
-                ctx.lineTo(W*0.915, H*0.195);
-                ctx.lineTo(W*0.665, H*0.195);
+                ctx.moveTo(W*0.665, H*0.225);
+                ctx.lineTo(W*0.665, H*0.31);
+                ctx.lineTo(W*0.915, H*0.31);
+                ctx.lineTo(W*0.915, H*0.225);
+                ctx.lineTo(W*0.665, H*0.225);
                 ctx.closePath();
 
                 // Rules
@@ -9478,10 +9486,10 @@ function Game() {
                 text(ctx,"Counter Elements Table",W*0.257+3,H*0.100-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
-                ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
+                ctx.fillRect(W*0.665-1,H*0.225-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
-                ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                ctx.fillRect(W*0.665,H*0.225-32-5,W*0.165,H*0.05);
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.225-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.670-1,H*0.39-32-5-1,W*0.14+2,H*0.05+2);
@@ -9523,7 +9531,7 @@ function Game() {
                 text(ctx,"* You will be able to join on the tournament until 23:50 GMT.",xleft,H*0.4+125,"32px"+FONT,"white","left","middle");
                 text(ctx,"* You can't edit your setup after joining the tournament.",xleft,H*0.4+150,"32px"+FONT,"white","left","middle");
                 text(ctx,"* All participants will be rewarded with Star Dust based on performance.",xleft,H*0.4+175,"32px"+FONT,"white","left","middle");
-                text(ctx,"* Wednesday FREE. Monday, Tuesday, Thursday, Friday 100 UM. Saturday 200, Sunday 500 UM",xleft,H*0.4+200,"28px"+FONT,"white","left","middle");
+                text(ctx,"* Wednesday FREE. Monday, Tuesday, Thursday, Friday 125 UM. Saturday 250, Sunday 400 UM",xleft,H*0.4+200,"28px"+FONT,"white","left","middle");
             } else {
                 // Log
                 ctx.moveTo(W*0.040, H*0.350);
@@ -9566,11 +9574,11 @@ function Game() {
                 ctx.closePath();
 
                 // Toggle
-                ctx.moveTo(W*0.665, H*0.195);
-                ctx.lineTo(W*0.665, H*0.28);
-                ctx.lineTo(W*0.915, H*0.28);
-                ctx.lineTo(W*0.915, H*0.195);
-                ctx.lineTo(W*0.665, H*0.195);
+                ctx.moveTo(W*0.665, H*0.225);
+                ctx.lineTo(W*0.665, H*0.31);
+                ctx.lineTo(W*0.915, H*0.31);
+                ctx.lineTo(W*0.915, H*0.225);
+                ctx.lineTo(W*0.665, H*0.225);
                 ctx.closePath();
 
                 // Top10
@@ -9615,16 +9623,16 @@ function Game() {
                 text(ctx,"Import Battle from Web",W*0.105+3,H*0.950-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
-                ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
+                ctx.fillRect(W*0.665-1,H*0.225-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
-                ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                ctx.fillRect(W*0.665,H*0.225-32-5,W*0.165,H*0.05);
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.225-16-5,"32px"+FONT,"white","left","middle");
 
-                ctx.fillStyle="rgba(255,255,255,0.95)";
+                /*ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
                 ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");*/
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.680-1,H*0.400-32-5-1,W*0.148+2,H*0.05+2);
@@ -11426,18 +11434,18 @@ function Game() {
             ctx.closePath();
 
             // Current Season
-            ctx.moveTo(W*0.22, H*0.185);
-            ctx.lineTo(W*0.22, H*0.253);
-            ctx.lineTo(W*0.33, H*0.253);
-            ctx.lineTo(W*0.33, H*0.185);
-            ctx.lineTo(W*0.22, H*0.185);
+            ctx.moveTo(W*0.222, H*0.185);
+            ctx.lineTo(W*0.222, H*0.253);
+            ctx.lineTo(W*0.336, H*0.253);
+            ctx.lineTo(W*0.336, H*0.185);
+            ctx.lineTo(W*0.222, H*0.185);
             ctx.closePath();
 
             // Season Pass
             ctx.moveTo(W*0.08, H*0.185);
             ctx.lineTo(W*0.08, H*0.253);
-            ctx.lineTo(W*0.21, H*0.253);
-            ctx.lineTo(W*0.21, H*0.185);
+            ctx.lineTo(W*0.215, H*0.253);
+            ctx.lineTo(W*0.215, H*0.185);
             ctx.lineTo(W*0.08, H*0.185);
             ctx.closePath();
 
