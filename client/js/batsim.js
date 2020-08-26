@@ -10098,8 +10098,10 @@ function calcTurn (A,B,seed,turnid) {
             if (skill.type=="turna") {
                 turn.buff.iAtk[i]+=skillVal;
             } else if (skill.type=="debuff") {
-                turn.buff.ratio*=1-(skillVal*lvlVal);
-                turn.atk.ratio*=1-(skillVal*lvlVal);
+            	var _val = skillVal*lvlVal;
+                if (skillVal == 0.5) _val = 0.5;
+                turn.buff.ratio*=1-_val;
+                turn.atk.ratio*=1-_val;
             } else if (skill.type=="mshield") {
                 turn.buff.sdefPerc[i]=1-skillVal;
             } else if (skill.type=="dampen") {

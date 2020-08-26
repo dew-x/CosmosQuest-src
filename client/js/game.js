@@ -18614,7 +18614,7 @@ function Game() {
                 if (data.playground[0].line[i] !== -1) anyA = true;
             }
             if (anyA) {
-                var level=document.getElementById("wblvl").value;
+                var level=parseInt(document.getElementById("wblvl").value);
                 if (!Number.isInteger(level) || level < 1) level = 1;
                 var heroA = Array(HERO.length).fill(1);
                 var heroB = Array(HERO.length).fill(1);
