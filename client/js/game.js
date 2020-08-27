@@ -12900,7 +12900,7 @@ function Game() {
         roundedRect(ctx,W*0.5-(bgw/2)+200,-5+H*0.5-(bgh/2)+15,bgw-400,H*0.075,5,"rgba(50,50,50,0.80)");
         T.draw(ctx,"k2mi",W*0.35-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
         T.draw(ctx,"k2mi",W*0.65-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
-        text(ctx,bint(SD),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","midle","middle");
+        text(ctx,bint(SD),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","center","middle");
 
         // Zones
         //var titles = ["4nak","il1i","n6uk","bqt5","veex","qarp"];
