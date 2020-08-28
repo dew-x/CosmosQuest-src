@@ -18296,6 +18296,9 @@ function Game() {
             } else {
                 showDaily = false;
                 flashOpen = false;
+                searchTab=false;
+                document.getElementById("herosearch").style.display="none";
+                document.getElementById("herosearch").value="";
             }
         } else if (action=="sflash") {
             // Navigate between days information
@@ -18349,6 +18352,9 @@ function Game() {
             } else {
                 inDungeon=false;
                 showDaily = false;
+                searchTab=false;
+                document.getElementById("herosearch").style.display="none";
+                document.getElementById("herosearch").value="";
             }
         } else if (action=="sfcell") {
             this.sfcell(extra.target);
