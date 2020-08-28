@@ -11741,8 +11741,11 @@ function Game() {
                 var mm = date.getMonth()+1;
                 var yyyy = date.getFullYear();
 
-                if (CQW.WB.id==87) text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"36px"+FONT,"black","center","middle");
-                else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
+                if (mdata.city.WB.log[showBoss].name=="MOTHER OF ALL KODAMAS") text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"36px"+FONT,"black","center","middle");
+                else if (mdata.city.WB.log[showBoss].name=="SUPER MOTHER OF ALL KODAMAS") {
+                    text(ctx,"SUPER",xpos,H*0.435,"36px"+FONT,"red","center","middle");
+                    text(ctx,"MOTHER OF ALL KODAMAS",xpos,H*0.465,"36px"+FONT,"black","center","middle");
+                } else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
                 text(ctx,"Level: "+mdata.city.WB.log[showBoss].level,xpos,H*0.50,"36px"+FONT,"black","center","middle");
                 text(ctx,"Mode: "+modes[mdata.city.WB.log[showBoss].mode],xpos,H*0.54,"36px"+FONT,"black","center","middle");
                 text(ctx,"Damage Done: "+bint(mdata.city.WB.log[showBoss].dealt),xpos,H*0.58,"36px"+FONT,"black","center","middle");
