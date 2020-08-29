@@ -332,15 +332,6 @@ function Game() {
                     return false;
                 }
             },{
-                id: "CQM",
-                icon: "bhe4",
-                text: "CosmosQuest Mobile",
-                action: "cqm",
-                extra: {target:!cqmOpen},
-                active: function () {
-                    return true;
-                }
-            },{
                 id:"STPA",
                 icon:"r8aa",
                 text: "St.Patrick Hero",
@@ -945,7 +936,6 @@ function Game() {
         percentage: undefined,
         next: false,
     };
-    var cqmOpen = false;
     var halloweenOpen = false;
     var halloweenMode = "fight";
     var halloweenLevelUp = undefined;
@@ -1687,9 +1677,6 @@ function Game() {
             } else if (adventureOpen) {
                 zones = {};
                 if (mdata!==undefined) this.drawAdventure(ctx);
-            } else if (cqmOpen) {
-                zones = {};
-                this.drawCQM(ctx);
             } else if (this.isHalloween() && halloweenOpen) {
                 zones = {};
                 this.drawHalloween(ctx);
@@ -12873,22 +12860,6 @@ function Game() {
         }
         else T.draw(ctx,"7otr",W*0.97*0.5+bgw*0.5-cw-2,H*0.5-bgh*0.97*0.5+8,cw,ch);
     }
-    this.drawCQM = function (ctx) {
-        var grect = (new Rect(W*0.53,H*0.75,W*0.165,H*0.08)).small();
-        if (grect.isInside(GM.x,GM.y)) {
-            this.addZone("cqlink_0",grect,"cqlink",{target:0});
-        }
-
-        var arect = (new Rect(W*0.73,H*0.75,W*0.165,H*0.08)).small();
-        if (arect.isInside(GM.x,GM.y)) {
-            this.addZone("cqlink_1",arect,"cqlink",{target:1});
-        }
-
-        var crect = (new Rect(W*0.865,H*0.125,W*0.03,H*0.05)).small();
-        if (crect.isInside(GM.x,GM.y)) {
-            this.addZone("cqm_close",crect,"cqm",{target:false});
-        }
-    }
     this.drawSeasonShop = function (ctx) {
         var shopData=getStarDustData();
         ctx.fillStyle="rgba(47,47,47,0.25)";
@@ -18756,17 +18727,6 @@ function Game() {
             }
         } else if (action=="cadventure") {
             adventure.next = false;
-        } else if (action=="cqm") {
-            if (extra.target) {
-                document.getElementById("cqmbl").style.display="block";
-                cqmOpen = true;
-            } else {
-                document.getElementById("cqmbl").style.display="none";
-                cqmOpen = false;
-            }
-        } else if (action=="cqlink") {
-            if (extra.target==0) window.open("http://bit.ly/2kRUDYb");
-            else window.open("http://apple.co/2kSj5bX");
         } else if (action=="ohall") {
             halloweenOpen = !halloweenOpen;
         } else if (action=="shal") {
