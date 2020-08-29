@@ -7608,7 +7608,7 @@ function Game() {
             T.draw(ctx,"0c2t",1024*0.019,640*0.185); // Fons Monstres
             var avaHero=false;
             for (var i=0;i<HERO.length;++i) if (heroes[i]!==0 && heroes[i]!==undefined) avaHero=true;
-            if (avaHero==false && tournamentid!==1) elements.splice(4,1);
+            if (avaHero==false && (tournamentid!==1||mode!="tournaments")) elements.splice(4,1);
             for (var i=0;i<elements.length; ++i) {
                 if (typeTab==i && !searchTab) T.draw(ctx,tabON,1024*0.125,640*(0.195+0.12*i));
                 else T.draw(ctx,tabOFF,1024*0.125,640*(0.195+0.12*i));
