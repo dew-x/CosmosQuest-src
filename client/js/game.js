@@ -7595,7 +7595,7 @@ function Game() {
             T.draw(ctx,"0c2t",1024*0.019,640*0.185); // Fons Monstres
             var avaHero=false;
             for (var i=0;i<HERO.length;++i) if (heroes[i]!==0 && heroes[i]!==undefined) avaHero=true;
-            if (avaHero==false && tournamentid!==1) elements.splice(4,1);
+            if (avaHero==false && (tournamentid!==1||mode!="tournaments")) elements.splice(4,1);
             for (var i=0;i<elements.length; ++i) {
                 if (typeTab==i && !searchTab) T.draw(ctx,tabON,1024*0.125,640*(0.195+0.12*i));
                 else T.draw(ctx,tabOFF,1024*0.125,640*(0.195+0.12*i));
@@ -7605,7 +7605,7 @@ function Game() {
                 T.draw(ctx,elements[i],1024*0.125,640*(0.195+0.12*i));
                 this.addZone("sTab_"+i,(new Rect(1024*0.125,640*(0.195+0.12*i),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
             }
-            if (mode!=="wb"||CQW.WB.mode==1) {
+            if ((mode!=="wb"||CQW.WB.mode==1) && (mode!=="tournaments"||hmode[tid%hmode.length]!=="No Heroes")) {
 	            if (!searchTab) {
 	                T.draw(ctx,tabOFF,1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
 	                this.addZone("osearchTab",(new Rect(1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
@@ -17988,6 +17988,9 @@ function Game() {
             if (tournamentPage=="join") tournamentPage="results";
             else tournamentPage="join";
         } else if (action=="idr") {
+            searchTab=false;
+            document.getElementById("herosearch").style.display="none";
+            document.getElementById("herosearch").value="";
             if (tournamentid==0) tournamentid=1;
             else tournamentid=0;
             //tournamentid=0;
