@@ -7618,7 +7618,7 @@ function Game() {
                 T.draw(ctx,elements[i],1024*0.125,640*(0.195+0.12*i));
                 this.addZone("sTab_"+i,(new Rect(1024*0.125,640*(0.195+0.12*i),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
             }
-            if (mode!=="wb"||CQW.WB.mode==1) {
+            if ((mode!=="wb"||CQW.WB.mode==1) && (mode!=="tournaments"||hmode[tid%hmode.length]!=="No Heroes")) {
 	            if (!searchTab) {
 	                T.draw(ctx,tabOFF,1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
 	                this.addZone("osearchTab",(new Rect(1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
