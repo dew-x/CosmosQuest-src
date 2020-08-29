@@ -18017,6 +18017,9 @@ function Game() {
             if (tournamentPage=="join") tournamentPage="results";
             else tournamentPage="join";
         } else if (action=="idr") {
+            searchTab=false;
+            document.getElementById("herosearch").style.display="none";
+            document.getElementById("herosearch").value="";
             if (tournamentid==0) tournamentid=1;
             else tournamentid=0;
             //tournamentid=0;
