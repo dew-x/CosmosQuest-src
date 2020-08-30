@@ -11587,19 +11587,19 @@ function Game() {
                 else T.negative(ctx,"06ur",W*0.78+(i*W*0.0272),bgy+T.height("08yf")*0.5-T.height("0omo")*0.5+173);
             }
 
-            text(ctx,"World Boss Line Slot",W*0.775+popupbgw/2*0.57,bgy+T.height("08yf")*0.5-T.height("0omo")*0.5+245,"40px"+FONT,"black","center","middle");
-            for (var i=0;i<5;++i) {
-                if (i==4) {
-                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+i*W*0.043-2,H*0.87-2,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
-                    roundedRect(ctx,W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
-                    T.draw(ctx,"bn4f",W*0.801-25+i*W*0.043+W*0.035*0.5-T.width("bn4f")*0.75*0.5,H*0.87+W*0.035*0.5-T.height("bn4f")*0.75*0.5,T.width("bn4f")*0.75,T.height("bn4f")*0.75);
+            text(ctx,"World Boss Line Slot",W*0.775+popupbgw/2*0.57,bgy+T.height("08yf")*0.5-T.height("0omo")*0.5+245-W*0.02,"40px"+FONT,"black","center","middle");
+            for (var i=0;i<10;++i) {
+            	if (i==9) {
+                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+(i%5)*W*0.043-2,H*0.87-2+Math.floor(i/5)*W*0.043-W*0.022,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
+                    roundedRect(ctx,W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
+                    T.draw(ctx,"bn4f",W*0.801-25+(i%5)*W*0.043+W*0.035*0.5-T.width("bn4f")*0.75*0.5,H*0.87+W*0.035*0.5-T.height("bn4f")*0.75*0.5+Math.floor(i/5)*W*0.043-W*0.022,T.width("bn4f")*0.75,T.height("bn4f")*0.75);
                 } else {
-                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+i*W*0.043-2,H*0.87-2,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
-                    roundedRect(ctx,W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
-                    text(ctx,i+1,W*0.801-25+i*W*0.043+W*0.035*0.5,H*0.87+W*0.035*0.5,"34px"+FONT,"white","center","middle");
-                    var lineRect=(new Rect(W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035)).small();
+                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+(i%5)*W*0.043-2,H*0.87-2+Math.floor(i/5)*W*0.043-W*0.022,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
+                    roundedRect(ctx,W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
+                    text(ctx,i+1,W*0.801-25+(i%5)*W*0.043+W*0.035*0.5,H*0.87+W*0.035*0.5+Math.floor(i/5)*W*0.043-W*0.022,"34px"+FONT,"white","center","middle");
+                    var lineRect=(new Rect(W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035)).small();
                     if (lineRect.isInside(GM.x,GM.y) && data.wbline!==i) {
-                        roundedRect(ctx,W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035,10,"rgba(255,255,255,0.6)");
+                        roundedRect(ctx,W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035,10,"rgba(255,255,255,0.6)");
                         this.addZone("wbline_"+i,lineRect,"wbline",{target: i});
                     }
                 }
@@ -18428,7 +18428,7 @@ function Game() {
                     }
                 }
             } else if (modes[CQW.WB.mode]==="Heroes Allowed"){
-                data.wbline=4;
+                data.wbline=9;
                 data.wb[data.wbline]=[-1,-1,-1,(-2-extra.target),-1,-1];
                 scene="worldboss";
             } else {
@@ -20284,6 +20284,12 @@ function Game() {
             data.version=45;
             data.stats.t.m.heroes=0;
             data.stats.c.m.heroes=0;
+        }
+        if (data.version==45) {
+            data.version=46;
+            var promo_lineup = data.wb.pop();
+            data.wb.push([-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]);
+            data.wb.push(promo_lineup);
         }
         if (data.heroInfo !== undefined) while (data.heroInfo.length < HERO.length) data.heroInfo.push(true);
         for (var i=0; i<EVENTS.length; ++i) {
