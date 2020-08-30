@@ -19,7 +19,7 @@ function Texer(jsonurl,audioUrls,animationFrames) {
     // load JSON
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && (this.status == 200 || this.status == 0)) {
             self.setJSON(this.responseText);
         }
     };
@@ -93,7 +93,8 @@ function Texer(jsonurl,audioUrls,animationFrames) {
         }
         var loadAudio = function (url,id) {
             var audio = new Audio();
-            loadBlob(audio,url,id);
+			if(!window.location.href.startsWith("file"))
+				loadBlob(audio,url,id);
             return audio;
         }
         self.loadData.todo=this.json.sources.length+audioFiles.length;
