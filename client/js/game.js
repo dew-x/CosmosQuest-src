@@ -7802,7 +7802,7 @@ function Game() {
             T.draw(ctx,"0gws",W*0.57-T.width("0lts")/2-T.width("0gws")+4,H*0.45-5-T.height("0gws"));
             var anyMonster=undefined;
             for (var i=0;i<data.playground[0].line.length;++i) if (data.playground[0].line[i]!=-1) anyMonster=true;
-            if (anyMonster) this.addZone("clGridPlayg0",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.455-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:0});
+            if (anyMonster && !simwbscreen) this.addZone("clGridPlayg0",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.455-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:0});
             
             text(ctx,"Player 01",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts"));
@@ -7812,7 +7812,7 @@ function Game() {
             T.draw(ctx,"0gws",W*0.57-T.width("0lts")/2-T.width("0gws")+4,H*0.75-5-T.height("0gws"));
             anyMonster=undefined;
             for (var i=0;i<data.playground[1].line.length;++i) if (data.playground[1].line[i]!=-1) anyMonster=true;
-            if (anyMonster) this.addZone("clGridPlayg1",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.755-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:1});
+            if (anyMonster && !simwbscreen) this.addZone("clGridPlayg1",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.755-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:1});
             
             text(ctx,"Player 02",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts"));
