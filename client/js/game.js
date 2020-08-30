@@ -7799,11 +7799,21 @@ function Game() {
             }
         } else if (mode=="playground") {
             // Player 1
+            T.draw(ctx,"0gws",W*0.57-T.width("0lts")/2-T.width("0gws")+4,H*0.45-5-T.height("0gws"));
+            var anyMonster=undefined;
+            for (var i=0;i<data.playground[0].line.length;++i) if (data.playground[0].line[i]!=-1) anyMonster=true;
+            if (anyMonster) this.addZone("clGridPlayg0",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.455-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:0});
+            
             text(ctx,"Player 01",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts"));
             var y1 = H*0.45-16;
 
             // Player 2
+            T.draw(ctx,"0gws",W*0.57-T.width("0lts")/2-T.width("0gws")+4,H*0.75-5-T.height("0gws"));
+            anyMonster=undefined;
+            for (var i=0;i<data.playground[1].line.length;++i) if (data.playground[1].line[i]!=-1) anyMonster=true;
+            if (anyMonster) this.addZone("clGridPlayg1",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.755-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:1});
+            
             text(ctx,"Player 02",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts"));
             var y2 = H*0.75-16;
@@ -17790,12 +17800,13 @@ function Game() {
                 text: "Do you want to clear the grid?",
                 mode: "confirm",
                 action: function () {
-                    if (scene=="city") _this.clearall();
+                    if (scene=="city" && cityPage=="hourly") _this.clearall();
                     else if (scene=="tournaments") data.tour.setup[tournamentid]=Array(30).fill(-1);
                     else if (scene=="pve" || scene=="pved" || inDungeon==true) data.pve[data.pveline]=[-1,-1,-1,-1,-1,-1];
                     else if (scene=="worldboss") data.wb[data.wbline]=[-1,-1,-1,-1,-1,-1];
                     else if (flashOpen) data.flash.setup=Array(18).fill(-1);
                     else if (halloweenOpen) data.halloween=[-1,-1,-1,-1,-1,-1];
+                    else if (scene=="city" && cityPage=="playground") data.playground[extra.target].line=[-1,-1,-1,-1,-1,-1];
                 }
             }
         } else if (action=="sPve") {
