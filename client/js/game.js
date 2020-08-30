@@ -332,15 +332,6 @@ function Game() {
                     return false;
                 }
             },{
-                id: "CQM",
-                icon: "bhe4",
-                text: "CosmosQuest Mobile",
-                action: "cqm",
-                extra: {target:!cqmOpen},
-                active: function () {
-                    return true;
-                }
-            },{
                 id:"STPA",
                 icon:"r8aa",
                 text: "St.Patrick Hero",
@@ -945,7 +936,6 @@ function Game() {
         percentage: undefined,
         next: false,
     };
-    var cqmOpen = false;
     var halloweenOpen = false;
     var halloweenMode = "fight";
     var halloweenLevelUp = undefined;
@@ -1687,9 +1677,6 @@ function Game() {
             } else if (adventureOpen) {
                 zones = {};
                 if (mdata!==undefined) this.drawAdventure(ctx);
-            } else if (cqmOpen) {
-                zones = {};
-                this.drawCQM(ctx);
             } else if (this.isHalloween() && halloweenOpen) {
                 zones = {};
                 this.drawHalloween(ctx);
@@ -2219,7 +2206,7 @@ function Game() {
         }
     }
     this.keyPress = function (code) {
-        if (!searchTab) {
+        if (!searchTab && document.getElementById("levelwb").style.display!="block" && document.getElementById("playgroundbg").style.display!="block") {
             if (code == 122) this.doAction("zPress");
             else if (code>=48 && code<=57) this.doAction("build",{target:code-48});
             else if (code==44) this.doAction("build",{target:10});
@@ -4027,7 +4014,7 @@ function Game() {
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                                 T.draw(ctx,"0ap1",ix+(W*0.15/2)+i*W*0.2+W*0.04,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                             }
-                            else if (hid==130||hid==102||hid==132) {
+                            else if (hid==130||hid==102||hid==132||hid==147||hid==198) {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"08y7",ix+(W*0.15/2)+i*W*0.2+W*0.024,y0+H*0.265-T.height("08y7")*0.5*0.6,T.width("08y7")*0.5,T.height("08y7")*0.5);
                             }
@@ -6806,6 +6793,12 @@ function Game() {
             text(ctx,"Link to shop to buy more keys",W*0.043+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
+            ctx.fillRect(W*0.27-1,H*0.916+5-1,W*0.26+2,H*0.05+2);
+            ctx.fillStyle="rgba(36,36,36,0.95)";
+            ctx.fillRect(W*0.27,H*0.916+5,W*0.26,H*0.05);
+            text(ctx,"Hold ctrl to open 10 keys in one click",W*0.27+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
+
+            ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.66-1,H*0.615-32-5-1,W*0.31+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.66,H*0.615-32-5,W*0.31,H*0.05);
@@ -6852,7 +6845,7 @@ function Game() {
             text(ctx,"* Legendary Heroes: 1 Legendary Hero",c2,H*0.19+132,"32px"+FONT,"gold","left","middle");
         }
 
-        text(ctx,"* HINT: You can press ctrl to open 10 chests in one click!!",W*0.05,H*0.955,"24px"+FONT,"black","left","middle");
+        //text(ctx,"* HINT: You can press ctrl to open 10 chests in one click!!",W*0.05,H*0.955,"24px"+FONT,"black","left","middle");
 
         // Multiple Chest Pop-UP
         if (mulChestArray !== undefined) {
@@ -7167,25 +7160,27 @@ function Game() {
                 ctx.lineTo(0, 0);
                 ctx.closePath();
 
-                ctx.moveTo(W * 0.022, H * 0.135);
-                ctx.lineTo(W * 0.022, H * 0.19);
-                ctx.lineTo(W * 0.165, H * 0.19);
-                ctx.lineTo(W * 0.165, H * 0.135);
-                ctx.lineTo(W * 0.022, H * 0.135);
+                // Followers & Line Info
+                ctx.moveTo(W*0.024, H*0.100);
+                ctx.lineTo(W*0.024, H*0.195);
+                ctx.lineTo(W*0.160, H*0.195);
+                ctx.lineTo(W*0.160, H*0.100);
+                ctx.lineTo(W*0.024, H*0.100);
+                ctx.closePath();
+                
+                // Elements
+                ctx.moveTo(W*0.170, H*0.035);
+                ctx.lineTo(W*0.170, H*0.17);
+                ctx.lineTo(W*0.252, H*0.17);
+                ctx.lineTo(W*0.252, H*0.035);
+                ctx.lineTo(W*0.170, H*0.035);
                 ctx.closePath();
 
-                ctx.moveTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) + T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) + T.width("065i") / 2, (H * 0.101) + T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) + T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.lineTo((W * 0.21) - T.width("065i") / 2, (H * 0.101) - T.height("065i") / 2);
-                ctx.closePath();
-
-                ctx.moveTo(px, py);
-                ctx.lineTo(px, py + ph);
-                ctx.lineTo(px + pw, py + ph);
-                ctx.lineTo(px + pw, py);
-                ctx.lineTo(px, py);
+                ctx.moveTo(px, py + 40);
+                ctx.lineTo(px, py + 40 + ph);
+                ctx.lineTo(px + pw, py + 40 + ph);
+                ctx.lineTo(px + pw, py + 40);
+                ctx.lineTo(px, py + 40);
                 ctx.closePath();
 
                 ctx.moveTo(16 + bx, 15 + by + 320);
@@ -7213,16 +7208,16 @@ function Game() {
                 ctx.fill();
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
-                ctx.fillRect(W * 0.28, H * 0.12, W * 0.2, H * 0.05);
-                text(ctx, "Counter elements table", (W * 0.28) + (W * 0.2) / 2, (H * 0.12) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
+                ctx.fillRect(W * 0.26, H * 0.12, W * 0.2, H * 0.05);
+                text(ctx, "Counter elements table", (W * 0.26) + (W * 0.2) / 2, (H * 0.12) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
                 ctx.fillRect(W * 0.024, H * 0.20, W * 0.2, H * 0.05);
-                text(ctx, "Available setup points", (W * 0.024) + (W * 0.2) / 2, (H * 0.20) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
+                text(ctx, "Followers & Line Info", (W * 0.024) + (W * 0.2) / 2, (H * 0.20) + (H * 0.05) / 2, "32px" + FONT, "white", "center", "middle");
 
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
-                ctx.fillRect(px, py + ph, pw, ph);
-                text(ctx, "Click the Log to view the Battle", px + pw / 2, py + ph + ph / 2, "32px" + FONT, "white", "center", "middle");
+                ctx.fillRect(px, py + 40 + ph, pw, ph);
+                text(ctx, "Click the Log to view the Battle", px + pw / 2, py + 40 + ph + ph / 2, "32px" + FONT, "white", "center", "middle");
 
                 this.drawMonster(ctx, 0, bx + 136, by + 175);
                 ctx.fillStyle = "rgba(36,36,36,0.95)";
@@ -7600,7 +7595,7 @@ function Game() {
             T.draw(ctx,"0c2t",1024*0.019,640*0.185); // Fons Monstres
             var avaHero=false;
             for (var i=0;i<HERO.length;++i) if (heroes[i]!==0 && heroes[i]!==undefined) avaHero=true;
-            if (avaHero==false && tournamentid!==1) elements.splice(4,1);
+            if (avaHero==false && (tournamentid!==1||mode!="tournaments")) elements.splice(4,1);
             for (var i=0;i<elements.length; ++i) {
                 if (typeTab==i && !searchTab) T.draw(ctx,tabON,1024*0.125,640*(0.195+0.12*i));
                 else T.draw(ctx,tabOFF,1024*0.125,640*(0.195+0.12*i));
@@ -7610,12 +7605,13 @@ function Game() {
                 T.draw(ctx,elements[i],1024*0.125,640*(0.195+0.12*i));
                 this.addZone("sTab_"+i,(new Rect(1024*0.125,640*(0.195+0.12*i),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
             }
-
-            if (!searchTab) {
-                T.draw(ctx,tabOFF,1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
-                this.addZone("osearchTab",(new Rect(1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
-            } else {
-                T.draw(ctx,tabON,1024*0.125,H*(0.195+0.6),T.width(tabON)*5,T.height(tabON)*0.6);
+            if ((mode!=="wb"||CQW.WB.mode==1) && (mode!=="tournaments"||hmode[tid%hmode.length]!=="No Heroes")) {
+	            if (!searchTab) {
+	                T.draw(ctx,tabOFF,1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
+	                this.addZone("osearchTab",(new Rect(1024*0.125,H*(0.195+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
+	            } else {
+	                T.draw(ctx,tabON,1024*0.125,H*(0.195+0.6),T.width(tabON)*5,T.height(tabON)*0.6);
+	            }
             }
         } else if (mode=="halloween") {
             var fx=W*0.12-5;
@@ -9094,7 +9090,7 @@ function Game() {
             if (CQW !== undefined && CQW.tour !== undefined) this.addZone("idr",idtrect,"idr");
         }
         else T.draw(ctx,"0di2",btx,bty-40);
-        text(ctx,"Tournament id: "+tournamentid,btx+T.width("0di2")*0.5,bty-40+T.height("0di2")*0.5,"50px"+FONT,"rgba(255,250,210,1)","center","middle");
+        text(ctx, "Tournament " + (tournamentid + 1),btx+T.width("0di2")*0.5,bty-40+T.height("0di2")*0.5,"50px"+FONT,"rgba(255,250,210,1)","center","middle");
 
         // Last tournaments results
         var ltrect = (new Rect(btx,bty+20,T.width("0di2"),T.height("0di2"))).small();
@@ -9311,7 +9307,7 @@ function Game() {
             else if (tdata.length>0) {
                 for (var j=0;j<10;++j) {
                     var yprice=TPRICE[tdata[showDay].tid%7];
-                    if (tdata[showDay].tid<=17349||yprice==0) yprice=10;
+                    if (tdata[showDay].tid<=17349&&yprice==0) yprice=10;
                     var reward=cn(tprize(j+1,tdata[showDay].amount,yprice));
                     text(ctx,(j+1),btx+36,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,tdata[showDay].top10[j],btx+66,bty+150+35*j,"36px"+FONT,"black","left","middle");
@@ -9342,7 +9338,7 @@ function Game() {
                     text(ctx,"Tournament hadn't finished",xpos,H*0.5,"26px"+FONT,"black","center","middle");
                 } else {
                     var yprice=TPRICE[tdata[showDay].tid%7];
-                    if (mdata.city.tour[tpos].tid<=17349||yprice==0) yprice=50;
+                    if (mdata.city.tour[tpos].tid<=17349&&yprice==0) yprice=50;
                     var yourReward=tprize(mdata.city.tour[tpos].top,mdata.city.tour[tpos].amount,yprice);
                     //var pranas=TPG[yprice];
                     var pranas=TPG[yprice];
@@ -9422,11 +9418,11 @@ function Game() {
                 ctx.closePath();
 
                 // Toggle
-                ctx.moveTo(W*0.665, H*0.195);
-                ctx.lineTo(W*0.665, H*0.28);
-                ctx.lineTo(W*0.915, H*0.28);
-                ctx.lineTo(W*0.915, H*0.195);
-                ctx.lineTo(W*0.665, H*0.195);
+                ctx.moveTo(W*0.665, H*0.225);
+                ctx.lineTo(W*0.665, H*0.31);
+                ctx.lineTo(W*0.915, H*0.31);
+                ctx.lineTo(W*0.915, H*0.225);
+                ctx.lineTo(W*0.665, H*0.225);
                 ctx.closePath();
 
                 // Rules
@@ -9477,10 +9473,10 @@ function Game() {
                 text(ctx,"Counter Elements Table",W*0.257+3,H*0.100-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
-                ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
+                ctx.fillRect(W*0.665-1,H*0.225-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
-                ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                ctx.fillRect(W*0.665,H*0.225-32-5,W*0.165,H*0.05);
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.225-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.670-1,H*0.39-32-5-1,W*0.14+2,H*0.05+2);
@@ -9522,7 +9518,7 @@ function Game() {
                 text(ctx,"* You will be able to join on the tournament until 23:50 GMT.",xleft,H*0.4+125,"32px"+FONT,"white","left","middle");
                 text(ctx,"* You can't edit your setup after joining the tournament.",xleft,H*0.4+150,"32px"+FONT,"white","left","middle");
                 text(ctx,"* All participants will be rewarded with Star Dust based on performance.",xleft,H*0.4+175,"32px"+FONT,"white","left","middle");
-                text(ctx,"* Wednesday FREE. Monday, Tuesday, Thursday, Friday 100 UM. Saturday 200, Sunday 500 UM",xleft,H*0.4+200,"28px"+FONT,"white","left","middle");
+                text(ctx,"* Wednesday FREE. Monday, Tuesday, Thursday, Friday 125 UM. Saturday 250, Sunday 400 UM",xleft,H*0.4+200,"28px"+FONT,"white","left","middle");
             } else {
                 // Log
                 ctx.moveTo(W*0.040, H*0.350);
@@ -9565,11 +9561,11 @@ function Game() {
                 ctx.closePath();
 
                 // Toggle
-                ctx.moveTo(W*0.665, H*0.195);
-                ctx.lineTo(W*0.665, H*0.28);
-                ctx.lineTo(W*0.915, H*0.28);
-                ctx.lineTo(W*0.915, H*0.195);
-                ctx.lineTo(W*0.665, H*0.195);
+                ctx.moveTo(W*0.665, H*0.225);
+                ctx.lineTo(W*0.665, H*0.31);
+                ctx.lineTo(W*0.915, H*0.31);
+                ctx.lineTo(W*0.915, H*0.225);
+                ctx.lineTo(W*0.665, H*0.225);
                 ctx.closePath();
 
                 // Top10
@@ -9614,16 +9610,16 @@ function Game() {
                 text(ctx,"Import Battle from Web",W*0.105+3,H*0.950-16-5,"32px"+FONT,"white","left","middle");
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
-                ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
+                ctx.fillRect(W*0.665-1,H*0.225-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
-                ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                ctx.fillRect(W*0.665,H*0.225-32-5,W*0.165,H*0.05);
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.225-16-5,"32px"+FONT,"white","left","middle");
 
-                ctx.fillStyle="rgba(255,255,255,0.95)";
+                /*ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.665-1,H*0.195-32-5-1,W*0.165+2,H*0.05+2);
                 ctx.fillStyle="rgba(36,36,36,0.95)";
                 ctx.fillRect(W*0.665,H*0.195-32-5,W*0.165,H*0.05);
-                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");
+                text(ctx,"Tournaments / Results",W*0.665+3,H*0.195-16-5,"32px"+FONT,"white","left","middle");*/
 
                 ctx.fillStyle="rgba(255,255,255,0.95)";
                 ctx.fillRect(W*0.680-1,H*0.400-32-5-1,W*0.148+2,H*0.05+2);
@@ -10042,8 +10038,8 @@ function Game() {
                 ctx.fill();
     
                 ctx.fillStyle="rgba(0,0,0,0.8)";
-                ctx.fillRect(btx-W*0.01,bty-H*0.04,W*0.685,H*0.05);
-                text(ctx,"Hide the selected hero on the left panel for pvp and pve. (Doesn't work in Tournaments)",btx-W*0.01+5,bty-H*0.04+H*0.025,"36px"+FONT,"white","left","middle");
+                ctx.fillRect(btx-W*0.01,bty-H*0.04,W*0.880,H*0.05);
+                text(ctx,"Hide the selected hero on the left panel for pvp, pve and disables it for the solver. (Doesn't work in Tournaments)",btx-W*0.01+5,bty-H*0.04+H*0.025,"36px"+FONT,"white","left","middle");
             }
 
             // Hero Decomposer Tool
@@ -11425,18 +11421,18 @@ function Game() {
             ctx.closePath();
 
             // Current Season
-            ctx.moveTo(W*0.22, H*0.185);
-            ctx.lineTo(W*0.22, H*0.253);
-            ctx.lineTo(W*0.33, H*0.253);
-            ctx.lineTo(W*0.33, H*0.185);
-            ctx.lineTo(W*0.22, H*0.185);
+            ctx.moveTo(W*0.222, H*0.185);
+            ctx.lineTo(W*0.222, H*0.253);
+            ctx.lineTo(W*0.336, H*0.253);
+            ctx.lineTo(W*0.336, H*0.185);
+            ctx.lineTo(W*0.222, H*0.185);
             ctx.closePath();
 
             // Season Pass
             ctx.moveTo(W*0.08, H*0.185);
             ctx.lineTo(W*0.08, H*0.253);
-            ctx.lineTo(W*0.21, H*0.253);
-            ctx.lineTo(W*0.21, H*0.185);
+            ctx.lineTo(W*0.215, H*0.253);
+            ctx.lineTo(W*0.215, H*0.185);
             ctx.lineTo(W*0.08, H*0.185);
             ctx.closePath();
 
@@ -11732,8 +11728,11 @@ function Game() {
                 var mm = date.getMonth()+1;
                 var yyyy = date.getFullYear();
 
-                if (CQW.WB.id==87) text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"36px"+FONT,"black","center","middle");
-                else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
+                if (mdata.city.WB.log[showBoss].name=="MOTHER OF ALL KODAMAS") text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"36px"+FONT,"black","center","middle");
+                else if (mdata.city.WB.log[showBoss].name=="SUPER MOTHER OF ALL KODAMAS") {
+                    text(ctx,"SUPER",xpos,H*0.435,"36px"+FONT,"red","center","middle");
+                    text(ctx,"MOTHER OF ALL KODAMAS",xpos,H*0.465,"36px"+FONT,"black","center","middle");
+                } else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
                 text(ctx,"Level: "+mdata.city.WB.log[showBoss].level,xpos,H*0.50,"36px"+FONT,"black","center","middle");
                 text(ctx,"Mode: "+modes[mdata.city.WB.log[showBoss].mode],xpos,H*0.54,"36px"+FONT,"black","center","middle");
                 text(ctx,"Damage Done: "+bint(mdata.city.WB.log[showBoss].dealt),xpos,H*0.58,"36px"+FONT,"black","center","middle");
@@ -12791,7 +12790,7 @@ function Game() {
         } else {
             var btw = W*0.2;
             var bth = H*0.125;
-            var kadvs = [{title:"Cosmic Coins",time:"04:30:00h",icon:"0ap1"},{title:"Prana Gems",time:"07:50:00h",icon:"0j14"},{title:"Ascended Spheres",time:"11:30:00h",icon:"08y7"}];
+            var kadvs = [{title:"Cosmic Coins",time:"04:30:00h",icon:"0ap1"},{title:"Prana Gems",time:"07:50:00h",icon:"0j14"},{title:"Ascension Spheres",time:"11:30:00h",icon:"08y7"}];
             for (var i = 0; i < 3; ++i) {
                 var brect = (new Rect(W*0.25-btw*0.5+W*0.25*i-2,H*0.35-bth*0.5-2,btw+4,bth+4)).small();
                 if (adventure.kind == i) {
@@ -12861,22 +12860,6 @@ function Game() {
         }
         else T.draw(ctx,"7otr",W*0.97*0.5+bgw*0.5-cw-2,H*0.5-bgh*0.97*0.5+8,cw,ch);
     }
-    this.drawCQM = function (ctx) {
-        var grect = (new Rect(W*0.53,H*0.75,W*0.165,H*0.08)).small();
-        if (grect.isInside(GM.x,GM.y)) {
-            this.addZone("cqlink_0",grect,"cqlink",{target:0});
-        }
-
-        var arect = (new Rect(W*0.73,H*0.75,W*0.165,H*0.08)).small();
-        if (arect.isInside(GM.x,GM.y)) {
-            this.addZone("cqlink_1",arect,"cqlink",{target:1});
-        }
-
-        var crect = (new Rect(W*0.865,H*0.125,W*0.03,H*0.05)).small();
-        if (crect.isInside(GM.x,GM.y)) {
-            this.addZone("cqm_close",crect,"cqm",{target:false});
-        }
-    }
     this.drawSeasonShop = function (ctx) {
         var shopData=getStarDustData();
         ctx.fillStyle="rgba(47,47,47,0.25)";
@@ -12891,11 +12874,11 @@ function Game() {
         roundedRect(ctx,W*0.5-(bgw/2)+200,-5+H*0.5-(bgh/2)+15,bgw-400,H*0.075,5,"rgba(50,50,50,0.80)");
         T.draw(ctx,"k2mi",W*0.35-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
         T.draw(ctx,"k2mi",W*0.65-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
-        text(ctx,bint(SD),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","midle","middle");
+        text(ctx,bint(SD),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","center","middle");
 
         // Zones
         //var titles = ["4nak","il1i","n6uk","bqt5","veex","qarp"];
-        var titles = ["PRANA GEMS","COSMIC COINS","ASCENDED SPHERES","KEYS","HERO KEYS","ENHANCE MIRACLES"];
+        var titles = ["PRANA GEMS","COSMIC COINS","ASCENSION SPHERES","KEYS","HERO KEYS","ENHANCE MIRACLES"];
         var num=0;
         var initx=W*0.25;
         for (var i=0;i<2;++i) {
@@ -13562,7 +13545,7 @@ function Game() {
             {a: "Gold Season Pass: ",b: mdata.city.pass.isGold},
             {a: "Cosmic Coins Dispenser: ",b: mdata.city.easter.ccdispenser,d:true},
             {a: "Prana Gems Dispenser: ",b: mdata.city.easter.pgdispenser,d:true},
-            {a: "Ascender Spheres Dispenser: ",b: mdata.city.easter.asdispenser,d:true},
+            {a: "Ascension Spheres Dispenser: ",b: mdata.city.easter.asdispenser,d:true},
             {a: "Universe Marbles Dispenser: ",b: mdata.city.easter.umdispenser,d:true},
             {a: "Chests Dispenser: ",b: mdata.city.easter.freesilver},
             {a: "Free Promotion 4: ",b: mdata.city.easter.freep4},
@@ -13649,7 +13632,7 @@ function Game() {
                         if (c==11) text(ctx,(c+1)+") "+"Cosmic Coins Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                         else if (c==14) text(ctx,(c+1)+") "+"Prana Gems Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                         else if (c==16) text(ctx,(c+1)+") "+"Universe Marbles Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
-                        else if (c==22) text(ctx,(c+1)+") "+"Ascended Spheres Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
+                        else if (c==22) text(ctx,(c+1)+") "+"Ascension Spheres Dispenser"+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                         else text(ctx,(c+1)+") "+rewards[c].t+" -> "+rewards[c].m+"p",W*0.5-bgw*0.25-bw*0.475+(i*bgw*0.5),H*0.225+(j*H*0.045),"26px"+FONT,"white","left","middle");
                     }
                     ++c;
@@ -18005,6 +17988,9 @@ function Game() {
             if (tournamentPage=="join") tournamentPage="results";
             else tournamentPage="join";
         } else if (action=="idr") {
+            searchTab=false;
+            document.getElementById("herosearch").style.display="none";
+            document.getElementById("herosearch").value="";
             if (tournamentid==0) tournamentid=1;
             else tournamentid=0;
             //tournamentid=0;
@@ -18284,6 +18270,9 @@ function Game() {
             } else {
                 showDaily = false;
                 flashOpen = false;
+                searchTab=false;
+                document.getElementById("herosearch").style.display="none";
+                document.getElementById("herosearch").value="";
             }
         } else if (action=="sflash") {
             // Navigate between days information
@@ -18337,6 +18326,9 @@ function Game() {
             } else {
                 inDungeon=false;
                 showDaily = false;
+                searchTab=false;
+                document.getElementById("herosearch").style.display="none";
+                document.getElementById("herosearch").value="";
             }
         } else if (action=="sfcell") {
             this.sfcell(extra.target);
@@ -18509,7 +18501,7 @@ function Game() {
             if (extra.allowhero===0) {
                 solver = new Solver(extra.grid,mdata.followers,Array(HERO.length).fill(0),mdata.city.promo,extra.setup,extra.shero,extra.spromo,extra.mode);
             } else {
-                solver = new Solver(extra.grid,mdata.followers,mdata.city.hero,mdata.city.promo,extra.setup,extra.shero,extra.spromo,extra.mode);
+                solver = new Solver(extra.grid,mdata.followers,mdata.city.hero.map((h, i) => data.heroInfo[i] ? h : 0),mdata.city.promo,extra.setup,extra.shero,extra.spromo,extra.mode);
             }
         } else if (action=="tsolver") {
             solver = new tSolver(extra.grid,extra.followers,extra.phero,extra.ppromo,extra.thero,extra.tpromo,extra.mode);
@@ -18605,7 +18597,7 @@ function Game() {
                 if (data.playground[0].line[i] !== -1) anyA = true;
             }
             if (anyA) {
-                var level=document.getElementById("wblvl").value;
+                var level=parseInt(document.getElementById("wblvl").value);
                 if (!Number.isInteger(level) || level < 1) level = 1;
                 var heroA = Array(HERO.length).fill(1);
                 var heroB = Array(HERO.length).fill(1);
@@ -18738,17 +18730,6 @@ function Game() {
             }
         } else if (action=="cadventure") {
             adventure.next = false;
-        } else if (action=="cqm") {
-            if (extra.target) {
-                document.getElementById("cqmbl").style.display="block";
-                cqmOpen = true;
-            } else {
-                document.getElementById("cqmbl").style.display="none";
-                cqmOpen = false;
-            }
-        } else if (action=="cqlink") {
-            if (extra.target==0) window.open("http://bit.ly/2kRUDYb");
-            else window.open("http://apple.co/2kSj5bX");
         } else if (action=="ohall") {
             halloweenOpen = !halloweenOpen;
         } else if (action=="shal") {
@@ -21321,6 +21302,7 @@ function Game() {
         if (hide_prom==undefined) hide_prom=false;
         if (id>=0) {
             hp=bstats==undefined?MONSTERS[id].hp:bstats.hp;
+            atk=bstats==undefined?MONSTERS[id].atk:bstats.atk;
             var eSphere = ["03xz","0l2b","0cyo","0ckv"];
             var aura = ["fq9i","9b1q","ewf1","yrzo"];
             var peana = "0j89";
@@ -21333,8 +21315,8 @@ function Game() {
             ctx.restore();
             T.draw(ctx,eSphere[MONSTERS[id].type],x-T.width("03xz")*scale/2,y-16*scale,T.width("03xz")*scale,T.height("03xz")*scale);
 
-            text(ctx,MONSTERS[id].atk,x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,"white","center","middle");
-            text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==MONSTERS[id].hp?"white":(hp>MONSTERS[id].hp?"green":"red"),"center","middle");
+            text(ctx,atk,x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==MONSTERS[id].atk?"white":(atk>MONSTERS[id].atk?"lime":"red"),"center","middle");
+            text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==MONSTERS[id].hp?"white":(hp>MONSTERS[id].hp?"lime":"red"),"center","middle");
 
             if (id>=120) T.draw(ctx,"3i47",x-T.width("3i47")*scale/2,y-(T.height("3i47")+10)*scale,T.width("3i47")*scale,T.height("3i47")*scale);
             else if (id>=60) T.draw(ctx,aura[MONSTERS[id].type],x-T.width(aura[MONSTERS[id].type])*scale/2,y-(T.height(aura[MONSTERS[id].type])+10)*scale,T.width(aura[MONSTERS[id].type])*scale,T.height(aura[MONSTERS[id].type])*scale);
@@ -21399,14 +21381,14 @@ function Game() {
                     T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
                 }
                 if (HERO[hid].rarity == 3 && false) {
-                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":"lime","center","middle","yellow",2);
-                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"yellow":"red","center","middle","yellow",2);
-                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"yellow":"red","center","middle","yellow",2);
+                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":(atk>stats.atk?"lime":"red"),"center","middle","yellow",2);
+                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"yellow":(hp>stats.hp?"lime":"red"),"center","middle","yellow",2);
+                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"yellow":(hp>stats.hp?"lime":"red"),"center","middle","yellow",2);
                 }
                 else {
-                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"white":"lime","center","middle");
-                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"white":"red","center","middle");
-                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"green":"red"),"center","middle");
+                    text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"white":(atk>stats.atk?"lime":"red"),"center","middle");
+                    if (hp>=1000) text(ctx,hp,x+18*scale,y-9*scale,Math.floor(16*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"lime":"red"),"center","middle");
+                    else text(ctx,hp,x+18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,hp==stats.hp?"white":(hp>stats.hp?"lime":"red"),"center","middle");
                 }
                 if (level>=1000) {
                     var x1 = 0;
@@ -22730,6 +22712,7 @@ function Game() {
     }
     this.skill2text = function (skill,lvl,wb,promote,plvl,value) {
         //var ttext="All";
+    	var stats = level2stats(skill.hid,lvl,plvl);
         lvl = Math.min(99,lvl);
         if (value===undefined) value=skill.value;
         if (promote!==undefined && plvl>=5 && wb!==true) value+=promote;
@@ -22815,7 +22798,7 @@ function Game() {
             }
         } else if (skill.type=="boom") {
             return {
-                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack on death",
+                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack ("+(stats.atk*value).toFixed(0)+") on death",
                 long: "AoE (Area of Effect) Revenge causes this unit to trigger an action upon death. This unit deals damage to all enemies (AoE) equal to a percentage of its attack upon death.",
             }
         } else if (skill.type=="buffatk") {
@@ -22982,7 +22965,7 @@ function Game() {
             }
         } else if (skill.type=="friend") {
             return {
-                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack ("+((level2stats(skill.hid,lvl,plvl).atk*(value*100))/100).toFixed(0)+") & Health ("+((level2stats(skill.hid,lvl,plvl).hp*(value*100))/100).toFixed(0)+") given to friendly units",
+                short: "AoE Revenge/n"+(value*100).toFixed(0)+"% Attack ("+((stats.atk*(value*100))/100).toFixed(0)+") & Health ("+((stats.hp*(value*100))/100).toFixed(0)+") given to friendly units",
                 long: "AoE (Area of Effect) causes this unit to trigger an action upon death. This unit will give all friendly units Attack & Health equal to the percentage displayed upon death.",
             }
         } else if (skill.type=="void") {
@@ -22992,7 +22975,7 @@ function Game() {
             }              
         } else if (skill.type=="bday") {
             return {
-                short: "Surprise! Targeted /nDeals "+(value*100).toFixed(0)+"% Attack ("+((level2stats(skill.hid,lvl,plvl).atk*(value*100))/100).toFixed(0)+") per turn to enemies last unit",
+                short: "Surprise! Targeted /nDeals "+(value*100).toFixed(0)+"% Attack ("+((stats.atk*(value*100))/100).toFixed(0)+") per turn to enemies last unit",
                 long: "Targeted causes this units skill to target another specific unit. This unit will deal a percentage of its attack as display, each turn, to the enemies last unit.",
             }
         } else if (skill.type=="infiltred") {

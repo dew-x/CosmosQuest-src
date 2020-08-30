@@ -100,6 +100,10 @@ function Solver(ugrid,fols,uhero,upromo,setup,shero,spromo,mode) {
     this.running = true;
     this.known = [];
     this.mode=mode===undefined?"normal":mode;
+    this.noProgress = 0;
+    this.lastMaxDmg = 0;
+    this.limit = 500;
+    this.totalBest = null;
     this.init = function () {
         this.monsterPool = [];
         this.heroPool = [];
@@ -118,55 +122,76 @@ function Solver(ugrid,fols,uhero,upromo,setup,shero,spromo,mode) {
             if (this.hero[i]>0 && HERO[i].rarity!==5 && this.grid.indexOf(-(i+2))===-1) this.heroPool.push(i); 
         } 
     }
+	function better(a,b) {
+		if (a.res==b.res || mode=="wb") {
+			if (a.res==1) {
+				var a1 = amountOf(a.row,-1);
+				var b1 = amountOf(b.row,-1);
+				if (a1==b1) {
+					return b.dmg-a.dmg;
+				} else return b1-a1;
+			} else {
+				return b.dmg-a.dmg;
+			}
+		} else return b.res-a.res;
+	}
     this.step = function () {
-        ++this.steps;
-        if (this.known.length<10||Math.random()<0.2) {
-            var lineup = randomLineup(this.force,this.folsLeft,this.heroPool,this.monsterPool);
-            var res = this.feed(lineup);
-            this.known.push({
-                row: lineup,
-                dmg: res.dmga,
-                res: res.result 
-            });
-        } else {
-            while (this.known.length>10) this.known.pop(); 
-            var one = Math.floor(this.known.length*Math.random());
-            var cpy = this.known[one].row.slice();
-            if (Math.random()<0.2) {
-                var tries = 0;
-                do {
-                    a = Math.floor(cpy.length*Math.random());
-                    b = Math.floor(cpy.length*Math.random());
-                    if (++tries>100) break; 
-                } while (a==b||this.force[a]!==-1||this.force[b]!==-1);
-                if (a!=b&&this.force[a]==-1&&this.force[b]==-1) {
-                    ov = cpy[a];
-                    cpy[a] = cpy[b];
-                    cpy[b] = ov;
-                }
-            } else {
-                changeOne(cpy,this.force,this.folsLeft,this.heroPool,this.monsterPool);
-            }
-            var res = this.feed(cpy);
-            this.known.push({
-                row: cpy,
-                dmg: res.dmga,
-                res: res.result 
-            });
-        }
-        this.known.sort(function(a,b) {
-            if (a.res==b.res) {
-                if (a.res==1) {
-                    var a1 = amountOf(a.row,-1);
-                    var b1 = amountOf(b.row,-1);
-                    if (a1==b1) {
-                        return b.dmg-a.dmg;
-                    } else return b1-a1;
-                } else {
-                    return b.dmg-a.dmg;
-                }
-            } else return b.res-a.res;
-        });
+        for(let st = 0;st < 20;st++){
+			if(this.known.length > 0){
+				this.noProgress++;
+				var first = this.known[0];
+				if(!this.totalBest || better(first, this.totalBest) < 0)
+					this.totalBest = first;
+				if(this.noProgress > this.limit && first.res <= 0){
+					this.known = [];
+					this.noProgress = 0;
+					this.limit = 500;
+
+				}
+				if(first.dmg != this.lastMaxDmg){
+					this.lastMaxDmg = first.dmg;
+				this.limit += this.noProgress
+					this.noProgress = 0;
+				}
+			}
+
+			++this.steps;
+			if (this.known.length<10||Math.random()<0.2) {
+				var lineup = randomLineup(this.force,this.folsLeft,this.heroPool,this.monsterPool);
+				var res = this.feed(lineup);
+				this.known.push({
+					row: lineup,
+					dmg: res.dmga,
+					res: res.result 
+				});
+			} else {
+				while (this.known.length>10) this.known.pop(); 
+				var one = Math.floor(this.known.length*Math.random());
+				var cpy = this.known[one].row.slice();
+				if (Math.random()<0.2) {
+					var tries = 0;
+					do {
+						a = Math.floor(cpy.length*Math.random());
+						b = Math.floor(cpy.length*Math.random());
+						if (++tries>100) break; 
+					} while (a==b||this.force[a]!==-1||this.force[b]!==-1);
+					if (a!=b&&this.force[a]==-1&&this.force[b]==-1) {
+						ov = cpy[a];
+						cpy[a] = cpy[b];
+						cpy[b] = ov;
+					}
+				} else {
+					changeOne(cpy,this.force,this.folsLeft,this.heroPool,this.monsterPool);
+				}
+				var res = this.feed(cpy);
+				this.known.push({
+					row: cpy,
+					dmg: res.dmga,
+					res: res.result 
+				});
+			}
+			this.known.sort(better);
+		}
         var self = this;
         if (this.running) this.pid = setTimeout(function () {self.step();},1);
     }
@@ -178,9 +203,9 @@ function Solver(ugrid,fols,uhero,upromo,setup,shero,spromo,mode) {
         this.running = false;
         clearInterval(this.pid);
         for (var i=0; i<this.grid.length; ++i) {
-            this.grid[i] = this.known[0].row[i]; 
+            this.grid[i] = this.totalBest.row[i]; 
         }
-        return this.known[0].row;
+        return this.totalBest.row;
     }
     this.info = function () {
         return {
@@ -266,6 +291,7 @@ function randomLineup2(force,fols,hpool,mpool) {
             }
         } else {
             row[j] = force[j];
+            if(row[j] == 1)row[j] = -1;
         }
     }
     return row;

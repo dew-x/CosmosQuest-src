@@ -1,7 +1,7 @@
 <?php
 include_once("sql.php");
 include_once("functions.php");
-doHeader("Cosmos Quest - Lottery");
+doHeader("Cosmos Quest - Weekly Events");
 doMenu("wevents.php");
 $offset=0;
 $page=0;
@@ -146,7 +146,7 @@ if (isset($_GET["id"]) and ctype_digit($_GET["id"])) {
             }
             $pidlist = "'".implode("','",$pids)."'";
             $res = $sql->query("SELECT id,pid,`name`,public FROM users WHERE pid IN ($pidlist)");
-            $content.='<h3>Space Journey '.$cid.'<h3><h3>Participants: '.count($players).'</h3>
+            $content.='<h3>G.A.M.E.S '.$cid.'<h3><h3>Participants: '.count($players).'</h3>
                 <table class="pure-table pure-table-striped center">
                 <thead>
                     <tr>

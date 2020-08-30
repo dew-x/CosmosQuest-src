@@ -852,9 +852,15 @@ function tid2fol(tid) {
 }
 
 function bint(num) {
-    if (num>=100000000000) {
-        if (num>=1000000000000) return Math.floor(num/1000000).toLocaleString()+" B";
-        else return (num/1000000000).toFixed(2).toLocaleString()+" B";
+    if (num>=100000000000000000) {
+        if (num>=1000000000000000000) return Math.floor(num/1000000000000).toLocaleString()+" P";
+        else return (num/1000000000000000).toFixed(2).toLocaleString()+" P";
+    } else if (num>=100000000000) {
+        if (num>=1000000000000000) return Math.floor(num/1000000000).toLocaleString()+" T";
+        else return (num/1000000000000).toFixed(2).toLocaleString()+" T";
+    } else if (num>=100000000000) {
+        if (num>=1000000000000) return Math.floor(num/1000000).toLocaleString()+" G";
+        else return (num/1000000000).toFixed(2).toLocaleString()+" G";
     } else if (num>=100000000) {
         if (num>=1000000000) return Math.floor(num/1000000).toLocaleString()+" M";
         else return (num/1000000).toFixed(2).toLocaleString()+" M";
@@ -1079,7 +1085,8 @@ function similarity(s1, s2) {
     if (longerLength == 0) {
       return 1.0;
     }
-    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+    var isSub = (longer.toLowerCase().indexOf(shorter.toLowerCase()) !== -1)?1:0; //check whether
+    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength) + isSub;
 }
 
 function editDistance(s1, s2) {
