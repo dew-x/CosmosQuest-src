@@ -266,8 +266,8 @@ function Game() {
                 id:"OTO6",
                 icon:"qyte",
                 text:"Season Pass",
-                action: "scene",
-                extra: {target:"ranking"},
+                action: "tgsp",
+                extra: {target:"true"},
                 active: function () {
                     if (mdata!==undefined && mdata.city!==undefined && mdata.city.pass!==undefined&&mdata.city.pass.isGold!==1) {
                         return true;
