@@ -10038,8 +10038,8 @@ function Game() {
                 ctx.fill();
     
                 ctx.fillStyle="rgba(0,0,0,0.8)";
-                ctx.fillRect(btx-W*0.01,bty-H*0.04,W*0.685,H*0.05);
-                text(ctx,"Hide the selected hero on the left panel for pvp and pve. (Doesn't work in Tournaments)",btx-W*0.01+5,bty-H*0.04+H*0.025,"36px"+FONT,"white","left","middle");
+                ctx.fillRect(btx-W*0.01,bty-H*0.04,W*0.880,H*0.05);
+                text(ctx,"Hide the selected hero on the left panel for pvp, pve and disables it for the solver. (Doesn't work in Tournaments)",btx-W*0.01+5,bty-H*0.04+H*0.025,"36px"+FONT,"white","left","middle");
             }
 
             // Hero Decomposer Tool
@@ -18501,7 +18501,7 @@ function Game() {
             if (extra.allowhero===0) {
                 solver = new Solver(extra.grid,mdata.followers,Array(HERO.length).fill(0),mdata.city.promo,extra.setup,extra.shero,extra.spromo,extra.mode);
             } else {
-                solver = new Solver(extra.grid,mdata.followers,mdata.city.hero,mdata.city.promo,extra.setup,extra.shero,extra.spromo,extra.mode);
+                solver = new Solver(extra.grid,mdata.followers,mdata.city.hero.map((h, i) => data.heroInfo[i] ? h : 0),mdata.city.promo,extra.setup,extra.shero,extra.spromo,extra.mode);
             }
         } else if (action=="tsolver") {
             solver = new tSolver(extra.grid,extra.followers,extra.phero,extra.ppromo,extra.thero,extra.tpromo,extra.mode);

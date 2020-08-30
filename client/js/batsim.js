@@ -9309,7 +9309,7 @@ var heroB = Array(HERO.length).fill(0);*/
 beginBattle(A,B,heroA,heroB);
 console.timeEnd('beginBattle');*/
 
-function calcSeed(A,times) {
+function calcSeedSlow(A,times) {
     var seed = 1;
     for (var i=0; i<A.length; ++i) {
         seed=(seed*Math.abs(A[i])+1) % 2147483647;
@@ -9318,6 +9318,23 @@ function calcSeed(A,times) {
         seed = seed * 16807 % 2147483647;
     }
     return seed;
+}
+var seedLookupTable = [];
+for(let i = 0, x = 1;i < 110;i++){
+    seedLookupTable.push(x);
+    x = 16807 * x % 2147483647;
+}
+function calcSeed(A, times) {
+    for (var seed = 1, i = 0; i < A.length; ++i)
+        seed = (seed * Math.abs(A[i]) + 1) % 2147483647;
+    let f = seedLookupTable[times];
+    let f1 = f&0xFFFF;
+    let f2 = (f>>16)&0xFFFF;
+    let x = ((seed * f2) % 2147483647) * 65536;
+    x = ((x + seed * f1) % 2147483647);
+	//if(x != calcSeedSlow(A, times))
+	//	alert("wrong seed");
+    return x;
 }
 
 var gBattle = undefined;
