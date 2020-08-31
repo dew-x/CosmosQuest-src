@@ -1,0 +1,380 @@
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+<head>
+    <!--<meta content="/logos/doodles/2016/holidays-2016-day-2-6356741311692800-hp.gif" itemprop="image">
+    <meta content="Bon Nadal! #GoogleDoodle" property="og:description">
+    <meta content="http://www.google.com/logos/doodles/2016/holidays-2016-day-2-6356741311692800-thp.png" property="og:image">
+    <meta content="450" property="og:image:width">
+    <meta content="200" property="og:image:height">
+    <meta content="http://www.google.com/logos/doodles/2016/holidays-2016-day-2-6356741311692800-hp2x.gif" property="og:url">
+    <meta content="video.other" property="og:type">
+    <meta content="origin" id="mref" name="referrer">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+    <meta charset="utf-8" /> 
+    <link href="favicon.ico" rel="shortcut icon">
+    <title>Cosmos Quest</title>
+    <style>
+        body,html {
+            background: black;
+            margin: 0px;
+            padding: 0px;
+            pointer-events: none;
+            width: 100%;
+        }
+        #canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 1024px;
+            height: 640px;
+            pointer-events: auto;
+            z-index: -1;
+        }
+        * { 
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        #popup {
+            position: absolute;
+            width: 400px;
+            height: 250px;
+            display: block;
+            right: 312px;
+            top: 195px;
+            z-index: 1000;
+            text-align: center;
+            background: url("img/WINDOW.png");
+            display: none;
+        }
+        #dataloc {
+            margin: 10px;
+            width: 370px;
+            height: 170px;
+            border: none;
+            padding: 5px;
+            pointer-events: auto;
+            background: transparent;
+        }
+        .databut {
+            width: 80px;
+            height: 30px;
+            padding: 5px;
+            pointer-events: auto;
+            margin: 0 auto;
+        }
+        #kong {
+            position: absolute;
+            width: 267px;
+            height: 40px;
+            left: 378px;
+            top: 560px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        #playgroundbg {
+            background: #e5bd6c;
+            border-style: solid;
+            position: absolute;
+            width: 400px;
+            height: 200px;
+            left: 50%;
+            margin-left: -200px;
+            top: 320px;
+            margin-top: -100px;
+            display: block;
+            z-index: 1000;
+            text-align: center;
+            display: none;
+        }
+        #level {
+            width: 100px;
+            height: 20px;
+            border-style: solid;
+            pointer-events: auto;
+            background: transparent;
+            resize: none;
+            vertical-align: top;
+            font-size: 16px;
+            text-align: center;
+        }
+        #promotion {
+            width: 100px;
+            height: 20px;
+            border-style: solid;
+            pointer-events: auto;
+            background: transparent;
+            resize: none;
+            vertical-align: top;
+            font-size: 16px;
+            text-align: center;
+        }
+        .mycontainer {
+            vertical-align: middle;
+        }
+        .mycontainer label {
+            font-size: 28px;
+        }
+        #donebut {
+            width: 80px;
+            height: 30px;
+            pointer-events: auto;
+        }
+        #levelwb {
+            position: absolute;
+            width: 200px;
+            height: 20;
+            left: 58.9%;
+            margin-left: -200px;
+            top: 510px;
+            margin-top: -100px;
+            display: block;
+            z-index: 1000;
+            text-align: center;
+            display: none;
+            line-height: 75%;
+        }
+        #wblvl {
+            width: 100px;
+            height: 20px;
+            border-style: solid;
+            pointer-events: auto;
+            background: transparent;
+            resize: none;
+            vertical-align: top;
+            font-size: 16px;
+            text-align: center;
+        }
+        #slidecontainer {
+            position: absolute;
+            width: 500px; /* Width of the outside container */
+            left: 42.20%;
+            top: 375px;
+            pointer-events: auto;
+            z-index: 1000;
+            display: none;
+        }
+        #adventureRange {
+            width: 300px;
+        }
+        #cqmbl {
+            position: absolute;
+            width: 832px;
+            height: 513px;
+            display: block;
+            right: 96px;
+            top: 63px;
+            z-index: 1000;
+            text-align: center;
+            background: url("img/promo3.png");
+            background-size: contain;
+            display: none;
+        }
+        .close {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            width: 32px;
+            height: 32px;
+            opacity: 0.8;
+            font-weight: 400;
+            text-shadow: 2px 2px #000000;
+        }
+        .close:hover {
+            opacity: 1;
+        }
+        .close:before, .close:after {
+            position: absolute;
+            left: 15px;
+            content: ' ';
+            height: 33px;
+            width: 2px;
+            background-color: #333;
+        }
+        .close:before {
+            transform: rotate(45deg);
+        }
+        .close:after {
+            transform: rotate(-45deg);
+        }
+        #herosearch {
+            position: absolute;
+            background-color: rgb(199,185,147);
+            width: 140px;
+            height: 25px;
+            left: 132px;
+            top: 516px;
+            display: none;
+            pointer-events: auto;
+            resize: none;
+            font-size: 18px;
+            z-index: 5;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lacquer" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas" rel="stylesheet">
+    
+</head>
+<body oncontextmenu="return false;">
+    <canvas id="canvas" width="1024px" height="640px">
+    </canvas>
+    <textarea id="herosearch"></textarea>
+    <div id="popup">
+        <textarea id="dataloc" onfocus="SelectAll('dataloc');"></textarea><br>
+        <button id="databut" class="databut">Close</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="closebut" onclick="hideBut()" class="databut">Close</button>
+    </div>
+    <div id="levelwb">
+        <textarea id="wblvl" rows="1">1</textarea>
+    </div>
+    <div id="cqmbl">
+        <span class="close"></span>
+    </div>
+    <div id="slidecontainer">
+        <input type="range" min="1" max="100" value="50" id="adventureRange">
+    </div>
+    <div id="playgroundbg">
+            <h2>Set the level and promotion</h2>
+            <h3>(Level must be 1-99 or 1000)</h3>
+            <p class="mycontainer">
+                <label for="level">Level:</label>
+                <textarea id="level" rows="1">1</textarea>
+            </p>        
+            <p class="mycontainer">
+                <label for="promotion">Promotion:</label>
+                <textarea id="promotion" rows="1">0</textarea>
+            </p>    
+            <button id="donebut" onclick="hideBut()">Done</button>
+        </div>
+    <img src="img/kongregate_red.png" id="kong">
+    <!--<script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/presentation.js"></script>
+    <script src="js/loading.js"></script>
+    <script src="js/texer.min.js"></script>
+    <script src="js/speciesidle.js"></script>-->
+    <script src="js/CosmosQuest.min.js?v=4.8.3.0"></script>
+    <script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
+    <script>
+        function SelectAll(id) {
+            document.getElementById(id).focus();
+            document.getElementById(id).select();
+        }
+        function hideBut() {
+            document.getElementById("popup").style.display="none";
+            document.getElementById("playgroundbg").style.display="none";
+            document.getElementById("levelwb").style.display="none";
+        }
+        function logKGNC() {
+            PlayFab.ClientApi.LoginWithKongregate({
+                TitleId: PlayFab.settings.titleId,
+                KongregateId: kid,
+                AuthTicket: kongregate.services.getGameAuthToken(),
+                CreateAccount: false,
+                InfoRequestParameters: {
+                    GetUserAccountInfo:true,
+                }
+            },function (res,err) {
+                if (res && res.code && res.code==200 && res.status=="OK") {
+                    PFfixed=true;
+                    window.pfdata=res.data;
+                    var name="";
+                    try {
+                        name=res.data.InfoResultPayload.AccountInfo.TitleInfo.DisplayName;
+                    } catch (e) {
+
+                    };
+                    var uname=kongregate.services.getUsername();
+                    if (name!==uname) {
+                        PlayFab.ClientApi.UpdateUserTitleDisplayName({
+                            "DisplayName":uname 
+                        },function () {});
+                    }
+                } else if (err!==undefined) {
+                    if (err.errorCode==1001) {
+                        logKGC();
+                    } else {
+                        alert("ErrKGNC: ",err.errorCode);
+                    }
+                }
+            });
+        }
+        function logKGC() {
+            PlayFab.ClientApi.LoginWithKongregate({
+                TitleId: PlayFab.settings.titleId,
+                KongregateId: window.kid,
+                AuthTicket: kongregate.services.getGameAuthToken(),
+                CreateAccount: true,
+            },function (res,err) {
+                if (res && res.code && res.code==200 && res.status=="OK") {
+                    window.pfdata=res.data;
+                    PlayFab.ClientApi.UpdateUserTitleDisplayName({
+                        "DisplayName": kongregate.services.getUsername()
+                    },function () {
+                        PFfixed=true;
+                    });
+                } else if (err!==undefined) {
+                    alert("Err KGC: ",err.errorCode);
+                }
+            });
+        }
+        window.kongregate = undefined;  
+        window.pfdata = undefined;       
+        window.kid = 0;
+        window.PFfixed = false; 
+        window.addEventListener('load',function () {
+            try {
+                kongregateAPI.loadAPI(function(){
+                    window.kongregate = kongregateAPI.getAPI();
+                    if (kongregate!==undefined) {
+                        kid=kongregate.services.getUserId();
+                        try {
+                            if (kid!=0) {
+                                logKGNC();
+                                /*PlayFab.ClientApi.LoginWithCustomID({
+                                    TitleId: PlayFab.settings.titleId,
+                                    CustomId: window.kid,
+                                    CreateAccount: true,
+                                    InfoRequestParameters: {
+                                        GetUserAccountInfo:true,
+                                    }
+                                }, function (res) {
+                                    if (res && res.code && res.code==200 && res.status=="OK") {
+                                        window.pfdata=res.data;
+                                        var name="";
+                                        try {
+                                            name=res.data.InfoResultPayload.AccountInfo.TitleInfo.DisplayName;
+                                        } catch (e) {
+
+                                        };
+                                        var uname=kongregate.services.getUsername();
+                                        if (name!==uname) {
+                                            PlayFab.ClientApi.UpdateUserTitleDisplayName({
+                                                "DisplayName":uname 
+                                            },function () {});
+                                        } else {
+                                            PlayFab.ClientApi.LinkKongregate({
+                                                KongregateId: kid,
+                                                AuthTicket: kongregate.services.getGameAuthToken(),
+                                                ForceLink: true
+                                            })
+                                        }
+                                    }
+                                });*/
+                            } else PFfixed=true;
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    } else PFfixed=true;
+                });
+            } catch (e) {
+                PFfixed=true;
+            }
+        },false);
+        setTimeout(function () {
+            PFfixed=true;
+        },30000);
+    </script>
+</body>
+</html>

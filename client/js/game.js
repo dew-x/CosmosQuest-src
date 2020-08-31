@@ -7,7 +7,7 @@ function Game() {
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.8.2.1";
+    var VERSION = "v4.8.3.0";
     var _this = this;
     var data = undefined;
     var production = 0;
@@ -16700,6 +16700,24 @@ function Game() {
             T.draw(ctx,"05x5",zx+zw/2+pw/4-bw/2,H*0.4+ph/6-bh/2);
             ctext(ctx,popup.rtext,zx+zw/2+pw/4,H*0.4+ph/6,"32px "+FONT,"black","center","middle");
             this.addZone(popup.right,(new Rect(zx+zw/2+pw/4-bw/2,H*0.4+ph/6-bh/2,bw,bh)).small(),popup.right);
+        } else if (popup.mode=="confirmshop") {
+            T.draw(ctx,"04ey",zx+zw/2-pw,H*0.4-ph*1.5,pw*2,ph*2);
+            ctext(ctx,"First of all: Thank you!",zx+zw/2,H*0.4-ph*1.5+32/2,"48px "+FONT,"white","center","top");
+            
+            ctext(ctx,"The company that made this game, Gaiabyte, no longer exists.",zx+zw/2,H*0.4-ph*1.5+64,"32px "+FONT,"white","center","top");
+            ctext(ctx,"But the game is currently being maintained by the community so new updates will come.",zx+zw/2,H*0.4-ph*1.5+80,"32px "+FONT,"white","center","top");
+            ctext(ctx,"This being said all purchases will be used to keep the servers alive.",zx+zw/2,H*0.4-ph*1.5+96,"32px "+FONT,"white","center","top");
+            ctext(ctx,"As long as you aknowledge the situaction you are free to contiune the purchase:",zx+zw/2,H*0.4-ph*1.5+128,"32px "+FONT,"white","center","top");
+            var bw = T.width("05x5");
+            var bh = T.height("05x5");
+            // yes
+            T.draw(ctx,"05x5",zx+zw/2-pw/4-bw/2,H*0.4+ph/6-bh/2);
+            ctext(ctx,"Yes",zx+zw/2-pw/4,H*0.4+ph/6,"32px "+FONT,"black","center","middle");
+            this.addZone("yespp",(new Rect(zx+zw/2-pw/4-bw/2,H*0.4+ph/6-bh/2,bw,bh)).small(),"dopp");
+            // no
+            T.draw(ctx,"07y4",zx+zw/2+pw/4-bw/2,H*0.4+ph/6-bh/2);
+            ctext(ctx,"No",zx+zw/2+pw/4,H*0.4+ph/6,"32px "+FONT,"black","center","middle");
+            this.addZone("nopp",(new Rect(zx+zw/2+pw/4-bw/2,H*0.4+ph/6-bh/2,bw,bh)).small(),"closepp");
         }
     }
     this.drawNews = function (ctx) {
@@ -17139,8 +17157,15 @@ function Game() {
                 else if (extra.target=="recycle") item="recycle";
                 if (item!=="") {
                     GA.getInstance().addEvent(new GA.Events.Design("Shop:"+item));
-                    if (kongregate!==undefined) kongregate.mtx.purchaseItems([item], onPurchaseResult);
-                    else {
+                    if (kongregate!==undefined) {
+                        popup = {
+                            mode: "confirmshop",
+                            action: function () {
+                                kongregate.mtx.purchaseItems([item], onPurchaseResult);
+                            }
+                        }  
+                        
+                    } else {
                         popup={
                             text:"Enable flash to purchase from shop",
                             mode:"alert",
@@ -17483,8 +17508,14 @@ function Game() {
                 kongregate.services.showRegistrationBox();
             } else {
                 GA.getInstance().addEvent(new GA.Events.Design("Shop:Finish"));
-                if (kongregate!==undefined) kongregate.mtx.purchaseItems([{identifier:"finish", data:extra.target}], onPurchaseResult);
-                else {
+                if (kongregate!==undefined) {
+                    popup = {
+                        mode: "confirmshop",
+                        action: function () {
+                            kongregate.mtx.purchaseItems([{identifier:"finish", data:extra.target}], onPurchaseResult);
+                        }
+                    }
+                } else {
                     popup={
                         text:"Enable flash to open the shop",
                         mode:"alert",
@@ -17496,8 +17527,14 @@ function Game() {
                 kongregate.services.showRegistrationBox();
             } else {
                 GA.getInstance().addEvent(new GA.Events.Design("Shop:FinishAll"));
-                if (kongregate!==undefined) kongregate.mtx.purchaseItems(["finishall"], onPurchaseResult);
-                else {
+                if (kongregate!==undefined) {
+                    popup = {
+                        mode: "confirmshop",
+                        action: function () {
+                            kongregate.mtx.purchaseItems(["finishall"], onPurchaseResult);
+                        }
+                    }
+                } else {
                     popup={
                         text:"Enable flash to open the shop",
                         mode:"alert",
@@ -17670,8 +17707,14 @@ function Game() {
             this.claimall();
         } else if (action=="MiracleMultiplier") {
             GA.getInstance().addEvent(new GA.Events.Design("Shop:Miracle"));
-            if (kongregate!==undefined) kongregate.mtx.purchaseItems(["miracle"], onPurchaseResult);
-            else {
+            if (kongregate!==undefined) {
+                popup = {
+                    mode: "confirmshop",
+                    action: function () {
+                        kongregate.mtx.purchaseItems(["miracle"], onPurchaseResult);
+                    }
+                }
+            } else {
                 popup={
                     text:"Enable flash to open the shop",
                     mode:"alert",
