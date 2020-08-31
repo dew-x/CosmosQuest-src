@@ -944,7 +944,7 @@ if (isset($_POST["action"])) {
                             if ($isSuper) {
                                 $res3=$sql->query("SELECT COUNT(*) as `atks` FROM WBD WHERE `uid`=$uid AND bid=$wbid");
                                 if ($row3=$res3->fetch_assoc()) {
-                                    if ($row3["atks"]>=2) {
+                                    if ($row3["atks"]>=5) {
                                         echo json_encode(array("success"=>false,"error"=>"Maximum 2 attacks"));
                                         exit();
                                     }
