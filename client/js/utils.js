@@ -852,21 +852,21 @@ function tid2fol(tid) {
 }
 
 function bint(num) {
-    if (num>=100000000000000000) {
-        if (num>=1000000000000000000) return Math.floor(num/1000000000000).toLocaleString()+" P";
-        else return (num/1000000000000000).toFixed(2).toLocaleString()+" P";
-    } else if (num>=100000000000000) {
-        if (num>=1000000000000000) return Math.floor(num/1000000000).toLocaleString()+" T";
-        else return (num/1000000000000).toFixed(2).toLocaleString()+" T";
-    } else if (num>=100000000000) {
-        if (num>=1000000000000) return Math.floor(num/1000000).toLocaleString()+" G";
-        else return (num/1000000000).toFixed(2).toLocaleString()+" G";
-    } else if (num>=100000000) {
-        if (num>=1000000000) return Math.floor(num/1000000).toLocaleString()+" M";
-        else return (num/1000000).toFixed(2).toLocaleString()+" M";
-    } else if (num>=100000) {
-        if (num>=1000000) return Math.floor(num/1000).toLocaleString()+" k";
-        else return (num/1000).toFixed(2).toLocaleString()+" k";
+    if (num>=1e17) {
+        if (num>=1e18) return Math.floor(num/1e15).toLocaleString()+" P";
+        else return (num/1e15).toFixed(2).toLocaleString()+" P";
+    } else if (num>=1e14) {
+        if (num>=1e15) return Math.floor(num/1e12).toLocaleString()+" T";
+        else return (num/1e12).toFixed(2).toLocaleString()+" T";
+    } else if (num>=1e11) {
+        if (num>=1e12) return Math.floor(num/1e9).toLocaleString()+" G";
+        else return (num/1e9).toFixed(2).toLocaleString()+" G";
+    } else if (num>=1e8) {
+        if (num>=1e9) return Math.floor(num/1e6).toLocaleString()+" M";
+        else return (num/1e6).toFixed(2).toLocaleString()+" M";
+    } else if (num>=1e5) {
+        if (num>=1e6) return Math.floor(num/1e3).toLocaleString()+" k";
+        else return (num/1e3).toFixed(2).toLocaleString()+" k";
         
     } else {
         return num;
