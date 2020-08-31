@@ -2258,6 +2258,8 @@ function Game() {
                 halllvlmode = 2;
             } else if (code==18) {
                 x100 = true;
+            } else if (eventCCopen && cc_data.start && cc_data.timer>0 && cc_data.attempts>0) { //CCC is running
+            	return (code==37||code==38||code==39||code==40); //prevent default action for arrow keys
             }
         }
     }
