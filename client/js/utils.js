@@ -855,7 +855,7 @@ function bint(num) {
     if (num>=100000000000000000) {
         if (num>=1000000000000000000) return Math.floor(num/1000000000000).toLocaleString()+" P";
         else return (num/1000000000000000).toFixed(2).toLocaleString()+" P";
-    } else if (num>=100000000000) {
+    } else if (num>=100000000000000) {
         if (num>=1000000000000000) return Math.floor(num/1000000000).toLocaleString()+" T";
         else return (num/1000000000000).toFixed(2).toLocaleString()+" T";
     } else if (num>=100000000000) {
