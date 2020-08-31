@@ -928,6 +928,7 @@ function Game() {
     var lili = 0;
     var simwbscreen = false;
     var simwbchoose = 0;
+    var simwbplayer = 0;
     var cellStatus = undefined;
     var showDecompose = undefined;
     var adventureOpen = false;
@@ -7804,7 +7805,7 @@ function Game() {
             for (var i=0;i<data.playground[0].line.length;++i) if (data.playground[0].line[i]!=-1) anyMonster=true;
             if (anyMonster && !simwbscreen) this.addZone("clGridPlayg0",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.455-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:0});
             
-            text(ctx,"Player 01",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
+            text(ctx,"Player 1",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts"));
             var y1 = H*0.45-16;
 
@@ -7814,7 +7815,7 @@ function Game() {
             for (var i=0;i<data.playground[1].line.length;++i) if (data.playground[1].line[i]!=-1) anyMonster=true;
             if (anyMonster && !simwbscreen) this.addZone("clGridPlayg1",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.755-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:1});
             
-            text(ctx,"Player 02",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
+            text(ctx,"Player 2",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts"));
             var y2 = H*0.75-16;
             
@@ -13742,6 +13743,17 @@ function Game() {
 
             text(ctx,"Choose a World Boss",W*0.57,H*0.5-H*0.7*0.5+30,"80px "+FONT,"black","center","middle");
 
+            for (var i = 0; i < 2; ++i) {
+	            if (simwbplayer == i) T.draw(ctx,"05x5",W*0.365+W*0.135*i+87,H*0.28-15,100,30);
+	            else T.draw(ctx,"07y4",W*0.365+W*0.135*i+87,H*0.28-15,100,30);
+	            var crect = (new Rect(W*0.365+W*0.135*i+87,H*0.28-15,100,30)).small();
+	            if (crect.isInside(GM.x,GM.y)) {
+	                if (simwbplayer != i) T.draw(ctx,"0567",W*0.365+W*0.135*i+87,H*0.28-15,100,30);
+	                this.addZone("choosewbsimplayer",crect,"choosewbsimplayer",{target:i});
+	            }
+	            text(ctx,"Player "+(i+1),W*0.5+W*0.135*i,H*0.28,"40px "+FONT,"black","center","middle");
+            }
+            
             var wbarray = [72,87,106,126,186];
             for (var i = 0; i < wbarray.length; ++i) {
                 if (simwbchoose == i) T.draw(ctx,"0gkd",W*0.3+W*0.135*i-T.width("0gkd")*1.5*0.5,H*0.33,T.width("0gkd")*1.5,T.height("0gkd")*1.5);
@@ -18602,6 +18614,8 @@ function Game() {
             document.getElementById("levelwb").style.display="none";
         } else if (action=="choosewbsim") {
             simwbchoose = extra.target;
+        } else if (action=="choosewbsimplayer") {
+            simwbplayer = extra.target;
         } else if (action=="dowbsim") {
             var anyA=false;
             for (var i = 0; i < 6; ++i) {
@@ -18624,7 +18638,7 @@ function Game() {
                 heroB[-2-(wbarray[simwbchoose])] = level;
                 var battle = {
                     date: Date.now(),
-                    rowA: data.playground[0].line,
+                    rowA: data.playground[simwbplayer].line,
                     rowB: [-2-(wbarray[simwbchoose]),-1,-1,-1,-1,-1],
                     back: "city",
                     heroA: heroA,
@@ -21622,7 +21636,7 @@ function Game() {
     this.loadPlaygroundWB = function (battle) {
         var arr=[];
         for (var i=0; i<HERO.length; ++i) arr.push(parseInt(battle.level));
-        beginBattle(battle.date,"Player 01",battle.name+" ["+battle.level+"]",battle.rowA,battle.rowB,battle.back,battle.heroA,arr,undefined,undefined,battle.promoA,battle.promoB);
+        beginBattle(battle.date,"Player " + (simwbplayer+1),battle.name+" ["+battle.level+"]",battle.rowA,battle.rowB,battle.back,battle.heroA,arr,undefined,undefined,battle.promoA,battle.promoB);
         this.doAction("scene",{target:"battle"});
     }
     this.loadHalloweenBattle = function (battle) {
