@@ -32,7 +32,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 1",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>1 && mdata!==undefined && mdata.city.hero[0]==0&&mdata.city.promo[0]==0) {
@@ -46,7 +46,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 2",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>5 && mdata!==undefined && mdata.city.hero[0]>=1 && mdata.city.hero[1]==0&&mdata.city.promo[1]==0) {
@@ -60,7 +60,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 3",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>10 && mdata!==undefined && mdata.city.hero[1]>=1 && mdata.city.hero[2]==0&&mdata.city.promo[2]==0) {
@@ -74,7 +74,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 4",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>20 && mdata!==undefined && mdata.city.hero[2]>=1 && mdata.city.hero[80]==0&&mdata.city.promo[80]==0) {
@@ -266,8 +266,8 @@ function Game() {
                 id:"OTO6",
                 icon:"qyte",
                 text:"Season Pass",
-                action: "scene",
-                extra: {target:"ranking"},
+                action: "tgsp",
+                extra: {target:"true"},
                 active: function () {
                     if (mdata!==undefined && mdata.city!==undefined && mdata.city.pass!==undefined&&mdata.city.pass.isGold!==1) {
                         return true;
@@ -6365,7 +6365,7 @@ function Game() {
         }
 
         T.draw(ctx,multiplier,(1024*0.65)-T.width(multiplier)/2,640*0.86);
-        this.addZone("toshop",(new Rect((1024*0.65)-T.width(multiplier)/2,640*0.86,T.width(multiplier),T.height(multiplier)*0.95)).small(),"menu",{target:"shop"});
+        this.addZone("toshop",(new Rect((1024*0.65)-T.width(multiplier)/2,640*0.86,T.width(multiplier),T.height(multiplier)*0.95)).small(),"menu",{target:"shop",submenu:"home"});
         if ((new Rect((1024*0.65)-T.width(multiplier)/2,640*0.86,T.width(multiplier),T.height(multiplier)*0.95)).small().isInside(GM.x,GM.y)) {
             ctx.fillStyle="rgba(255,255,255,0.2)";
             ctx.fillRect((1024*0.665)-T.width(multiplier)/2,640*0.875,T.width(multiplier)*0.95,T.height(multiplier)*0.73);
@@ -6544,7 +6544,7 @@ function Game() {
                             }
                             T.draw(ctx,"0884",W*0.5-padlockw/2,H*0.735-padlockh/2);
                             if (UM>=100) {
-                                this.addZone("ccase1",BRect,"menu",{target:"shop"});
+                                this.addZone("ccase1",BRect,"menu",{target:"shop",submenu:"home"});
                             } else {
                                 this.addZone("ccase",BRect,"scene",{target:"buildings"});
                                 this.addZone("ccase1",BRect,"mshop",{target:true});
@@ -6729,7 +6729,7 @@ function Game() {
         var BKrect = (new Rect(W*0.51-T.width("0d7z")/2-err,H*0.79,bkeyw*0.94,bkeyh*0.8)).small();
         if (BKrect.isInside(GM.x,GM.y)){
             T.draw(ctx,hkey,W*0.5-T.width("0d7z")/2-err,H*0.77);
-            this.addZone("goshop",BKrect,"menu",{target:"shop"});
+            this.addZone("goshop",BKrect,"menu",{target:"shop",submenu:"home"});
         }
         else T.draw(ctx,bkey,W*0.5-T.width("0d7z")/2-err,H*0.77);
 
@@ -16859,6 +16859,10 @@ function Game() {
                     if (scene=="miracles"||scene=="roulette") scene="buildings";
                     GA.getInstance().addEvent(new GA.Events.Design("Shop:Open"));
                     if (extra.submenu=="lto") ltoOpen=true;
+                    else if (extra.submenu=="home") {
+                    	auctionOpen = false;
+                    	ltoOpen = false;
+                    }
                 }
             }
         } else if (action=="research") {
