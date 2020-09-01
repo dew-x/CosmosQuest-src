@@ -3445,7 +3445,7 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 1,
+      filter: 0,
       upgrade: {
         pg: 1,
         cc: 1,

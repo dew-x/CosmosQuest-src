@@ -4014,7 +4014,7 @@ function Game() {
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                                 T.draw(ctx,"0ap1",ix+(W*0.15/2)+i*W*0.2+W*0.04,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                             }
-                            else if (hid==130||hid==102||hid==132||hid==147||hid==198) {
+                            else if (hid==130||hid==102||hid==132||hid==147||hid==198||hid==173) {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"08y7",ix+(W*0.15/2)+i*W*0.2+W*0.024,y0+H*0.265-T.height("08y7")*0.5*0.6,T.width("08y7")*0.5,T.height("08y7")*0.5);
                             }
@@ -4033,6 +4033,11 @@ function Game() {
                             else if (hid==200||hid==201||hid==202||hid==203) {
                                 text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 text(ctx,"Get 3 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                            }
+                            else if (hid==101) {
+                            	text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.018,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                                T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
+                                T.draw(ctx,"0dvo",ix+(W*0.15/2)+i*W*0.2+W*0.04-T.width("0j14")*0.15,y0+H*0.265-T.height("0j14")*0.88*0.5,T.width("0j14")*0.95,T.height("0j14")*0.8);
                             }
                             else {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
