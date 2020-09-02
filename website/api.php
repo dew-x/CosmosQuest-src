@@ -2,7 +2,7 @@
 include_once("sql.php");
 include_once("functions.php");
 
-$__SECRET="secret";
+$__SECRET="secret"; // set by gaia
 
 function getTid() {
     return intval(floor((time()+12*60*60)/(24*60*60)));
@@ -246,10 +246,6 @@ function validateSetupWB($setup,$hero,$fols,$mode) {
         echo json_encode(array("success"=>false,"error"=>"Too much followers"));
         return false;
     }
-    if ($units>6) {
-        echo json_encode(array("success"=>false,"error"=>"Max 6 units"));
-        return false;
-    }
     return true;
 }
 
@@ -369,8 +365,6 @@ function doHeros() {
     return $ret;
 }
 
-
-
 function calcFollowers($hero) {
     global $HERO;
     $followers = 0;
@@ -410,6 +404,7 @@ function fregister($uid,$tid,$setup) {
         echo json_encode(array("success"=>false,"error"=>"Tournament is full"));
     }
 }
+
 function file_post_contents($url, $data) {
     $postdata = http_build_query($data);
 
@@ -455,7 +450,7 @@ function evalFight($psetup,$phero,$esetup,$ehero,$ppromo,$epromo) {
     return intval($out);
 }
 
-function getUserEntries($uid) {
+function getUserEntries($uid) { // amount of flashes entered today
     global $sql;
     $res=$sql->query("SELECT COUNT(*) as `amount` FROM fsetups s, ftournaments t WHERE s.uid=$uid AND s.tid=t.id AND t.created>DATE_SUB(NOW(), INTERVAL 1 DAY)");
     if ($row=$res->fetch_assoc()) {
@@ -471,7 +466,7 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
         $res=$sql->query("SELECT COUNT(*) as atks FROM WBD WHERE bid=$bid GROUP BY bid");
         if ($row=$res->fetch_assoc()) {
             $limit=($isSuper?1200:1600);
-            if ($row["atks"]>=$limit) {
+            if ($row["atks"]>=$limit) { // wb is dead, spawn new
                 // kill previous boss
                 $sql->query("UPDATE WB SET `status`=1 WHERE id=$bid LIMIT 1");
                 // spawn a new boss
@@ -482,22 +477,24 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
                     ++$ids[array_search($row1["mid"],$WB)];
                     ++$modes[$row1["mode"]];
                 }
-                $forceWB = false;
+                $forceWB = false; // swb
                 $forceNH = false;
                 $forceH = false;
                 if ($modes[2]+$modes[3]<=5) $forceWB = true;
                 if ($modes[0]+$modes[2]<=20) $forceNH = true;
                 if ($modes[1]+$modes[3]<=20) $forceH = true;
                 $now=time();
-                $wb = $WB[rand(0,count($WB)-1)];
-                for ($i=0; $i<count($ids); ++$i) {
-                    if ($ids[$i]<7) $wb=$WB[$i];
-                }
+				do { // if we need a NH, prevent bornag from spawning
+					$wb = $WB[rand(0,count($WB)-1)];
+					for ($i=0; $i<count($ids); ++$i) {
+						if ($ids[$i]<7) $wb=$WB[$i];
+					}
+				} while ($forceNH && $wb==186);
                 $lvl = 1;
                 $mode = rand(0,count($WBM)-1);
+                if ($wb==186) $mode=1; // force ha when bornag
                 if ($forceNH) $mode=0;
                 if ($forceH) $mode=1;
-                if ($wb==186) $mode=1;
                 if ($forceWB or (rand()/getrandmax())<0.1) $mode+=2;
                 $res1=$sql->query("SELECT MAX(`level`) AS mlvl FROM WB WHERE mid=$wb AND mode=$mode GROUP BY mid");
                 if ($row1=$res1->fetch_assoc()) {
@@ -518,7 +515,7 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
 
 if (isset($_POST["action"])) {
     $action=$_POST["action"];
-    if ($action=="register") {
+    if ($action=="register") { // t1
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["name"]) and isset($_POST["pid"]) and isset($_POST["tid"])) {
                 $name=$sql->real_escape_string($_POST["name"]);
@@ -570,7 +567,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="register2") {
+    } else if ($action=="register2") { // t2
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["name"]) and isset($_POST["pid"])) {
                 $name=$sql->real_escape_string($_POST["name"]);
@@ -620,7 +617,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="fregister") {
+    } else if ($action=="fregister") { // flash
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["name"]) and isset($_POST["pid"]) and isset($_POST["tid"])) {
                 $name=$sql->real_escape_string($_POST["name"]);
@@ -681,7 +678,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="vote") {
+    } else if ($action=="vote") { // poll
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"]) and isset($_POST["kid"]) and isset($_POST["vote"]) and ctype_digit($_POST["kid"]) and ctype_digit($_POST["vote"])) {
                 $qid = floor(time()/(24*60*60));
@@ -736,7 +733,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="sfcell") {
+    } else if ($action=="sfcell") { // lucky followers
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"])) {
                 if (isset($_POST["cell"]) and ctype_digit($_POST["cell"]) and $_POST["cell"]>=0 and $_POST["cell"]<=11) {
@@ -798,7 +795,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="lottery") {
+    } else if ($action=="lottery") { // lottery
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"])) {
                 $now=time();
@@ -818,7 +815,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="prizes") {
+    } else if ($action=="prizes") { // easter
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"]) and ctype_xdigit($_POST["pid"])) {
                 $pid=$_POST["pid"];
@@ -870,15 +867,14 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="clear") {
+    } else if ($action=="clear") { // clear t1
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"]) and ctype_alnum($_POST["pid"]) and isset($_POST["tid"]) and ctype_digit($_POST["tid"])) {
                 $pid=$_POST["pid"];
                 $tid=$_POST["tid"]-17347;
-                $res=$sql->query("DELETE FROM setups WHERE tid=$tid AND uid=(SELECT id FROM users WHERE pid LIKE '$pid')");
+                $res=$sql->query("DELETE FROM setups WHERE tid=$tid AND uid=(SELECT id FROM users WHERE pid LIKE '$pid')"); // bug #1 ?
                 if ($sql->affected_rows>0) {
                     echo json_encode(array("success"=>true));
-                    //echo json_encode(array("success"=>true));
                 } else {
                     echo json_encode(array("success"=>false,"error"=>"Not joined"));
                 }
@@ -888,7 +884,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="clear2") {
+    } else if ($action=="clear2") { // clear t2
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"]) and ctype_alnum($_POST["pid"])) {
                 $pid=$_POST["pid"];
@@ -896,7 +892,6 @@ if (isset($_POST["action"])) {
                 $res=$sql->query("DELETE FROM setups2 WHERE tid=$tid AND uid=(SELECT id FROM users WHERE pid LIKE '$pid')");
                 if ($sql->affected_rows>0) {
                     echo json_encode(array("success"=>true));
-                    //echo json_encode(array("success"=>true));
                 } else {
                     echo json_encode(array("success"=>false,"error"=>"Not joined"));
                 }
@@ -906,7 +901,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="wb") {
+    } else if ($action=="wb") { // attack wb
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET and isset($_POST["pid"]) and ctype_alnum($_POST["pid"]) and isset($_POST["kid"]) and ctype_digit($_POST["kid"])) {
             $setup=json_decode(urldecode($_POST["setup"]),true);
             $hero=json_decode(urldecode($_POST["hero"]),true);
@@ -933,7 +928,7 @@ if (isset($_POST["action"])) {
                                 exit();
                             }
                         }
-                        $res1=$sql->query("SELECT * FROM WB WHERE `status`=0 LIMIT 1");
+                        $res1=$sql->query("SELECT * FROM WB WHERE `status`= 0 LIMIT 1");
                         if ($row1=$res1->fetch_assoc()) {
                             $wbid=$row1["id"];
                             $wb=$row1["mid"];
@@ -944,8 +939,8 @@ if (isset($_POST["action"])) {
                             if ($isSuper) {
                                 $res3=$sql->query("SELECT COUNT(*) as `atks` FROM WBD WHERE `uid`=$uid AND bid=$wbid");
                                 if ($row3=$res3->fetch_assoc()) {
-                                    if ($row3["atks"]>=5) {
-                                        echo json_encode(array("success"=>false,"error"=>"Maximum 2 attacks"));
+                                    if ($row3["atks"]>=5) { // swb threshold
+                                        echo json_encode(array("success"=>false,"error"=>"Maximum 5 attacks"));
                                         exit();
                                     }
                                 }
@@ -983,7 +978,7 @@ if (isset($_POST["action"])) {
                 echo json_encode(array("success"=>false,"error"=>"JSON error"));
             }
         } else echo json_encode(array("success"=>false,"error"=>"Bad data"));
-    } else if ($action=="check") {
+    } else if ($action=="check") { // is that used ?
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET and isset($_POST["pid"]) and ctype_alnum($_POST["pid"])) {
             $pid=$_POST["pid"];
             $res=$sql->query("SELECT TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP(),moment)) as moment FROM mutex WHERE pid='$pid' LIMIT 1");
@@ -998,13 +993,13 @@ if (isset($_POST["action"])) {
             }
             echo json_encode(array("success"=>true));
         } else echo json_encode(array("success"=>false,"error"=>"Bad data"));
-    } else if ($action=="public") {
+    } else if ($action=="public") { // toggle username display on website
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET and isset($_POST["pid"]) and ctype_alnum($_POST["pid"])) {
             $pid=$_POST["pid"];
             $sql->query("UPDATE users SET public = NOT public WHERE pid='$pid' LIMIT 1");
             echo json_encode(array("success"=>true));
         } else echo json_encode(array("success"=>false,"error"=>"Bad data"));
-    } else if ($action=="auction") {
+    } else if ($action=="auction") { // bid
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["name"]) and isset($_POST["pid"]) and isset($_POST["hid"]) and isset($_POST["bid"]) and isset($_POST["kid"])) {
                 $name=$sql->real_escape_string($_POST["name"]);
@@ -1062,7 +1057,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="dungeon") {
+    } else if ($action=="dungeon") { // dungeon fight
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             $now=time();
             $res=$sql->query("SELECT * FROM events WHERE `end`>$now AND `type`=3 LIMIT 1");
@@ -1115,6 +1110,14 @@ if (isset($_POST["action"])) {
                     $sql->query("UPDATE dungeon SET `level`= $lvl WHERE eid = $eid AND `uid`='$uid' LIMIT 1");
                     $prize = json_encode(array("SD"=>2500*$wins));
                     $sql->query("INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, '0', '0', CURRENT_TIMESTAMP, '$uid', '$prize');");
+					// fix #34
+					$res1 = $sql->query("SELECT `hero`,`setup` FROM dlvl WHERE eid = $eid AND `lvl`=$lvl LIMIT 1");
+                    if ($res1->num_rows>0 and $row1=$res1->fetch_assoc()) {
+                        $lsetup=json_decode($row1["setup"],true);
+                        $lhero=json_decode($row1["hero"],true);
+                        $lpromo=array_fill(0,count($HERO),0);
+					}
+					// end #34
                 }
                 echo json_encode(array("success"=>true,"data"=>array(
                     "enemy"=> "Dungeon Floor[$lvl]",
@@ -1133,7 +1136,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="halloween") {
+    } else if ($action=="halloween") { // halloween
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET and isset($_POST["pid"]) and isset($_POST["setup"]) and isset($_POST["hero"]) and isset($_POST["pid"]) and ctype_digit($_POST["kid"])) {
             $now=time();
             $pid = $_POST["pid"];
@@ -1174,7 +1177,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="points") {
+    } else if ($action=="points") { // get easter points status
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             $res = $sql->query("SELECT SUM(`value`) as `suma` FROM `easter` WHERE 1");
             if ($row = $res->fetch_assoc()) {
@@ -1188,7 +1191,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="createCapcha") {
+    } else if ($action=="createCapcha") { // create a capcha
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             $capcha = json_encode(createCapcha());
             $capcha=$sql->real_escape_string($capcha);
@@ -1206,7 +1209,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="checkCapcha") {
+    } else if ($action=="checkCapcha") { // check a capcha
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             $id = $_POST["id"];
             $res1 = $sql->query("SELECT `data` FROM `capcha` WHERE `id`=$id LIMIT 1");
@@ -1223,7 +1226,7 @@ if (isset($_POST["action"])) {
                     }
                 }
                 $mistakes+=count($cdata["picks"]);
-                if ($mistakes==0) {
+                if ($mistakes==0) { // if we plan to allow one mistake, it's here
                     $sql->query("UPDATE `capcha` SET `solved`=1 WHERE `id`=$id LIMIT 1");
                 }
                 echo json_encode(array("success"=>$mistakes<=1,"error"=>"Wrong solution"));
@@ -1233,7 +1236,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="coupon") {
+    } else if ($action=="coupon") { // use coupon
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET and isset($_POST["code"]) and isset($_POST["pid"]) and ctype_alnum($_POST["pid"])) {
             $valid=true;
             $code=$_POST["code"];
@@ -1275,7 +1278,7 @@ if (isset($_POST["action"])) {
                 echo json_encode(array("success"=>false,"error"=>"Wrong Coupon"));
             }
         }
-    } else if ($action=="finder") {
+    } else if ($action=="finder") { // ?
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) file_put_contents("finder.txt",$_POST["pid"].".\n",FILE_APPEND);
     } else {
         echo json_encode(array("success"=>false,"error"=>"Wrong action"));
