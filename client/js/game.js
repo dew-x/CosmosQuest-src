@@ -8765,14 +8765,13 @@ function Game() {
                 for (var i=mdata.city.daily.setup.length-1; i>=0; --i) {
                     var hid=-(mdata.city.daily.setup[4-i]+2);
                     if (mdata.city.daily.setup[4-i]>-1) this.drawMonster(ctx,mdata.city.daily.setup[4-i],bx+bw*(1/8)+(i*bw/5.37),by+bh*0.7,undefined,true,1.3);
-                    else if (mdata.city.daily.setup[4-i]<-1) {
-                        this.drawMonster(ctx,mdata.city.daily.setup[4-i],bx+bw*(1/8)+(i*bw/5.37),by+bh*0.7,undefined,true,1.3,mdata.city.daily.hero[hid]);
-                        var mw = T.width(HERO[0].img)*1.3;
-                        var mh = T.height(HERO[0].img)*1.3;
-                        var hrect = (new Rect(bx+bw*(1/8)+(i*bw/5.37)-mw/2,by+bh*0.7-mh,mw,mh)).small();
-                        if (hrect.isInside(GM.x,GM.y)) {
-                            skillInfo=i;
-                        }
+                    else if (mdata.city.daily.setup[4-i]<-1) this.drawMonster(ctx,mdata.city.daily.setup[4-i],bx+bw*(1/8)+(i*bw/5.37),by+bh*0.7,undefined,true,1.3,mdata.city.daily.hero[hid]);
+                    //Check if tooltip should be drawn
+                    var mw = T.width(HERO[0].img)*1.3;
+                    var mh = T.height(HERO[0].img)*1.3;
+                    var hrect = (new Rect(bx+bw*(1/8)+(i*bw/5.37)-mw/2,by+bh*0.7-mh,mw,mh)).small();
+                    if (hrect.isInside(GM.x,GM.y)) {
+                        skillInfo=i;
                     }
                 }
             }
@@ -8983,10 +8982,18 @@ function Game() {
             ctx.closePath();
             ctx.fillStyle="rgba(0,0,0,0.7)";
             ctx.fill();
-            ctx.fillStyle="rgba(0,0,0,0.7)";
-            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-W*0.3,by+bh*0.7-mh-42-H*0.1-20,W*0.6,H*0.1+20);
-            text(ctx,HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].name,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
-            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.promo[-(mdata.city.daily.setup[4-skillInfo]+2)]).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
+        	if (mdata.city.daily.setup[4-skillInfo] < -1) {//Hero
+	            ctx.fillStyle="rgba(0,0,0,0.7)";
+	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-W*0.3,by+bh*0.7-mh-42-H*0.1-20,W*0.6,H*0.1+20);
+	            text(ctx,HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].name,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
+	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.promo[-(mdata.city.daily.setup[4-skillInfo]+2)]).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
+        	} else {//Monster
+	            ctx.fillStyle="rgba(0,0,0,0.7)";
+	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-20,by+bh*0.7-mh-42-H*0.1+20,40,H*0.1-20);
+	            var elements_short =["A","E","F","W"];
+	            var mobname = elements_short[mdata.city.daily.setup[4-skillInfo]%4] + (Math.floor(mdata.city.daily.setup[4-skillInfo]/4)+1);
+	            text(ctx,mobname,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)+10,"40px"+FONT,"white","center","middle");
+        	}
         }
     }
 
