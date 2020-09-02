@@ -489,7 +489,7 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
 					for ($i=0; $i<count($ids); ++$i) {
 						if ($ids[$i]<7) $wb=$WB[$i];
 					}
-				} while (!$forceNH || $wb==186);
+				} while ($forceNH && $wb==186);
                 $lvl = 1;
                 $mode = rand(0,count($WBM)-1);
                 if ($wb==186) $mode=1; // force ha when bornag
