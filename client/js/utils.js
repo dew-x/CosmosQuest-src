@@ -851,22 +851,23 @@ function tid2fol(tid) {
     return Math.round(base*vals[tid%vals.length]);
 }
 
-function bint(num) {
+function bint(num,mode) {
+	var prefixes = (mode)?[" k"," M"," G"," T"," P"]:[" k"," M"," B"," T"," Q"]
     if (num>=1e17) {
-        if (num>=1e18) return Math.floor(num/1e15).toLocaleString()+" P";
-        else return (num/1e15).toFixed(2).toLocaleString()+" P";
+        if (num>=1e18) return Math.floor(num/1e15).toLocaleString()+prefixes[4];
+        else return (num/1e15).toFixed(2).toLocaleString()+prefixes[4];
     } else if (num>=1e14) {
-        if (num>=1e15) return Math.floor(num/1e12).toLocaleString()+" T";
-        else return (num/1e12).toFixed(2).toLocaleString()+" T";
+        if (num>=1e15) return Math.floor(num/1e12).toLocaleString()+prefixes[3];
+        else return (num/1e12).toFixed(2).toLocaleString()+prefixes[3];
     } else if (num>=1e11) {
-        if (num>=1e12) return Math.floor(num/1e9).toLocaleString()+" G";
-        else return (num/1e9).toFixed(2).toLocaleString()+" G";
+        if (num>=1e12) return Math.floor(num/1e9).toLocaleString()+prefixes[2];
+        else return (num/1e9).toFixed(2).toLocaleString()+prefixes[2];
     } else if (num>=1e8) {
-        if (num>=1e9) return Math.floor(num/1e6).toLocaleString()+" M";
-        else return (num/1e6).toFixed(2).toLocaleString()+" M";
+        if (num>=1e9) return Math.floor(num/1e6).toLocaleString()+prefixes[1];
+        else return (num/1e6).toFixed(2).toLocaleString()+prefixes[1];
     } else if (num>=1e5) {
-        if (num>=1e6) return Math.floor(num/1e3).toLocaleString()+" k";
-        else return (num/1e3).toFixed(2).toLocaleString()+" k";
+        if (num>=1e6) return Math.floor(num/1e3).toLocaleString()+prefixes[0];
+        else return (num/1e3).toFixed(2).toLocaleString()+prefixes[0];
         
     } else {
         return num;
