@@ -4674,15 +4674,15 @@ function Game() {
             this.soundBox(ctx,r1,c3+13,"soundclick","sound","click","Click",data.click,"Mutes Click Sound");
 
             this.checkBox(ctx,r2-20,c2-80,data.showNumbers,"sshown","toggle","showNumbers","Show clicks","right","Display the energy obtained by Clicks");
-            this.checkBox(ctx,r2-20,c2-20,data.fractal,"sfrac","toggle","fractal","High Graphics","right","Disable for better performance");
-            this.checkBox(ctx,r2-20,c2+40,data.tdon,"stdon","toggle","tdon","Energy Orbs","right","Run/Pause Energy Orbs");
+            this.checkBox(ctx,r2-20,c2-35,data.fractal,"sfrac","toggle","fractal","High Graphics","right","Disable for better performance");
+            this.checkBox(ctx,r2-20,c2+10,data.tdon,"stdon","toggle","tdon","Energy Orbs","right","Run/Pause Energy Orbs");
+            this.checkBox(ctx,r2-20,c2+55,data.colorblind,"scolorblind","toggle","colorblind","Color Blind","right","Display Numbers in AP board");
             
             if (CQW!==undefined && CQW.isPublic!==undefined) this.checkBox(ctx,r2-20,c2+100,CQW.isPublic,"spub","toggle","public","Display name","right","Show your name in CosmosQuest.net");
 
-            text(ctx,"Notation",r3+T.width("0567")/2,c1-ndist,"30px "+FONT,"white","center","top");
-            this.rectButton(ctx,r3,c1,"notation","notation",undefined,undefined,["S.I.","Scientific"],data.nMode,"Changes Number Display Mode");
-            text(ctx,"Color Blind",r4+T.width("0567")/2,c1-ndist,"30px "+FONT,"white","center","top");
-            this.rectButton(ctx,r4,c1,"colorblind","cblind",undefined,undefined,["OFF","ON"],data.colorblind,"Display Number in AP board");
+            text(ctx,"Notation",r3+T.width("0567")+5,c1-ndist,"30px "+FONT,"white","center","top");
+            this.rectButton(ctx,r3,c1,"notation","notation",undefined,undefined,["S.I.","Scientific"],data.nMode,"Changes Number Display Mode for Idle");
+            this.rectButton(ctx,r4,c1,"bintmode","bintmode",undefined,undefined,["k/M/B/T/Q","k/M/G/T/P","k/Mn/Md/..."],data.bintmode,"Changes Number Display Mode for Followers");
 
             var sortList=["Species","Alphabetical","Level","Life","Damage","Rarity","Element","Strength"];
             text(ctx,"Hero Sort",r3+T.width("0567") + 5,c2-ndist,"30px "+FONT,"white","center","top");
@@ -6317,7 +6317,7 @@ function Game() {
 
             initx-=iw*0.92;
         }
-        text(ctx,bint(mdata.followers),1024*0.845,640*0.077,"58px"+FONT,"rgba(255,250,210,1)","center","middle");
+        text(ctx,bint(mdata.followers,data.bintmode),1024*0.845,640*0.077,"58px"+FONT,"rgba(255,250,210,1)","center","middle");
 
         if (scene=="miracles") this.drawMiracles(ctx);
         else if (scene=="roulette") this.drawRoulette(ctx);
@@ -7295,7 +7295,7 @@ function Game() {
             var matk = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.655,"36px"+FONT,"white","center","middle");
             text(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.66,"36px"+FONT,"white","center","middle");
             T.draw(ctx,"0e9t",xt+wTool/2-T.width("0e9t")-matk/2,yt+hTool*0.655-T.height("0e9t")/2);
-            text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost),xt+wTool/2,yt+hTool*0.76,"36px"+FONT,"white","center","middle");
+            text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost,data.bintmode),xt+wTool/2,yt+hTool*0.76,"36px"+FONT,"white","center","middle");
             text(ctx,"ELEMENT: "+elements[mArray[i*1+monstersPage[typeTab]*20].type],xt+wTool/2,yt+hTool*0.86,"36px"+FONT,"white","center","middle");
         }
         else {
@@ -7378,10 +7378,10 @@ function Game() {
     
         if (mode=="pve") {
             followerLeft=mdata.followers-this.getPveSpent();
-            text(ctx,bint(this.getPveSpent())+"/"+bint(mdata.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(this.getPveSpent())+"/"+bint(mdata.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="city") {
             followerLeft=mdata.followers-this.getPvPSpent();
-            text(ctx,bint(mdata.followers-this.getPvPSpent())+"/"+bint(mdata.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(mdata.followers-this.getPvPSpent(),data.bintmode)+"/"+bint(mdata.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="tournaments") {
             var fmode=tid2fol(tid);
             if (tournamentid==1) fmode = CQW.tour.current.followers;
@@ -7391,13 +7391,13 @@ function Game() {
                 promotion[i]=TPROMO[tid%THERO.length][i]==-1?mdata.city.promo[i]:TPROMO[tid%THERO.length][i];
             }
             followerLeft=fmode-this.getTournamentSpent();
-            text(ctx,bint(fmode-this.getTournamentSpent())+"/"+bint(fmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(fmode-this.getTournamentSpent(),data.bintmode)+"/"+bint(fmode,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="wb") {
             if (tid == 0) {
                 for (var i=0; i<heroes.length; ++i) heroes[i]=0;
             } 
             followerLeft=mdata.followers-this.getWbSpent();
-            text(ctx,bint(this.getWbSpent())+"/"+bint(mdata.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(this.getWbSpent(),data.bintmode)+"/"+bint(mdata.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="flash") {
             for (var i=0; i<heroes.length; ++i) {
                 heroes[i]=CQW.flash.current.hero[i]==-1?heroes[i]:CQW.flash.current.hero[i];
@@ -7408,10 +7408,10 @@ function Game() {
             }
             promotion=CQW.flash.current.promo.slice();
             followerLeft=CQW.flash.current.followers-this.getFlashSpent();
-            text(ctx,bint(followerLeft)+"/"+bint(CQW.flash.current.followers),W*0.385+T.width("0le4")/2,H*0.678+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(followerLeft,data.bintmode)+"/"+bint(CQW.flash.current.followers,data.bintmode),W*0.385+T.width("0le4")/2,H*0.678+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="dungeon") {
             followerLeft=mdata.followers-this.getPveSpent();
-            text(ctx,bint(this.getPveSpent())+"/"+bint(mdata.followers),W*0.68+T.width("0le4")/2,H*0.545+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(this.getPveSpent(),data.bintmode)+"/"+bint(mdata.followers,data.bintmode),W*0.68+T.width("0le4")/2,H*0.545+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="playground") {
             for (var i = 0; i < HERO.length; ++i) {
                 heroes[i]=HERO[i].rarity==5?0:1;
@@ -7428,7 +7428,7 @@ function Game() {
             }
             promotion=CQW.tour.current.promo.slice();
             followerLeft=CQW.tour.current.followers-this.getTournamentSpent();
-            text(ctx,bint(followerLeft)+"/"+bint(CQW.tour.current.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(followerLeft,data.bintmode)+"/"+bint(CQW.tour.current.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="halloween") {
             promotion=Array(HERO.length).fill(0);
         }
@@ -7592,8 +7592,8 @@ function Game() {
             else {
                 if (inlineInfo==0) text(ctx,"Empty Line",1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
                 else {
-                    if (data.lineInfo==0) text(ctx,"Strength: "+bint(inlineInfo),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
-                    else if(data.lineInfo==1) text(ctx,"Followers: "+bint(inlineInfo),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+                    if (data.lineInfo==0) text(ctx,"Strength: "+bint(inlineInfo,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+                    else if(data.lineInfo==1) text(ctx,"Followers: "+bint(inlineInfo,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
                 }
             }
         }
@@ -8091,7 +8091,7 @@ function Game() {
                         var color="rgb(120,120,120)";
                         var size = "24px"+FONT;
                         if (drawMonsters[i*1+monstersPage[typeTab]*20].cost<=followerLeft || followerLeft==-1) color="rgb(130,233,255)";
-                        text(ctx,bint(drawMonsters[i*1+monstersPage[typeTab]*20].cost),mx+T.width("0fj5")/2,H*(my+0.145*pos)+T.height("0klu")/2-3,size,color,"center","middle");
+                        text(ctx,bint(drawMonsters[i*1+monstersPage[typeTab]*20].cost,data.bintmode),mx+T.width("0fj5")/2,H*(my+0.145*pos)+T.height("0klu")/2-3,size,color,"center","middle");
                         ++pos;
                     }
                 }
@@ -11180,7 +11180,7 @@ function Game() {
                         text(ctx,dd+"/"+mm+"/"+yyyy+" "+hh+":"+mn,(1024*rxhof)+T.width("0c2k")/2.3,20+hofy+i*hofdis,"26px"+FONT,"black","right","middle");
                         text(ctx,hofTexts[i],W*rxhof,45+hofy+i*hofdis,"24px"+FONT,"black","center","middle");
                         text(ctx,ranquing.hof[hofTab][keys[i]].left,10+(1024*rxhof)-T.width("0c2k")/2.2,70+hofy+i*hofdis,"26px"+FONT,"rgb(0,82,135)","left","middle");
-                        text(ctx,bint(p1)+" vs "+bint(p2),W*rxhof,70+hofy+i*hofdis,"24px"+FONT,"black","center","middle");
+                        text(ctx,bint(p1,data.bintmode)+" vs "+bint(p2,data.bintmode),W*rxhof,70+hofy+i*hofdis,"24px"+FONT,"black","center","middle");
                         if (hofNames[i] == "Bloodbath") text(ctx,ranquing.hof[hofTab][keys[i]].enemy,(1024*rxhof)+T.width("0c2k")/2.3,70+hofy+i*hofdis,"26px"+FONT,"rgb(0,82,135)","right","middle");
 
                         var crect=(new Rect(W*rxhof-T.width("0i93")/2,hofy+i*hofdis,T.width("0i93"),T.height("0i93")*0.90)).small();
@@ -11268,12 +11268,12 @@ function Game() {
                         if (pfdata.PlayFabId == CQW.seasons[showRanking-1].ranking[begin+i].PlayFabId){
                             text(ctx,i+10*rankingPage+1,(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1]),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
                         }
                         else {
                             text(ctx,i+10*rankingPage+1,(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1]),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
                         }
                         if (rTopSeason !== undefined) {
                             for (var j = 0; j < rTopSeason.length; ++j) {
@@ -11323,12 +11323,12 @@ function Game() {
                         if (pfdata.PlayFabId == CQW.seasons[showRanking-1].tournament[begin+i].PlayFabId){
                             text(ctx,i+10*rankingPageT+1,(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1]),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
                         }
                         else {
                             text(ctx,i+10*rankingPageT+1,(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1]),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
                         }
                     }
                     var ew=T.width("0f9n");
@@ -11558,11 +11558,11 @@ function Game() {
             else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"50px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"PRIZE POOL: "+Math.round(reward).toLocaleString()+" AS",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.25,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"Damage Done:",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.35-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
-            text(ctx,bint(damageDone)+" ["+(damageDone/damageTotal*100).toFixed(2)+"%]",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.40-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
+            text(ctx,bint(damageDone,data.bintmode)+" ["+(damageDone/damageTotal*100).toFixed(2)+"%]",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.40-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"Attacks left: "+CQW.WB.atk,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.45-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             
             text(ctx,"Total damage:",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.52-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
-            text(ctx,bint(CQW.WB.dmg),bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.57-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
+            text(ctx,bint(CQW.WB.dmg,data.bintmode),bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.57-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"LVL: "+wbLvl,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.65-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"MODE: "+modes[CQW.WB.mode],bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.70-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"ELEMENT: "+ELEM[HERO[CQW.WB.id].type],bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.75-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
@@ -11718,7 +11718,7 @@ function Game() {
                 for (var j=0;j<10;++j) {
                     text(ctx,(j+1),btx+36,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,mdata.city.WB.log[showBoss].top10[j][0],btx+66,bty+150+35*j,"36px"+FONT,"black","left","middle");
-                    text(ctx,bint(mdata.city.WB.log[showBoss].top10[j][1]),btx+295,bty+150+35*j,"36px"+FONT,"black","right","middle");
+                    text(ctx,bint(mdata.city.WB.log[showBoss].top10[j][1],data.bintmode),btx+295,bty+150+35*j,"36px"+FONT,"black","right","middle");
                 }
             }
 
@@ -11742,7 +11742,7 @@ function Game() {
                 } else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
                 text(ctx,"Level: "+mdata.city.WB.log[showBoss].level,xpos,H*0.50,"36px"+FONT,"black","center","middle");
                 text(ctx,"Mode: "+modes[mdata.city.WB.log[showBoss].mode],xpos,H*0.54,"36px"+FONT,"black","center","middle");
-                text(ctx,"Damage Done: "+bint(mdata.city.WB.log[showBoss].dealt),xpos,H*0.58,"36px"+FONT,"black","center","middle");
+                text(ctx,"Damage Done: "+bint(mdata.city.WB.log[showBoss].dealt,data.bintmode),xpos,H*0.58,"36px"+FONT,"black","center","middle");
                 text(ctx,"Date: "+dd+"/"+mm+"/"+yyyy,xpos,H*0.62,"36px"+FONT,"black","center","middle");
                 text(ctx,"Time Alive: "+timer(talive),xpos,H*0.66,"36px"+FONT,"black","center","middle");
                 text(ctx,"Top: "+top,xpos,H*0.70,"36px"+FONT,"black","center","middle");
@@ -12881,7 +12881,7 @@ function Game() {
         roundedRect(ctx,W*0.5-(bgw/2)+200,-5+H*0.5-(bgh/2)+15,bgw-400,H*0.075,5,"rgba(50,50,50,0.80)");
         T.draw(ctx,"k2mi",W*0.35-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
         T.draw(ctx,"k2mi",W*0.65-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
-        text(ctx,bint(SD),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","center","middle");
+        text(ctx,bint(SD,data.bintmode),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","center","middle");
 
         // Zones
         //var titles = ["4nak","il1i","n6uk","bqt5","veex","qarp"];
@@ -12945,7 +12945,7 @@ function Game() {
                             ctx.restore();
                         } else T.draw(ctx,shopData[num].qty,initx-btw*0.5+(j*initx)+55,H*0.28-bth*0.5+(i*H*0.43)+10+(k*H*0.092)+16);
                         T.draw(ctx,"k2mi",initx+btw*0.5+(j*initx)-T.width("k2mi")*1.22-3,H*0.28-bth*0.5+(i*H*0.43)+10+(k*H*0.092)+9+2);
-                        text(ctx,bint(shopData[num].cost),initx+btw*0.5+(j*initx)-T.width("k2mi")*1.1,H*0.28+(i*H*0.43)+10+(k*H*0.092)+9,"36px"+FONT,"rgb(255,255,255)","right","middle");
+                        text(ctx,bint(shopData[num].cost,data.bintmode),initx+btw*0.5+(j*initx)-T.width("k2mi")*1.1,H*0.28+(i*H*0.43)+10+(k*H*0.092)+9,"36px"+FONT,"rgb(255,255,255)","right","middle");
                     }
                     ++num;
                 }
@@ -17411,8 +17411,8 @@ function Game() {
             }
         } else if (action=="notation") {
             data.nMode=extra.target;
-        } else if (action=="cblind") {
-            data.colorblind=extra.target;
+        } else if (action=="bintmode") {
+            data.bintmode=extra.target;
         } else if (action=="res") {
             if (data.resolution===true) data.resolution=1;
             if (data.resolution===false) data.resolution=0;
@@ -20344,6 +20344,7 @@ function Game() {
             var promo_lineup = data.wb.pop();
             data.wb.push([-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]);
             data.wb.push(promo_lineup);
+            data.bintmode = 0;
         }
         if (data.heroInfo !== undefined) while (data.heroInfo.length < HERO.length) data.heroInfo.push(true);
         for (var i=0; i<EVENTS.length; ++i) {
