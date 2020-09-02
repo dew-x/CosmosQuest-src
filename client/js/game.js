@@ -12767,7 +12767,7 @@ function Game() {
             ctx.fillStyle="rgb(230,190,92)";
             ctx.fillRect(W*0.5-sw*0.5,H*0.5-sh*0.5,sw,sh);
 
-            var mission = ["Cosmic Coins","Prana Gems","Ascencion Spheres"];
+            var mission = ["Cosmic Coins","Prana Gems","Ascension Spheres"];
             text(ctx,"Looking for "+mission[mdata.city.adventure.kind],W*0.5,H*0.5-sh*0.35,"56px"+FONT,"black","center","middle");
             text(ctx,"Time Left: "+timer((mdata.city.adventure.time-Date.now())/1000),W*0.5,H*0.5,"60px"+FONT,"black","center","middle");
 
@@ -12784,7 +12784,7 @@ function Game() {
             ctx.fillStyle="rgb(230,190,92)";
             ctx.fillRect(W*0.5-sw*0.5,H*0.5-sh*0.5,sw,sh);
 
-            var mission = ["Cosmic Coins","Prana Gems","Ascencion Spheres"];
+            var mission = ["Cosmic Coins","Prana Gems","Ascension Spheres"];
             if (mdata.city.adventure.prize == -1) text(ctx,"You have not found anything.",W*0.5,H*0.5,"50px"+FONT,"black","center","middle");
             else text(ctx,"You have found "+mdata.city.adventure.prize+" "+mission[mdata.city.adventure.kind],W*0.5,H*0.5,"50px"+FONT,"black","center","middle");
 
