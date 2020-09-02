@@ -246,10 +246,6 @@ function validateSetupWB($setup,$hero,$fols,$mode) {
         echo json_encode(array("success"=>false,"error"=>"Too much followers"));
         return false;
     }
-    if ($units>6) { // is this really useful ? see first if
-        echo json_encode(array("success"=>false,"error"=>"Max 6 units"));
-        return false;
-    }
     return true;
 }
 
