@@ -9326,6 +9326,7 @@ function Game() {
                 for (var j=0;j<10;++j) {
                     var yprice=TPRICE[tdata[showDay].tid%7];
                     if (tdata[showDay].tid<=17349&&yprice==0) yprice=10;
+					if (yprice==0) yprice=50;
                     var reward=cn(tprize(j+1,tdata[showDay].amount,yprice));
                     text(ctx,(j+1),btx+36,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,tdata[showDay].top10[j],btx+66,bty+150+35*j,"36px"+FONT,"black","left","middle");
@@ -9356,7 +9357,8 @@ function Game() {
                     text(ctx,"Tournament hadn't finished",xpos,H*0.5,"26px"+FONT,"black","center","middle");
                 } else {
                     var yprice=TPRICE[tdata[showDay].tid%7];
-                    if (mdata.city.tour[tpos].tid<=17349&&yprice==0) yprice=50;
+                    //if (mdata.city.tour[tpos].tid<=17349&&yprice==0) yprice=50;
+					if (yprice==0) yprice=50;
                     var yourReward=tprize(mdata.city.tour[tpos].top,mdata.city.tour[tpos].amount,yprice);
                     //var pranas=TPG[yprice];
                     var pranas=TPG[yprice];
