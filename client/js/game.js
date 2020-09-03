@@ -7290,7 +7290,6 @@ function Game() {
             var size = "50px"+FONT;
             if (i*1+monstersPage[typeTab]*20 >= 60) size = "46px"+FONT;
             text(ctx,mArray[i*1+monstersPage[typeTab]*20].name,xt+wTool/2,yt+hTool*0.05,size,"white","center","middle");
-<<<<<<< HEAD
             text(ctx,"("+elements_short[mArray[i*1+monstersPage[typeTab]*20].type]+(Math.floor(i/4+monstersPage[typeTab]*5)+1)+")",xt+wTool/2,yt+hTool*0.1,"36px"+FONT,"white","center","middle");
             this.drawMonster(ctx,i*1+monstersPage[typeTab]*20,xt+wTool/2,yt+hTool*0.51,undefined,false,2);
             var mhp = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].hp,xt+wTool/2,yt+hTool*0.61,"36px"+FONT,"white","center","middle");
@@ -7301,17 +7300,6 @@ function Game() {
             T.draw(ctx,"0e9t",xt+wTool/2-T.width("0e9t")-matk/2,yt+hTool*0.705-T.height("0e9t")/2);
             text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost),xt+wTool/2,yt+hTool*0.81,"36px"+FONT,"white","center","middle");
             text(ctx,"ELEMENT: "+elements[mArray[i*1+monstersPage[typeTab]*20].type],xt+wTool/2,yt+hTool*0.91,"36px"+FONT,"white","center","middle");
-=======
-            this.drawMonster(ctx,i*1+monstersPage[typeTab]*20,xt+wTool/2,yt+hTool*0.46,undefined,false,2);
-            var mhp = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].hp,xt+wTool/2,yt+hTool*0.56,"36px"+FONT,"white","center","middle");
-            text(ctx,mArray[i*1+monstersPage[typeTab]*20].hp,xt+wTool/2,yt+hTool*0.56,"36px"+FONT,"white","center","middle");
-            T.draw(ctx,"0fuu",xt+wTool/2-T.width("0fuu")-mhp/2,yt+hTool*0.555-T.height("0fuu")/2);
-            var matk = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.655,"36px"+FONT,"white","center","middle");
-            text(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.66,"36px"+FONT,"white","center","middle");
-            T.draw(ctx,"0e9t",xt+wTool/2-T.width("0e9t")-matk/2,yt+hTool*0.655-T.height("0e9t")/2);
-            text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost,data.bintmode),xt+wTool/2,yt+hTool*0.76,"36px"+FONT,"white","center","middle");
-            text(ctx,"ELEMENT: "+elements[mArray[i*1+monstersPage[typeTab]*20].type],xt+wTool/2,yt+hTool*0.86,"36px"+FONT,"white","center","middle");
->>>>>>> master
         }
         else {
             ctx.beginPath();
