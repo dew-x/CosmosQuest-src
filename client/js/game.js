@@ -7960,7 +7960,7 @@ function Game() {
             var myHeroPos=[];
             for (var i=0;i<HERO.length;++i) {
                 if (mode!=="tournaments" && mode!=="flash" && mode!=="extratournament" && mode!=="halloween"){
-                    if (heroes[i]!=0 && data.heroInfo[i]==true){
+                    if (heroes[i]!=0 && (data.heroInfo[i]==true || (mode=="playground"&&data.showDisabled))) {
                         myHeroArray.push(heroes[i]);
                         myHeroPos.push(i);
                     }
@@ -8117,7 +8117,7 @@ function Game() {
             var myHeroPos=[];
             for (var i=0;i<HERO.length;++i) {
                 if (mode!=="tournaments" && mode!=="flash" && mode!=="extratournament" && mode!=="halloween"){
-                    if (heroes[i]!=0 && data.heroInfo[i]==true){
+                    if (heroes[i]!=0 && (data.heroInfo[i]==true || (mode=="playground"&&data.showDisabled))) {
                         myHeroArray.push(heroes[i]);
                         myHeroPos.push(i);
                     }
@@ -13744,8 +13744,7 @@ function Game() {
 
     }
     this.drawPlayground = function (ctx) {
-        this.drawMonsterTabs(ctx,"playground");
-
+        this.checkBox(ctx,W*0.15,H*0.9,data.showDisabled,"plshow","toggle","showDisabled","Show disabled heroes","right","Hide/Show the Heroes you've disabled in the hero manager");
         if (simwbscreen) {
             ctx.fillStyle="rgba(0,0,0,0.5)";
             ctx.fillRect(0,0,W,H);
@@ -13842,6 +13841,7 @@ function Game() {
                 }
             }
         }
+        this.drawMonsterTabs(ctx,"playground");
     }
     this.drawAdvent = function (ctx) {
         var startTid=18231; 
@@ -20378,6 +20378,7 @@ function Game() {
             data.wb.push([-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]);
             data.wb.push(promo_lineup);
             data.bintmode = 0;
+            data.showDisabled = false;
         }
         if (data.heroInfo !== undefined) while (data.heroInfo.length < HERO.length) data.heroInfo.push(true);
         for (var i=0; i<EVENTS.length; ++i) {
