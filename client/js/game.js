@@ -7298,7 +7298,7 @@ function Game() {
             var matk = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.705,"36px"+FONT,"white","center","middle");
             text(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.71,"36px"+FONT,"white","center","middle");
             T.draw(ctx,"0e9t",xt+wTool/2-T.width("0e9t")-matk/2,yt+hTool*0.705-T.height("0e9t")/2);
-            text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost),xt+wTool/2,yt+hTool*0.81,"36px"+FONT,"white","center","middle");
+            text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost,data.bintmode),xt+wTool/2,yt+hTool*0.81,"36px"+FONT,"white","center","middle");
             text(ctx,"ELEMENT: "+elements[mArray[i*1+monstersPage[typeTab]*20].type],xt+wTool/2,yt+hTool*0.91,"36px"+FONT,"white","center","middle");
         }
         else {
