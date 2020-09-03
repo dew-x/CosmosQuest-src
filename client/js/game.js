@@ -9326,7 +9326,7 @@ function Game() {
                 for (var j=0;j<10;++j) {
                     var yprice=TPRICE[tdata[showDay].tid%7];
                     if (tdata[showDay].tid<=17349&&yprice==0) yprice=10;
-                    var reward=cn(tprize(j+1,tdata[showDay].amount,yprice));
+                    var reward=cn(tprize(j+1,tdata[showDay].amount,Math.min(50,yprice)));
                     text(ctx,(j+1),btx+36,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,tdata[showDay].top10[j],btx+66,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,reward,btx+270,bty+150+35*j,"36px"+FONT,"black","right","middle");
@@ -9357,8 +9357,7 @@ function Game() {
                 } else {
                     var yprice=TPRICE[tdata[showDay].tid%7];
                     if (mdata.city.tour[tpos].tid<=17349&&yprice==0) yprice=50;
-                    var yourReward=tprize(mdata.city.tour[tpos].top,mdata.city.tour[tpos].amount,yprice);
-                    //var pranas=TPG[yprice];
+                    var yourReward=tprize(mdata.city.tour[tpos].top,mdata.city.tour[tpos].amount,Math.min(50,yprice)); // #56
                     var pranas=TPG[yprice];
                     var yourPos=mdata.city.tour[tpos].top;
                     var yourPranas=pranas[0];
