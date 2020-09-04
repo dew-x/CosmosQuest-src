@@ -24049,6 +24049,7 @@ function Game() {
                 "FunctionParameter": {
                     setup: data.wb[data.wbline],
                     kid: kid,
+					wbid: CQW.WB.id
                 }
             }, function (res,err) {
                 fightWBsync=false;
