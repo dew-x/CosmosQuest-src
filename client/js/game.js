@@ -12904,7 +12904,7 @@ function Game() {
         text(ctx,"CosmosQuest Info",W*0.5,H*0.25,"60px"+FONT,"white","center","middle");
 
         text(ctx,"The company that made this game, Gaiabyte, no longer exists.",W*0.5-bw*0.5+20,H*0.3,"36px"+FONT,"white","left","middle");
-        text(ctx,"However there's a team of community members, who is maintaining it.",W*0.5-bw*0.5+20,H*0.3+20,"36px"+FONT,"white","left","middle");
+        text(ctx,"However there's a team of community members who are maintaining it.",W*0.5-bw*0.5+20,H*0.3+20,"36px"+FONT,"white","left","middle");
         text(ctx,"We are open for suggestions and thankful for potential support.",W*0.5-bw*0.5+20,H*0.3+40,"36px"+FONT,"white","left","middle");
         
         text(ctx,"As Kongregate has closed the forums, some stuff happens on discord",W*0.5-bw*0.5+20,H*0.3+80,"36px"+FONT,"white","left","middle");
