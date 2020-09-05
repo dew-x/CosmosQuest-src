@@ -3455,7 +3455,7 @@ handlers.fightWB = function (args, context) {
     if (data) {
         if (data.city.WB.atks<=0) return { ok: false, err: "No attacks left" };
         var headers = {};
-        var content = "action=wb&key="+CQ+"&pid="+currentPlayerId+"&kid="+args.kid+"&fol="+data.followers+"&setup="+encodeURI(JSON.stringify(args.setup))+"&hero="+encodeURI(JSON.stringify(data.city.hero))+"&promo="+encodeURI(JSON.stringify(data.city.promo));
+        var content = "action=wb&key="+CQ+"&pid="+currentPlayerId+"&kid="+args.kid+"&wbid="+args.wbid+"&fol="+data.followers+"&setup="+encodeURI(JSON.stringify(args.setup))+"&hero="+encodeURI(JSON.stringify(data.city.hero))+"&promo="+encodeURI(JSON.stringify(data.city.promo));
         var httpMethod = "post";
         try {
             var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
