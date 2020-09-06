@@ -12375,7 +12375,12 @@ function Game() {
                     ctx.restore();
                 }  
             }
-
+        } else {
+        	this.doAction("doDaily", false);
+            popup={
+                    text:"Congratulations, you've finished todays event.",
+                    mode:"alert",
+                }
         }
     }
     this.drawFlash = function (ctx) {
