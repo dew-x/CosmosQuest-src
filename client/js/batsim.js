@@ -6714,7 +6714,7 @@ var HERO = [
       skill: {
         type: "acum",
         target: 9,
-        value: 0.1112,
+        value: 1.2223,
         value2: 4,
         hid: 201
       },
@@ -9072,7 +9072,7 @@ var HERO = [
       atk: 40,
       hp: 40,
       both: 40,
-      skill: 0.0202,
+      skill: 0.2222,
       quest: 63
     },
     {
