@@ -10188,7 +10188,7 @@ function calcTurn (A,B,seed,turnid) {
                 }
                 if (skill.type=="guardian" && j!=i) turn.buff.heal[j]+=Math.floor(skillVal*lvlVal/skill.target);
                 if (skill.type=="acum" && ((turnid%skill.value2)==0)) {
-                    turn.buff.iAtk[j]+=Math.round(Math.floor(lvlVal*skillVal)*skill.target);
+                    turn.buff.iAtk[j]+=Math.round(Math.floor(lvlVal/skill.target)*skillVal*skill.target);
                 }
             }
             // all other units 
