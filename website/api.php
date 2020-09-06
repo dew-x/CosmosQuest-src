@@ -908,6 +908,7 @@ if (isset($_POST["action"])) {
             $promo=json_decode(urldecode($_POST["promo"]),true);
             $pid=$_POST["pid"];
             $kid=$_POST["kid"];
+            $client_wbid=$_POST["wbid"];
             if (!is_null($setup) and !is_null($hero) and !is_null($promo)) {
                 $res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
                 if ($res) {
@@ -935,6 +936,10 @@ if (isset($_POST["action"])) {
                             $level=$row1["level"];
                             $mode=$row1["mode"]%2;
                             $isSuper=false;
+							if ($wbid != $client_wbid) { // wrong wb
+								echo json_encode(array("success"=>false,"error"=>"A new WB has spawned, please refresh"));
+								exit();
+							}
                             if ($row1["mode"]>1) $isSuper=true;
                             if ($isSuper) {
                                 $res3=$sql->query("SELECT COUNT(*) as `atks` FROM WBD WHERE `uid`=$uid AND bid=$wbid");
