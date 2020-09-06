@@ -16744,7 +16744,7 @@ function Game() {
             ctext(ctx,"The company that made this game, Gaiabyte, no longer exists.",zx+zw/2,H*0.4-ph*1.5+64,"32px "+FONT,"white","center","top");
             ctext(ctx,"But the game is currently being maintained by the community so new updates will come.",zx+zw/2,H*0.4-ph*1.5+80,"32px "+FONT,"white","center","top");
             ctext(ctx,"This being said all purchases will be used to keep the servers alive.",zx+zw/2,H*0.4-ph*1.5+96,"32px "+FONT,"white","center","top");
-            ctext(ctx,"As long as you aknowledge the situaction you are free to contiune the purchase:",zx+zw/2,H*0.4-ph*1.5+128,"32px "+FONT,"white","center","top");
+            ctext(ctx,"As long as you acknowledge the situaction you are free to continue the purchase:",zx+zw/2,H*0.4-ph*1.5+128,"32px "+FONT,"white","center","top");
             var bw = T.width("05x5");
             var bh = T.height("05x5");
             // yes
