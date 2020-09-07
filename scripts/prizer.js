@@ -9025,7 +9025,7 @@ var bids = [
     {id:205,time:86400*2,price:454}, //Kilkenny
     {id:206,time:21600,price:9}, //egg
     {id:207,time:43200,price:45}, //baby
-    {id:208,time:86400,price:454}, //young
+    {id:208,time:86400,price:181}, //young
     {id:209,time:86400*2,price:909} //king
 ];
 
