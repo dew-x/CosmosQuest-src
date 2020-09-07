@@ -13746,6 +13746,7 @@ function Game() {
     this.drawPlayground = function (ctx) {
         this.checkBox(ctx,W*0.15,H*0.9,data.showDisabled,"plshow","toggle","showDisabled","Show disabled heroes","right","Hide/Show the Heroes you've disabled in the hero manager");
         if (simwbscreen) {
+            this.drawMonsterTabs(ctx,"playground");
             ctx.fillStyle="rgba(0,0,0,0.5)";
             ctx.fillRect(0,0,W,H);
 
@@ -13811,7 +13812,8 @@ function Game() {
                 this.addZone("simulatewb",fsrect,"simulatewb");            
             } T.draw(ctx,"091m",W*0.57-T.width("091m")*0.5+120,H*0.85-T.height("091m")*0.5);
             text(ctx,"WORLD BOSS",W*0.57+120,H*0.85,"50px "+FONT,"white","center","middle");
-    
+
+            this.drawMonsterTabs(ctx,"playground");
     
             if (cityClick != undefined) {
                 if (swapping) {
@@ -13841,7 +13843,6 @@ function Game() {
                 }
             }
         }
-        this.drawMonsterTabs(ctx,"playground");
     }
     this.drawAdvent = function (ctx) {
         var startTid=18231; 
@@ -16745,6 +16746,7 @@ function Game() {
             ctext(ctx,"But the game is currently being maintained by the community so new updates will come.",zx+zw/2,H*0.4-ph*1.5+80,"32px "+FONT,"white","center","top");
             ctext(ctx,"This being said, all purchases will be used to keep the servers alive.",zx+zw/2,H*0.4-ph*1.5+96,"32px "+FONT,"white","center","top");
             ctext(ctx,"As long as you acknowledge the situation you are free to continue the purchase:",zx+zw/2,H*0.4-ph*1.5+128,"32px "+FONT,"white","center","top");
+
             var bw = T.width("05x5");
             var bh = T.height("05x5");
             // yes

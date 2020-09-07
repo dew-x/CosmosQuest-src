@@ -71,7 +71,7 @@ if (isset($_GET["id"]) and ctype_digit($_GET["id"])) {
         $cells[]='<a href="lottery.php?id='.$row["id"].'">'.ceil($row["id"]/4).'</a>';
         $cells[]=date("Y/m/d",$row["end"]-12*60*60);
         $cells[]=$row["end"]<time()?"Finished":"Ongoing";
-        if (date("N",$row["end"]-12*60*60)<6) $content.='<tr><td class="big">'.implode('</td><td class="small">',$cells).'</td></tr>';
+        $content.='<tr><td class="big">'.implode('</td><td class="small">',$cells).'</td></tr>';
     }
     $res->free();
     $content.='</tbody></table>';
