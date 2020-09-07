@@ -672,6 +672,7 @@ function genStats() {
             qdaily: 0,
             tdm: 0, // td max level
             tde: 0, // max energy
+            heroes: 0,
         },
         a: { // arrs can only insert
             zclick: [], // zones clicked
