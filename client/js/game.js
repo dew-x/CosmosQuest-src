@@ -23200,7 +23200,7 @@ function Game() {
             }
         } else if (skill.type=="acum") {
             return {
-				short: "Aura/n+"+Math.floor(skill.target*value).toFixed(0)+" Attack ("+Math.floor(Math.floor(lvl/skill.target)*value*skill.target).toFixed(0)+") per "+skill.value2+" turns per "+skill.target+" levels",
+				short: "Aura/n+"+value.toFixed(1)+" Attack per level ("+Math.floor(lvl*value).toFixed(0)+") every "+skill.value2+" turns",
                 long: "Attack increases the amount of direct damage a hero deals, by the value. This value increases every number of turns displayed. The value of the attack increases based on the level of this unit. Auras affect all friendly units until the unit with the aura dies.",
             }
         } else if (skill.type=="empow") {
