@@ -12378,7 +12378,7 @@ function Game() {
         } else {
         	this.doAction("doDaily", false);
             popup={
-                    text:"Congratulations, you've finished todays event.",
+                    text:"Congratulations, you've finished today's event.",
                     mode:"alert",
                 }
         }
