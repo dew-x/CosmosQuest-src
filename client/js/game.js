@@ -4012,7 +4012,7 @@ function Game() {
                                 text(ctx,"Get 9 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
 
                             }
-                            else if (hid==51||hid==52||hid==53||hid==96||hid==113||hid==127||hid==128||hid==129||hid==148||hid==168) {
+                            else if (hid==51||hid==52||hid==53||hid==96||hid==113||hid==127||hid==128||hid==129||hid==148||hid==168||hid==205) { //PG&CC
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.018,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                                 T.draw(ctx,"0ap1",ix+(W*0.15/2)+i*W*0.2+W*0.04,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
@@ -4037,10 +4037,14 @@ function Game() {
                                 text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 text(ctx,"Get 3 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                             }
-                            else if (hid==101) {
+                            else if (hid==101) { //PG&UM
                             	text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.018,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                                 T.draw(ctx,"0dvo",ix+(W*0.15/2)+i*W*0.2+W*0.04-T.width("0j14")*0.15,y0+H*0.265-T.height("0j14")*0.88*0.5,T.width("0j14")*0.95,T.height("0j14")*0.8);
+                            }
+                            else if (hid==206||hid==207||hid==208||hid==209) { //pyros
+                                text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                                text(ctx,"Get 33 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                             }
                             else {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
