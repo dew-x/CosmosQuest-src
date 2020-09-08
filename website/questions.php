@@ -941,6 +941,120 @@ $questions = array(
         "Have you ever played World of Warcraft?",
         "Yes",
         "No"
+    ),
+    
+    "18517"=>array(
+        "Do you remeber polls in this game?",
+        "Yes",
+        "No, I forgot about them",
+        "No, I wasn't around back then"
+    ),
+    "18518"=>array(
+        "Do you know about the CQ discord?",
+        "Yes, I'm already there.",
+        "Yes, but I don't care",
+        "No, I didn't know about it."
+    ),
+    "18519"=>array(
+        "What would you like to see next?",
+        "New season",
+        "New weekly event",
+        "I don't care"
+    ),
+    "18520"=>array(
+        "How long should an average World boss be alive?",
+        "More than that",
+        "21h",
+        "18h",
+        "15h",
+        "Less than that"
+    ),
+    "18521"=>array(
+        "How do you feel about heroes with random skills?",
+        "I like them",
+        "I'm not sure",
+        "I don't like them",
+        "I don't care"        
+    ),
+    "18522"=>array(
+        "Should we nerf Promotion 6 of some heroes (namely, Revive)?",
+        "Yes, as soon as possible!",
+        "Better give a boost to other heroes to balance things out!",
+        "No way, never look back!"
+    ),
+    "18523"=>array(
+        "Which notation do you use?",
+        "k/M/G/T/P",
+        "k/M/B/T/Q",
+        "k/Mn/Md/Bn/Bd"
+    ),
+    "18524"=>array(
+        "Do you like current World bosses?",
+        "I like them all",
+        "Interesting concepts of current bosses, but small pool of solutions",
+        "Would like to see more different bosses",
+        "I don't really care about them",
+        "I don't like bosses at all"
+    ),
+    "18525"=>array(
+        "What would be your first choice?",
+        "A new world boss",
+        "Tournament 2 replays",
+        "Promo7",
+        "Gaia's nude pics on freegaia.today"
+    ),
+    "18526"=>array(
+        "Do you use hotkeys in CQ?",
+        "Yes",
+        "No, I didn't knew about them.",
+        "No, I don't need them."
+    ),
+    "18527"=>array(
+        "Do you like normal Tournaments (Tournament 1)?",
+        "Everything is good",
+        "There're not enough players entering",
+        "They are not rewarding enough",
+        "Price to join is too high",
+        "Game modes are boring/repetitive"
+    ),
+    "18528"=>array(
+        "Do you like secondary Tournaments (Tournament 2)?",
+        "Everything is good",
+        "There're not enough players entering",
+        "Fix block description/function and it will be good",
+        "Interesting modifiers, but would like to see more",
+        "I don't really care about secondary tournament"
+        
+    ),
+    "18529"=>array(
+        "What do you think about new quests?",
+        "It's fine as it is.",
+        "New heroes would be good, but only with new heroes",
+        "New quests would be good, even without heroes as reward",
+        "I don't care about these",
+        "I don't like quests"
+    ),
+    "18530"=>array(
+        "Should we keep improving idle-mode?",
+        "Yes, I want more idle content",
+        "Just fix the worst bugs, then focus on PvP",
+        "I don't care about idle, give me heroes and events"
+    ),
+    "18531"=>array(
+        "Rate your experience with Community-Patches so far",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+    ),
+    "18532"=>array(
+        "What do you think about chests?",
+        "Leave them as they are.",
+        "Add more idle rewards",
+        "Add more non-idle rewards",
+        "Add more heroes",
+        "I don't care"
     )
 );
 
