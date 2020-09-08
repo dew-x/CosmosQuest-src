@@ -6714,7 +6714,8 @@ var HERO = [
       skill: {
         type: "acum",
         target: 9,
-        value: 4,
+        value: 1,
+        value2: 4,
         hid: 201
       },
       passive: {
@@ -9071,7 +9072,7 @@ var HERO = [
       atk: 40,
       hp: 40,
       both: 40,
-      skill: 1,
+      skill: 0.2021,
       quest: 63
     },
     {
@@ -10186,8 +10187,8 @@ function calcTurn (A,B,seed,turnid) {
                     }
                 }
                 if (skill.type=="guardian" && j!=i) turn.buff.heal[j]+=Math.floor(skillVal*lvlVal/skill.target);
-                if (skill.type=="acum" && ((turnid%skillVal)==0)) {
-                    turn.buff.iAtk[j]+=Math.round(Math.floor(lvlVal/9)*skill.target);
+                if (skill.type=="acum" && ((turnid%skill.value2)==0)) {
+					turn.buff.iAtk[j]+=Math.round(lvlVal*skillVal);
                 }
             }
             // all other units 
