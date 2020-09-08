@@ -84,6 +84,15 @@ function Game() {
                     return false;
                 }
             },{
+                id: "CQDC",
+                icon: "2gv4",
+                text: "CosmosQuest Info",
+                action: "cqdc",
+                extra: {target:!cqdcOpen},
+                active: function () {
+                    return true;
+                }
+            },{
                 id:"RESEARCH",
                 icon:"02gd",
                 text:"Research Available",
@@ -937,6 +946,7 @@ function Game() {
         percentage: undefined,
         next: false,
     };
+    var cqdcOpen = false;
     var halloweenOpen = false;
     var halloweenMode = "fight";
     var halloweenLevelUp = undefined;
@@ -1678,6 +1688,9 @@ function Game() {
             } else if (adventureOpen) {
                 zones = {};
                 if (mdata!==undefined) this.drawAdventure(ctx);
+            } else if (cqdcOpen) {
+                zones = {};
+                this.drawCQDC(ctx);
             } else if (this.isHalloween() && halloweenOpen) {
                 zones = {};
                 this.drawHalloween(ctx);
@@ -12895,6 +12908,48 @@ function Game() {
         }
         else T.draw(ctx,"7otr",W*0.97*0.5+bgw*0.5-cw-2,H*0.5-bgh*0.97*0.5+8,cw,ch);
     }
+    this.drawCQDC = function (ctx) {
+    	var bw=W*0.6;
+        var bh=H*0.6;
+        roundedRect(ctx,W*0.5-(bw*0.5)-2,H*0.5-(bh*0.5)-2,bw+4,bh+4,5,"rgb(255,255,255)");
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(W*0.5-(bw*0.5),H*0.5-(bh*0.5),bw,bh);
+        ctx.closePath();
+        ctx.clip();
+        T.draw(ctx,"0k2u",W*0.5-(bw*0.5),H*0.5-(bh*0.5),W*0.929,bh);
+        ctx.restore();
+        
+        // Close
+        var cw = T.width("0evr");
+        var ch = T.height("0evr");
+        var crect = (new Rect(W*0.81-cw*1.2,H*0.195,cw,ch)).small();
+        if (crect.isInside(GM.x,GM.y)) {
+            T.draw(ctx,"7otr",W*0.81-cw*1.2+2,H*0.195+2,cw-4,ch-4);
+            this.addZone("cqdc_close",crect,"cqdc",{target:false});
+        }
+        else T.draw(ctx,"7otr",W*0.81-cw*1.2,H*0.195,cw,ch);
+
+        text(ctx,"CosmosQuest Info",W*0.5,H*0.25,"60px"+FONT,"white","center","middle");
+
+        text(ctx,"The company that made this game, Gaiabyte, no longer exists. However",W*0.5-bw*0.5+20,H*0.3,"36px"+FONT,"white","left","middle");
+        text(ctx,"there's a team of community members who are maintaining the game.",W*0.5-bw*0.5+20,H*0.3+20,"36px"+FONT,"white","left","middle");
+        text(ctx,"We are open for suggestions and thankful for any potential support.",W*0.5-bw*0.5+20,H*0.3+40,"36px"+FONT,"white","left","middle");
+        text(ctx,"As Kongregate has closed the forums, discussions happen on Discord",W*0.5-bw*0.5+20,H*0.3+80,"36px"+FONT,"white","left","middle");
+        text(ctx,"now: if you're interested in Announcements, Patch Notes or want to report",W*0.5-bw*0.5+20,H*0.3+100,"36px"+FONT,"white","left","middle");
+        text(ctx,"a bug it's best to head there.",W*0.5-bw*0.5+20,H*0.3+120,"36px"+FONT,"white","left","middle");
+        text(ctx,"If you want to join the Dev team, reach out to Matthy (there or in chat).",W*0.5-bw*0.5+20,H*0.3+140,"36px"+FONT,"white","left","middle");
+        text(ctx,"",W*0.5-bw*0.5+20,H*0.3+160,"36px"+FONT,"white","left","middle");
+        
+        //Discord link
+        var grect=(new Rect(W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2,T.width("091m"),T.height("091m"))).small();
+        if (grect.isInside(GM.x,GM.y)){
+            T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
+            this.addZone("cqlink_0",grect,"cqlink");
+        } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
+        text(ctx,"VISIT OUR DISCORD",W*0.5,H*0.7,"36px"+FONT,"white","center","middle");
+    }
     this.drawSeasonShop = function (ctx) {
         var shopData=getStarDustData();
         ctx.fillStyle="rgba(47,47,47,0.25)";
@@ -18828,6 +18883,14 @@ function Game() {
             }
         } else if (action=="cadventure") {
             adventure.next = false;
+        } else if (action=="cqdc") {
+            if (extra.target) {
+                cqdcOpen = true;
+            } else {
+                cqdcOpen = false;
+            }
+        } else if (action=="cqlink") {
+            window.open("https://discord.gg/YyUpGsj");
         } else if (action=="ohall") {
             halloweenOpen = !halloweenOpen;
         } else if (action=="shal") {
