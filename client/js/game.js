@@ -8437,7 +8437,7 @@ function Game() {
                 "Increases health by "+(CQW.tour.current.vals[cellStatus.n]*100).toFixed(0)+"%",
             ];
             var fixDraw=[0,1,9,18,27];
-            var line = Math.ceil((cellStatus.n+1)/6)-1;
+            var line = Math.floor(cellStatus.n/6);
             var x=cellStatus.x+80;
             var y=cellStatus.y+40+fixDraw[line];
             var cStat = CQW.tour.current.grid[cellStatus.n];
