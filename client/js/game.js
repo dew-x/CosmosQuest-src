@@ -10008,7 +10008,7 @@ function Game() {
         }
     
         if (!filterOpen && showHero!==undefined) {
-            this.drawMonster(ctx,-2-showHero,btx+bw/4+15,bty+bh/3,undefined,false,1.5,mdata.city.hero[showHero],true,base,mdata.city.promo[showHero],true);
+            this.drawMonster(ctx,-2-showHero,btx+bw/4+15,bty+bh/3,undefined,false,1.5,mdata.city.hero[showHero],true,true,mdata.city.promo[showHero],true);
             var asize = mtext(ctx," -> ",btx+bw/4+15,bty+bh/3+70,"40px"+FONT,"white","center","middle");
             if (HERO[showHero].rarity==3 || showHero == 108) text(ctx,HERO[showHero].name,btx+bw/4+15,bty+bh/3+40,"56px"+FONT,"rgb(73,174,183)","center","middle");
             else if (showHero == 133 || showHero == 134 || showHero == 135 || showHero == 174 || showHero == 201 || showHero == 205 || showHero == 184 || 
