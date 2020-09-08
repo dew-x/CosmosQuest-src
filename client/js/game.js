@@ -12904,13 +12904,12 @@ function Game() {
         text(ctx,"CosmosQuest Info",W*0.5,H*0.25,"60px"+FONT,"white","center","middle");
 
         text(ctx,"The company that made this game, Gaiabyte, no longer exists.",W*0.5-bw*0.5+20,H*0.3,"36px"+FONT,"white","left","middle");
-        text(ctx,"However there's a team of community members who are maintaining it.",W*0.5-bw*0.5+20,H*0.3+20,"36px"+FONT,"white","left","middle");
-        text(ctx,"We are open for suggestions and thankful for potential support.",W*0.5-bw*0.5+20,H*0.3+40,"36px"+FONT,"white","left","middle");
-        
-        text(ctx,"As Kongregate has closed the forums, some stuff happens on discord",W*0.5-bw*0.5+20,H*0.3+80,"36px"+FONT,"white","left","middle");
-        text(ctx,"now: If you're interested in announcements, patch notes or want to report",W*0.5-bw*0.5+20,H*0.3+100,"36px"+FONT,"white","left","middle");
+        text(ctx,"However there's a team of community members who are maintaining the game.",W*0.5-bw*0.5+20,H*0.3+20,"36px"+FONT,"white","left","middle");
+        text(ctx,"We are open for suggestions and thankful for any potential support.",W*0.5-bw*0.5+20,H*0.3+40,"36px"+FONT,"white","left","middle");
+        text(ctx,"As Kongregate has closed the forums, discussions happen on Discord",W*0.5-bw*0.5+20,H*0.3+80,"36px"+FONT,"white","left","middle");
+        text(ctx,"now: if you're interested in Announcements, Patch Notes or want to report",W*0.5-bw*0.5+20,H*0.3+100,"36px"+FONT,"white","left","middle");
         text(ctx,"a bug it's best to head there.",W*0.5-bw*0.5+20,H*0.3+120,"36px"+FONT,"white","left","middle");
-        text(ctx,"If you want to join the dev team, reach out to matthy (there or in chat).",W*0.5-bw*0.5+20,H*0.3+140,"36px"+FONT,"white","left","middle");
+        text(ctx,"If you want to join the Dev team, reach out to Matthy (there or in chat).",W*0.5-bw*0.5+20,H*0.3+140,"36px"+FONT,"white","left","middle");
         text(ctx,"",W*0.5-bw*0.5+20,H*0.3+160,"36px"+FONT,"white","left","middle");
         
         //Discord link
