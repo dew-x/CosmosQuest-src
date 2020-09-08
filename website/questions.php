@@ -1024,7 +1024,6 @@ $questions = array(
         "Fix block description/function and it will be good",
         "Interesting modifiers, but would like to see more",
         "I don't really care about secondary tournament"
-        
     ),
     "18529"=>array(
         "What do you think about new quests?",
