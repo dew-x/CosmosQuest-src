@@ -85,7 +85,7 @@ function Game() {
                 }
             },{
                 id: "CQDC",
-                icon: "bhe4",
+                icon: "2gv4",
                 text: "CosmosQuest Info",
                 action: "cqdc",
                 extra: {target:!cqdcOpen},
