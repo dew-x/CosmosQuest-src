@@ -7748,7 +7748,7 @@ function Game() {
                         if (CQW.tour.current.grid[mp] == 4) T.draw(ctx,"islj_"+(CQW.tour.current.grid[mp]),x+40-T.width("islj_0")*0.5+3,y+40+yfix[i]-T.height("islj_0")*0.5-2);
                         else T.draw(ctx,"islj_"+(CQW.tour.current.grid[mp]),x+40-T.width("islj_0")*0.5,y+40+yfix[i]-T.height("islj_0")*0.5);
                         if (CQW.tour.current.vals[mp]!==0 && CQW.tour.current.grid[mp]!==4 && CQW.tour.current.grid[mp]!==8) {
-                            text(ctx,"  "+(CQW.tour.current.vals[mp]*100)+"%",x+40+T.width("islj_0")*0.5,y+40+yfix[i]-T.height("islj_0")*0.5,"26px"+FONT,"rgba(255,255,255,0.5)","right","top");
+                            text(ctx,"  "+(CQW.tour.current.vals[mp]*100).toFixed(0)+"%",x+40+T.width("islj_0")*0.5,y+40+yfix[i]-T.height("islj_0")*0.5,"26px"+FONT,"rgba(255,255,255,0.5)","right","top");
                         }
                         if ((new Rect(x,y,80,80)).small().isInside(GM.x,GM.y)) {
                             //cellStatus = mp;
@@ -8437,7 +8437,7 @@ function Game() {
                 "Increases health by "+(CQW.tour.current.vals[cellStatus.n]*100).toFixed(0)+"%",
             ];
             var fixDraw=[0,1,9,18,27];
-            var line = Math.ceil(cellStatus.n/6)-1;
+            var line = Math.ceil((cellStatus.n+1)/6)-1;
             var x=cellStatus.x+80;
             var y=cellStatus.y+40+fixDraw[line];
             var cStat = CQW.tour.current.grid[cellStatus.n];
