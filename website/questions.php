@@ -1028,7 +1028,7 @@ $questions = array(
     "18529"=>array(
         "What do you think about new quests?",
         "It's fine as it is.",
-        "New heroes would be good, but only with new heroes",
+        "New quests would be good, but only with new heroes",
         "New quests would be good, even without heroes as reward",
         "I don't care about these",
         "I don't like quests"
