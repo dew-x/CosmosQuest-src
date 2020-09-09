@@ -43,7 +43,7 @@
     $limit=1600;
     if ($isSuper) $limit=1200;
     $data=array(
-        "version"=>"v4.8.3.0",
+        "version"=>"v4.8.4.0",
         "tournament"=>array(
             "pool"=>$pool
         ),
@@ -55,7 +55,7 @@
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),
-        "news"=>"First community update. Thank you Xoc82, Matthieu Bonne and Simoris!!!"
+        "news"=>"Second community update! Check changelog for details."
     );
     file_put_contents("data.json",json_encode($data));
      
