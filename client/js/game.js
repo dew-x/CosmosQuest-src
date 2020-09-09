@@ -12721,6 +12721,7 @@ function Game() {
                         }
                     }
                     if (newPosition == cc_coin) {
+                        cc_body.unshift(newPosition);
                         var added = false;
                         while (!added) {
                             var new_coin = Math.floor(Math.random() * 180);
@@ -12736,7 +12737,6 @@ function Game() {
                         
                         cc_data.points += 3;
                         if (cc_data.speed > 100) cc_data.speed -= 50;
-                        cc_body.unshift(newPosition);
                     } else {
                         cc_body[0] = newPosition;
                     }
