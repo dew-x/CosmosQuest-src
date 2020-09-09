@@ -23513,11 +23513,11 @@ function Game() {
             mode: undefined,
         };
         if (CQW!==undefined && CQW.WB!==undefined && CQW.WB.name.indexOf("SUPER")!==-1 && CQW.super!==undefined && CQW.super===1) {
-            element.icon="ube1";
+            element.icon="esyg";
             element.text="Extra AS SWB";
             element.mode="wb";
         } else if (CQW!==undefined && CQW.WB!==undefined && CQW.WB.name.indexOf("SUPER")!==-1) {
-            element.icon="ube1";
+            element.icon="esyg";
             element.text="Super World Boss";
             element.mode="wb";
         } else if (CQW!==undefined && CQW.super!==undefined && CQW.super===1) {
