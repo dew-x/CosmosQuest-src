@@ -9021,6 +9021,12 @@ var bids = [
     {id:196,time:43200,price:45},
     {id:197,time:86400,price:181},
     {id:198,time:86400*3,price:1364},
+    {id:199,time:43200,price:45}, //Yisus
+    {id:205,time:86400*2,price:454}, //Kilkenny
+    {id:206,time:21600,price:9}, //egg
+    {id:207,time:43200,price:45}, //baby
+    {id:208,time:86400,price:181}, //young
+    {id:209,time:86400*2,price:909} //king
 ];
 
 var working=0;
@@ -9037,7 +9043,9 @@ function doUpdate(row) {
             } else if (row.hero==153||row.hero==154||row.hero==155||row.hero==156) {
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":33}\');', function (error, results, fields) {});
             } else if (row.hero==200||row.hero==201||row.hero==202||row.hero==203) {
-              connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":3}\');', function (error, results, fields) {});
+                connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":3}\');', function (error, results, fields) {});
+            } else if (row.hero==206||row.hero==207||row.hero==208||row.hero==209) { //pyros
+                connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":33}\');', function (error, results, fields) {});
             } else {
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+'}\');', function (error, results, fields) {});
             }

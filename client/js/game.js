@@ -32,7 +32,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 1",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>1 && mdata!==undefined && mdata.city.hero[0]==0&&mdata.city.promo[0]==0) {
@@ -46,7 +46,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 2",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>5 && mdata!==undefined && mdata.city.hero[0]>=1 && mdata.city.hero[1]==0&&mdata.city.promo[1]==0) {
@@ -60,7 +60,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 3",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>10 && mdata!==undefined && mdata.city.hero[1]>=1 && mdata.city.hero[2]==0&&mdata.city.promo[2]==0) {
@@ -74,7 +74,7 @@ function Game() {
                 icon:"08ot",
                 text:"One-Time Offer 4",
                 action: "menu",
-                extra: {target:"shop"},
+                extra: {target:"shop",submenu:"home"},
                 active: function () {
                     if (!_this.isStPatrick()||(pfdata!==undefined&&mdata!==undefined&&mdata.city.hero[96]>0)) {
                         if (data.stats.t.v.ascension>20 && mdata!==undefined && mdata.city.hero[2]>=1 && mdata.city.hero[80]==0&&mdata.city.promo[80]==0) {
@@ -82,6 +82,15 @@ function Game() {
                         }
                     }
                     return false;
+                }
+            },{
+                id: "CQDC",
+                icon: "2gv4",
+                text: "CosmosQuest Info",
+                action: "cqdc",
+                extra: {target:!cqdcOpen},
+                active: function () {
+                    return true;
                 }
             },{
                 id:"RESEARCH",
@@ -266,8 +275,8 @@ function Game() {
                 id:"OTO6",
                 icon:"qyte",
                 text:"Season Pass",
-                action: "scene",
-                extra: {target:"ranking"},
+                action: "tgsp",
+                extra: {target:"true"},
                 active: function () {
                     if (mdata!==undefined && mdata.city!==undefined && mdata.city.pass!==undefined&&mdata.city.pass.isGold!==1) {
                         return true;
@@ -928,6 +937,7 @@ function Game() {
     var lili = 0;
     var simwbscreen = false;
     var simwbchoose = 0;
+    var simwbplayer = 0;
     var cellStatus = undefined;
     var showDecompose = undefined;
     var adventureOpen = false;
@@ -936,6 +946,7 @@ function Game() {
         percentage: undefined,
         next: false,
     };
+    var cqdcOpen = false;
     var halloweenOpen = false;
     var halloweenMode = "fight";
     var halloweenLevelUp = undefined;
@@ -1677,6 +1688,9 @@ function Game() {
             } else if (adventureOpen) {
                 zones = {};
                 if (mdata!==undefined) this.drawAdventure(ctx);
+            } else if (cqdcOpen) {
+                zones = {};
+                this.drawCQDC(ctx);
             } else if (this.isHalloween() && halloweenOpen) {
                 zones = {};
                 this.drawHalloween(ctx);
@@ -2258,6 +2272,8 @@ function Game() {
                 halllvlmode = 2;
             } else if (code==18) {
                 x100 = true;
+            } else if (eventCCopen && cc_data.start && cc_data.timer>0 && cc_data.attempts>0) { //CCC is running
+            	return (code==37||code==38||code==39||code==40); //prevent default action for arrow keys
             }
         }
     }
@@ -4009,12 +4025,12 @@ function Game() {
                                 text(ctx,"Get 9 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
 
                             }
-                            else if (hid==51||hid==52||hid==53||hid==96||hid==113||hid==127||hid==128||hid==129||hid==148||hid==168) {
+                            else if (hid==51||hid==52||hid==53||hid==96||hid==113||hid==127||hid==128||hid==129||hid==148||hid==168||hid==205) { //PG&CC
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.018,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                                 T.draw(ctx,"0ap1",ix+(W*0.15/2)+i*W*0.2+W*0.04,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                             }
-                            else if (hid==130||hid==102||hid==132||hid==147||hid==198) {
+                            else if (hid==130||hid==102||hid==132||hid==147||hid==198||hid==173) {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"08y7",ix+(W*0.15/2)+i*W*0.2+W*0.024,y0+H*0.265-T.height("08y7")*0.5*0.6,T.width("08y7")*0.5,T.height("08y7")*0.5);
                             }
@@ -4033,6 +4049,15 @@ function Game() {
                             else if (hid==200||hid==201||hid==202||hid==203) {
                                 text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 text(ctx,"Get 3 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                            }
+                            else if (hid==101) { //PG&UM
+                            	text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.018,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                                T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
+                                T.draw(ctx,"0dvo",ix+(W*0.15/2)+i*W*0.2+W*0.04-T.width("0j14")*0.15,y0+H*0.265-T.height("0j14")*0.88*0.5,T.width("0j14")*0.95,T.height("0j14")*0.8);
+                            }
+                            else if (hid==206||hid==207||hid==208||hid==209) { //pyros
+                                text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                                text(ctx,"Get 33 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                             }
                             else {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
@@ -4667,15 +4692,15 @@ function Game() {
             this.soundBox(ctx,r1,c3+13,"soundclick","sound","click","Click",data.click,"Mutes Click Sound");
 
             this.checkBox(ctx,r2-20,c2-80,data.showNumbers,"sshown","toggle","showNumbers","Show clicks","right","Display the energy obtained by Clicks");
-            this.checkBox(ctx,r2-20,c2-20,data.fractal,"sfrac","toggle","fractal","High Graphics","right","Disable for better performance");
-            this.checkBox(ctx,r2-20,c2+40,data.tdon,"stdon","toggle","tdon","Energy Orbs","right","Run/Pause Energy Orbs");
+            this.checkBox(ctx,r2-20,c2-35,data.fractal,"sfrac","toggle","fractal","High Graphics","right","Disable for better performance");
+            this.checkBox(ctx,r2-20,c2+10,data.tdon,"stdon","toggle","tdon","Energy Orbs","right","Run/Pause Energy Orbs");
+            this.checkBox(ctx,r2-20,c2+55,data.colorblind,"scolorblind","toggle","colorblind","Color Blind","right","Display Numbers in AP board");
             
             if (CQW!==undefined && CQW.isPublic!==undefined) this.checkBox(ctx,r2-20,c2+100,CQW.isPublic,"spub","toggle","public","Display name","right","Show your name in CosmosQuest.net");
 
-            text(ctx,"Notation",r3+T.width("0567")/2,c1-ndist,"30px "+FONT,"white","center","top");
-            this.rectButton(ctx,r3,c1,"notation","notation",undefined,undefined,["S.I.","Scientific"],data.nMode,"Changes Number Display Mode");
-            text(ctx,"Color Blind",r4+T.width("0567")/2,c1-ndist,"30px "+FONT,"white","center","top");
-            this.rectButton(ctx,r4,c1,"colorblind","cblind",undefined,undefined,["OFF","ON"],data.colorblind,"Display Number in AP board");
+            text(ctx,"Notation",r3+T.width("0567")+5,c1-ndist,"30px "+FONT,"white","center","top");
+            this.rectButton(ctx,r3,c1,"notation","notation",undefined,undefined,["S.I.","Scientific"],data.nMode,"Changes Number Display Mode for Idle");
+            this.rectButton(ctx,r4,c1,"bintmode","bintmode",undefined,undefined,["k/M/B/T/Q","k/M/G/T/P","k/Mn/Md/..."],data.bintmode,"Changes Number Display Mode for Followers");
 
             var sortList=["Species","Alphabetical","Level","Life","Damage","Rarity","Element","Strength"];
             text(ctx,"Hero Sort",r3+T.width("0567") + 5,c2-ndist,"30px "+FONT,"white","center","top");
@@ -6310,7 +6335,7 @@ function Game() {
 
             initx-=iw*0.92;
         }
-        text(ctx,bint(mdata.followers),1024*0.845,640*0.077,"58px"+FONT,"rgba(255,250,210,1)","center","middle");
+        text(ctx,bint(mdata.followers,data.bintmode),1024*0.845,640*0.077,"58px"+FONT,"rgba(255,250,210,1)","center","middle");
 
         if (scene=="miracles") this.drawMiracles(ctx);
         else if (scene=="roulette") this.drawRoulette(ctx);
@@ -6365,7 +6390,7 @@ function Game() {
         }
 
         T.draw(ctx,multiplier,(1024*0.65)-T.width(multiplier)/2,640*0.86);
-        this.addZone("toshop",(new Rect((1024*0.65)-T.width(multiplier)/2,640*0.86,T.width(multiplier),T.height(multiplier)*0.95)).small(),"menu",{target:"shop"});
+        this.addZone("toshop",(new Rect((1024*0.65)-T.width(multiplier)/2,640*0.86,T.width(multiplier),T.height(multiplier)*0.95)).small(),"menu",{target:"shop",submenu:"home"});
         if ((new Rect((1024*0.65)-T.width(multiplier)/2,640*0.86,T.width(multiplier),T.height(multiplier)*0.95)).small().isInside(GM.x,GM.y)) {
             ctx.fillStyle="rgba(255,255,255,0.2)";
             ctx.fillRect((1024*0.665)-T.width(multiplier)/2,640*0.875,T.width(multiplier)*0.95,T.height(multiplier)*0.73);
@@ -6544,7 +6569,7 @@ function Game() {
                             }
                             T.draw(ctx,"0884",W*0.5-padlockw/2,H*0.735-padlockh/2);
                             if (UM>=100) {
-                                this.addZone("ccase1",BRect,"menu",{target:"shop"});
+                                this.addZone("ccase1",BRect,"menu",{target:"shop",submenu:"home"});
                             } else {
                                 this.addZone("ccase",BRect,"scene",{target:"buildings"});
                                 this.addZone("ccase1",BRect,"mshop",{target:true});
@@ -6729,7 +6754,7 @@ function Game() {
         var BKrect = (new Rect(W*0.51-T.width("0d7z")/2-err,H*0.79,bkeyw*0.94,bkeyh*0.8)).small();
         if (BKrect.isInside(GM.x,GM.y)){
             T.draw(ctx,hkey,W*0.5-T.width("0d7z")/2-err,H*0.77);
-            this.addZone("goshop",BKrect,"menu",{target:"shop"});
+            this.addZone("goshop",BKrect,"menu",{target:"shop",submenu:"home"});
         }
         else T.draw(ctx,bkey,W*0.5-T.width("0d7z")/2-err,H*0.77);
 
@@ -7251,6 +7276,7 @@ function Game() {
     }
     this.drawMonsterTooltip = function (ctx,i,pos,maxnumpages,type,lvl,mArray,prom) {
         var elements = ["Air","Earth","Fire","Water","Void"];
+        var elements_short = ["A","E","F","W","V"];
         var wTool = 300;
         var hTool = T.height("0c2t")*0.9;
         var xt = W*0.14;
@@ -7281,15 +7307,16 @@ function Game() {
             var size = "50px"+FONT;
             if (i*1+monstersPage[typeTab]*20 >= 60) size = "46px"+FONT;
             text(ctx,mArray[i*1+monstersPage[typeTab]*20].name,xt+wTool/2,yt+hTool*0.05,size,"white","center","middle");
-            this.drawMonster(ctx,i*1+monstersPage[typeTab]*20,xt+wTool/2,yt+hTool*0.46,undefined,false,2);
-            var mhp = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].hp,xt+wTool/2,yt+hTool*0.56,"36px"+FONT,"white","center","middle");
-            text(ctx,mArray[i*1+monstersPage[typeTab]*20].hp,xt+wTool/2,yt+hTool*0.56,"36px"+FONT,"white","center","middle");
-            T.draw(ctx,"0fuu",xt+wTool/2-T.width("0fuu")-mhp/2,yt+hTool*0.555-T.height("0fuu")/2);
-            var matk = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.655,"36px"+FONT,"white","center","middle");
-            text(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.66,"36px"+FONT,"white","center","middle");
-            T.draw(ctx,"0e9t",xt+wTool/2-T.width("0e9t")-matk/2,yt+hTool*0.655-T.height("0e9t")/2);
-            text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost),xt+wTool/2,yt+hTool*0.76,"36px"+FONT,"white","center","middle");
-            text(ctx,"ELEMENT: "+elements[mArray[i*1+monstersPage[typeTab]*20].type],xt+wTool/2,yt+hTool*0.86,"36px"+FONT,"white","center","middle");
+            text(ctx,"("+elements_short[mArray[i*1+monstersPage[typeTab]*20].type]+(Math.floor(i/4+monstersPage[typeTab]*5)+1)+")",xt+wTool/2,yt+hTool*0.1,"36px"+FONT,"white","center","middle");
+            this.drawMonster(ctx,i*1+monstersPage[typeTab]*20,xt+wTool/2,yt+hTool*0.51,undefined,false,2);
+            var mhp = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].hp,xt+wTool/2,yt+hTool*0.61,"36px"+FONT,"white","center","middle");
+            text(ctx,mArray[i*1+monstersPage[typeTab]*20].hp,xt+wTool/2,yt+hTool*0.61,"36px"+FONT,"white","center","middle");
+            T.draw(ctx,"0fuu",xt+wTool/2-T.width("0fuu")-mhp/2,yt+hTool*0.605-T.height("0fuu")/2);
+            var matk = mtext(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.705,"36px"+FONT,"white","center","middle");
+            text(ctx,mArray[i*1+monstersPage[typeTab]*20].atk,xt+wTool/2,yt+hTool*0.71,"36px"+FONT,"white","center","middle");
+            T.draw(ctx,"0e9t",xt+wTool/2-T.width("0e9t")-matk/2,yt+hTool*0.705-T.height("0e9t")/2);
+            text(ctx,"COST: "+bint(mArray[i*1+monstersPage[typeTab]*20].cost,data.bintmode),xt+wTool/2,yt+hTool*0.81,"36px"+FONT,"white","center","middle");
+            text(ctx,"ELEMENT: "+elements[mArray[i*1+monstersPage[typeTab]*20].type],xt+wTool/2,yt+hTool*0.91,"36px"+FONT,"white","center","middle");
         }
         else {
             ctx.beginPath();
@@ -7371,10 +7398,10 @@ function Game() {
     
         if (mode=="pve") {
             followerLeft=mdata.followers-this.getPveSpent();
-            text(ctx,bint(this.getPveSpent())+"/"+bint(mdata.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(this.getPveSpent())+"/"+bint(mdata.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="city") {
             followerLeft=mdata.followers-this.getPvPSpent();
-            text(ctx,bint(mdata.followers-this.getPvPSpent())+"/"+bint(mdata.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(mdata.followers-this.getPvPSpent(),data.bintmode)+"/"+bint(mdata.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="tournaments") {
             var fmode=tid2fol(tid);
             if (tournamentid==1) fmode = CQW.tour.current.followers;
@@ -7384,13 +7411,13 @@ function Game() {
                 promotion[i]=TPROMO[tid%THERO.length][i]==-1?mdata.city.promo[i]:TPROMO[tid%THERO.length][i];
             }
             followerLeft=fmode-this.getTournamentSpent();
-            text(ctx,bint(fmode-this.getTournamentSpent())+"/"+bint(fmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(fmode-this.getTournamentSpent(),data.bintmode)+"/"+bint(fmode,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="wb") {
             if (tid == 0) {
                 for (var i=0; i<heroes.length; ++i) heroes[i]=0;
             } 
             followerLeft=mdata.followers-this.getWbSpent();
-            text(ctx,bint(this.getWbSpent())+"/"+bint(mdata.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(this.getWbSpent(),data.bintmode)+"/"+bint(mdata.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="flash") {
             for (var i=0; i<heroes.length; ++i) {
                 heroes[i]=CQW.flash.current.hero[i]==-1?heroes[i]:CQW.flash.current.hero[i];
@@ -7401,10 +7428,10 @@ function Game() {
             }
             promotion=CQW.flash.current.promo.slice();
             followerLeft=CQW.flash.current.followers-this.getFlashSpent();
-            text(ctx,bint(followerLeft)+"/"+bint(CQW.flash.current.followers),W*0.385+T.width("0le4")/2,H*0.678+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(followerLeft,data.bintmode)+"/"+bint(CQW.flash.current.followers,data.bintmode),W*0.385+T.width("0le4")/2,H*0.678+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="dungeon") {
             followerLeft=mdata.followers-this.getPveSpent();
-            text(ctx,bint(this.getPveSpent())+"/"+bint(mdata.followers),W*0.68+T.width("0le4")/2,H*0.545+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(this.getPveSpent(),data.bintmode)+"/"+bint(mdata.followers,data.bintmode),W*0.68+T.width("0le4")/2,H*0.545+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="playground") {
             for (var i = 0; i < HERO.length; ++i) {
                 heroes[i]=HERO[i].rarity==5?0:1;
@@ -7421,7 +7448,7 @@ function Game() {
             }
             promotion=CQW.tour.current.promo.slice();
             followerLeft=CQW.tour.current.followers-this.getTournamentSpent();
-            text(ctx,bint(followerLeft)+"/"+bint(CQW.tour.current.followers),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+            text(ctx,bint(followerLeft,data.bintmode)+"/"+bint(CQW.tour.current.followers,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.095+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
         } else if (mode=="halloween") {
             promotion=Array(HERO.length).fill(0);
         }
@@ -7585,8 +7612,8 @@ function Game() {
             else {
                 if (inlineInfo==0) text(ctx,"Empty Line",1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
                 else {
-                    if (data.lineInfo==0) text(ctx,"Strength: "+bint(inlineInfo),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
-                    else if(data.lineInfo==1) text(ctx,"Followers: "+bint(inlineInfo),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+                    if (data.lineInfo==0) text(ctx,"Strength: "+bint(inlineInfo,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
+                    else if(data.lineInfo==1) text(ctx,"Followers: "+bint(inlineInfo,data.bintmode),1024*0.019+T.width("0le4")/2,640*0.145+T.height("0le4")/2,"24px"+FONT,"rgb(130,233,255)","center","middle");
                 }
             }
         }
@@ -7734,7 +7761,7 @@ function Game() {
                         if (CQW.tour.current.grid[mp] == 4) T.draw(ctx,"islj_"+(CQW.tour.current.grid[mp]),x+40-T.width("islj_0")*0.5+3,y+40+yfix[i]-T.height("islj_0")*0.5-2);
                         else T.draw(ctx,"islj_"+(CQW.tour.current.grid[mp]),x+40-T.width("islj_0")*0.5,y+40+yfix[i]-T.height("islj_0")*0.5);
                         if (CQW.tour.current.vals[mp]!==0 && CQW.tour.current.grid[mp]!==4 && CQW.tour.current.grid[mp]!==8) {
-                            text(ctx,"  "+(CQW.tour.current.vals[mp]*100)+"%",x+40+T.width("islj_0")*0.5,y+40+yfix[i]-T.height("islj_0")*0.5,"26px"+FONT,"rgba(255,255,255,0.5)","right","top");
+                            text(ctx,"  "+(CQW.tour.current.vals[mp]*100).toFixed(0)+"%",x+40+T.width("islj_0")*0.5,y+40+yfix[i]-T.height("islj_0")*0.5,"26px"+FONT,"rgba(255,255,255,0.5)","right","top");
                         }
                         if ((new Rect(x,y,80,80)).small().isInside(GM.x,GM.y)) {
                             //cellStatus = mp;
@@ -7799,12 +7826,22 @@ function Game() {
             }
         } else if (mode=="playground") {
             // Player 1
-            text(ctx,"Player 01",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
+            T.draw(ctx,"0gws",W*0.57-T.width("0lts")/2-T.width("0gws")+4,H*0.45-5-T.height("0gws"));
+            var anyMonster=undefined;
+            for (var i=0;i<data.playground[0].line.length;++i) if (data.playground[0].line[i]!=-1) anyMonster=true;
+            if (anyMonster && !simwbscreen) this.addZone("clGridPlayg0",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.455-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:0});
+            
+            text(ctx,"Player 1",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.45-T.height("0lts"));
             var y1 = H*0.45-16;
 
             // Player 2
-            text(ctx,"Player 02",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
+            T.draw(ctx,"0gws",W*0.57-T.width("0lts")/2-T.width("0gws")+4,H*0.75-5-T.height("0gws"));
+            anyMonster=undefined;
+            for (var i=0;i<data.playground[1].line.length;++i) if (data.playground[1].line[i]!=-1) anyMonster=true;
+            if (anyMonster && !simwbscreen) this.addZone("clGridPlayg1",(new Rect(W*0.582-T.width("0lts")/2-T.width("0gws")+4,H*0.755-5-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid",{target:1});
+            
+            text(ctx,"Player 2",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts")-8,"40px"+FONT,"black","left","middle");
             T.draw(ctx,"0lts",W*0.57-T.width("0lts")/2,H*0.75-T.height("0lts"));
             var y2 = H*0.75-16;
             
@@ -7940,7 +7977,7 @@ function Game() {
             var myHeroPos=[];
             for (var i=0;i<HERO.length;++i) {
                 if (mode!=="tournaments" && mode!=="flash" && mode!=="extratournament" && mode!=="halloween"){
-                    if (heroes[i]!=0 && data.heroInfo[i]==true){
+                    if (heroes[i]!=0 && (data.heroInfo[i]==true || (mode=="playground"&&data.showDisabled))) {
                         myHeroArray.push(heroes[i]);
                         myHeroPos.push(i);
                     }
@@ -8084,7 +8121,7 @@ function Game() {
                         var color="rgb(120,120,120)";
                         var size = "24px"+FONT;
                         if (drawMonsters[i*1+monstersPage[typeTab]*20].cost<=followerLeft || followerLeft==-1) color="rgb(130,233,255)";
-                        text(ctx,bint(drawMonsters[i*1+monstersPage[typeTab]*20].cost),mx+T.width("0fj5")/2,H*(my+0.145*pos)+T.height("0klu")/2-3,size,color,"center","middle");
+                        text(ctx,bint(drawMonsters[i*1+monstersPage[typeTab]*20].cost,data.bintmode),mx+T.width("0fj5")/2,H*(my+0.145*pos)+T.height("0klu")/2-3,size,color,"center","middle");
                         ++pos;
                     }
                 }
@@ -8097,7 +8134,7 @@ function Game() {
             var myHeroPos=[];
             for (var i=0;i<HERO.length;++i) {
                 if (mode!=="tournaments" && mode!=="flash" && mode!=="extratournament" && mode!=="halloween"){
-                    if (heroes[i]!=0 && data.heroInfo[i]==true){
+                    if (heroes[i]!=0 && (data.heroInfo[i]==true || (mode=="playground"&&data.showDisabled))) {
                         myHeroArray.push(heroes[i]);
                         myHeroPos.push(i);
                     }
@@ -8413,7 +8450,7 @@ function Game() {
                 "Increases health by "+(CQW.tour.current.vals[cellStatus.n]*100).toFixed(0)+"%",
             ];
             var fixDraw=[0,1,9,18,27];
-            var line = Math.ceil(cellStatus.n/6)-1;
+            var line = Math.floor(cellStatus.n/6);
             var x=cellStatus.x+80;
             var y=cellStatus.y+40+fixDraw[line];
             var cStat = CQW.tour.current.grid[cellStatus.n];
@@ -8758,14 +8795,13 @@ function Game() {
                 for (var i=mdata.city.daily.setup.length-1; i>=0; --i) {
                     var hid=-(mdata.city.daily.setup[4-i]+2);
                     if (mdata.city.daily.setup[4-i]>-1) this.drawMonster(ctx,mdata.city.daily.setup[4-i],bx+bw*(1/8)+(i*bw/5.37),by+bh*0.7,undefined,true,1.3);
-                    else if (mdata.city.daily.setup[4-i]<-1) {
-                        this.drawMonster(ctx,mdata.city.daily.setup[4-i],bx+bw*(1/8)+(i*bw/5.37),by+bh*0.7,undefined,true,1.3,mdata.city.daily.hero[hid]);
-                        var mw = T.width(HERO[0].img)*1.3;
-                        var mh = T.height(HERO[0].img)*1.3;
-                        var hrect = (new Rect(bx+bw*(1/8)+(i*bw/5.37)-mw/2,by+bh*0.7-mh,mw,mh)).small();
-                        if (hrect.isInside(GM.x,GM.y)) {
-                            skillInfo=i;
-                        }
+                    else if (mdata.city.daily.setup[4-i]<-1) this.drawMonster(ctx,mdata.city.daily.setup[4-i],bx+bw*(1/8)+(i*bw/5.37),by+bh*0.7,undefined,true,1.3,mdata.city.daily.hero[hid]);
+                    //Check if tooltip should be drawn
+                    var mw = T.width(HERO[0].img)*1.3;
+                    var mh = T.height(HERO[0].img)*1.3;
+                    var hrect = (new Rect(bx+bw*(1/8)+(i*bw/5.37)-mw/2,by+bh*0.7-mh,mw,mh)).small();
+                    if (hrect.isInside(GM.x,GM.y)) {
+                        skillInfo=i;
                     }
                 }
             }
@@ -8976,10 +9012,18 @@ function Game() {
             ctx.closePath();
             ctx.fillStyle="rgba(0,0,0,0.7)";
             ctx.fill();
-            ctx.fillStyle="rgba(0,0,0,0.7)";
-            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-W*0.3,by+bh*0.7-mh-42-H*0.1-20,W*0.6,H*0.1+20);
-            text(ctx,HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].name,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
-            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.promo[-(mdata.city.daily.setup[4-skillInfo]+2)]).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
+        	if (mdata.city.daily.setup[4-skillInfo] < -1) {//Hero
+	            ctx.fillStyle="rgba(0,0,0,0.7)";
+	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-W*0.3,by+bh*0.7-mh-42-H*0.1-20,W*0.6,H*0.1+20);
+	            text(ctx,HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].name,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
+	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.promo[-(mdata.city.daily.setup[4-skillInfo]+2)]).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
+        	} else {//Monster
+	            ctx.fillStyle="rgba(0,0,0,0.7)";
+	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-20,by+bh*0.7-mh-42-H*0.1+20,40,H*0.1-20);
+	            var elements_short =["A","E","F","W"];
+	            var mobname = elements_short[mdata.city.daily.setup[4-skillInfo]%4] + (Math.floor(mdata.city.daily.setup[4-skillInfo]/4)+1);
+	            text(ctx,mobname,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)+10,"40px"+FONT,"white","center","middle");
+        	}
         }
     }
 
@@ -9308,7 +9352,7 @@ function Game() {
                 for (var j=0;j<10;++j) {
                     var yprice=TPRICE[tdata[showDay].tid%7];
                     if (tdata[showDay].tid<=17349&&yprice==0) yprice=10;
-                    var reward=cn(tprize(j+1,tdata[showDay].amount,yprice));
+                    var reward=cn(tprize(j+1,tdata[showDay].amount,Math.max(50,yprice)));
                     text(ctx,(j+1),btx+36,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,tdata[showDay].top10[j],btx+66,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,reward,btx+270,bty+150+35*j,"36px"+FONT,"black","right","middle");
@@ -9339,8 +9383,7 @@ function Game() {
                 } else {
                     var yprice=TPRICE[tdata[showDay].tid%7];
                     if (mdata.city.tour[tpos].tid<=17349&&yprice==0) yprice=50;
-                    var yourReward=tprize(mdata.city.tour[tpos].top,mdata.city.tour[tpos].amount,yprice);
-                    //var pranas=TPG[yprice];
+                    var yourReward=tprize(mdata.city.tour[tpos].top,mdata.city.tour[tpos].amount,Math.max(50,yprice)); // #56
                     var pranas=TPG[yprice];
                     var yourPos=mdata.city.tour[tpos].top;
                     var yourPranas=pranas[0];
@@ -9965,7 +10008,7 @@ function Game() {
         }
     
         if (!filterOpen && showHero!==undefined) {
-            this.drawMonster(ctx,-2-showHero,btx+bw/4+15,bty+bh/3,undefined,false,1.5,mdata.city.hero[showHero],true,base,mdata.city.promo[showHero],true);
+            this.drawMonster(ctx,-2-showHero,btx+bw/4+15,bty+bh/3,undefined,false,1.5,mdata.city.hero[showHero],true,true,mdata.city.promo[showHero],true);
             var asize = mtext(ctx," -> ",btx+bw/4+15,bty+bh/3+70,"40px"+FONT,"white","center","middle");
             if (HERO[showHero].rarity==3 || showHero == 108) text(ctx,HERO[showHero].name,btx+bw/4+15,bty+bh/3+40,"56px"+FONT,"rgb(73,174,183)","center","middle");
             else if (showHero == 133 || showHero == 134 || showHero == 135 || showHero == 174 || showHero == 201 || showHero == 205 || showHero == 184 || 
@@ -11173,7 +11216,7 @@ function Game() {
                         text(ctx,dd+"/"+mm+"/"+yyyy+" "+hh+":"+mn,(1024*rxhof)+T.width("0c2k")/2.3,20+hofy+i*hofdis,"26px"+FONT,"black","right","middle");
                         text(ctx,hofTexts[i],W*rxhof,45+hofy+i*hofdis,"24px"+FONT,"black","center","middle");
                         text(ctx,ranquing.hof[hofTab][keys[i]].left,10+(1024*rxhof)-T.width("0c2k")/2.2,70+hofy+i*hofdis,"26px"+FONT,"rgb(0,82,135)","left","middle");
-                        text(ctx,bint(p1)+" vs "+bint(p2),W*rxhof,70+hofy+i*hofdis,"24px"+FONT,"black","center","middle");
+                        text(ctx,bint(p1,data.bintmode)+" vs "+bint(p2,data.bintmode),W*rxhof,70+hofy+i*hofdis,"24px"+FONT,"black","center","middle");
                         if (hofNames[i] == "Bloodbath") text(ctx,ranquing.hof[hofTab][keys[i]].enemy,(1024*rxhof)+T.width("0c2k")/2.3,70+hofy+i*hofdis,"26px"+FONT,"rgb(0,82,135)","right","middle");
 
                         var crect=(new Rect(W*rxhof-T.width("0i93")/2,hofy+i*hofdis,T.width("0i93"),T.height("0i93")*0.90)).small();
@@ -11261,12 +11304,12 @@ function Game() {
                         if (pfdata.PlayFabId == CQW.seasons[showRanking-1].ranking[begin+i].PlayFabId){
                             text(ctx,i+10*rankingPage+1,(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1]),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
                         }
                         else {
                             text(ctx,i+10*rankingPage+1,(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1]),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
                         }
                         if (rTopSeason !== undefined) {
                             for (var j = 0; j < rTopSeason.length; ++j) {
@@ -11316,12 +11359,12 @@ function Game() {
                         if (pfdata.PlayFabId == CQW.seasons[showRanking-1].tournament[begin+i].PlayFabId){
                             text(ctx,i+10*rankingPageT+1,(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1]),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
                         }
                         else {
                             text(ctx,i+10*rankingPageT+1,(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
                             text(ctx,CQW.seasons[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1]),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
+                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
                         }
                     }
                     var ew=T.width("0f9n");
@@ -11551,11 +11594,11 @@ function Game() {
             else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"50px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"PRIZE POOL: "+Math.round(reward).toLocaleString()+" AS",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.25,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"Damage Done:",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.35-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
-            text(ctx,bint(damageDone)+" ["+(damageDone/damageTotal*100).toFixed(2)+"%]",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.40-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
+            text(ctx,bint(damageDone,data.bintmode)+" ["+(damageDone/damageTotal*100).toFixed(2)+"%]",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.40-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"Attacks left: "+CQW.WB.atk,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.45-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             
             text(ctx,"Total damage:",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.52-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
-            text(ctx,bint(CQW.WB.dmg),bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.57-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
+            text(ctx,bint(CQW.WB.dmg,data.bintmode),bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.57-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"LVL: "+wbLvl,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.65-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"MODE: "+modes[CQW.WB.mode],bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.70-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"ELEMENT: "+ELEM[HERO[CQW.WB.id].type],bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.75-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
@@ -11587,19 +11630,19 @@ function Game() {
                 else T.negative(ctx,"06ur",W*0.78+(i*W*0.0272),bgy+T.height("08yf")*0.5-T.height("0omo")*0.5+173);
             }
 
-            text(ctx,"World Boss Line Slot",W*0.775+popupbgw/2*0.57,bgy+T.height("08yf")*0.5-T.height("0omo")*0.5+245,"40px"+FONT,"black","center","middle");
-            for (var i=0;i<5;++i) {
-                if (i==4) {
-                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+i*W*0.043-2,H*0.87-2,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
-                    roundedRect(ctx,W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
-                    T.draw(ctx,"bn4f",W*0.801-25+i*W*0.043+W*0.035*0.5-T.width("bn4f")*0.75*0.5,H*0.87+W*0.035*0.5-T.height("bn4f")*0.75*0.5,T.width("bn4f")*0.75,T.height("bn4f")*0.75);
+            text(ctx,"World Boss Line Slot",W*0.775+popupbgw/2*0.57,bgy+T.height("08yf")*0.5-T.height("0omo")*0.5+245-W*0.02,"40px"+FONT,"black","center","middle");
+            for (var i=0;i<10;++i) {
+            	if (i==9) {
+                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+(i%5)*W*0.043-2,H*0.87-2+Math.floor(i/5)*W*0.043-W*0.022,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
+                    roundedRect(ctx,W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
+                    T.draw(ctx,"bn4f",W*0.801-25+(i%5)*W*0.043+W*0.035*0.5-T.width("bn4f")*0.75*0.5,H*0.87+W*0.035*0.5-T.height("bn4f")*0.75*0.5+Math.floor(i/5)*W*0.043-W*0.022,T.width("bn4f")*0.75,T.height("bn4f")*0.75);
                 } else {
-                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+i*W*0.043-2,H*0.87-2,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
-                    roundedRect(ctx,W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
-                    text(ctx,i+1,W*0.801-25+i*W*0.043+W*0.035*0.5,H*0.87+W*0.035*0.5,"34px"+FONT,"white","center","middle");
-                    var lineRect=(new Rect(W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035)).small();
+                    if (data.wbline==i) roundedRect(ctx,W*0.801-25+(i%5)*W*0.043-2,H*0.87-2+Math.floor(i/5)*W*0.043-W*0.022,W*0.035+4,W*0.035+4,10,"rgba(255,255,255,0.8)");
+                    roundedRect(ctx,W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035,10,"rgba(25,52,58,1)");
+                    text(ctx,i+1,W*0.801-25+(i%5)*W*0.043+W*0.035*0.5,H*0.87+W*0.035*0.5+Math.floor(i/5)*W*0.043-W*0.022,"34px"+FONT,"white","center","middle");
+                    var lineRect=(new Rect(W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035)).small();
                     if (lineRect.isInside(GM.x,GM.y) && data.wbline!==i) {
-                        roundedRect(ctx,W*0.801-25+i*W*0.043,H*0.87,W*0.035,W*0.035,10,"rgba(255,255,255,0.6)");
+                        roundedRect(ctx,W*0.801-25+(i%5)*W*0.043,H*0.87+Math.floor(i/5)*W*0.043-W*0.022,W*0.035,W*0.035,10,"rgba(255,255,255,0.6)");
                         this.addZone("wbline_"+i,lineRect,"wbline",{target: i});
                     }
                 }
@@ -11711,7 +11754,7 @@ function Game() {
                 for (var j=0;j<10;++j) {
                     text(ctx,(j+1),btx+36,bty+150+35*j,"36px"+FONT,"black","left","middle");
                     text(ctx,mdata.city.WB.log[showBoss].top10[j][0],btx+66,bty+150+35*j,"36px"+FONT,"black","left","middle");
-                    text(ctx,bint(mdata.city.WB.log[showBoss].top10[j][1]),btx+295,bty+150+35*j,"36px"+FONT,"black","right","middle");
+                    text(ctx,bint(mdata.city.WB.log[showBoss].top10[j][1],data.bintmode),btx+295,bty+150+35*j,"36px"+FONT,"black","right","middle");
                 }
             }
 
@@ -11735,7 +11778,7 @@ function Game() {
                 } else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
                 text(ctx,"Level: "+mdata.city.WB.log[showBoss].level,xpos,H*0.50,"36px"+FONT,"black","center","middle");
                 text(ctx,"Mode: "+modes[mdata.city.WB.log[showBoss].mode],xpos,H*0.54,"36px"+FONT,"black","center","middle");
-                text(ctx,"Damage Done: "+bint(mdata.city.WB.log[showBoss].dealt),xpos,H*0.58,"36px"+FONT,"black","center","middle");
+                text(ctx,"Damage Done: "+bint(mdata.city.WB.log[showBoss].dealt,data.bintmode),xpos,H*0.58,"36px"+FONT,"black","center","middle");
                 text(ctx,"Date: "+dd+"/"+mm+"/"+yyyy,xpos,H*0.62,"36px"+FONT,"black","center","middle");
                 text(ctx,"Time Alive: "+timer(talive),xpos,H*0.66,"36px"+FONT,"black","center","middle");
                 text(ctx,"Top: "+top,xpos,H*0.70,"36px"+FONT,"black","center","middle");
@@ -12349,7 +12392,12 @@ function Game() {
                     ctx.restore();
                 }  
             }
-
+        } else {
+        	this.doAction("doDaily", false);
+            popup={
+                    text:"Congratulations, you've finished today's event.",
+                    mode:"alert",
+                }
         }
     }
     this.drawFlash = function (ctx) {
@@ -12673,6 +12721,7 @@ function Game() {
                         }
                     }
                     if (newPosition == cc_coin) {
+                        cc_body.unshift(newPosition);
                         var added = false;
                         while (!added) {
                             var new_coin = Math.floor(Math.random() * 180);
@@ -12688,7 +12737,6 @@ function Game() {
                         
                         cc_data.points += 3;
                         if (cc_data.speed > 100) cc_data.speed -= 50;
-                        cc_body.unshift(newPosition);
                     } else {
                         cc_body[0] = newPosition;
                     }
@@ -12760,7 +12808,7 @@ function Game() {
             ctx.fillStyle="rgb(230,190,92)";
             ctx.fillRect(W*0.5-sw*0.5,H*0.5-sh*0.5,sw,sh);
 
-            var mission = ["Cosmic Coins","Prana Gems","Ascencion Spheres"];
+            var mission = ["Cosmic Coins","Prana Gems","Ascension Spheres"];
             text(ctx,"Looking for "+mission[mdata.city.adventure.kind],W*0.5,H*0.5-sh*0.35,"56px"+FONT,"black","center","middle");
             text(ctx,"Time Left: "+timer((mdata.city.adventure.time-Date.now())/1000),W*0.5,H*0.5,"60px"+FONT,"black","center","middle");
 
@@ -12777,7 +12825,7 @@ function Game() {
             ctx.fillStyle="rgb(230,190,92)";
             ctx.fillRect(W*0.5-sw*0.5,H*0.5-sh*0.5,sw,sh);
 
-            var mission = ["Cosmic Coins","Prana Gems","Ascencion Spheres"];
+            var mission = ["Cosmic Coins","Prana Gems","Ascension Spheres"];
             if (mdata.city.adventure.prize == -1) text(ctx,"You have not found anything.",W*0.5,H*0.5,"50px"+FONT,"black","center","middle");
             else text(ctx,"You have found "+mdata.city.adventure.prize+" "+mission[mdata.city.adventure.kind],W*0.5,H*0.5,"50px"+FONT,"black","center","middle");
 
@@ -12860,6 +12908,48 @@ function Game() {
         }
         else T.draw(ctx,"7otr",W*0.97*0.5+bgw*0.5-cw-2,H*0.5-bgh*0.97*0.5+8,cw,ch);
     }
+    this.drawCQDC = function (ctx) {
+    	var bw=W*0.6;
+        var bh=H*0.6;
+        roundedRect(ctx,W*0.5-(bw*0.5)-2,H*0.5-(bh*0.5)-2,bw+4,bh+4,5,"rgb(255,255,255)");
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(W*0.5-(bw*0.5),H*0.5-(bh*0.5),bw,bh);
+        ctx.closePath();
+        ctx.clip();
+        T.draw(ctx,"0k2u",W*0.5-(bw*0.5),H*0.5-(bh*0.5),W*0.929,bh);
+        ctx.restore();
+        
+        // Close
+        var cw = T.width("0evr");
+        var ch = T.height("0evr");
+        var crect = (new Rect(W*0.81-cw*1.2,H*0.195,cw,ch)).small();
+        if (crect.isInside(GM.x,GM.y)) {
+            T.draw(ctx,"7otr",W*0.81-cw*1.2+2,H*0.195+2,cw-4,ch-4);
+            this.addZone("cqdc_close",crect,"cqdc",{target:false});
+        }
+        else T.draw(ctx,"7otr",W*0.81-cw*1.2,H*0.195,cw,ch);
+
+        text(ctx,"CosmosQuest Info",W*0.5,H*0.25,"60px"+FONT,"white","center","middle");
+
+        text(ctx,"The company that made this game, Gaiabyte, no longer exists. However",W*0.5-bw*0.5+20,H*0.3,"36px"+FONT,"white","left","middle");
+        text(ctx,"there's a team of community members who are maintaining the game.",W*0.5-bw*0.5+20,H*0.3+20,"36px"+FONT,"white","left","middle");
+        text(ctx,"We are open for suggestions and thankful for any potential support.",W*0.5-bw*0.5+20,H*0.3+40,"36px"+FONT,"white","left","middle");
+        text(ctx,"As Kongregate has closed the forums, discussions happen on Discord",W*0.5-bw*0.5+20,H*0.3+80,"36px"+FONT,"white","left","middle");
+        text(ctx,"now: if you're interested in Announcements, Patch Notes or want to report",W*0.5-bw*0.5+20,H*0.3+100,"36px"+FONT,"white","left","middle");
+        text(ctx,"a bug it's best to head there.",W*0.5-bw*0.5+20,H*0.3+120,"36px"+FONT,"white","left","middle");
+        text(ctx,"If you want to join the Dev team, reach out to Matthy (there or in chat).",W*0.5-bw*0.5+20,H*0.3+140,"36px"+FONT,"white","left","middle");
+        text(ctx,"",W*0.5-bw*0.5+20,H*0.3+160,"36px"+FONT,"white","left","middle");
+        
+        //Discord link
+        var grect=(new Rect(W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2,T.width("091m"),T.height("091m"))).small();
+        if (grect.isInside(GM.x,GM.y)){
+            T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
+            this.addZone("cqlink_0",grect,"cqlink");
+        } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
+        text(ctx,"VISIT OUR DISCORD",W*0.5,H*0.7,"36px"+FONT,"white","center","middle");
+    }
     this.drawSeasonShop = function (ctx) {
         var shopData=getStarDustData();
         ctx.fillStyle="rgba(47,47,47,0.25)";
@@ -12874,7 +12964,7 @@ function Game() {
         roundedRect(ctx,W*0.5-(bgw/2)+200,-5+H*0.5-(bgh/2)+15,bgw-400,H*0.075,5,"rgba(50,50,50,0.80)");
         T.draw(ctx,"k2mi",W*0.35-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
         T.draw(ctx,"k2mi",W*0.65-T.width("k2mi")*0.5,-3+H*0.5-(bgh/2)+15);
-        text(ctx,bint(SD),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","center","middle");
+        text(ctx,bint(SD,data.bintmode),W*0.5,-5+H*0.5-(bgh/2)+15+H*0.075*0.5,"90px"+FONT,"rgb(151,246,255)","center","middle");
 
         // Zones
         //var titles = ["4nak","il1i","n6uk","bqt5","veex","qarp"];
@@ -12938,7 +13028,7 @@ function Game() {
                             ctx.restore();
                         } else T.draw(ctx,shopData[num].qty,initx-btw*0.5+(j*initx)+55,H*0.28-bth*0.5+(i*H*0.43)+10+(k*H*0.092)+16);
                         T.draw(ctx,"k2mi",initx+btw*0.5+(j*initx)-T.width("k2mi")*1.22-3,H*0.28-bth*0.5+(i*H*0.43)+10+(k*H*0.092)+9+2);
-                        text(ctx,bint(shopData[num].cost),initx+btw*0.5+(j*initx)-T.width("k2mi")*1.1,H*0.28+(i*H*0.43)+10+(k*H*0.092)+9,"36px"+FONT,"rgb(255,255,255)","right","middle");
+                        text(ctx,bint(shopData[num].cost,data.bintmode),initx+btw*0.5+(j*initx)-T.width("k2mi")*1.1,H*0.28+(i*H*0.43)+10+(k*H*0.092)+9,"36px"+FONT,"rgb(255,255,255)","right","middle");
                     }
                     ++num;
                 }
@@ -13718,9 +13808,9 @@ function Game() {
 
     }
     this.drawPlayground = function (ctx) {
-        this.drawMonsterTabs(ctx,"playground");
-
+        this.checkBox(ctx,W*0.15,H*0.9,data.showDisabled,"plshow","toggle","showDisabled","Show disabled heroes","right","Hide/Show the Heroes you've disabled in the hero manager");
         if (simwbscreen) {
+            this.drawMonsterTabs(ctx,"playground");
             ctx.fillStyle="rgba(0,0,0,0.5)";
             ctx.fillRect(0,0,W,H);
 
@@ -13732,6 +13822,17 @@ function Game() {
 
             text(ctx,"Choose a World Boss",W*0.57,H*0.5-H*0.7*0.5+30,"80px "+FONT,"black","center","middle");
 
+            for (var i = 0; i < 2; ++i) {
+	            if (simwbplayer == i) T.draw(ctx,"05x5",W*0.365+W*0.135*i+87,H*0.28-15,100,30);
+	            else T.draw(ctx,"07y4",W*0.365+W*0.135*i+87,H*0.28-15,100,30);
+	            var crect = (new Rect(W*0.365+W*0.135*i+87,H*0.28-15,100,30)).small();
+	            if (crect.isInside(GM.x,GM.y)) {
+	                if (simwbplayer != i) T.draw(ctx,"0567",W*0.365+W*0.135*i+87,H*0.28-15,100,30);
+	                this.addZone("choosewbsimplayer",crect,"choosewbsimplayer",{target:i});
+	            }
+	            text(ctx,"Player "+(i+1),W*0.5+W*0.135*i,H*0.28,"40px "+FONT,"black","center","middle");
+            }
+            
             var wbarray = [72,87,106,126,186];
             for (var i = 0; i < wbarray.length; ++i) {
                 if (simwbchoose == i) T.draw(ctx,"0gkd",W*0.3+W*0.135*i-T.width("0gkd")*1.5*0.5,H*0.33,T.width("0gkd")*1.5,T.height("0gkd")*1.5);
@@ -13775,7 +13876,8 @@ function Game() {
                 this.addZone("simulatewb",fsrect,"simulatewb");            
             } T.draw(ctx,"091m",W*0.57-T.width("091m")*0.5+120,H*0.85-T.height("091m")*0.5);
             text(ctx,"WORLD BOSS",W*0.57+120,H*0.85,"50px "+FONT,"white","center","middle");
-    
+
+            this.drawMonsterTabs(ctx,"playground");
     
             if (cityClick != undefined) {
                 if (swapping) {
@@ -16706,8 +16808,9 @@ function Game() {
             
             ctext(ctx,"The company that made this game, Gaiabyte, no longer exists.",zx+zw/2,H*0.4-ph*1.5+64,"32px "+FONT,"white","center","top");
             ctext(ctx,"But the game is currently being maintained by the community so new updates will come.",zx+zw/2,H*0.4-ph*1.5+80,"32px "+FONT,"white","center","top");
-            ctext(ctx,"This being said all purchases will be used to keep the servers alive.",zx+zw/2,H*0.4-ph*1.5+96,"32px "+FONT,"white","center","top");
-            ctext(ctx,"As long as you aknowledge the situaction you are free to contiune the purchase:",zx+zw/2,H*0.4-ph*1.5+128,"32px "+FONT,"white","center","top");
+            ctext(ctx,"This being said, all purchases will be used to keep the servers alive.",zx+zw/2,H*0.4-ph*1.5+96,"32px "+FONT,"white","center","top");
+            ctext(ctx,"As long as you acknowledge the situation you are free to continue the purchase:",zx+zw/2,H*0.4-ph*1.5+128,"32px "+FONT,"white","center","top");
+
             var bw = T.width("05x5");
             var bh = T.height("05x5");
             // yes
@@ -16877,6 +16980,10 @@ function Game() {
                     if (scene=="miracles"||scene=="roulette") scene="buildings";
                     GA.getInstance().addEvent(new GA.Events.Design("Shop:Open"));
                     if (extra.submenu=="lto") ltoOpen=true;
+                    else if (extra.submenu=="home") {
+                    	auctionOpen = false;
+                    	ltoOpen = false;
+                    }
                 }
             }
         } else if (action=="research") {
@@ -17400,8 +17507,8 @@ function Game() {
             }
         } else if (action=="notation") {
             data.nMode=extra.target;
-        } else if (action=="cblind") {
-            data.colorblind=extra.target;
+        } else if (action=="bintmode") {
+            data.bintmode=extra.target;
         } else if (action=="res") {
             if (data.resolution===true) data.resolution=1;
             if (data.resolution===false) data.resolution=0;
@@ -17833,12 +17940,13 @@ function Game() {
                 text: "Do you want to clear the grid?",
                 mode: "confirm",
                 action: function () {
-                    if (scene=="city") _this.clearall();
+                    if (scene=="city" && cityPage=="hourly") _this.clearall();
                     else if (scene=="tournaments") data.tour.setup[tournamentid]=Array(30).fill(-1);
                     else if (scene=="pve" || scene=="pved" || inDungeon==true) data.pve[data.pveline]=[-1,-1,-1,-1,-1,-1];
                     else if (scene=="worldboss") data.wb[data.wbline]=[-1,-1,-1,-1,-1,-1];
                     else if (flashOpen) data.flash.setup=Array(18).fill(-1);
                     else if (halloweenOpen) data.halloween=[-1,-1,-1,-1,-1,-1];
+                    else if (scene=="city" && cityPage=="playground") data.playground[extra.target].line=[-1,-1,-1,-1,-1,-1];
                 }
             }
         } else if (action=="sPve") {
@@ -18471,7 +18579,7 @@ function Game() {
                     }
                 }
             } else if (modes[CQW.WB.mode]==="Heroes Allowed"){
-                data.wbline=4;
+                data.wbline=9;
                 data.wb[data.wbline]=[-1,-1,-1,(-2-extra.target),-1,-1];
                 scene="worldboss";
             } else {
@@ -18634,6 +18742,8 @@ function Game() {
             document.getElementById("levelwb").style.display="none";
         } else if (action=="choosewbsim") {
             simwbchoose = extra.target;
+        } else if (action=="choosewbsimplayer") {
+            simwbplayer = extra.target;
         } else if (action=="dowbsim") {
             var anyA=false;
             for (var i = 0; i < 6; ++i) {
@@ -18656,7 +18766,7 @@ function Game() {
                 heroB[-2-(wbarray[simwbchoose])] = level;
                 var battle = {
                     date: Date.now(),
-                    rowA: data.playground[0].line,
+                    rowA: data.playground[simwbplayer].line,
                     rowB: [-2-(wbarray[simwbchoose]),-1,-1,-1,-1,-1],
                     back: "city",
                     heroA: heroA,
@@ -18773,6 +18883,14 @@ function Game() {
             }
         } else if (action=="cadventure") {
             adventure.next = false;
+        } else if (action=="cqdc") {
+            if (extra.target) {
+                cqdcOpen = true;
+            } else {
+                cqdcOpen = false;
+            }
+        } else if (action=="cqlink") {
+            window.open("https://discord.gg/YyUpGsj");
         } else if (action=="ohall") {
             halloweenOpen = !halloweenOpen;
         } else if (action=="shal") {
@@ -20328,6 +20446,14 @@ function Game() {
             data.stats.t.m.heroes=0;
             data.stats.c.m.heroes=0;
         }
+        if (data.version==45) {
+            data.version=46;
+            var promo_lineup = data.wb.pop();
+            data.wb.push([-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]);
+            data.wb.push(promo_lineup);
+            data.bintmode = 0;
+            data.showDisabled = false;
+        }
         if (data.heroInfo !== undefined) while (data.heroInfo.length < HERO.length) data.heroInfo.push(true);
         for (var i=0; i<EVENTS.length; ++i) {
             var key=EVENTS[i].id.replace(/[0-9]/g, '');
@@ -21654,7 +21780,7 @@ function Game() {
     this.loadPlaygroundWB = function (battle) {
         var arr=[];
         for (var i=0; i<HERO.length; ++i) arr.push(parseInt(battle.level));
-        beginBattle(battle.date,"Player 01",battle.name+" ["+battle.level+"]",battle.rowA,battle.rowB,battle.back,battle.heroA,arr,undefined,undefined,battle.promoA,battle.promoB);
+        beginBattle(battle.date,"Player " + (simwbplayer+1),battle.name+" ["+battle.level+"]",battle.rowA,battle.rowB,battle.back,battle.heroA,arr,undefined,undefined,battle.promoA,battle.promoB);
         this.doAction("scene",{target:"battle"});
     }
     this.loadHalloweenBattle = function (battle) {
@@ -23148,7 +23274,7 @@ function Game() {
             }
         } else if (skill.type=="acum") {
             return {
-                short: "Aura/n+"+(lvl/skill.target).toFixed(0)+" Attack per "+value+" turns per "+skill.target+" levels",
+				short: "Aura/n+"+value.toFixed(1)+" Attack per level ("+Math.floor(lvl*value).toFixed(0)+") every "+skill.value2+" turns",
                 long: "Attack increases the amount of direct damage a hero deals, by the value. This value increases every number of turns displayed. The value of the attack increases based on the level of this unit. Auras affect all friendly units until the unit with the aura dies.",
             }
         } else if (skill.type=="empow") {
@@ -23997,6 +24123,7 @@ function Game() {
                 "FunctionParameter": {
                     setup: data.wb[data.wbline],
                     kid: kid,
+					wbid: CQW.WB.id
                 }
             }, function (res,err) {
                 fightWBsync=false;
