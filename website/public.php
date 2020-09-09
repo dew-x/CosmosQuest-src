@@ -102,8 +102,19 @@
     }
     $data["WB"]["dealt"]=0;
     $res2 = $sql->query("SELECT SUM(WBD.damage) AS dealt FROM WBD, WB, users WHERE users.kid=$kid AND WB.status=0 AND WB.id=WBD.bid AND WBD.uid=users.id GROUP BY WBD.bid");
+	function bigintval($value) {
+		$value = trim($value);
+		if (ctype_digit($value)) {
+			return $value;
+		}
+		$value = preg_replace("/[^0-9](.*)$/", '', $value);
+		if (ctype_digit($value)) {
+			return $value;
+		}
+		return 0;
+	}
     if ($row2 = $res2->fetch_assoc()) {
-        $data["WB"]["dealt"]=intval($row2["dealt"]);
+        $data["WB"]["dealt"]=bigintval($row2["dealt"]);
     }
     $res3 = $sql->query("SELECT score,public FROM users WHERE kid=$kid LIMIT 1");
     if ($row3 = $res3->fetch_assoc()) {
