@@ -1231,7 +1231,7 @@ if (isset($_POST["action"])) {
                     }
                 }
                 $mistakes+=count($cdata["picks"]);
-                if ($mistakes==0) { // if we plan to allow one mistake, it's here
+                if ($mistakes<=1) { // allow one mistake
                     $sql->query("UPDATE `capcha` SET `solved`=1 WHERE `id`=$id LIMIT 1");
                 }
                 echo json_encode(array("success"=>$mistakes<=1,"error"=>"Wrong solution"));
