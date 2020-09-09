@@ -18349,6 +18349,7 @@ function Game() {
                     }
                 }
             } else if (WCSHOP[chest].type == "KRED") {
+				/*
                 popup = {
                     text: "Do you want to purchase weekly chest?",
                     mode: "confirm",
@@ -18356,6 +18357,16 @@ function Game() {
                         _this.doAction("shop",{target:WCSHOP[chest].id});
                     }
                 }
+				*/
+				item="";
+                if (WCSHOP[chest].id==11) item="wc1";
+                else if (WCSHOP[chest].id==12) item="wc2";
+				popup = {
+					mode: "confirmshop",
+					action: function () {
+						kongregate.mtx.purchaseItems([item], onPurchaseResult);
+					}
+				}
             }
         } else if (action=="viewbattle") {
             viewbattle = extra.target;
