@@ -7,7 +7,7 @@ function Game() {
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.8.3.0";
+    var VERSION = "v4.8.4.0";
     var _this = this;
     var data = undefined;
     var production = 0;
@@ -255,6 +255,20 @@ function Game() {
                 extra: {target:"true"},
                 active: function () {
                     if (_this.isDailyEvent().mode!==undefined) return true;
+                    else return false;
+                }
+            },{
+                id:"EASD",
+                icon: function() {
+                    return _this.isEAS().icon;
+                },
+                text: function() {
+                    return _this.isEAS().text;
+                },
+                action: "scene",
+                extra: {target:"worldboss"},
+                active: function () {
+                    if (_this.isEAS().mode!==undefined) return true;
                     else return false;
                 }
             },{
@@ -23474,7 +23488,7 @@ function Game() {
             mode: undefined,
         };
         var tid=Math.floor(Date.now()/(24*60*60*1000));
-        var events=["lucky followers","cc","pge","lottery","flash","swb","dungeon","key tower","adventure"];
+        var events=["lucky followers","cc","pge","lottery","flash","eas","dungeon","key tower","adventure"];
         if (CQW!==undefined && CQW.dungeon!==undefined && mdata!==undefined && mdata.city!==undefined) {
             element.icon="8k54";
             element.text="CQ Dungeon";
@@ -23517,7 +23531,7 @@ function Game() {
         }
         return element;
     }
-    this.isSWB = function () {
+    this.isEAS = function () {
         var element = {
             icon: undefined,
             text: undefined,
@@ -23527,13 +23541,26 @@ function Game() {
             element.icon="ube1";
             element.text="Extra AS SWB";
             element.mode="wb";
-        } else if (CQW!==undefined && CQW.WB!==undefined && CQW.WB.name.indexOf("SUPER")!==-1) {
-            element.icon="ube1";
-            element.text="Super World Boss";
-            element.mode="wb";
         } else if (CQW!==undefined && CQW.super!==undefined && CQW.super===1) {
             element.icon="ube1";
             element.text="Extra AS World Boss";
+            element.mode="wb";
+        }
+        return element;
+    }
+    this.isSWB = function () {
+        var element = {
+            icon: undefined,
+            text: undefined,
+            mode: undefined,
+        };
+        if (CQW!==undefined && CQW.WB!==undefined && CQW.WB.name.indexOf("SUPER")!==-1 && CQW.super!==undefined && CQW.super===1) {
+            element.icon="esyg";
+            element.text="Extra AS SWB";
+            element.mode="wb";
+        } else if (CQW!==undefined && CQW.WB!==undefined && CQW.WB.name.indexOf("SUPER")!==-1) {
+            element.icon="esyg";
+            element.text="Super World Boss";
             element.mode="wb";
         }
         return element;
