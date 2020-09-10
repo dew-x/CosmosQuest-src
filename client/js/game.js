@@ -18772,7 +18772,7 @@ function Game() {
         } else if (action=="dowbsim") {
             var anyA=false;
             for (var i = 0; i < 6; ++i) {
-                if (data.playground[0].line[i] !== -1) anyA = true;
+                if (data.playground[simwbplayer].line[i] !== -1) anyA = true;
             }
             if (anyA) {
                 var level=parseInt(document.getElementById("wblvl").value);
@@ -18781,10 +18781,10 @@ function Game() {
                 var heroB = Array(HERO.length).fill(1);
                 var promoA = Array(HERO.length).fill(0);
                 for (var i = 0; i < 6; ++i) {
-                    if (data.playground[0].line[i] < -1) {
-                        var id = -2*1-data.playground[0].line[i];
-                        heroA[id] = data.playground[0].level[i];
-                        promoA[id] = data.playground[0].promo[i];
+                    if (data.playground[simwbplayer].line[i] < -1) {
+                        var id = -2*1-data.playground[simwbplayer].line[i];
+                        heroA[id] = data.playground[simwbplayer].level[i];
+                        promoA[id] = data.playground[simwbplayer].promo[i];
                     }
                 }
                 var wbarray = [72,87,106,126,186];
