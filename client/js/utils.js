@@ -852,6 +852,7 @@ function tid2fol(tid) {
 }
 
 function bint(num,mode) {
+    if (mode===undefined) mode = 0;
 	prefixes = [[" k"," M"," G"," T"," P"],[" k"," M"," B"," T"," Q"],[" k"," Mn"," Md"," Bn"," Bd"]];
     if (num>=1e17) {
         if (num>=1e18) return Math.floor(num/1e15).toLocaleString()+prefixes[mode][4];
