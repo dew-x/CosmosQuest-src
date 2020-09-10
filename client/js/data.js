@@ -672,6 +672,7 @@ function genStats() {
             qdaily: 0,
             tdm: 0, // td max level
             tde: 0, // max energy
+            heroes: 0,
         },
         a: { // arrs can only insert
             zclick: [], // zones clicked
@@ -2902,7 +2903,7 @@ function getEasterData() {
             },
             {
                 m: 11000,
-                t: "Universe Marbles Dispenser: 100 UM during 60 days or 10 UM LifeTime",
+                t: "Universe Marbles Dispenser: 300 UM during 60 days or 100 UM LifeTime",
                 egg: "0o1k",
                 d: "UM Dispenser",
                 e: "UM",

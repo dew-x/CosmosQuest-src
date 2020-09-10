@@ -2478,7 +2478,7 @@ handlers.fight = function (args, context) {
         }
         
         if (Math.max(dataA.elo,dataB.elo)-Math.min(dataA.elo,dataB.elo)>1000) return {ok: false, err: "Too weak to fight"};
-        if (Math.max(dataA.followers,dataB.followers)/Math.min(dataA.followers,dataB.followers)>100) return {ok: false, err: "Can't fight"};
+        if (Math.max(dataA.followers,dataB.followers)/Math.min(dataA.followers,dataB.followers)>100000) return {ok: false, err: "Can't fight"};
         if (dataA.followers<1000||dataB.followers<1000) return {ok: false,err:"Need 1000 followers"};
         if (valid) --data.city.pvp.attacks;
         else return {ok: false,err:"You already attacked this player"};
@@ -3455,7 +3455,7 @@ handlers.fightWB = function (args, context) {
     if (data) {
         if (data.city.WB.atks<=0) return { ok: false, err: "No attacks left" };
         var headers = {};
-        var content = "action=wb&key="+CQ+"&pid="+currentPlayerId+"&kid="+args.kid+"&fol="+data.followers+"&setup="+encodeURI(JSON.stringify(args.setup))+"&hero="+encodeURI(JSON.stringify(data.city.hero))+"&promo="+encodeURI(JSON.stringify(data.city.promo));
+        var content = "action=wb&key="+CQ+"&pid="+currentPlayerId+"&kid="+args.kid+"&wbid="+args.wbid+"&fol="+data.followers+"&setup="+encodeURI(JSON.stringify(args.setup))+"&hero="+encodeURI(JSON.stringify(data.city.hero))+"&promo="+encodeURI(JSON.stringify(data.city.promo));
         var httpMethod = "post";
         try {
             var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
