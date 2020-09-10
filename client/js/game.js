@@ -4714,7 +4714,7 @@ function Game() {
 
             text(ctx,"Notation",r3+T.width("0567")+5,c1-ndist,"30px "+FONT,"white","center","top");
             this.rectButton(ctx,r3,c1,"notation","notation",undefined,undefined,["S.I.","Scientific"],data.nMode,"Changes Number Display Mode for Idle");
-            this.rectButton(ctx,r4,c1,"bintmode","bintmode",undefined,undefined,["k/M/B/T/Q","k/M/G/T/P","k/Mn/Md/..."],data.bintmode,"Changes Number Display Mode for Followers");
+            this.rectButton(ctx,r4,c1,"bintmode","bintmode",undefined,undefined,["k/M/G/T/P","k/M/B/T/Q","k/Mn/Md/..."],data.bintmode,"Changes Number Display Mode for Followers");
 
             var sortList=["Species","Alphabetical","Level","Life","Damage","Rarity","Element","Strength"];
             text(ctx,"Hero Sort",r3+T.width("0567") + 5,c2-ndist,"30px "+FONT,"white","center","top");
