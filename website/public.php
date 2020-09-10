@@ -107,6 +107,7 @@
 		if (ctype_digit($value)) {
 			return $value;
 		}
+		$value = str_replace('.', '', $value);
 		$value = preg_replace("/[^0-9](.*)$/", '', $value);
 		if (ctype_digit($value)) {
 			return $value;
