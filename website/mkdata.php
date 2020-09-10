@@ -19,7 +19,7 @@
         $wbmode = $row1["mode"]%2;
         
         if ($row1["mode"]>1) $isSuper=true;
-        if ($isSuper) $wbname="SUPER ".$wbname;
+        
         $res2 = $sql->query("SELECT SUM(`damage`) AS damages, COUNT(*) AS atks FROM WBD WHERE bid=$unid GROUP BY bid");
         if ($row2=$res2->fetch_assoc()) {
             $wbdmg=$row2["damages"];
@@ -44,11 +44,12 @@
         $wbmode = $mode;
     }
     $wbname = wbName($bid);
+    if ($isSuper) $wbname="SUPER ".$wbname;
     $res1->free();
     $limit=1600;
     if ($isSuper) $limit=1200;
     $data=array(
-        "version"=>"v4.8.4.1",
+        "version"=>"v4.8.4.2",
         "tournament"=>array(
             "pool"=>$pool
         ),
