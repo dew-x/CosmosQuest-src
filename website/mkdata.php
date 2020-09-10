@@ -14,7 +14,7 @@
     if ($res1->num_rows==1 and $row1=$res1->fetch_assoc()) {
         $unid = $row1["id"];
         $bid = $row1["mid"];
-        $wbname = wbName($bid);
+        
         $wblvl = $row1["level"];
         $wbmode = $row1["mode"]%2;
         
@@ -38,17 +38,23 @@
         }
         $sql->query("INSERT INTO `WB` (`id`, `mid`, `level`, `spawn`, `killed`, `mode`, `status`) VALUES 
                         (NULL, '$wb', '$lvl', '$now', '0', '$mode', '0');");
+        $bid = $wb;
+        $unid = $sql->insert_id;
+        $wblvl = $lvl;
+        $wbmode = $mode;
     }
+    $wbname = wbName($bid);
     $res1->free();
     $limit=1600;
     if ($isSuper) $limit=1200;
     $data=array(
-        "version"=>"v4.8.4.0",
+        "version"=>"v4.8.4.1",
         "tournament"=>array(
             "pool"=>$pool
         ),
         "WB"=>array(
             "id"=>$bid,
+            "uid"=>$unid,
             "name"=>$wbname,
             "atk"=>$limit-$wbatk,
             "dmg"=>$wbdmg,

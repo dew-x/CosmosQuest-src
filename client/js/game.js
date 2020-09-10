@@ -7,7 +7,7 @@ function Game() {
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.8.4.0";
+    var VERSION = "v4.8.4.1";
     var _this = this;
     var data = undefined;
     var production = 0;
@@ -24161,7 +24161,7 @@ function Game() {
                 "FunctionParameter": {
                     setup: data.wb[data.wbline],
                     kid: kid,
-					wbid: CQW.WB.id
+					wbid: CQW.WB.uid
                 }
             }, function (res,err) {
                 fightWBsync=false;
