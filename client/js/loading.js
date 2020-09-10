@@ -40,7 +40,7 @@ function Loading() {
                     var res1=confirm("Do you want to load low resolution graphics?\nOtherwise wait until the game loads");
                     if (res1) {
                         extra=true;
-                        if (localStorage.res==0) window.T = new Texer("img/CosmosQuestLow.json?v=4.7.5.1",SFX);
+                        if (localStorage.res==0) window.T = new Texer("img/CosmosQuestLow.json?v=4.8.4.0",SFX);
                     } else {
                         timedown=Date.now();
                     }
