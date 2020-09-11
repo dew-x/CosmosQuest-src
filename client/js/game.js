@@ -8803,8 +8803,8 @@ function Game() {
             if (mdata.city.daily.timer2>Date.now()) {
                 clvl=mdata.city.daily.lvl;
                 text(ctx,timer((mdata.city.daily.timer2-Date.now())/1000),bx+bw-T.width("0cp8")/2-5,by-54+bh+42,"32px"+FONT,"white","center","middle");
-            } 
-
+            }
+            
             if (mdata.city.daily.setup!==undefined && mdata.city.daily.timer2>Date.now()) {
                 for (var i=mdata.city.daily.setup.length-1; i>=0; --i) {
                     var hid=-(mdata.city.daily.setup[4-i]+2);
@@ -8814,7 +8814,7 @@ function Game() {
                     var mw = T.width(HERO[0].img)*1.3;
                     var mh = T.height(HERO[0].img)*1.3;
                     var hrect = (new Rect(bx+bw*(1/8)+(i*bw/5.37)-mw/2,by+bh*0.7-mh,mw,mh)).small();
-                    if (hrect.isInside(GM.x,GM.y)) {
+                    if (hrect.isInside(GM.x,GM.y) && mdata.city.daily.setup[4-i]!=-1 && mdata.city.daily.setup[4-i]!=undefined) {
                         skillInfo=i;
                     }
                 }
