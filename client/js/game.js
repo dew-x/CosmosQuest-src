@@ -12262,14 +12262,12 @@ function Game() {
                             for (var i=CQW.dungeon.setup.length-1; i>=0; --i) {
                                 var hid=-(CQW.dungeon.setup[4-i]+2);
                                 if (CQW.dungeon.setup[4-i]>-1) this.drawMonster(ctx,CQW.dungeon.setup[4-i],center-bw*0.9*0.5+72+(i*110),bgh+80,undefined,true,1.2);
-                                else if (CQW.dungeon.setup[4-i]<-1) {
-                                    this.drawMonster(ctx,CQW.dungeon.setup[4-i],center-bw*0.9*0.5+72+(i*110),bgh+80,undefined,true,1.2,CQW.dungeon.hero[hid],true,true,CQW.dungeon.promo[hid]);
-                                    var mw = T.width(HERO[0].img)*1.2;
-                                    var mh = T.height(HERO[0].img)*1.2;
-                                    var hrect = (new Rect(center-bw*0.9*0.5+72+(i*110)-mw/2,bgh+80-mh,mw,mh)).small();
-                                    if (hrect.isInside(GM.x,GM.y)) {
-                                        skillInfo=i;
-                                    }
+                                else if (CQW.dungeon.setup[4-i]<-1) this.drawMonster(ctx,CQW.dungeon.setup[4-i],center-bw*0.9*0.5+72+(i*110),bgh+80,undefined,true,1.2,CQW.dungeon.hero[hid],true,true,CQW.dungeon.promo[hid]);
+                                var mw = T.width(HERO[0].img)*1.2;
+                                var mh = T.height(HERO[0].img)*1.2;
+                                var hrect = (new Rect(center-bw*0.9*0.5+72+(i*110)-mw/2,bgh+80-mh,mw,mh)).small();
+                                if (hrect.isInside(GM.x,GM.y) && CQW.dungeon.setup[4-i]!=undefined && CQW.dungeon.setup[4-i]!=-1) {
+                                    skillInfo=i;
                                 }
                             }
                             if (mdata.city !== undefined && mdata.city.easter !== undefined && mdata.city.easter.dungeonsolver !== 0) {
@@ -12344,7 +12342,7 @@ function Game() {
 
                     // Skill and Name info
                     if (skillInfo!=undefined) {
-                        var mh = T.height(HERO[0].img)*1.2;
+                    	var mh = T.height(HERO[0].img)*1.2;
                         ctx.beginPath();
                         ctx.moveTo(center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-30);
                         ctx.lineTo(center-bw*0.9*0.5+72+(skillInfo*110)+12,bgh+80-mh-42);
@@ -12352,10 +12350,18 @@ function Game() {
                         ctx.closePath();
                         ctx.fillStyle="rgba(0,0,0,0.7)";
                         ctx.fill();
-                        ctx.fillStyle="rgba(0,0,0,0.7)";
-                        ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
-                        text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");
-                        mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05),"34px"+FONT,"white","center","middle");
+                    	if (CQW.dungeon.hero[4-skillInfo] < -1) {//Hero
+            	            ctx.fillStyle="rgba(0,0,0,0.7)";
+            	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
+                            text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");
+            	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05),"34px"+FONT,"white","center","middle");
+                    	} else {//Monster
+                    		ctx.fillStyle="rgba(0,0,0,0.7)";
+            	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-20,bgh+80-mh-42-H*0.1+20,40,H*0.1-20);
+            	            var elements_short =["A","E","F","W"];
+            	            var mobname = elements_short[CQW.dungeon.setup[4-skillInfo]%4] + (Math.floor(CQW.dungeon.setup[4-skillInfo]/4)+1);
+            	            text(ctx,mobname,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)+10,"40px"+FONT,"white","center","middle");
+                    	}
                     }
                 }
                 else {
