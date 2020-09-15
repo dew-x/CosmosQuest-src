@@ -11791,7 +11791,7 @@ function Game() {
 
                 if (mdata.city.WB.log[showBoss].name=="MOTHER OF ALL KODAMAS") text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"36px"+FONT,"black","center","middle");
                 else if (mdata.city.WB.log[showBoss].name=="SUPER MOTHER OF ALL KODAMAS") {
-                    text(ctx,"SUPER",xpos,H*0.435,"36px"+FONT,"red","center","middle");
+                    text(ctx,"SUPER",xpos,H*0.435,"36px"+FONT,"black","center","middle");
                     text(ctx,"MOTHER OF ALL KODAMAS",xpos,H*0.465,"36px"+FONT,"black","center","middle");
                 } else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
                 text(ctx,"Level: "+mdata.city.WB.log[showBoss].level,xpos,H*0.50,"36px"+FONT,"black","center","middle");
