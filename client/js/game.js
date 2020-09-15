@@ -9897,18 +9897,8 @@ function Game() {
             }
         }
         for (var i = MARR.length - 1; i >= 0; --i) {
-            var clean = false;
-            for (var j = 0; j < filterList.Levels.length; ++j) {
-                if (!clean && j == 1 && data.filterStatus.Levels[j] && mdata.city.hero[MARR[i]] !== 1) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                } else if (!clean && j == 2 && data.filterStatus.Levels[j] && mdata.city.hero[MARR[i]] === 99) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                } else if (!clean && j == 3 && data.filterStatus.Levels[j] && mdata.city.hero[MARR[i]] !== 99) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                }
+            if ((data.filterStatus.Levels[1] && mdata.city.hero[MARR[i]] !== 1) || (data.filterStatus.Levels[2] && (mdata.city.hero[MARR[i]] === 99 || mdata.city.hero[MARR[i]] === 0)) || (data.filterStatus.Levels[3] && mdata.city.hero[MARR[i]] !== 99)) {
+                MARR.splice(i, 1);
             }
         }
 
