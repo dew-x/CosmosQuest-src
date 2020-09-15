@@ -6479,7 +6479,8 @@ function Game() {
                     var y=((640*(0.432+0.17*i))-buttonH/2)+miraclesH/1.7;
                     roundedRect(ctx,x,y,W*0.212,H*0.1,10,"rgba(0,0,0,0.7)");
                     var followers=Math.round(MIRACLES[miracleSprite].followers*this.getFmul()*(1+0.01*mdata.city.mclaims[miracleSprite]));
-                    var hourly=Math.round(followers/MIRACLES[miracleSprite].time);
+                    var lucyBonus = (mdata.tm==-1||(mdata.tm-Date.now()>0))?0.9:1;
+                    var hourly=Math.round(followers/(MIRACLES[miracleSprite].time*(1-mdata.city.easter.miracles)*lucyBonus));
                     var daily=hourly*24;
                     var monthly=daily*31;
                     text(ctx,"Hourly: "+hourly+" followers",x+8,y+(H*0.1*0.25),"24px"+FONT,"white","left","middle");
@@ -6502,6 +6503,26 @@ function Game() {
             this.addZone("tomil",milrect,"scene",{target:"milestones"});
         }
         T.draw(ctx,"086f",W*0.0185,H*0.885,T.width("086f")*0.85,T.height("086f")*0.85);
+        
+        //Miracle prediction
+        var mrect=(new Rect(W*0.75,H*0.007,T.width("0nkt"),T.height("0nkt"))).small();
+        if (mrect.isInside(GM.x,GM.y)) {
+            var x=W*0.75;
+            var y=H*0.007+T.height("0nkt");
+            roundedRect(ctx,x,y,W*0.212,H*0.125,10,"rgba(0,0,0,0.7)");
+            var lucyBonus = (mdata.tm==-1||(mdata.tm-Date.now()>0))?0.9:1;
+            var hourly = 0;
+            for (var i = 0; i < 9; i++) {
+            	var followers=Math.round(MIRACLES[i].followers*this.getFmul()*(1+0.01*mdata.city.mclaims[i]));
+            	hourly += Math.round(followers/(MIRACLES[i].time*(1-mdata.city.easter.miracles)*lucyBonus));
+            }
+            var daily=hourly*24;
+            var monthly=daily*31;
+            text(ctx,"Expected gain from miracles:",x+8,y+(H*0.1*0.25),"24px"+FONT,"white","left","middle");
+            text(ctx,"Hourly: "+hourly+" followers",x+8,y+(H*0.1*0.5),"24px"+FONT,"white","left","middle");
+            text(ctx,"Daily: "+daily+" followers",x+8,y+(H*0.1*0.75),"24px"+FONT,"white","left","middle");
+            text(ctx,"Monthly: "+monthly+" followers",x+8,y+(H*0.1),"24px"+FONT,"white","left","middle");
+        }
     }
     this.drawRoulette = function (ctx) {
         var basew = 950;
