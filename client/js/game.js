@@ -11604,8 +11604,12 @@ function Game() {
             var bgx=W*0.217;
             var bgy=H*0.15;
             T.draw(ctx,"08yf",bgx,bgy);
-            if (CQW.WB.id==87)  text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"38px"+FONT,"rgb(151,246,255)","center","middle");
-            else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"50px"+FONT,"rgb(151,246,255)","center","middle");
+            if (CQW.WB.id==87) { //moak
+            	if (CQW.WB.name=="SUPER MOTHER OF ALL KODAMAS") {
+            		text(ctx,"SUPER",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15-22,"38px"+FONT,"rgb(151,246,255)","center","middle");
+            		text(ctx,"MOTHER OF ALL KODAMAS",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"38px"+FONT,"rgb(151,246,255)","center","middle");
+            	} else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"38px"+FONT,"rgb(151,246,255)","center","middle");
+            } else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"50px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"PRIZE POOL: "+Math.round(reward).toLocaleString()+" AS",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.25,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"Damage Done:",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.35-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,bint(damageDone,data.bintmode)+" ["+(damageDone/damageTotal*100).toFixed(2)+"%]",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.40-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
