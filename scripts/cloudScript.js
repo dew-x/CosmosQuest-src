@@ -913,18 +913,7 @@ function registerT(name,pid,tid,setup,hero,kid,promo) {
     else return response.error;
 }
 function registerT2(name,pid,setup,kid) {
-    var s=Array(30).fill(-1);
-    for (var i=0; i<30; i+=6) {
-        var begin=i;
-        for (var j=0; j<6; ++j) {
-            if (setup[i+j]!==-1) {
-                s[begin]=setup[i+j];
-                ++begin;
-            }
-        }
-    }
-    
-    var content = "action=register2&key="+CQ+"&name="+name+"&pid="+pid+"&kid="+kid+"&setup="+encodeURI(JSON.stringify(s));
+    var content = "action=register2&key="+CQ+"&name="+name+"&pid="+pid+"&kid="+kid+"&setup="+encodeURI(JSON.stringify(setup));
     var httpMethod = "post";
     try {
         var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
