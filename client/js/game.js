@@ -9888,12 +9888,8 @@ function Game() {
             }
         }
         for (var i = MARR.length - 1; i >= 0; --i) {
-            var clean = false;
-            for (var j = 0; j < filterList.Leveling.length; ++j) {
-                if (!clean && !data.filterStatus.Leveling[j] && HERO[MARR[i]].filter == conditional.Leveling[j]) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                }
+            if (!((data.filterStatus.Leveling[0] && HERO[MARR[i]].upgrade["pg"] == 1) || (data.filterStatus.Leveling[1] && HERO[MARR[i]].upgrade["cc"] == 1) || (data.filterStatus.Leveling[2] && HERO[MARR[i]].upgrade["as"] == 1) || (data.filterStatus.Leveling[3] && (HERO[MARR[i]].upgrade["um"] == 1 || HERO[MARR[i]].upgrade["none"] == 1)))) {
+                MARR.splice(i, 1);
             }
         }
         for (var i = MARR.length - 1; i >= 0; --i) {
