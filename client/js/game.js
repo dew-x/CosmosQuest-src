@@ -1605,6 +1605,7 @@ function Game() {
                     this.claimPersonalEaster(mdata.city.easter.claimed + 1);
                 }
                 else {
+                	easterAnimation.check = Date.now();
                     popup = {
                         text:"You have unlocked a 2019 Easter Reward",
                         alert: easterMilestones.personal[mdata.city.easter.claimed + 1].t,
@@ -18699,8 +18700,10 @@ function Game() {
             else vipOpen = false;
         } else if (action=="elt") {
             this.claimPersonalEaster(mdata.city.easter.claimed + 1,-1);
+            popup=undefined;
         } else if (action=="e30") {
             this.claimPersonalEaster(mdata.city.easter.claimed + 1,1);
+            popup=undefined;
         } else if (action=="filO") {
             if (extra.target) filterOpen=true;
             else filterOpen=false;
