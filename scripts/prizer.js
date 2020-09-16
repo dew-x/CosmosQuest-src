@@ -9477,9 +9477,21 @@ connection.query('SELECT COUNT(*) as `wip`, MAX(tid) AS `mtid` FROM tournaments2
         var followers = Math.floor(Math.random()*Math.pow(2,41));
         var grid = Array(30).fill(-1);
         var vals = Array(30).fill(0);
-        for (var i=0; i<30; ++i) {
-          if (Math.random()<0.25) {
+        for (var i=0; i<5; ++i) { //Place unit blocks, filling from the front
+        	if (Math.random()<0.15) {
+        		var j0 = Math.floor(Math.random()*5+1);
+        		for (var j = j0; j<6; ++j) {
+        			grid[6*i+j] = 4;
+        		}
+        	}
+        }
+        for (var i=0; i<30; ++i) { //Place other runes
+          if (grid[i] == -1 && Math.random()<0.25) {
             grid[i]=Math.floor(Math.random()*10);
+            if (grid[i] == 4) {
+            	grid[i] = -1;
+            	continue;
+            }
             var minval = 0.25;
             var maxval = 2;
             if ([0,7].indexOf(grid[i])!==-1) { // 10 - 50
