@@ -21,30 +21,27 @@ $content='
     </p>
 
     <p>
-        </p><h2>Season 9 Rules</h2>
+        </p><h2>Season 11 Rules</h2>
         <h3>Tournament modes</h3>
-        - <span class="hl">5 lives</span>: Players will fight against a random opponent (without repetition). After losing 5 times players are eliminated. Players are then ranked based on the round they lost in first, and then damage dealt as a decider.<br>
-        - <span class="hl">Multilevel</span>: Players will fight against a random opponent (with equal or close points). Gaining a point with each win and losing a point with each loss, after 3 losses you no longer lose points, instead losing eliminates you and winning ensures your survivability. Players are ranked based on when they\'re eliminated, and then damage dealt as a decider.<br>
-        - <span class="hl">Page Rank</span>: Players will fight against all other players earning points based on wins. Wins against a player with a higher win ratio are more valuable than wins against a player with a lower win ratio. Players are ranked based on their points, and then damage dealt as a decider.<br>
-
-		<h3>Hero Pools</h3>
+        	- <span class="hl">5 lives</span>: Players will fight against a random opponent (without repetition). After losing 5 times players are eliminated. Players are then ranked based on the round they lost in first, and then damage dealt as a decider.<br>
+	        - <span class="hl">Lane League</span>: Players will fight against all other players earning points based on wins for each lane. After playing a fixed amount of players everyone will be ranked based on their total score of points and then damage dealt will be a deciding factor. <br>
+        	- <span class="hl">Page Rank</span>: Players will fight against all other players earning points based on wins. Wins against a player with a higher win ratio are more valuable than wins against a player with a lower win ratio. Players are ranked based on their points, and then damage dealt as a decider.<br>
+	<h3>Hero Pools</h3>
 		- Each tournament that does not include a players personal Heroes will select from 2 Hero Pools as follows
 		- Chest Heroes + Seasonal Heroes (Heroes obtained from Chests or as Seasonal Rewards are in this pool)
 		- Quest Heroes + Event Heroes (Heroes obtained from Quests, Events or others (Auction House/Shop) are in the pool)
-		
         <h3>Hero modes</h3>
-        - <span class="hl">Your Common</span>: Players can use all Common Heroes they have unlocked.<br>
-        - <span class="hl">Rare & Legendary</span>: Players can use a random selection of Rare and Legendary Heroes (All players have the same selection).<br>
-        - <span class="hl">Your Heroes</span>: Players can use all Heroes they have unlocked.<br>
-        - <span class="hl">Common & Rare</span>: Players can use a random selection of Common and Rare Heroes (All players have the same selection).<br>
-        - <span class="hl">Legendary and Ascended</span>: Players can use a random selection of Legendary and Ascended Heroes (All players have the same selection).<br>
-        - <span class="hl">Your Rare</span>: Players can use all Rare Heroes they have unlocked.<br>
-        - <span class="hl">No Heroes</span>: Players cannot use any Heroes.<br>
-        - <span class="hl">Random Promotion 5</span>: Players can use a random selection of Heroes set to Promotion Level 5 (All players have the same selection).<br>
-        - <span class="hl">Your Legendary</span>: Players can use all Legendary Heroes they have unlocked.<br>
-        - <span class="hl">Super Ascended</span>: Players can use a random selection of Level 1,000 Ascended Heroes (All players have the same selection).<br>
-		- <span class="hl">Super Legendary</span>: Players can use a random selection of Level 1,000 Legendary Heroes (All players have the same selection).<br>
-
+		- <span class="hl">Your Heroes</span>: Players can use all Heroes they have unlocked.<br>
+		- <span class="hl">No Heroes</span>: Players cannot use any Heroes.<br>
+	        - <span class="hl">Super Ascended</span>: Players can use a random selection of Level 1,000 Ascended Heroes (All players have the same selection).<br>
+        	- <span class="hl">Your Legendary</span>: Players can use all Legendary Heroes they have unlocked.<br>
+        	- <span class="hl">Random Promotion 6</span>: Players can use a random selection of Heroes set to Promotion Level 5 (All players have the same selection).<br>
+		- <span class="hl">Your Common</span>: Players can use all Common Heroes they have unlocked.<br>
+        	- <span class="hl">Random</span>: Players can use a random selection of Heroes (All players have the same selection).<br>
+        	- <span class="hl">Random Legendary</span>: Players can use a random selection of Legendary Heroes (All players have the same selection).<br>
+		- <span class="hl">Your Rare</span>: Players can use all Rare Heroes they have unlocked.<br>
+        	- <span class="hl">Random Common</span>: Players can use a random selection of Common Heroes (All players have the same selection).<br>
+        	- <span class="hl">Super Rare</span>: Players can use a random selection of Level 1,000 Rare Heroes (All players have the same selection).<br>
 
         <h3>Follower modes</h3>
         - Each tournament players have access to an amount of Followers that is generated based on the strength of Heroes available in that tournament. Players will find in most tournaments they should be able to use a strong balance of the Heroes available as well as the Followers available to purchase Monsters. <br>
