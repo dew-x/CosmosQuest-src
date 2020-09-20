@@ -3981,7 +3981,7 @@ function Game() {
                             var ix = W*0.365;
 
                             if (kongregate.services.getUsername() == CQW.auction[drawArray[item+i].id].bidname) {
-                                text(ctx,"You are the max BID",ix+(W*0.15/2)+i*W*0.2,y0+H*0.87,"24px"+FONT,"white","center","middle"); 
+                                text(ctx,"You have the max bid",ix+(W*0.15/2)+i*W*0.2,y0+H*0.87,"24px"+FONT,"white","center","middle"); 
                                 roundedRect(ctx,ix+i*W*0.2-12,y0+H*0.3-12,W*0.15+24,W*0.2+24,10,"rgba(255,215,0,1)");
                             } else if (mdata.city.hero[CQW.auction[drawArray[item+i].id].hero]==99 || mdata.city.promo[CQW.auction[drawArray[item+i].id].hero]==5) {
                                 text(ctx,"Already at level 99!",ix+(W*0.15/2)+i*W*0.2,y0+H*0.87,"24px"+FONT,"white","center","middle"); 
