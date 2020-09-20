@@ -18698,6 +18698,7 @@ function Game() {
             cc_body = [2,1,0];
             cc_direction = "RIGHT";
             newPosition = 2;
+            cc_changed = false;
         } else if (action=="oyear") {
             show2year = extra.target;
         } else if (action=="anni") {
