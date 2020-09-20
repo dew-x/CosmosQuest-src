@@ -9051,7 +9051,7 @@ function Game() {
 	            ctx.fillStyle="rgba(0,0,0,0.7)";
 	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-W*0.3,by+bh*0.7-mh-42-H*0.1-20,W*0.6,H*0.1+20);
 	            text(ctx,HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].name,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
-	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.promo[-(mdata.city.daily.setup[4-skillInfo]+2)]).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
+	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,0).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
         	} else {//Monster
 	            ctx.fillStyle="rgba(0,0,0,0.7)";
 	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-20,by+bh*0.7-mh-42-H*0.1+20,40,H*0.1-20);
