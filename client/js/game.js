@@ -4636,8 +4636,7 @@ function Game() {
                 wtext=mtext(ctx,stext.substr(stext.indexOf("/n")),xt+wTool/2,yt+hTool*0.86,tsize,"rgb(151,246,255)","center","middle");
                 if (wtext >= wTool) tsize="20px"+FONT;
                 mltext(ctx,"SKILL: "+this.skill2text(HERO[rhero].skill,1,false).short,xt+wTool/2,yt+hTool*0.86,tsize,"white","center","middle");
-
-                if (!auctionOpen && rhero !== 42 && rhero !== 43 && rhero !== 44) {
+                if (monsterKreed != undefined) {
                     var kreedsToCandies = {10: 10, 30: 30, 100: 110, 200: 230, 250: 300, 300: 380};
                     for (var i = 0; i < 9; ++i) T.draw(ctx,"joy2",6+i*32,yt-135,T.width("joy2"),T.height("joy2"));
                     mltext(ctx,"Get "+kreedsToCandies[monsterKreed]+" Event Tickets/nfor this purchase!",xt+wTool/2,yt-90,"46px"+FONT,"white","center","middle");
