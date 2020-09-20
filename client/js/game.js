@@ -11889,7 +11889,7 @@ function Game() {
                 for (var i = 0; i < 4; ++i) {
                     for (var j = 0; j < 8; ++j) {
                         if (picked[c] == true) {
-                            ctx.fillStyle = "rgba(173,216,230,0.5)";
+                            ctx.fillStyle = "rgba(255,215,0,1)";
                             ctx.fillRect(x-cardSize*0.93*0.5+(j*cardSize*1.115)-1,y-cardSize*0.93*0.5+(i*cardSize*1.115)-1,cardSize*0.93+2,cardSize*0.93+2);
                         }
                         if (cards[c] == -1) {
@@ -11898,11 +11898,11 @@ function Game() {
                         } else {
                             if (mdata.city !== undefined && mdata.city.pge !== undefined) {
                                 if (mdata.city.pge.choice[0] == c || mdata.city.pge.choice[1] == c) {
-                                    ctx.fillStyle = "rgba(255,255,255,0.5)";
+                                    ctx.fillStyle = "rgba(255,255,255,0.75)";
                                     ctx.fillRect(x-cardSize*0.93*0.5+(j*cardSize*1.115)-1,y-cardSize*0.93*0.5+(i*cardSize*1.115)-1,cardSize*0.93+2,cardSize*0.93+2);
                                 }
                             }
-                            T.draw(ctx,"0gkd",x-cardSize*0.5+(j*cardSize*1.115),y-cardSize*0.5+(i*cardSize*1.115),cardSize,cardSize);
+                            //T.draw(ctx,"0gkd",x-cardSize*0.5+(j*cardSize*1.115),y-cardSize*0.5+(i*cardSize*1.115),cardSize,cardSize);
                             T.draw(ctx,"0fj5",x-cardSize*0.92*0.5+(j*cardSize*1.115)-2,y-cardSize*0.92*0.5+(i*cardSize*1.115),cardSize*0.92,cardSize*0.92);
                             this.drawMonster(ctx,-2-cards[c],x+(j*cardSize*1.115),y+(i*cardSize*1.115)+cardSize*0.4,undefined,false,0.88,1);
                         }
