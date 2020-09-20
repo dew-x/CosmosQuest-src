@@ -1063,17 +1063,18 @@ function getPrizeLimits(ENTRIES) {
     var CCplayers = ENTRIES - PGindex;
     var ASplayers = ASindex;
     var PGplayers = PGindex-ASindex;
-    return [
-        {text:"Top "+ASPERC+"% get AS","center":true},
-        {text:"Top 1",reward:rperc(1,ASplayers,ASPOOL),"type":"08y7"},
-        {text:"Top "+(ASindex||1),reward:rperc(ASplayers,ASplayers,ASPOOL),"type":"08y7"},
-        {text:"Top "+PGPERC+"% get PG","center":true},
-        {text:"Top "+((ASindex+1)||1),reward:rperc(1,PGplayers,PGPOOL),"type":"0j14"},
-        {text:"Top "+(PGindex||1),reward:rperc(PGplayers,PGplayers,PGPOOL),"type":"0j14"},
-        {text:"Rest get CC","center":true},
-        {text:"Top "+((PGindex+1)||1),reward:rperc(1,CCplayers,CCPOOL),"type":"0ap1"},
-        {text:"Top "+(ENTRIES||1),reward:rperc(CCplayers,CCplayers,CCPOOL),"type":"0ap1"},
-    ];
+    
+    var ret = [{text:"Top "+ASPERC+"% get AS","center":true}];
+    if (ASindex >= 1) ret.push({text:"Top 1",reward:rperc(1,ASplayers,ASPOOL),"type":"08y7"});
+    if (ASindex >= 2) ret.push({text:"Top "+(ASindex||1),reward:rperc(ASplayers,ASplayers,ASPOOL),"type":"08y7"});
+    ret.push({text:"Next "+PGPERC+"% get PG","center":true});
+    if (PGindex >= 1) ret.push({text:"Top "+((ASindex+1)||1),reward:rperc(1,PGplayers,PGPOOL),"type":"0j14"});
+    if (PGindex >= 2) ret.push({text:"Top "+(PGindex||1),reward:rperc(PGplayers,PGplayers,PGPOOL),"type":"0j14"});
+    ret.push({text:"Rest get CC","center":true});
+    if (PGindex+1 < ENTRIES) ret.push({text:"Top "+((PGindex+1)||1),reward:rperc(1,CCplayers,CCPOOL),"type":"0ap1"});
+    ret.push({text:"Top "+(ENTRIES||1),reward:rperc(CCplayers,CCplayers,CCPOOL),"type":"0ap1"});
+    
+    return ret;
 }
 
 function similarity(s1, s2) {
