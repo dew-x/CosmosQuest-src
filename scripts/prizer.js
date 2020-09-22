@@ -9006,6 +9006,102 @@ var HERO = [
       both: 120,
       skill: 0.1,
       quest: 150
+    },
+    {
+      name: "YURI",
+      atk: 22,
+      hp: 28,
+      both: 24,
+      skill: 1,
+      quest: 20
+    },
+    {
+      name: "ALAN",
+      atk: 40,
+      hp: 52,
+      both: 28,
+      skill: 1,
+      quest: 59
+    },
+    {
+      name: "VALENTINA",
+      atk: 60,
+      hp: 88,
+      both: 62,
+      skill: 1,
+      quest: 89
+    },
+    {
+      name: "JOHN",
+      atk: 220,
+      hp: 284,
+      both: 234,
+      skill: 1,
+      quest: 157
+    },
+    {
+      name: "SULLY",
+      atk: 12,
+      hp: 6,
+      both: 14,
+      skill: 0.01,
+      quest: 20
+    },
+    {
+      name: "MERIDA",
+      atk: 42,
+      hp: 22,
+      both: 30,
+      skill: 0.01,
+      quest: 60
+    },
+    {
+      name: "WILL",
+      atk: 211,
+      hp: 91,
+      both: 79,
+      skill: 0.01,
+      quest: 73
+    },
+    {
+      name: "SAGITTARIA",
+      atk: 292,
+      hp: 164,
+      both: 278,
+      skill: 0.01,
+      quest: 133
+    },
+    {
+      name: "EMMISARY JALROK",
+      atk: 4,
+      hp: 26,
+      both: 18,
+      skill: 0.01,
+      quest: 106
+    },
+    {
+      name: "RAELAN THE GUARDIAN",
+      atk: 8,
+      hp: 32,
+      both: 28,
+      skill: 0.01,
+      quest: 113
+    },
+    {
+      name: "GATEKEEPER SYLNIR",
+      atk: 12,
+      hp: 44,
+      both: 36,
+      skill: 0.01,
+      quest: 121
+    },
+    {
+      name: "LORD AR'ATHON",
+      atk: 24,
+      hp: 144,
+      both: 108,
+      skill: 0.01,
+      quest: 168
     }
   ];
 
@@ -9187,86 +9283,94 @@ function doPF(id,pid,togive) {
     );
 }
 function hval(hid,lvl) {
-    var hp=HERO[hid].hp;
-    var atk=HERO[hid].atk;
-    var points = lvl - 1;
-    if (HERO[hid].rarity==1) points *= 2;
-    else if (HERO[hid].rarity==2) points *= 6;
-    else if (HERO[hid].rarity==3) points *= 12;
-    var nhp = HERO[hid].hp+Math.round(points*hp/(hp+atk));
-    var natk = HERO[hid].atk+Math.round(points*atk/(hp+atk));
-    var score = nhp*natk;
-    if (HERO[hid].skill.type=="pierce") score*=HERO[hid].skill.value/2;
-    else if (HERO[hid].skill.type=="buff") score*=HERO[hid].skill.value*2;
-    else if (HERO[hid].skill.type=="rico") score*=HERO[hid].skill.value*3;
-    return score*Math.sqrt(score);
+	var hp=HERO[hid].hp;
+	var atk=HERO[hid].atk;
+	var points = lvl - 1;
+	if (HERO[hid].rarity==1) points *= 2;
+	else if (HERO[hid].rarity==2) points *= 6;
+	else if (HERO[hid].rarity==3) points *= 12;
+	var nhp = HERO[hid].hp+Math.round(points*hp/(hp+atk));
+	var natk = HERO[hid].atk+Math.round(points*atk/(hp+atk));
+	var score = nhp*natk;
+	if (HERO[hid].skill.type=="pierce") score*=HERO[hid].skill.value/2;
+	else if (HERO[hid].skill.type=="buff" || HERO[hid].skill.type=="backrico") score*=HERO[hid].skill.value*2;
+	else if (HERO[hid].skill.type=="anarchy" || HERO[hid].skill.type=="boom" || HERO[hid].skill.type=="payback") score*=HERO[hid].skill.value*3;
+	else if (HERO[hid].skill.type=="bday") score*=3;
+	else if (HERO[hid].skill.type=="rico") score*=HERO[hid].skill.value*(HERO[hid].skill.target+1);
+	if(hp / atk > 1.6) score*=Math.pow(hp / atk, 0.3);
+	return score*Math.sqrt(score);
 }
 
 function doDaily(lvl) {
-    var target=Math.pow(1.21-0.42*(1-(350+lvl)/(350+lvl*2)),lvl-1)*2500*(1+lvl/100)*0.8;
-    var root=[Math.floor(Math.random()*4),-1,-1,-1,-1,-1];
-    for (var i=1; i<5; ++i) {
-        root[i]=N[root[i-1]%4][Math.floor(Math.pow(Math.random()*2,2))];
-    }
-    var hero=PVEHERO.slice();
-    var bcost=0;
-    for (var i=0; i<5; ++i) {
-        if (bcost<target) {
-            var fam=root[i];
-            var avgleft=(target*0.8-bcost)/(5-i);
-            while (fam+4<MONSTERS.length && MONSTERS[fam+4].cost<avgleft) {
-                fam+=4;
-            }
-            root[i]=fam;
-            bcost+=MONSTERS[root[i]].cost;
-        }
-    }
-    // pick 2 commons, 2 rares, 2 legendaries
-    var ignore=[];
-    var picks=[];
-    while (picks.length<20) {
-        var hid=Math.floor(Math.random()*HERO.length);
-        if (picks.length<5) {
-            if (HERO[hid].rarity==0 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else if (picks.length<10) {
-            if (HERO[hid].rarity==1 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else if (picks.length<15) {
-            if (HERO[hid].rarity==2 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else {
-            if (HERO[hid].rarity==3 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        }
-    }
-    var placed=[];
-    for (var pos=0; pos<=4; ++pos) {
-        var todo=target-(bcost-MONSTERS[root[pos]].cost);
-        var bestid=-1;
-        var bestlvl=0;
-        for (var i=0;i<picks.length;++i) {
-            if (placed.indexOf(picks[i])===-1) {
-                if (hval(picks[i],1)<todo) {
-                    var lvl=1;
-                    while (lvl<1000 && hval(picks[i],lvl<99?lvl+1:1000)<todo) {
-                        lvl=lvl<99?lvl+1:1000;
-                    }
-                    if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl)) {
-                        bestid=i;
-                        bestlvl=lvl;
-                    }
-                }
-            }
-        }
-        if (bestid!=-1 && hval(picks[bestid],bestlvl)>1.5*MONSTERS[root[pos]].cost) {
-            bcost-=MONSTERS[root[pos]].cost;
-            bcost+=hval(picks[bestid],bestlvl);
-            placed.push(picks[bestid]);
-            root[pos]=-(2+picks[bestid]);
-            hero[picks[bestid]]=bestlvl;
-        }
-    }
-    return {
-        setup:root,
-        hero:hero
-    };
+	var target=Math.pow(1.215-0.43*(1-(350+lvl)/(350+lvl*2)),lvl-1)*2600*(1+lvl/100)*0.8;
+	var root=[Math.floor(Math.random()*4),-1,-1,-1,-1,-1];
+	for (var i=1; i<5; ++i) {
+		root[i]=N[root[i-1]%4][Math.floor(Math.pow(Math.random()*2,2))];
+	}
+	var hero=PVEHERO.slice();
+	var bcost=0;
+	for (var i=0; i<5; ++i) {
+		if (bcost<target) {
+			var fam=root[i];
+			var avgleft=(target*0.8-bcost)/(5-i);
+			while (fam+4<MONSTERS.length && MONSTERS[fam+4].cost<avgleft) {
+				fam+=4;
+			}
+			root[i]=fam;
+			bcost+=MONSTERS[root[i]].cost;
+		}
+	}
+
+	var ignore=[];
+	var picks=[];
+	while (picks.length<30) {
+		var hid=Math.floor(Math.random()*HERO.length);
+		if (picks.length<7) {
+			if (HERO[hid].rarity==0 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else if (picks.length<14) {
+			if (HERO[hid].rarity==1 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else if (picks.length<21) {
+			if (HERO[hid].rarity==2 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else {
+			if (HERO[hid].rarity==3 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		}
+	}
+	var placed=[];
+	var heroProbaModifier = 0.4;
+	if(lvl < 150)
+		heroProbaModifier = 0.1;
+	if(lvl < 100)
+		heroProbaModifier = 0;
+	for (var pos=0; pos<=4; ++pos) {
+		var todo=target-(bcost-MONSTERS[root[pos]].cost);
+		var bestid=-1;
+		var bestlvl=0;
+		for (var i=0;i<picks.length;++i) {
+			if (placed.indexOf(picks[i])===-1) {
+				if (hval(picks[i],1)<todo) {
+					var lvl=1;
+					while (lvl<9000 && hval(picks[i],lvl<99?lvl+1:(lvl<1000?1000:lvl+1000))<todo) {
+						lvl=lvl<99?lvl+1:(lvl<1000?1000:lvl+1000);
+					}
+					if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl)) {
+						bestid=i;
+						bestlvl=lvl;
+					}
+				}
+			}
+		}
+		if (bestid!=-1 && ((hval(picks[bestid],bestlvl)>1.5*MONSTERS[root[pos]].cost && hval(picks[bestid],bestlvl)<2.2*MONSTERS[root[pos]].cost) || Math.random() < (heroProbaModifier + (4-pos)*0.1))) {
+			bcost-=MONSTERS[root[pos]].cost;
+			bcost+=hval(picks[bestid],bestlvl);
+			placed.push(picks[bestid]);
+			root[pos]=-(2+picks[bestid]);
+			hero[picks[bestid]]=bestlvl;
+		}
+	}
+	return {
+		setup:root,
+		hero:hero
+	};
 }
 
 function pos2perc(pos,total) {
