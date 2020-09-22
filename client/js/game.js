@@ -19083,7 +19083,7 @@ function Game() {
             searchTab = extra.target;
             if (searchTab) {
                 document.getElementById("herosearch").style.display="block";
-                document.getElementById("herosearch").focus();
+                window.setTimeout(function () { document.getElementById("herosearch").focus(); }, 0);
             }
         } else if (action=="capzone") {
             var existent = undefined;
