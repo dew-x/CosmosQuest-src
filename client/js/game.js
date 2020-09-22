@@ -19084,6 +19084,13 @@ function Game() {
             if (searchTab) {
                 document.getElementById("herosearch").style.display="block";
                 window.setTimeout(function () { document.getElementById("herosearch").focus(); }, 0);
+                if (showDaily) { //Dungeon, flash
+                	document.getElementById("herosearch").style.left = "232px";
+                	document.getElementById("herosearch").style.top = "463px";
+                } else {
+                	document.getElementById("herosearch").style.left = "132px";
+                	document.getElementById("herosearch").style.top = "516px";
+                }
             }
         } else if (action=="capzone") {
             var existent = undefined;
