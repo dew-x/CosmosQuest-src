@@ -779,7 +779,7 @@ var UNITSN = {
     18:"Exa",
     21:"Zetta",
     24:"Yotta",
-    27:"Bronto#",
+    27:"Bronto",
     30:"greater",
 }
 
