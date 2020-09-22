@@ -2187,6 +2187,7 @@ handlers.open = function (args, context) {
                 data.followers+=Math.round(Math.max(REWARD[prize].v*(data.mlvl+mlvl1+1)*(1+data.city.easter.doubleem),Math.min(3000000000,data.followers)*REWARD[prize].p));
                 log("[CHEST] "+Math.round(Math.max(REWARD[prize].v*(data.mlvl+mlvl1+1)*(1+data.city.easter.doubleem),Math.min(3000000000,data.followers)*REWARD[prize].p))+" followers");
                 server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {followers:Math.round(data.followers)}});
+				statKong(args.kid,"followers",Math.floor(Math.log10(data.followers)*1000));
             } else if (REWARD[prize].t=="UM") {
                 log("[CHEST] "+REWARD[prize].v+" UM");
                 award(currentPlayerId,"UM",REWARD[prize].v);
