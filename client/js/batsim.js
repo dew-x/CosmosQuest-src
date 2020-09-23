@@ -10060,8 +10060,12 @@ function doTurn (A,D,turnA,turnD,side) {
             });
         }
         
-        var percAoe = Math.round(D.setup[i].hp*(1-atk.percAoe[i])*buff.ratio*buff.sdefPerc[i]);
-        var flatAoe = Math.round(atk.flatAoe[i]*buff.ratio*buff.sdefPerc[i]);
+        defvalue = function(a,b) {
+        	return (a == 0 || a)?a:b;
+        }
+        
+        var percAoe = Math.round(defvalue(D.setup[i].hp,0)*(1-defvalue(atk.percAoe[i],1))*buff.ratio*defvalue(buff.sdefPerc[i],1));
+        var flatAoe = Math.round(defvalue(atk.flatAoe[i],0)*buff.ratio*defvalue(buff.sdefPerc[i],1));
         aoeArr[i]=percAoe+flatAoe+buff.fmasochism[i];
         var totalDamage = finalDamage+percAoe+flatAoe+buff.fmasochism[i];
         var initHp = D.setup[i].hp;
