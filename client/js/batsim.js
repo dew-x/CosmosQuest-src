@@ -10061,7 +10061,7 @@ function doTurn (A,D,turnA,turnD,side) {
         }
         
         defvalue = function(a,b) {
-        	return a?a:b;
+        	return (a == 0 || a)?a:b;
         }
         
         var percAoe = Math.round(defvalue(D.setup[i].hp,0)*(1-defvalue(atk.percAoe[i],1))*buff.ratio*defvalue(buff.sdefPerc[i],1));
