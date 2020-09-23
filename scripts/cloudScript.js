@@ -1487,7 +1487,7 @@ function getFOL() {
 
 handlers.status = function (args, context) {
     if (authKong(args.kid,args.token)) {
-        var data = loadData();
+        var data = loadData(void 0, args.kid);
         var items=getItems(args.kid);
         var mlvl = 0;
         for (var i=0; i<items.length; ++i) {
@@ -2099,7 +2099,7 @@ handlers.panic = function (args, context) {
 }
 
 handlers.claim = function (args, context) {
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     if (data && data.miracles) {
         var mlvl1=getFOL();
         if (args.id>=0 && args.id<MIRACLES.length && data.miracles[args.id]<data.now) {
@@ -2118,7 +2118,7 @@ handlers.claim = function (args, context) {
 }
 
 handlers.claimall = function (args, context) {
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     if (data && data.miracles) {
         var mlvl1=getFOL();
         var done=0;
@@ -2141,7 +2141,7 @@ handlers.claimall = function (args, context) {
 }
 
 handlers.open = function (args, context) {
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     var ret1 = server.GetUserInventory({"PlayFabId" : currentPlayerId});
     if (data && ret1) {
         var valid=false;
@@ -2187,6 +2187,7 @@ handlers.open = function (args, context) {
                 data.followers+=Math.round(Math.max(REWARD[prize].v*(data.mlvl+mlvl1+1)*(1+data.city.easter.doubleem),Math.min(3000000000,data.followers)*REWARD[prize].p));
                 log("[CHEST] "+Math.round(Math.max(REWARD[prize].v*(data.mlvl+mlvl1+1)*(1+data.city.easter.doubleem),Math.min(3000000000,data.followers)*REWARD[prize].p))+" followers");
                 server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {followers:Math.round(data.followers)}});
+				statKong(args.kid,"followers",Math.floor(Math.log10(data.followers)*1000));
             } else if (REWARD[prize].t=="UM") {
                 log("[CHEST] "+REWARD[prize].v+" UM");
                 award(currentPlayerId,"UM",REWARD[prize].v);
@@ -2229,7 +2230,7 @@ handlers.open = function (args, context) {
 }
 
 handlers.open10 = function (args, context) {
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     var ret1 = server.GetUserInventory({"PlayFabId" : currentPlayerId});
     if (data && ret1) {
         var amount = 10;
@@ -2327,7 +2328,7 @@ handlers.open10 = function (args, context) {
 
 handlers.place = function (args, context) {
     if (authKong(args.kid,args.token)) {
-        var data=loadData();
+        var data=loadData(void 0, args.kid);
         if (data!==undefined) {
             if (args.pos>=0 && args.pos<data.city.setup.length) {
                 var valid=false;
@@ -2385,7 +2386,7 @@ handlers.swap = function (args, context) {
 
 handlers.clearall = function (args, context) {
     if (authKong(args.kid,args.token)) {
-        var data=loadData();
+        var data=loadData(void 0, args.kid);
         if (data!==undefined) {
             data.city.setup=Array(36).fill(-1);
             server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
@@ -2583,7 +2584,7 @@ function checkSetup(setup,len,fol,hero) {
 }
 
 handlers.pve = function (args, context) {
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     if (data===undefined) return {ok: false,err:"Server error"};
     // check enough followers
     var mcount=checkSetup(args.setup,6,data.followers,data.city.hero);
@@ -2751,7 +2752,7 @@ handlers.pved = function (args, context) {
 
     if (!response.success) return {ok: false,err:response.error};
 
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     var dataA,dataB;
     if (data==undefined) return {ok: false,err:"Server error"};
     // check enough followers
@@ -3093,7 +3094,7 @@ handlers.toCC = function (args,context) {
 var P = [125,125,250,400,125,125,0]
 
 handlers.register = function (args, context) {
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     var res=server.GetUserAccountInfo({
         "PlayFabId": currentPlayerId,
     });
@@ -3143,7 +3144,7 @@ handlers.etregister = function (args, context) {
 }
 
 handlers.fregister = function (args, context) {
-    var data=loadData();
+    var data=loadData(void 0, args.kid);
     var res=server.GetUserAccountInfo({
         "PlayFabId": currentPlayerId,
     });
