@@ -62,7 +62,7 @@
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),
-        "news"=>"Second community update! Check changelog for details."
+        "news"=>"Third community update! Check changelog for details."
     );
     file_put_contents("data.json",json_encode($data));
      
