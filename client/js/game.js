@@ -21467,6 +21467,7 @@ function Game() {
                         CQW.dungeon.hero=res.data.FunctionResult.battle.phero;
                         CQW.dungeon.lvl=parseInt(res.data.FunctionResult.battle.enemy.match(/\d+/)[0]);
                         _this.loadDungeonBattle(res.data.FunctionResult.battle);
+                        _this.wsync(); //if the dungeon battle was lost we don't need this call, but that's something to test on a live dungeon
                     } else {
                         var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
                             msg:"PFdung",
