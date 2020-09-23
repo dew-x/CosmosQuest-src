@@ -11602,6 +11602,7 @@ function Game() {
             else if (CQW.WB.id==126) reward = Math.log(CQW.WB.dmg)*1700;
             else if (CQW.WB.id==186) reward = Math.log(CQW.WB.dmg)*1700;
         }
+        reward = Math.max(reward,0);
         if (CQW.WB.name.indexOf("SUPER")!==-1) reward*=2;
         if (modes[CQW.WB.mode]=="No Heroes" && typeTab==4) typeTab=0;
 
