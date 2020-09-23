@@ -1115,14 +1115,14 @@ if (isset($_POST["action"])) {
                     $sql->query("UPDATE dungeon SET `level`= $lvl WHERE eid = $eid AND `uid`='$uid' LIMIT 1");
                     $prize = json_encode(array("SD"=>2500*$wins));
                     $sql->query("INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, '0', '0', CURRENT_TIMESTAMP, '$uid', '$prize');");
-					// fix #34
+					/*// fix #34
 					$res1 = $sql->query("SELECT `hero`,`setup` FROM dlvl WHERE eid = $eid AND `lvl`=$lvl LIMIT 1");
                     if ($res1->num_rows>0 and $row1=$res1->fetch_assoc()) {
                         $lsetup=json_decode($row1["setup"],true);
                         $lhero=json_decode($row1["hero"],true);
                         $lpromo=array_fill(0,count($HERO),0);
 					}
-					// end #34
+					// end #34 */
                 }
                 echo json_encode(array("success"=>true,"data"=>array(
                     "enemy"=> "Dungeon Floor[$lvl]",

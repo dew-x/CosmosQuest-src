@@ -1459,7 +1459,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1485,7 +1484,6 @@ var HERO = [
         type: 9,
         value: 0.1
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1511,7 +1509,6 @@ var HERO = [
         type: 3,
         value: 0.23
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1537,7 +1534,6 @@ var HERO = [
         type: 2,
         value: 0.05
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1563,7 +1559,6 @@ var HERO = [
         type: 2,
         value: 0.05
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1589,7 +1584,6 @@ var HERO = [
         type: 2,
         value: 0.05
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1615,7 +1609,6 @@ var HERO = [
         type: 2,
         value: 0.05
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1641,7 +1634,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1667,7 +1659,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1693,7 +1684,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1720,7 +1710,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1746,7 +1735,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1772,7 +1760,6 @@ var HERO = [
         type: 2,
         value: 0.21
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1799,7 +1786,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1825,7 +1811,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1851,7 +1836,6 @@ var HERO = [
         type: 3,
         value: 0.21
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1878,7 +1862,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1904,7 +1887,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1930,7 +1912,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -1957,7 +1938,6 @@ var HERO = [
         type: 3,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -1983,7 +1963,6 @@ var HERO = [
         type: 6,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2009,7 +1988,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2035,7 +2013,6 @@ var HERO = [
         type: 3,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2061,7 +2038,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2088,7 +2064,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2114,7 +2089,6 @@ var HERO = [
         type: 9,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2140,7 +2114,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2167,7 +2140,6 @@ var HERO = [
         type: 3,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2193,7 +2165,6 @@ var HERO = [
         type: 3,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2219,7 +2190,6 @@ var HERO = [
         type: 3,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2245,7 +2215,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2271,7 +2240,6 @@ var HERO = [
         type: 0,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2297,7 +2265,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2324,7 +2291,6 @@ var HERO = [
         type: 6,
         value: 0.17
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2350,7 +2316,6 @@ var HERO = [
         type: 6,
         value: 0.17
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2376,7 +2341,6 @@ var HERO = [
         type: 6,
         value: 0.18
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2402,7 +2366,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2428,7 +2391,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2454,7 +2416,6 @@ var HERO = [
         type: 5,
         value: 0.14
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2481,7 +2442,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2507,7 +2467,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2533,7 +2492,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2559,7 +2517,6 @@ var HERO = [
         type: 3,
         value: 0.23
       },
-      filter: 3,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2585,7 +2542,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 3,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2611,7 +2567,6 @@ var HERO = [
         type: 6,
         value: 0.18
       },
-      filter: 3,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2637,7 +2592,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2663,7 +2617,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2689,7 +2642,6 @@ var HERO = [
         type: 5,
         value: 0.13
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2716,7 +2668,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2742,7 +2693,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2768,7 +2718,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -2794,7 +2743,6 @@ var HERO = [
         type: 2,
         value: 0.05
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2820,7 +2768,6 @@ var HERO = [
         type: 5,
         value: 0.08
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2846,7 +2793,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2872,7 +2818,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2898,7 +2843,6 @@ var HERO = [
         type: 2,
         value: 0.21
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2924,7 +2868,6 @@ var HERO = [
         type: 2,
         value: 0.22
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2950,7 +2893,6 @@ var HERO = [
         type: 2,
         value: 0.22
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -2976,7 +2918,6 @@ var HERO = [
         type: 2,
         value: 0.22
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -3002,7 +2943,6 @@ var HERO = [
         type: 6,
         value: 0.17
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3028,7 +2968,6 @@ var HERO = [
         type: 6,
         value: 0.17
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3054,7 +2993,6 @@ var HERO = [
         type: 6,
         value: 0.18
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3080,7 +3018,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3106,7 +3043,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3132,7 +3068,6 @@ var HERO = [
         type: 5,
         value: 0.14
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3159,7 +3094,6 @@ var HERO = [
         type: 3,
         value: 0.36
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3185,7 +3119,6 @@ var HERO = [
         type: 2,
         value: 0.37
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3211,7 +3144,6 @@ var HERO = [
         type: 5,
         value: 0.25
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3237,7 +3169,6 @@ var HERO = [
         type: 9,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3263,7 +3194,6 @@ var HERO = [
         type: 6,
         value: 0.34
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3289,7 +3219,6 @@ var HERO = [
         type: 1,
         value: 0.01
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3315,7 +3244,6 @@ var HERO = [
         type: 1,
         value: 0.1
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3341,7 +3269,6 @@ var HERO = [
         type: null,
         value: null
       },
-      filter: 0,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3367,7 +3294,6 @@ var HERO = [
         type: 9,
         value: 0.05
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3393,7 +3319,6 @@ var HERO = [
         type: 3,
         value: 0.11
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3419,7 +3344,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3445,7 +3369,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -3471,7 +3394,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3497,7 +3419,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3523,7 +3444,6 @@ var HERO = [
         type: 5,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3550,7 +3470,6 @@ var HERO = [
         type: 7,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3576,7 +3495,6 @@ var HERO = [
         type: 5,
         value: 0.24
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3602,7 +3520,6 @@ var HERO = [
         type: 5,
         value: 0.23
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3628,7 +3545,6 @@ var HERO = [
         type: 6,
         value: 0.17
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3654,7 +3570,6 @@ var HERO = [
         type: 6,
         value: 0.18
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3680,7 +3595,6 @@ var HERO = [
         type: 6,
         value: 0.18
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3706,7 +3620,6 @@ var HERO = [
         type: 5,
         value: 0.25
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3732,7 +3645,6 @@ var HERO = [
         type: null,
         value: null
       },
-      filter: 0,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3758,7 +3670,6 @@ var HERO = [
         type: 5,
         value: 0.15
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -3784,7 +3695,6 @@ var HERO = [
         type: 5,
         value: 0.17
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -3810,7 +3720,6 @@ var HERO = [
         type: 5,
         value: 0.16
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -3836,7 +3745,6 @@ var HERO = [
         type: 5,
         value: 0.15
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -3862,7 +3770,6 @@ var HERO = [
         type: 5,
         value: 0.26
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -3888,7 +3795,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3914,7 +3820,6 @@ var HERO = [
         type: 3,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3940,7 +3845,6 @@ var HERO = [
         type: 6,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -3967,7 +3871,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -3993,7 +3896,6 @@ var HERO = [
         type: 0,
         value: 0.05
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4019,7 +3921,6 @@ var HERO = [
         type: 0,
         value: 0.1
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4045,7 +3946,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4071,7 +3971,6 @@ var HERO = [
         type: 0,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4097,12 +3996,11 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
         as: 0,
-        um: 0,
+        um: 1,
         none: 0
       }
     },
@@ -4123,7 +4021,6 @@ var HERO = [
         type: 1,
         value: 0.1
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4149,7 +4046,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4175,7 +4071,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4201,7 +4096,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4227,7 +4121,6 @@ var HERO = [
         type: null,
         value: null
       },
-      filter: 0,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4253,7 +4146,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4279,7 +4171,6 @@ var HERO = [
         type: 5,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4305,7 +4196,6 @@ var HERO = [
         type: 3,
         value: 0.24
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4331,7 +4221,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4357,7 +4246,6 @@ var HERO = [
         type: 3,
         value: 0.12
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4383,7 +4271,6 @@ var HERO = [
         type: 2,
         value: 0.22
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4410,7 +4297,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4436,7 +4322,6 @@ var HERO = [
         type: 5,
         value: 0.13
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4462,7 +4347,6 @@ var HERO = [
         type: 5,
         value: 0.13
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4488,7 +4372,6 @@ var HERO = [
         type: 5,
         value: 0.14
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4514,7 +4397,6 @@ var HERO = [
         type: 5,
         value: 0.13
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4540,7 +4422,6 @@ var HERO = [
         type: 2,
         value: 0.39
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4567,7 +4448,6 @@ var HERO = [
         type: 2,
         value: 0.39
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4594,7 +4474,6 @@ var HERO = [
         type: 2,
         value: 0.4
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4621,7 +4500,6 @@ var HERO = [
         type: 2,
         value: 0.4
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4648,7 +4526,6 @@ var HERO = [
         type: 5,
         value: 0.27
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4675,7 +4552,6 @@ var HERO = [
         type: 5,
         value: 0.31
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4702,7 +4578,6 @@ var HERO = [
         type: 5,
         value: 0.29
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4729,7 +4604,6 @@ var HERO = [
         type: 5,
         value: 0.28
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -4756,7 +4630,6 @@ var HERO = [
         type: null,
         value: null
       },
-      filter: 0,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4782,7 +4655,6 @@ var HERO = [
         type: 5,
         value: 0.05
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4808,7 +4680,6 @@ var HERO = [
         type: 9,
         value: 0.1
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4834,7 +4705,6 @@ var HERO = [
         type: 6,
         value: 0.25
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -4860,7 +4730,6 @@ var HERO = [
         type: 3,
         value: 0.46
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4886,7 +4755,6 @@ var HERO = [
         type: 3,
         value: 0.41
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4913,7 +4781,6 @@ var HERO = [
         type: 2,
         value: 0.39
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -4939,7 +4806,6 @@ var HERO = [
         type: 2,
         value: 0.22
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4965,7 +4831,6 @@ var HERO = [
         type: 2,
         value: 0.22
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -4991,7 +4856,6 @@ var HERO = [
         type: 2,
         value: 0.23
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5017,7 +4881,6 @@ var HERO = [
         type: 2,
         value: 0.12
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5043,7 +4906,6 @@ var HERO = [
         type: 2,
         value: 0.05
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5069,7 +4931,6 @@ var HERO = [
         type: 7,
         value: 0.1
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5095,7 +4956,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5121,7 +4981,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5147,7 +5006,6 @@ var HERO = [
         type: 0,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5173,7 +5031,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5200,7 +5057,6 @@ var HERO = [
         type: 0,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5227,7 +5083,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5253,7 +5108,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5279,7 +5133,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5305,7 +5158,6 @@ var HERO = [
         type: 1,
         value: 0.1
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5331,7 +5183,6 @@ var HERO = [
         type: 6,
         value: 0.32
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -5357,7 +5208,6 @@ var HERO = [
         type: 1,
         value: 0.4
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5383,7 +5233,6 @@ var HERO = [
         type: 1,
         value: 0.3
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5409,7 +5258,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5436,7 +5284,6 @@ var HERO = [
         type: 6,
         value: 0.2
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -5462,7 +5309,6 @@ var HERO = [
         type: 7,
         value: 0.05
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5488,7 +5334,6 @@ var HERO = [
         type: 7,
         value: 0.1
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5514,7 +5359,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5540,7 +5384,6 @@ var HERO = [
         type: 7,
         value: 0.2
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5566,7 +5409,6 @@ var HERO = [
         type: 5,
         value: 0.21
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -5593,7 +5435,6 @@ var HERO = [
         type: 5,
         value: 0.22
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -5620,7 +5461,6 @@ var HERO = [
         type: 5,
         value: 0.23
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -5647,7 +5487,6 @@ var HERO = [
         type: 5,
         value: 0.22
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -5674,7 +5513,6 @@ var HERO = [
         type: 2,
         value: 0.05
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -5700,7 +5538,6 @@ var HERO = [
         type: 5,
         value: 0.09
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -5726,7 +5563,6 @@ var HERO = [
         type: 3,
         value: 0.23
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -5752,7 +5588,6 @@ var HERO = [
         type: 0,
         value: 0.2
       },
-      filter: 1,
       upgrade: {
         pg: 0,
         cc: 1,
@@ -5778,7 +5613,6 @@ var HERO = [
         type: 9,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5804,7 +5638,6 @@ var HERO = [
         type: 6,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5830,7 +5663,6 @@ var HERO = [
         type: 2,
         value: 0.21
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5857,7 +5689,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -5883,7 +5714,6 @@ var HERO = [
         type: 2,
         value: 0.36
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -5910,7 +5740,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5936,7 +5765,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5962,7 +5790,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -5988,7 +5815,6 @@ var HERO = [
         type: 0,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6014,7 +5840,6 @@ var HERO = [
         type: 1,
         value: 0.1
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6040,7 +5865,6 @@ var HERO = [
         type: 1,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6066,7 +5890,6 @@ var HERO = [
         type: 7,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6092,7 +5915,6 @@ var HERO = [
         type: 1,
         value: 0.3
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6118,7 +5940,6 @@ var HERO = [
         type: 5,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6145,7 +5966,6 @@ var HERO = [
         type: 5,
         value: 0.17
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6172,7 +5992,6 @@ var HERO = [
         type: 6,
         value: 0.18
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6198,7 +6017,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6224,7 +6042,6 @@ var HERO = [
         type: 2,
         value: 0.11
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6250,7 +6067,6 @@ var HERO = [
         type: 6,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6277,7 +6093,6 @@ var HERO = [
         type: 6,
         value: 0.27
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6303,7 +6118,6 @@ var HERO = [
         type: 7,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6329,7 +6143,6 @@ var HERO = [
         type: null,
         value: null
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6355,7 +6168,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6381,7 +6193,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6407,7 +6218,6 @@ var HERO = [
         type: 9,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6433,7 +6243,6 @@ var HERO = [
         type: 9,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6460,7 +6269,6 @@ var HERO = [
         type: 3,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6486,7 +6294,6 @@ var HERO = [
         type: 3,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6512,7 +6319,6 @@ var HERO = [
         type: 3,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6539,7 +6345,6 @@ var HERO = [
         type: 3,
         value: 0.3
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6565,7 +6370,6 @@ var HERO = [
         type: 7,
         value: 0.05
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6591,7 +6395,6 @@ var HERO = [
         type: 7,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6617,7 +6420,6 @@ var HERO = [
         type: 0,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6643,7 +6445,6 @@ var HERO = [
         type: 2,
         value: 0.45
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6669,7 +6470,6 @@ var HERO = [
         type: 5,
         value: 0.1
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6695,7 +6495,6 @@ var HERO = [
         type: 0,
         value: 0.05
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6722,7 +6521,6 @@ var HERO = [
         type: 9,
         value: 0.1
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6748,7 +6546,6 @@ var HERO = [
         type: 3,
         value: 0.24
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6774,7 +6571,6 @@ var HERO = [
         type: 2,
         value: 0.3
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6800,7 +6596,6 @@ var HERO = [
         type: 2,
         value: 0.2
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -6826,7 +6621,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 1,
       upgrade: {
         pg: 1,
         cc: 1,
@@ -6852,7 +6646,6 @@ var HERO = [
         type: 6,
         value: 0.25
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6878,7 +6671,6 @@ var HERO = [
         type: 6,
         value: 0.22
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6904,7 +6696,6 @@ var HERO = [
         type: 6,
         value: 0.2
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6930,7 +6721,6 @@ var HERO = [
         type: 6,
         value: 0.25
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -6956,7 +6746,6 @@ var HERO = [
         type: 2,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -6982,7 +6771,6 @@ var HERO = [
         type: 2,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -7008,7 +6796,6 @@ var HERO = [
         type: 2,
         value: 0.2
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -7034,7 +6821,6 @@ var HERO = [
         type: 2,
         value: 0.3
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7060,7 +6846,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -7086,7 +6871,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -7112,7 +6896,6 @@ var HERO = [
         type: 7,
         value: 0.15
       },
-      filter: 0,
       upgrade: {
         pg: 1,
         cc: 0,
@@ -7138,7 +6921,6 @@ var HERO = [
         type: 7,
         value: 0.2
       },
-      filter: 2,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7164,7 +6946,6 @@ var HERO = [
         type: 5,
         value: 0.1
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7190,7 +6971,6 @@ var HERO = [
         type: 5,
         value: 0.15
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7216,7 +6996,6 @@ var HERO = [
         type: 5,
         value: 0.2
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7242,7 +7021,6 @@ var HERO = [
         type: 5,
         value: 0.25
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7268,7 +7046,6 @@ var HERO = [
         type: 5,
         value: 0.2
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7294,7 +7071,6 @@ var HERO = [
         type: 5,
         value: 0.22
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7320,7 +7096,6 @@ var HERO = [
         type: 5,
         value: 0.26
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7346,7 +7121,6 @@ var HERO = [
         type: 5,
         value: 0.3
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7372,7 +7146,6 @@ var HERO = [
         type: 6,
         value: 0.35
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7398,7 +7171,6 @@ var HERO = [
         type: 6,
         value: 0.4
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7424,7 +7196,6 @@ var HERO = [
         type: 6,
         value: 0.45
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -7450,7 +7221,6 @@ var HERO = [
         type: 6,
         value: 0.5
       },
-      filter: 3,
       upgrade: {
         pg: 0,
         cc: 0,
@@ -10290,8 +10060,12 @@ function doTurn (A,D,turnA,turnD,side) {
             });
         }
         
-        var percAoe = Math.round(D.setup[i].hp*(1-atk.percAoe[i])*buff.ratio*buff.sdefPerc[i]);
-        var flatAoe = Math.round(atk.flatAoe[i]*buff.ratio*buff.sdefPerc[i]);
+        defvalue = function(a,b) {
+        	return (a == 0 || a)?a:b;
+        }
+        
+        var percAoe = Math.round(defvalue(D.setup[i].hp,0)*(1-defvalue(atk.percAoe[i],1))*buff.ratio*defvalue(buff.sdefPerc[i],1));
+        var flatAoe = Math.round(defvalue(atk.flatAoe[i],0)*buff.ratio*defvalue(buff.sdefPerc[i],1));
         aoeArr[i]=percAoe+flatAoe+buff.fmasochism[i];
         var totalDamage = finalDamage+percAoe+flatAoe+buff.fmasochism[i];
         var initHp = D.setup[i].hp;

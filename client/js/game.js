@@ -7,7 +7,7 @@ function Game() {
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.8.4.1";
+    var VERSION = "v4.8.5.0";
     var _this = this;
     var data = undefined;
     var production = 0;
@@ -1605,6 +1605,7 @@ function Game() {
                     this.claimPersonalEaster(mdata.city.easter.claimed + 1);
                 }
                 else {
+                	easterAnimation.check = Date.now();
                     popup = {
                         text:"You have unlocked a 2019 Easter Reward",
                         alert: easterMilestones.personal[mdata.city.easter.claimed + 1].t,
@@ -3980,7 +3981,7 @@ function Game() {
                             var ix = W*0.365;
 
                             if (kongregate.services.getUsername() == CQW.auction[drawArray[item+i].id].bidname) {
-                                text(ctx,"You are the max BID",ix+(W*0.15/2)+i*W*0.2,y0+H*0.87,"24px"+FONT,"white","center","middle"); 
+                                text(ctx,"You have the max bid",ix+(W*0.15/2)+i*W*0.2,y0+H*0.87,"24px"+FONT,"white","center","middle"); 
                                 roundedRect(ctx,ix+i*W*0.2-12,y0+H*0.3-12,W*0.15+24,W*0.2+24,10,"rgba(255,215,0,1)");
                             } else if (mdata.city.hero[CQW.auction[drawArray[item+i].id].hero]==99 || mdata.city.promo[CQW.auction[drawArray[item+i].id].hero]==5) {
                                 text(ctx,"Already at level 99!",ix+(W*0.15/2)+i*W*0.2,y0+H*0.87,"24px"+FONT,"white","center","middle"); 
@@ -4636,8 +4637,7 @@ function Game() {
                 wtext=mtext(ctx,stext.substr(stext.indexOf("/n")),xt+wTool/2,yt+hTool*0.86,tsize,"rgb(151,246,255)","center","middle");
                 if (wtext >= wTool) tsize="20px"+FONT;
                 mltext(ctx,"SKILL: "+this.skill2text(HERO[rhero].skill,1,false).short,xt+wTool/2,yt+hTool*0.86,tsize,"white","center","middle");
-
-                if (!auctionOpen && rhero !== 42 && rhero !== 43 && rhero !== 44) {
+                if (monsterKreed != undefined) {
                     var kreedsToCandies = {10: 10, 30: 30, 100: 110, 200: 230, 250: 300, 300: 380};
                     for (var i = 0; i < 9; ++i) T.draw(ctx,"joy2",6+i*32,yt-135,T.width("joy2"),T.height("joy2"));
                     mltext(ctx,"Get "+kreedsToCandies[monsterKreed]+" Event Tickets/nfor this purchase!",xt+wTool/2,yt-90,"46px"+FONT,"white","center","middle");
@@ -4714,7 +4714,7 @@ function Game() {
 
             text(ctx,"Notation",r3+T.width("0567")+5,c1-ndist,"30px "+FONT,"white","center","top");
             this.rectButton(ctx,r3,c1,"notation","notation",undefined,undefined,["S.I.","Scientific"],data.nMode,"Changes Number Display Mode for Idle");
-            this.rectButton(ctx,r4,c1,"bintmode","bintmode",undefined,undefined,["k/M/B/T/Q","k/M/G/T/P","k/Mn/Md/..."],data.bintmode,"Changes Number Display Mode for Followers");
+            this.rectButton(ctx,r4,c1,"bintmode","bintmode",undefined,undefined,["k/M/G/T/P","k/M/B/T/Q","k/Mn/Md/..."],data.bintmode,"Changes Number Display Mode for Followers");
 
             var sortList=["Species","Alphabetical","Level","Life","Damage","Rarity","Element","Strength"];
             text(ctx,"Hero Sort",r3+T.width("0567") + 5,c2-ndist,"30px "+FONT,"white","center","top");
@@ -6479,7 +6479,8 @@ function Game() {
                     var y=((640*(0.432+0.17*i))-buttonH/2)+miraclesH/1.7;
                     roundedRect(ctx,x,y,W*0.212,H*0.1,10,"rgba(0,0,0,0.7)");
                     var followers=Math.round(MIRACLES[miracleSprite].followers*this.getFmul()*(1+0.01*mdata.city.mclaims[miracleSprite]));
-                    var hourly=Math.round(followers/MIRACLES[miracleSprite].time);
+                    var lucyBonus = (mdata.tm==-1||(mdata.tm-Date.now()>0))?0.9:1;
+                    var hourly=Math.round(followers/(MIRACLES[miracleSprite].time*(1-mdata.city.easter.miracles)*lucyBonus));
                     var daily=hourly*24;
                     var monthly=daily*31;
                     text(ctx,"Hourly: "+hourly+" followers",x+8,y+(H*0.1*0.25),"24px"+FONT,"white","left","middle");
@@ -6502,6 +6503,26 @@ function Game() {
             this.addZone("tomil",milrect,"scene",{target:"milestones"});
         }
         T.draw(ctx,"086f",W*0.0185,H*0.885,T.width("086f")*0.85,T.height("086f")*0.85);
+        
+        //Miracle prediction
+        var mrect=(new Rect(W*0.75,H*0.007,T.width("0nkt"),T.height("0nkt"))).small();
+        if (mrect.isInside(GM.x,GM.y)) {
+            var x=W*0.75;
+            var y=H*0.007+T.height("0nkt");
+            roundedRect(ctx,x,y,W*0.212,H*0.125,10,"rgba(0,0,0,0.7)");
+            var lucyBonus = (mdata.tm==-1||(mdata.tm-Date.now()>0))?0.9:1;
+            var hourly = 0;
+            for (var i = 0; i < 9; i++) {
+            	var followers=Math.round(MIRACLES[i].followers*this.getFmul()*(1+0.01*mdata.city.mclaims[i]));
+            	hourly += Math.round(followers/(MIRACLES[i].time*(1-mdata.city.easter.miracles)*lucyBonus));
+            }
+            var daily=hourly*24;
+            var monthly=daily*31;
+            text(ctx,"Expected gain from miracles:",x+8,y+(H*0.1*0.25),"24px"+FONT,"white","left","middle");
+            text(ctx,"Hourly: "+hourly+" followers",x+8,y+(H*0.1*0.5),"24px"+FONT,"white","left","middle");
+            text(ctx,"Daily: "+daily+" followers",x+8,y+(H*0.1*0.75),"24px"+FONT,"white","left","middle");
+            text(ctx,"Monthly: "+monthly+" followers",x+8,y+(H*0.1),"24px"+FONT,"white","left","middle");
+        }
     }
     this.drawRoulette = function (ctx) {
         var basew = 950;
@@ -8803,8 +8824,8 @@ function Game() {
             if (mdata.city.daily.timer2>Date.now()) {
                 clvl=mdata.city.daily.lvl;
                 text(ctx,timer((mdata.city.daily.timer2-Date.now())/1000),bx+bw-T.width("0cp8")/2-5,by-54+bh+42,"32px"+FONT,"white","center","middle");
-            } 
-
+            }
+            
             if (mdata.city.daily.setup!==undefined && mdata.city.daily.timer2>Date.now()) {
                 for (var i=mdata.city.daily.setup.length-1; i>=0; --i) {
                     var hid=-(mdata.city.daily.setup[4-i]+2);
@@ -8814,7 +8835,7 @@ function Game() {
                     var mw = T.width(HERO[0].img)*1.3;
                     var mh = T.height(HERO[0].img)*1.3;
                     var hrect = (new Rect(bx+bw*(1/8)+(i*bw/5.37)-mw/2,by+bh*0.7-mh,mw,mh)).small();
-                    if (hrect.isInside(GM.x,GM.y)) {
+                    if (hrect.isInside(GM.x,GM.y) && mdata.city.daily.setup[4-i]!=-1 && mdata.city.daily.setup[4-i]!=undefined) {
                         skillInfo=i;
                     }
                 }
@@ -9030,7 +9051,7 @@ function Game() {
 	            ctx.fillStyle="rgba(0,0,0,0.7)";
 	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-W*0.3,by+bh*0.7-mh-42-H*0.1-20,W*0.6,H*0.1+20);
 	            text(ctx,HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].name,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
-	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.promo[-(mdata.city.daily.setup[4-skillInfo]+2)]).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
+	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,mdata.city.daily.hero[-(mdata.city.daily.setup[4-skillInfo]+2)],false,promoData[-(mdata.city.daily.setup[4-skillInfo]+2)].skill,0).short,bx+bw*(1/8)+(skillInfo*bw/5.37),by+bh*0.7-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
         	} else {//Monster
 	            ctx.fillStyle="rgba(0,0,0,0.7)";
 	            ctx.fillRect(bx+bw*(1/8)+(skillInfo*bw/5.37)-20,by+bh*0.7-mh-42-H*0.1+20,40,H*0.1-20);
@@ -9888,27 +9909,13 @@ function Game() {
             }
         }
         for (var i = MARR.length - 1; i >= 0; --i) {
-            var clean = false;
-            for (var j = 0; j < filterList.Leveling.length; ++j) {
-                if (!clean && !data.filterStatus.Leveling[j] && HERO[MARR[i]].filter == conditional.Leveling[j]) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                }
+            if (!((data.filterStatus.Leveling[0] && HERO[MARR[i]].upgrade["pg"] == 1) || (data.filterStatus.Leveling[1] && HERO[MARR[i]].upgrade["cc"] == 1) || (data.filterStatus.Leveling[2] && HERO[MARR[i]].upgrade["as"] == 1) || (data.filterStatus.Leveling[3] && (HERO[MARR[i]].upgrade["um"] == 1 || HERO[MARR[i]].upgrade["none"] == 1)))) {
+                MARR.splice(i, 1);
             }
         }
         for (var i = MARR.length - 1; i >= 0; --i) {
-            var clean = false;
-            for (var j = 0; j < filterList.Levels.length; ++j) {
-                if (!clean && j == 1 && data.filterStatus.Levels[j] && mdata.city.hero[MARR[i]] !== 1) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                } else if (!clean && j == 2 && data.filterStatus.Levels[j] && mdata.city.hero[MARR[i]] === 99) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                } else if (!clean && j == 3 && data.filterStatus.Levels[j] && mdata.city.hero[MARR[i]] !== 99) {
-                    MARR.splice(i, 1);
-                    clean = true;
-                }
+            if ((data.filterStatus.Levels[1] && mdata.city.hero[MARR[i]] !== 1) || (data.filterStatus.Levels[2] && (mdata.city.hero[MARR[i]] === 99 || mdata.city.hero[MARR[i]] === 0)) || (data.filterStatus.Levels[3] && mdata.city.hero[MARR[i]] !== 99)) {
+                MARR.splice(i, 1);
             }
         }
 
@@ -11595,6 +11602,7 @@ function Game() {
             else if (CQW.WB.id==126) reward = Math.log(CQW.WB.dmg)*1700;
             else if (CQW.WB.id==186) reward = Math.log(CQW.WB.dmg)*1700;
         }
+        reward = Math.max(reward,0);
         if (CQW.WB.name.indexOf("SUPER")!==-1) reward*=2;
         if (modes[CQW.WB.mode]=="No Heroes" && typeTab==4) typeTab=0;
 
@@ -11604,8 +11612,12 @@ function Game() {
             var bgx=W*0.217;
             var bgy=H*0.15;
             T.draw(ctx,"08yf",bgx,bgy);
-            if (CQW.WB.id==87)  text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"38px"+FONT,"rgb(151,246,255)","center","middle");
-            else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"50px"+FONT,"rgb(151,246,255)","center","middle");
+            if (CQW.WB.id==87) { //moak
+            	if (CQW.WB.name=="SUPER MOTHER OF ALL KODAMAS") {
+            		text(ctx,"SUPER",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15-22,"38px"+FONT,"rgb(151,246,255)","center","middle");
+            		text(ctx,"MOTHER OF ALL KODAMAS",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"38px"+FONT,"rgb(151,246,255)","center","middle");
+            	} else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"38px"+FONT,"rgb(151,246,255)","center","middle");
+            } else text(ctx,CQW.WB.name,bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.15,"50px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"PRIZE POOL: "+Math.round(reward).toLocaleString()+" AS",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.25,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,"Damage Done:",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.35-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
             text(ctx,bint(damageDone,data.bintmode)+" ["+(damageDone/damageTotal*100).toFixed(2)+"%]",bgx+T.width("08yf")*0.26,bgy+T.height("08yf")*0.40-15,"40px"+FONT,"rgb(151,246,255)","center","middle");
@@ -11787,7 +11799,7 @@ function Game() {
 
                 if (mdata.city.WB.log[showBoss].name=="MOTHER OF ALL KODAMAS") text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"36px"+FONT,"black","center","middle");
                 else if (mdata.city.WB.log[showBoss].name=="SUPER MOTHER OF ALL KODAMAS") {
-                    text(ctx,"SUPER",xpos,H*0.435,"36px"+FONT,"red","center","middle");
+                    text(ctx,"SUPER",xpos,H*0.435,"36px"+FONT,"black","center","middle");
                     text(ctx,"MOTHER OF ALL KODAMAS",xpos,H*0.465,"36px"+FONT,"black","center","middle");
                 } else text(ctx,mdata.city.WB.log[showBoss].name,xpos,H*0.45,"46px"+FONT,"black","center","middle");
                 text(ctx,"Level: "+mdata.city.WB.log[showBoss].level,xpos,H*0.50,"36px"+FONT,"black","center","middle");
@@ -11864,7 +11876,7 @@ function Game() {
                 for (var i = 0; i < 4; ++i) {
                     for (var j = 0; j < 8; ++j) {
                         if (picked[c] == true) {
-                            ctx.fillStyle = "rgba(173,216,230,0.5)";
+                            ctx.fillStyle = "rgba(255,215,0,1)";
                             ctx.fillRect(x-cardSize*0.93*0.5+(j*cardSize*1.115)-1,y-cardSize*0.93*0.5+(i*cardSize*1.115)-1,cardSize*0.93+2,cardSize*0.93+2);
                         }
                         if (cards[c] == -1) {
@@ -11873,11 +11885,11 @@ function Game() {
                         } else {
                             if (mdata.city !== undefined && mdata.city.pge !== undefined) {
                                 if (mdata.city.pge.choice[0] == c || mdata.city.pge.choice[1] == c) {
-                                    ctx.fillStyle = "rgba(255,255,255,0.5)";
+                                    ctx.fillStyle = "rgba(255,255,255,0.75)";
                                     ctx.fillRect(x-cardSize*0.93*0.5+(j*cardSize*1.115)-1,y-cardSize*0.93*0.5+(i*cardSize*1.115)-1,cardSize*0.93+2,cardSize*0.93+2);
                                 }
                             }
-                            T.draw(ctx,"0gkd",x-cardSize*0.5+(j*cardSize*1.115),y-cardSize*0.5+(i*cardSize*1.115),cardSize,cardSize);
+                            //T.draw(ctx,"0gkd",x-cardSize*0.5+(j*cardSize*1.115),y-cardSize*0.5+(i*cardSize*1.115),cardSize,cardSize);
                             T.draw(ctx,"0fj5",x-cardSize*0.92*0.5+(j*cardSize*1.115)-2,y-cardSize*0.92*0.5+(i*cardSize*1.115),cardSize*0.92,cardSize*0.92);
                             this.drawMonster(ctx,-2-cards[c],x+(j*cardSize*1.115),y+(i*cardSize*1.115)+cardSize*0.4,undefined,false,0.88,1);
                         }
@@ -12258,14 +12270,12 @@ function Game() {
                             for (var i=CQW.dungeon.setup.length-1; i>=0; --i) {
                                 var hid=-(CQW.dungeon.setup[4-i]+2);
                                 if (CQW.dungeon.setup[4-i]>-1) this.drawMonster(ctx,CQW.dungeon.setup[4-i],center-bw*0.9*0.5+72+(i*110),bgh+80,undefined,true,1.2);
-                                else if (CQW.dungeon.setup[4-i]<-1) {
-                                    this.drawMonster(ctx,CQW.dungeon.setup[4-i],center-bw*0.9*0.5+72+(i*110),bgh+80,undefined,true,1.2,CQW.dungeon.hero[hid],true,true,CQW.dungeon.promo[hid]);
-                                    var mw = T.width(HERO[0].img)*1.2;
-                                    var mh = T.height(HERO[0].img)*1.2;
-                                    var hrect = (new Rect(center-bw*0.9*0.5+72+(i*110)-mw/2,bgh+80-mh,mw,mh)).small();
-                                    if (hrect.isInside(GM.x,GM.y)) {
-                                        skillInfo=i;
-                                    }
+                                else if (CQW.dungeon.setup[4-i]<-1) this.drawMonster(ctx,CQW.dungeon.setup[4-i],center-bw*0.9*0.5+72+(i*110),bgh+80,undefined,true,1.2,CQW.dungeon.hero[hid],true,true,CQW.dungeon.promo[hid]);
+                                var mw = T.width(HERO[0].img)*1.2;
+                                var mh = T.height(HERO[0].img)*1.2;
+                                var hrect = (new Rect(center-bw*0.9*0.5+72+(i*110)-mw/2,bgh+80-mh,mw,mh)).small();
+                                if (hrect.isInside(GM.x,GM.y) && CQW.dungeon.setup[4-i]!=undefined && CQW.dungeon.setup[4-i]!=-1) {
+                                    skillInfo=i;
                                 }
                             }
                             if (mdata.city !== undefined && mdata.city.easter !== undefined && mdata.city.easter.dungeonsolver !== 0) {
@@ -12340,7 +12350,7 @@ function Game() {
 
                     // Skill and Name info
                     if (skillInfo!=undefined) {
-                        var mh = T.height(HERO[0].img)*1.2;
+                    	var mh = T.height(HERO[0].img)*1.2;
                         ctx.beginPath();
                         ctx.moveTo(center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-30);
                         ctx.lineTo(center-bw*0.9*0.5+72+(skillInfo*110)+12,bgh+80-mh-42);
@@ -12348,10 +12358,18 @@ function Game() {
                         ctx.closePath();
                         ctx.fillStyle="rgba(0,0,0,0.7)";
                         ctx.fill();
-                        ctx.fillStyle="rgba(0,0,0,0.7)";
-                        ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
-                        text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");
-                        mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05),"34px"+FONT,"white","center","middle");
+                    	if (CQW.dungeon.hero[4-skillInfo] < -1) {//Hero
+            	            ctx.fillStyle="rgba(0,0,0,0.7)";
+            	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
+                            text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");
+            	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05),"34px"+FONT,"white","center","middle");
+                    	} else {//Monster
+                    		ctx.fillStyle="rgba(0,0,0,0.7)";
+            	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-20,bgh+80-mh-42-H*0.1+20,40,H*0.1-20);
+            	            var elements_short =["A","E","F","W"];
+            	            var mobname = elements_short[CQW.dungeon.setup[4-skillInfo]%4] + (Math.floor(CQW.dungeon.setup[4-skillInfo]/4)+1);
+            	            text(ctx,mobname,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)+10,"40px"+FONT,"white","center","middle");
+                    	}
                     }
                 }
                 else {
@@ -18667,6 +18685,7 @@ function Game() {
             cc_body = [2,1,0];
             cc_direction = "RIGHT";
             newPosition = 2;
+            cc_changed = false;
         } else if (action=="oyear") {
             show2year = extra.target;
         } else if (action=="anni") {
@@ -18689,8 +18708,10 @@ function Game() {
             else vipOpen = false;
         } else if (action=="elt") {
             this.claimPersonalEaster(mdata.city.easter.claimed + 1,-1);
+            popup=undefined;
         } else if (action=="e30") {
             this.claimPersonalEaster(mdata.city.easter.claimed + 1,1);
+            popup=undefined;
         } else if (action=="filO") {
             if (extra.target) filterOpen=true;
             else filterOpen=false;
@@ -18772,7 +18793,7 @@ function Game() {
         } else if (action=="dowbsim") {
             var anyA=false;
             for (var i = 0; i < 6; ++i) {
-                if (data.playground[0].line[i] !== -1) anyA = true;
+                if (data.playground[simwbplayer].line[i] !== -1) anyA = true;
             }
             if (anyA) {
                 var level=parseInt(document.getElementById("wblvl").value);
@@ -18781,10 +18802,10 @@ function Game() {
                 var heroB = Array(HERO.length).fill(1);
                 var promoA = Array(HERO.length).fill(0);
                 for (var i = 0; i < 6; ++i) {
-                    if (data.playground[0].line[i] < -1) {
-                        var id = -2*1-data.playground[0].line[i];
-                        heroA[id] = data.playground[0].level[i];
-                        promoA[id] = data.playground[0].promo[i];
+                    if (data.playground[simwbplayer].line[i] < -1) {
+                        var id = -2*1-data.playground[simwbplayer].line[i];
+                        heroA[id] = data.playground[simwbplayer].level[i];
+                        promoA[id] = data.playground[simwbplayer].promo[i];
                     }
                 }
                 var wbarray = [72,87,106,126,186];
@@ -19063,7 +19084,14 @@ function Game() {
             searchTab = extra.target;
             if (searchTab) {
                 document.getElementById("herosearch").style.display="block";
-                document.getElementById("herosearch").focus();
+                window.setTimeout(function () { document.getElementById("herosearch").focus(); }, 0);
+                if (showDaily) { //Dungeon, flash
+                	document.getElementById("herosearch").style.left = "232px";
+                	document.getElementById("herosearch").style.top = "463px";
+                } else {
+                	document.getElementById("herosearch").style.left = "132px";
+                	document.getElementById("herosearch").style.top = "516px";
+                }
             }
         } else if (action=="capzone") {
             var existent = undefined;
@@ -21439,6 +21467,7 @@ function Game() {
                         CQW.dungeon.hero=res.data.FunctionResult.battle.phero;
                         CQW.dungeon.lvl=parseInt(res.data.FunctionResult.battle.enemy.match(/\d+/)[0]);
                         _this.loadDungeonBattle(res.data.FunctionResult.battle);
+                        _this.wsync(); //if the dungeon battle was lost we don't need this call, but that's something to test on a live dungeon
                     } else {
                         var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
                             msg:"PFdung",
