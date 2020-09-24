@@ -7,11 +7,11 @@ function Game() {
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.8.5.0";
+    var VERSION = "v4.8.5.1";
     var _this = this;
     var data = undefined;
     var production = 0;
-    var PFMODE='Latest';
+    var PFMODE='Live';
     var BEVO = [
         [1,81,486*2*3,1458*9*3,4374*25*7,15000*36*150,45000*49*200,45000*49*200*50,45000*49*200*250,45000*49*200*250*100,45000*49*200*250*300,45000*49*200*250*300*25,45000*49*200*250*300*250,45000*49*200*250*300*250*10,45000*49*200*250*300*250*50], // 0
         [1,5,450,50000,2500000,2500000*1000], // 1
