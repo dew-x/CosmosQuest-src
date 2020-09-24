@@ -12358,7 +12358,7 @@ function Game() {
                         ctx.closePath();
                         ctx.fillStyle="rgba(0,0,0,0.7)";
                         ctx.fill();
-                    	if (CQW.dungeon.hero[4-skillInfo] < -1) {//Hero
+                    	if (CQW.dungeon.setup[4-skillInfo] < -1) {//Hero
             	            ctx.fillStyle="rgba(0,0,0,0.7)";
             	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
                             text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");
