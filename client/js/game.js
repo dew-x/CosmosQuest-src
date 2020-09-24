@@ -7,11 +7,11 @@ function Game() {
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.8.5.0";
+    var VERSION = "v4.8.5.1";
     var _this = this;
     var data = undefined;
     var production = 0;
-    var PFMODE='Latest';
+    var PFMODE='Live';
     var BEVO = [
         [1,81,486*2*3,1458*9*3,4374*25*7,15000*36*150,45000*49*200,45000*49*200*50,45000*49*200*250,45000*49*200*250*100,45000*49*200*250*300,45000*49*200*250*300*25,45000*49*200*250*300*250,45000*49*200*250*300*250*10,45000*49*200*250*300*250*50], // 0
         [1,5,450,50000,2500000,2500000*1000], // 1
@@ -12358,7 +12358,7 @@ function Game() {
                         ctx.closePath();
                         ctx.fillStyle="rgba(0,0,0,0.7)";
                         ctx.fill();
-                    	if (CQW.dungeon.hero[4-skillInfo] < -1) {//Hero
+                    	if (CQW.dungeon.setup[4-skillInfo] < -1) {//Hero
             	            ctx.fillStyle="rgba(0,0,0,0.7)";
             	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
                             text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");

@@ -49,7 +49,7 @@
     $limit=1600;
     if ($isSuper) $limit=1200;
     $data=array(
-        "version"=>"v4.8.5.0",
+        "version"=>"v4.8.5.1",
         "tournament"=>array(
             "pool"=>$pool
         ),
