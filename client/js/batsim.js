@@ -10060,12 +10060,8 @@ function doTurn (A,D,turnA,turnD,side) {
             });
         }
         
-        defvalue = function(a,b) {
-        	return (a == 0 || a)?a:b;
-        }
-        
-        var percAoe = Math.round(defvalue(D.setup[i].hp,0)*(1-defvalue(atk.percAoe[i],1))*buff.ratio*defvalue(buff.sdefPerc[i],1));
-        var flatAoe = Math.round(defvalue(atk.flatAoe[i],0)*buff.ratio*defvalue(buff.sdefPerc[i],1));
+        var percAoe = Math.round(D.setup[i].hp*(1-atk.percAoe[i])*buff.ratio*buff.sdefPerc[i]);
+        var flatAoe = Math.round(atk.flatAoe[i]*buff.ratio*buff.sdefPerc[i]);
         aoeArr[i]=percAoe+flatAoe+buff.fmasochism[i];
         var totalDamage = finalDamage+percAoe+flatAoe+buff.fmasochism[i];
         var initHp = D.setup[i].hp;
@@ -10317,7 +10313,7 @@ function killUnits (A,side,turn) {
         }
     }
     if (any) {
-        for (var i = 0; i < turn.length; ++i) {
+        for (var i = 0; i < Math.min(turn.length,1); ++i) {
             cleanTurn(turn[i],kills);
         }
         gBattle.steps.push({
