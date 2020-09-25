@@ -1944,7 +1944,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL"],
                 });
-                log("Buy 1 Enchant Miracles for 560000 SD");
+                log("Buy 1 Enhance Miracles for 560000 SD");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="EM10") {
@@ -1953,7 +1953,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 10 Enchant Miracles for 5300000 SD");
+                log("Buy 10 Enhance Miracles for 5300000 SD");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="EM20") {
@@ -1962,7 +1962,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 20 Enchant Miracles for 10000000 SD");
+                log("Buy 20 Enhance Miracles for 10000000 SD");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="FOL5") {
@@ -1971,7 +1971,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 5 Enchant Miracles for 2300 UM");
+                log("Buy 5 Enhance Miracles for 2300 UM");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="FOL15") {
@@ -1980,7 +1980,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 15 Enchant Miracles for 6000 UM");
+                log("Buy 15 Enhance Miracles for 6000 UM");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="MUL5") {
@@ -4510,7 +4510,7 @@ handlers.sjclaim = function () {
                             mission: -1,
                             timer: -1,
                         }
-                        log("[SPACE] Won "+data.city.space.last.gears+" gears, and "+data.city.space.last.asteroids+" Asteroids on Mission "+(data.city.space.current.mission+1));
+                        log("[SPACE] Won "+data.city.space.last.gears+" gears, and "+data.city.space.last.asteroids+" Asteroids on Mission "+(data.city.space.last.mission+1));
                         server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)} });
                         return { ok: true, data:data, update: true}; 
                     } else return { ok: false, err: "Nothing to claim"};

@@ -6844,7 +6844,7 @@ function Game() {
             ctx.fillRect(W*0.043-1,H*0.695-32-5-1,W*0.21+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.043,H*0.695-32-5,W*0.21,H*0.05);
-            text(ctx,"Avaiable keys to open chests",W*0.043+3,H*0.695-16-5,"32px"+FONT,"white","left","middle");
+            text(ctx,"Available keys to open chests",W*0.043+3,H*0.695-16-5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.043-1,H*0.916+5-1,W*0.22+2,H*0.05+2);
@@ -6869,7 +6869,7 @@ function Game() {
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.63,H*0.90+5,W*0.36,H*0.09);
             text(ctx,"Every 10 chests opened, you'll receive a Hero Chest",W*0.63+3,H*0.90+16+5,"32px"+FONT,"white","left","middle");
-            text(ctx,"Top number is the amount of avaiable Hero Chests",W*0.63+3,H*0.90+16+5+27,"32px"+FONT,"white","left","middle");
+            text(ctx,"Top number is the amount of available Hero Chests",W*0.63+3,H*0.90+16+5+27,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.1-2,H*0.05-2,W*0.8+4,H*0.45+4);
@@ -7982,24 +7982,24 @@ function Game() {
         var numtabs=elements.length;
         var pos=0;
         var drawMonsters = [];
-        var avaiableFollowers = mdata.followers;
+        var availableFollowers = mdata.followers;
         var initMons = 60;
         if (mode=="tournaments") {
-            if (tournamentid==0) avaiableFollowers = tid2fol(tid);
-            else avaiableFollowers = CQW.tour.current.followers;
+            if (tournamentid==0) availableFollowers = tid2fol(tid);
+            else availableFollowers = CQW.tour.current.followers;
         }
-        else if (mode=="extratournament") avaiableFollowers = CQW.tour.current.followers;
-        else if (mode=="flash") avaiableFollowers = CQW.flash.current.followers;
-        else if (mode=="playground") avaiableFollowers = -1;
-        else if (mode=="halloween") avaiableFollowers = 0;
+        else if (mode=="extratournament") availableFollowers = CQW.tour.current.followers;
+        else if (mode=="flash") availableFollowers = CQW.flash.current.followers;
+        else if (mode=="playground") availableFollowers = -1;
+        else if (mode=="halloween") availableFollowers = 0;
         if (!data.hideafford) initMons = 180;
         for (var i=0;i<initMons;++i) drawMonsters.push(MONSTERS[i]);
         if (data.hideafford) {
             for (var i=60;i<MONSTERS.length;i=i+4) {
                 var canAfford=false;
                 for (var j=0;j<4;++j) {
-                    if (avaiableFollowers == -1) canAfford = true;
-                    else if (MONSTERS[i+j].cost <= avaiableFollowers) canAfford = true;
+                    if (availableFollowers == -1) canAfford = true;
+                    else if (MONSTERS[i+j].cost <= availableFollowers) canAfford = true;
                 }
                 if (canAfford == true) {
                     for (var j=0;j<4;++j) drawMonsters.push(MONSTERS[i+j]);
@@ -8065,24 +8065,24 @@ function Game() {
 
                 T.draw(ctx,"0fj5",mx,H*(my+0.145*i)-3);
 
-                var avaiable=true;
+                var available=true;
                 if (mode=="city") {
-                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="tournaments" || mode =="extratournament") {
-                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="pve" || mode=="pved" || mode=="dungeon") {
-                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="wb") {
-                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="flash") {
-                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="playground") {
-                    avaiable=true;
+                    available=true;
                 } else if (mode=="halloween") {
-                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-fullHeroArray[i].pos) available=false;
                 }
-                this.drawMonster(ctx,inithero-fullHeroArray[i].pos,dmx+T.width("0fj5")/2,(640*(dmy+0.145*i))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],avaiable,true,promotion[fullHeroArray[i].pos]);
-                if (placeSync===undefined && avaiable) {
+                this.drawMonster(ctx,inithero-fullHeroArray[i].pos,dmx+T.width("0fj5")/2,(640*(dmy+0.145*i))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],available,true,promotion[fullHeroArray[i].pos]);
+                if (placeSync===undefined && available) {
                     if (mode=="flash") {
                         if (this.canJoinFlash()) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-fullHeroArray[i].pos});
@@ -8327,24 +8327,24 @@ function Game() {
 
                 T.draw(ctx,"0fj5",mx,H*(my+0.145*pos)-3);
 
-                var avaiable=true;
+                var available=true;
                 if (mode=="city") {
-                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="tournaments" || mode =="extratournament") {
-                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="pve" || mode=="pved" || mode=="dungeon") {
-                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="wb") {
-                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="flash") {
-                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="playground") {
-                    avaiable=true;
+                    available=true;
                 } else if (mode=="halloween") {
-                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-myHeroPos[realpos]) available=false;
                 }
-                this.drawMonster(ctx,inithero-myHeroPos[realpos],dmx+T.width("0fj5")/2,(640*(dmy+0.145*pos))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],avaiable,true,promotion[myHeroPos[realpos]]);
-                if (placeSync===undefined && avaiable) {
+                this.drawMonster(ctx,inithero-myHeroPos[realpos],dmx+T.width("0fj5")/2,(640*(dmy+0.145*pos))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],available,true,promotion[myHeroPos[realpos]]);
+                if (placeSync===undefined && available) {
                     if (mode=="flash") {
                         if (this.canJoinFlash()) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-myHeroPos[realpos]});
@@ -12120,7 +12120,7 @@ function Game() {
                 }
                 if (unlocked === 3) {
                     if (CQW.followers.timeleft<Date.now()) this.wsync();
-                    else text(ctx,"New opening avaiable in: "+timer((CQW.followers.timeleft-Date.now())/1000),W*0.5,H*0.3,"40px"+FONT,"black","center","middle");
+                    else text(ctx,"New opening available in: "+timer((CQW.followers.timeleft-Date.now())/1000),W*0.5,H*0.3,"40px"+FONT,"black","center","middle");
                 }
             }
             else if (this.isDailyEvent().mode=="lottery") {
@@ -21515,11 +21515,11 @@ function Game() {
             });
         }
     }
-    this.drawMonster = function (ctx,id,x,y,bstats,reverse,scale,level,avaiable,base,prom,hide_prom) {
+    this.drawMonster = function (ctx,id,x,y,bstats,reverse,scale,level,available,base,prom,hide_prom) {
         reverse=reverse||false;
         scale=scale||1;
         level=level||1;
-        if (avaiable==undefined) avaiable=true;
+        if (available==undefined) available=true;
         if (base==undefined) base=true;
         if (prom==undefined) prom=0;
         if (hide_prom==undefined) hide_prom=false;
@@ -21556,7 +21556,7 @@ function Game() {
             ctx.save();
             ctx.translate(x,y);
             if (HERO[hid].rarity != 5){
-                if (avaiable) T.draw(ctx,peana,-T.width(peana)*scale/2,-T.height(peana)*scale,T.width(peana)*scale,T.height(peana)*scale);
+                if (available) T.draw(ctx,peana,-T.width(peana)*scale/2,-T.height(peana)*scale,T.width(peana)*scale,T.height(peana)*scale);
                 else T.negative(ctx,peana,-T.width(peana)*scale/2,-T.height(peana)*scale,T.width(peana)*scale,T.height(peana)*scale);
                 if (reverse) ctx.scale(-1,1);
                 if (hid==130 && scene=="prana" && mdata.city.hero[hid]!==0) {
@@ -21574,13 +21574,13 @@ function Game() {
                         fixx = -2*scale;
                         fixy = 4*scale;
                     }
-                    if (avaiable) T.draw(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
+                    if (available) T.draw(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     else T.negative(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     if (hid==185) {
                         T.draw(ctx,"8tvj",-T.width(HERO[hid].img)*scale/2,-(T.height(HERO[hid].img)+15 )*scale,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     }
                 }
-                if (avaiable) T.draw(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
+                if (available) T.draw(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
                 else T.negative(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
                 ctx.restore();
                 if (HERO[hid].rarity == 3 && HERO[hid].pve!==undefined) {
