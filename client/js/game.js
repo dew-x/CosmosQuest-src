@@ -23368,7 +23368,7 @@ function Game() {
             }
         } else if (skill.type=="voidmaster") {
             return {
-                short: "Empowered/nGains 2% ("+(value*lvl/skill.target*100).toFixed(1)+"%) of all damage received per "+(skill.target)+" levels as Attack",
+                short: "Empowered/nGains "+(value*100).toFixed(0)+"% ("+(value*lvl/skill.target*100).toFixed(0)+"%) of all damage received per "+(skill.target)+" levels as Attack",
                 long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will gain attack equal to a percentage of all damage received."
             }
         }
