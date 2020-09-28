@@ -19010,7 +19010,7 @@ function Game() {
         } else if (action == "missj") {
             var endTime = Date.now()+this.getSJUpgrade(extra.target,"engine",mdata.city.space.upgrades);
             var endDay = Math.floor(endTime/(24*60*60*1000));
-            if (currentSpecialEvent(endDay) == "Space Journey" && endTime < (mdata.city.space.start+((24*60*60*1000)*5))) {
+            if (currentSpecialEvent(endDay) == "Space Journey" && (endTime - mdata.city.space.hyperloop * 20*60*1000) < (mdata.city.space.start+((24*60*60*1000)*5))) {
                 this.startSpaceJourneyMission(extra.target);
             } else {
                 popup={
