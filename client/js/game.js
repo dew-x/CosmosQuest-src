@@ -5753,9 +5753,23 @@ function Game() {
             }
         }
 
-        T.draw(ctx,fAllSprite,zx+tzw/2-tallw-5,zy+tzh-tallh);
-        var x = zx+tzw/2-tallw/2;
-        var y = zy+tzh-tallh;
+        //Set all experiments
+        var x = zx+tzw/2-tallw/2-5-T.width("twbw");
+        T.draw(ctx,"twbw",x,zy+tzh-tallh);
+        var any = false;
+        for (var i = 0; i < unlocked; ++i) if (i<=data.specie && !nn(data.lab[i])) any = true;
+        if (any) {
+	        for (var i = 0; i < 3; ++i) {
+		        if (mouse) this.addZone("setAll"+i,(new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small(),"setAllExp",{target:i,max:unlocked});
+		        if ((new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small().isInside(GM.x,GM.y)) {
+		            ctx.fillStyle="rgba(255,255,255,0.3)";
+		            ctx.fillRect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6);
+		        }
+	        }
+        }
+        
+        //Finish all for 250 UM
+        T.draw(ctx,fAllSprite,zx+tzw/2-tallw/2,zy+tzh-tallh);
         var AllEnergyObtain = 0;
         var CurrentInvestigations = 0;
         for (var i = 0; i < unlocked; i++){
@@ -5765,25 +5779,28 @@ function Game() {
             }
         }
         if (AllEnergyObtain!=0 && CurrentInvestigations >= 1){
-            if (mouse && purchasing===undefined) this.addZone("buyfall",(new Rect(zx+tzw/2-tallw-5,zy+tzh-tallh,tallw,tallh)).small(),"buy",{target:"fall"});
-            if ((new Rect(zx+tzw/2-tallw-5,zy+tzh-tallh,tallw,tallh)).small().isInside(GM.x,GM.y)) {
+            if (mouse && purchasing===undefined) this.addZone("buyfall",(new Rect(zx+tzw/2-tallw/2,zy+tzh-tallh,tallw,tallh)).small(),"buy",{target:"fall"});
+            if ((new Rect(zx+tzw/2-tallw/2,zy+tzh-tallh,tallw,tallh)).small().isInside(GM.x,GM.y)) {
                 ctx.fillStyle="rgba(255,255,255,0.1)";
-                ctx.fillRect(zx+tzw/2-tallw-5,zy+tzh-tallh,tallw,tallh*0.95);
-                text(ctx,"You will obtain: "+this.pn(AllEnergyObtain,"J"),zx+tzw/2-tallw-5-tallw/1.4,zy+tzh-tallh+18,"26px"+FONT,"white","left","left");
+                ctx.fillRect(zx+tzw/2-tallw/2,zy+tzh-tallh,tallw,tallh*0.95);
+                ctx.fillStyle="rgba(0,0,0,0.8)";
+                ctx.fillRect(zx+tzw/2-tallw/2,zy+tzh-1.5*tallh,tallw,tallh*0.5);
+                text(ctx,"You will obtain: "+this.pn(AllEnergyObtain,"J"),zx+tzw/2-tallw/2+8,zy+tzh-tallh-10,"26px"+FONT,"white","left","left");
             }
         }
 
-        T.draw(ctx,"02pq",zx+tzw/2+5,zy+tzh-tallh);
+        //Claim all experiments
+        T.draw(ctx,"02pq",zx+tzw/2+5+tallw/2,zy+tzh-tallh);
         var anyClaim = false;
         for (var i = 0; i < unlocked; i++){
             if (nn(data.lab[i]) && data.lab[i].todo <= 0) anyClaim = true;
         }
         
         if (anyClaim) {
-            if (mouse) this.addZone("clall",(new Rect(zx+tzw/2-5,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small(),"clall",{target:unlocked});
-            if ((new Rect(zx+tzw/2-5,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small().isInside(GM.x,GM.y)) {
+            if (mouse) this.addZone("clall",(new Rect(zx+tzw/2+5+tallw/2,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small(),"clall",{target:unlocked});
+            if ((new Rect(zx+tzw/2+5+tallw/2,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small().isInside(GM.x,GM.y)) {
                 ctx.fillStyle="rgba(255,255,255,0.1)";
-                ctx.fillRect(zx+tzw/2-5,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq")*0.95);
+                ctx.fillRect(zx+tzw/2+5+tallw/2,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq")*0.95);
             }
         }
 
@@ -17639,6 +17656,43 @@ function Game() {
                 nrg: nrg*this.dimBuff("labmul"),
                 init: todo*this.dimBuff("labtimer"),
                 mode: extra.target,
+            }
+            this.save();
+        } else if (action=="setAllExp") {
+            while (data.lab.length<extra.max) data.lab.push(undefined);
+            var todo=60*60*1000;
+            var nrg = (data.stats.t.m.prod*24*60*60)/((Math.min(12,data.specie+1))*14);
+            if (extra.target==1) {
+                todo*=4;
+                nrg*=3;
+            } else if (extra.target==2) {
+                todo*=12;
+                nrg*=7;
+            }
+            data.lab[extra.specie] = {
+                start: Date.now(),
+                todo: todo*this.dimBuff("labtimer"),
+                nrg: nrg*this.dimBuff("labmul"),
+                init: todo*this.dimBuff("labtimer"),
+                mode: extra.target,
+            }
+            for (var i = 0; i < extra.max; ++i) {
+            	if (i<=data.specie && !nn(data.lab[i])) {
+            		data.lab[i] = {
+                        start: Date.now(),
+                        todo: todo*this.dimBuff("labtimer"),
+                        nrg: nrg*this.dimBuff("labmul"),
+                        init: todo*this.dimBuff("labtimer"),
+                        mode: extra.target,
+                    }
+                    if (extra.target==1) {
+                        this.doStat("v","ltimes4",1);
+                    } else if (extra.target==2) {
+                        this.doStat("v","ltimes12",1);
+                    } else {
+                        this.doStat("v","ltimes1",1);
+                    }
+                }
             }
             this.save();
         } else if (action=="Finish5k") {
