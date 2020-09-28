@@ -19014,7 +19014,7 @@ function Game() {
                 this.startSpaceJourneyMission(extra.target);
             } else {
                 popup={
-                    text:"Mission have to end inside Event period",
+                    text:"Mission has to end inside event period",
                     mode:"alert",
                 }
             }
