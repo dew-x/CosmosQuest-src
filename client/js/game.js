@@ -5754,16 +5754,18 @@ function Game() {
         }
 
         //Set all experiments
-        var x = zx+tzw/2-tallw/2-5-T.width("twbw");
-        T.draw(ctx,"twbw",x,zy+tzh-tallh);
-        var any = false;
-        for (var i = 0; i < unlocked; ++i) if (i<=data.specie && !nn(data.lab[i])) any = true;
-        if (any) {
-	        for (var i = 0; i < 3; ++i) {
-		        if (mouse) this.addZone("setAll"+i,(new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small(),"setAllExp",{target:i,max:unlocked});
-		        if ((new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small().isInside(GM.x,GM.y)) {
-		            ctx.fillStyle="rgba(255,255,255,0.3)";
-		            ctx.fillRect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6);
+        if (unlocked == 12) {
+	        var x = zx+tzw/2-tallw/2-5-T.width("twbw");
+	        T.draw(ctx,"twbw",x,zy+tzh-tallh);
+	        var any = false;
+	        for (var i = 0; i < 12; ++i) if (i<=data.specie && !nn(data.lab[i])) any = true;
+	        if (any) {
+		        for (var i = 0; i < 3; ++i) {
+			        if (mouse) this.addZone("setAll"+i,(new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small(),"setAllExp",{target:i,max:unlocked});
+			        if ((new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small().isInside(GM.x,GM.y)) {
+			            ctx.fillStyle="rgba(255,255,255,0.3)";
+			            ctx.fillRect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6);
+			        }
 		        }
 	        }
         }
