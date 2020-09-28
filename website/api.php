@@ -532,6 +532,10 @@ function ensureUserExists($pid, $kid, $name="") {
 		}
 		$res->free();
 	}
+	if ($uid==-1) {
+		echo json_encode(array("success"=>false,"error"=>"Unable to access DB to update user info"));
+		exit();
+	}
 	return $uid;
 }
 if (isset($_POST["pid"]) && ctype_alnum($_POST["pid"]) && isset($_POST["kid"]) && ctype_digit($_POST["kid"])) {
