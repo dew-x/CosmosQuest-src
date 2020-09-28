@@ -513,6 +513,32 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
     }
 }
 
+function ensureUserExists($pid, $kid, $name="") {
+	$uid=-1;
+	$res=$sql->query("SELECT * FROM users WHERE pid=$pid LIMIT 1");
+	if ($res) {
+		if ($row=$res->fetch_assoc()) {
+			$uid=$row["id"];
+			if ($row["kid"]==0 && $kid!=0) {
+				$sql->query("UPDATE `users` SET kid=$kid WHERE id=$uid LIMIT 1");
+			}
+			if ($row["name"]!=$name && $name!="") {
+				$sql->query("UPDATE `users` SET `name`='$name' WHERE id=$uid LIMIT 1");
+			}
+		} else {
+			if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '$name', $pid, '0', '0', $kid);")) {
+				$uid=$sql->insert_id;
+			}
+		}
+		$res->free();
+	}
+	return $uid;
+}
+if (isset($_POST["pid"]) && ctype_alnum($_POST["pid"]) && isset($_POST["kid"]) && ctype_digit($_POST["kid"])) {
+	$name = isset($_POST["name"]) ? $sql->real_escape_string($_POST["name"]) : "";
+	ensureUserExists((int)$_POST["pid"], (int)$_POST["kid"], $name);
+}
+
 if (isset($_POST["action"])) {
     $action=$_POST["action"];
     if ($action=="register") { // t1
@@ -525,42 +551,19 @@ if (isset($_POST["action"])) {
                 if (isset($_POST["kid"])) {
                     $kid=$sql->real_escape_string($_POST["kid"]);
                 }
-                $res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
-                if ($res) {
-                    $uid=-1;
-                    if ($row=$res->fetch_assoc()) {
-                        $uid=$row["id"];
-                        if ($row["kid"]==0 && $kid!=0) {
-                            $sql->query("UPDATE `users` SET kid=$kid WHERE id=$uid LIMIT 1");
-                        }
-                        if ($row["name"]!=$name && $name!="") {
-                            $sql->query("UPDATE `users` SET `name`='$name' WHERE id=$uid LIMIT 1");
-                        }
-                    } else {
-                        if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '$name', '$pid', '0', '0', '$kid');")) {
-                            $uid=$sql->insert_id;
-                        }
-                    }
-                    $res->free();
-                    if ($uid!==-1) {
-                        if (isset($_POST["setup"]) and isset($_POST["hero"])) {
-                            $setup=json_decode(urldecode($_POST["setup"]),true);
-                            $hero=json_decode(urldecode($_POST["hero"]),true);
-                            $promo=json_decode(urldecode($_POST["promo"]),true);
-                            if (!is_null($setup) and !is_null($hero) and !is_null($promo)) {
-                                register($uid,$tid,$setup,$hero,$promo);
-                            } else {
-                                echo json_encode(array("success"=>false,"error"=>"JSON error"));
-                            }
-                        } else {
-                            echo json_encode(array("success"=>false,"error"=>"Missing setup"));
-                        }
-                    } else {
-                        echo json_encode(array("success"=>false,"error"=>"user create DDBB error"));
-                    }
-                } else {
-                    echo json_encode(array("success"=>false,"error"=>"user DDBB error"));
-                }
+				$uid=ensureUserExists($pid, $kid, $name);
+				if (isset($_POST["setup"]) and isset($_POST["hero"])) {
+					$setup=json_decode(urldecode($_POST["setup"]),true);
+					$hero=json_decode(urldecode($_POST["hero"]),true);
+					$promo=json_decode(urldecode($_POST["promo"]),true);
+					if (!is_null($setup) and !is_null($hero) and !is_null($promo)) {
+						register($uid,$tid,$setup,$hero,$promo);
+					} else {
+						echo json_encode(array("success"=>false,"error"=>"JSON error"));
+					}
+				} else {
+					echo json_encode(array("success"=>false,"error"=>"Missing setup"));
+				}
             } else {
                 echo json_encode(array("success"=>false,"error"=>"Wrong data"));
             }
@@ -576,41 +579,18 @@ if (isset($_POST["action"])) {
                 if (isset($_POST["kid"])) {
                     $kid=$sql->real_escape_string($_POST["kid"]);
                 }
-                $res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
-                if ($res) {
-                    $uid=-1;
-                    if ($row=$res->fetch_assoc()) {
-                        $uid=$row["id"];
-                        if ($row["kid"]==0 && $kid!=0) {
-                            $sql->query("UPDATE `users` SET kid=$kid WHERE id=$uid LIMIT 1");
-                        }
-                        if ($row["name"]!=$name && $name!="") {
-                            $sql->query("UPDATE `users` SET `name`='$name' WHERE id=$uid LIMIT 1");
-                        }
-                    } else {
-                        if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '$name', '$pid', '0', '0', '$kid');")) {
-                            $uid=$sql->insert_id;
-                        }
-                    }
-                    $res->free();
-                    if ($uid!==-1) {
-                        if (isset($_POST["setup"])) {
-                            $setup=json_decode(urldecode($_POST["setup"]),true);
-                            $tid=getTid();
-                            if (!is_null($setup)) {
-                                register2($uid,$tid,$setup);
-                            } else {
-                                echo json_encode(array("success"=>false,"error"=>"JSON error"));
-                            }
-                        } else {
-                            echo json_encode(array("success"=>false,"error"=>"Missing setup"));
-                        }
-                    } else {
-                        echo json_encode(array("success"=>false,"error"=>"user create DDBB error"));
-                    }
-                } else {
-                    echo json_encode(array("success"=>false,"error"=>"user DDBB error"));
-                }
+				$uid=ensureUserExists($pid, $kid, $name);
+				if (isset($_POST["setup"])) {
+					$setup=json_decode(urldecode($_POST["setup"]),true);
+					$tid=getTid();
+					if (!is_null($setup)) {
+						register2($uid,$tid,$setup);
+					} else {
+						echo json_encode(array("success"=>false,"error"=>"JSON error"));
+					}
+				} else {
+					echo json_encode(array("success"=>false,"error"=>"Missing setup"));
+				}
             } else {
                 echo json_encode(array("success"=>false,"error"=>"Wrong data"));
             }
@@ -627,51 +607,28 @@ if (isset($_POST["action"])) {
                 if (isset($_POST["kid"])) {
                     $kid=$sql->real_escape_string($_POST["kid"]);
                 }
-                $res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
-                if ($res) {
-                    $uid=-1;
-                    if ($row=$res->fetch_assoc()) {
-                        $uid=$row["id"];
-                        if ($row["kid"]==0 && $kid!=0) {
-                            $sql->query("UPDATE `users` SET kid=$kid WHERE id=$uid LIMIT 1");
-                        }
-                        if ($row["name"]!=$name && $name!="") {
-                            $sql->query("UPDATE `users` SET `name`='$name' WHERE id=$uid LIMIT 1");
-                        }
-                    } else {
-                        if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '$name', '$pid', '0', '0', '$kid');")) {
-                            $uid=$sql->insert_id;
-                        }
-                    }
-                    $res->free();
-                    if ($uid!==-1) {
-                        if (getUserEntries($uid)<8) {
-                            if (isset($_POST["setup"])) {
-                                $setup=json_decode(urldecode($_POST["setup"]),true);
-                                if (!is_null($setup)) {
-                                    $fp = fopen('/tmp/ftournament.txt', 'w+');
-                                    if(flock($fp, LOCK_EX | LOCK_NB)) {
-                                        fregister($uid,$tid,$setup);
-                                        flock($fp, LOCK_UN);
-                                        fclose($fp);
-                                    } else {
-                                        echo json_encode(array("success"=>false,"error"=>"Someone else is registering"));
-                                    }
-                                } else {
-                                    echo json_encode(array("success"=>false,"error"=>"JSON error"));
-                                }
-                            } else {
-                                echo json_encode(array("success"=>false,"error"=>"Missing setup"));
-                            }
-                        } else {
-                            echo json_encode(array("success"=>false,"error"=>"You can only join 8 Flash Tournaments"));
-                        }
-                    } else {
-                        echo json_encode(array("success"=>false,"error"=>"user create DDBB error"));
-                    }
-                } else {
-                    echo json_encode(array("success"=>false,"error"=>"user DDBB error"));
-                }
+				$uid=ensureUserExists($pid, $kid, $name);
+				if (getUserEntries($uid)<8) {
+					if (isset($_POST["setup"])) {
+						$setup=json_decode(urldecode($_POST["setup"]),true);
+						if (!is_null($setup)) {
+							$fp = fopen('/tmp/ftournament.txt', 'w+');
+							if(flock($fp, LOCK_EX | LOCK_NB)) {
+								fregister($uid,$tid,$setup);
+								flock($fp, LOCK_UN);
+								fclose($fp);
+							} else {
+								echo json_encode(array("success"=>false,"error"=>"Someone else is registering"));
+							}
+						} else {
+							echo json_encode(array("success"=>false,"error"=>"JSON error"));
+						}
+					} else {
+						echo json_encode(array("success"=>false,"error"=>"Missing setup"));
+					}
+				} else {
+					echo json_encode(array("success"=>false,"error"=>"You can only join 8 Flash Tournaments"));
+				}
             } else {
                 echo json_encode(array("success"=>false,"error"=>"Wrong data"));
             }
@@ -909,76 +866,59 @@ if (isset($_POST["action"])) {
             $pid=$_POST["pid"];
             $kid=$_POST["kid"];
             $client_wbid=$_POST["wbid"];
+			$uid=ensureUserExists($pid, $kid, "");
             if (!is_null($setup) and !is_null($hero) and !is_null($promo)) {
-                $res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
-                if ($res) {
-                    $uid=-1;
-                    if ($row=$res->fetch_assoc()) {
-                        $uid=$row["id"];
-                    } else {
-                        if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '', '$pid', '0', '0', '$kid');")) {
-                            $uid=$sql->insert_id;
-                        }
-                    }
-                    $res->free();
-                    if ($uid!==-1) {
-                        $res2=$sql->query("SELECT TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP(),MAX(moment))) as moment FROM WBD WHERE uid=$uid");
-                        if ($row2=$res2->fetch_assoc()) {
-                            if (!is_null($row2["moment"]) and $row2["moment"]<5) {
-                                echo json_encode(array("success"=>false,"error"=>"Wait 5 seconds"));
-                                exit();
-                            }
-                        }
-                        $res1=$sql->query("SELECT * FROM WB WHERE `status`= 0 LIMIT 1");
-                        if ($row1=$res1->fetch_assoc()) {
-                            $wbid=$row1["id"];
-                            $wb=$row1["mid"];
-                            $level=$row1["level"];
-                            $mode=$row1["mode"]%2;
-                            $isSuper=false;
-							if ($wbid != $client_wbid) { // wrong wb
-								echo json_encode(array("success"=>false,"error"=>"A new WB has spawned, please refresh"));
+				$res2=$sql->query("SELECT TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP(),MAX(moment))) as moment FROM WBD WHERE uid=$uid");
+				if ($row2=$res2->fetch_assoc()) {
+					if (!is_null($row2["moment"]) and $row2["moment"]<5) {
+						echo json_encode(array("success"=>false,"error"=>"Wait 5 seconds"));
+						exit();
+					}
+				}
+				$res1=$sql->query("SELECT * FROM WB WHERE `status`= 0 LIMIT 1");
+				if ($row1=$res1->fetch_assoc()) {
+					$wbid=$row1["id"];
+					$wb=$row1["mid"];
+					$level=$row1["level"];
+					$mode=$row1["mode"]%2;
+					$isSuper=false;
+					if ($wbid != $client_wbid) { // wrong wb
+						echo json_encode(array("success"=>false,"error"=>"A new WB has spawned, please refresh"));
+						exit();
+					}
+					if ($row1["mode"]>1) $isSuper=true;
+					if ($isSuper) {
+						$res3=$sql->query("SELECT COUNT(*) as `atks` FROM WBD WHERE `uid`=$uid AND bid=$wbid");
+						if ($row3=$res3->fetch_assoc()) {
+							if ($row3["atks"]>=5) { // swb threshold
+								echo json_encode(array("success"=>false,"error"=>"Maximum 5 attacks"));
 								exit();
 							}
-                            if ($row1["mode"]>1) $isSuper=true;
-                            if ($isSuper) {
-                                $res3=$sql->query("SELECT COUNT(*) as `atks` FROM WBD WHERE `uid`=$uid AND bid=$wbid");
-                                if ($row3=$res3->fetch_assoc()) {
-                                    if ($row3["atks"]>=5) { // swb threshold
-                                        echo json_encode(array("success"=>false,"error"=>"Maximum 5 attacks"));
-                                        exit();
-                                    }
-                                }
-                            }
-                            $wbhp=wbHp($level,$mode);
-                            $damage=evalWB($wb,$level,$mode,$setup,$hero,$promo);
-                            if (validateSetupWB($setup,$hero,$_POST["fol"],$mode)) {
-                                $fp = fopen('/tmp/attacking.txt', 'w+');
-                                if(flock($fp, LOCK_EX | LOCK_NB)) {
-                                    if (doWB($wbid,$uid,$damage,$wbhp,$isSuper)==1) {
-                                        echo json_encode(array(
-                                            "success"=>true,
-                                            "name"=>wbName($wb,$isSuper),
-                                            "id"=>$wb,
-                                            "lvl"=>$level,
-                                            "damage"=>$damage
-                                        ));
-                                    }
-                                    flock($fp, LOCK_UN);
-                                    fclose($fp);
-                                } else {
-                                    echo json_encode(array("success"=>false,"error"=>"Someone else is attacking"));
-                                } 
-                            }
-                        } else {
-                            echo json_encode(array("success"=>false,"error"=>"No World Boss available"));
-                        }                           
-                    } else {
-                        echo json_encode(array("success"=>false,"error"=>"user create DDBB error"));
-                    }
-                } else {
-                    echo json_encode(array("success"=>false,"error"=>"user DDBB error"));
-                }
+						}
+					}
+					$wbhp=wbHp($level,$mode);
+					$damage=evalWB($wb,$level,$mode,$setup,$hero,$promo);
+					if (validateSetupWB($setup,$hero,$_POST["fol"],$mode)) {
+						$fp = fopen('/tmp/attacking.txt', 'w+');
+						if(flock($fp, LOCK_EX | LOCK_NB)) {
+							if (doWB($wbid,$uid,$damage,$wbhp,$isSuper)==1) {
+								echo json_encode(array(
+									"success"=>true,
+									"name"=>wbName($wb,$isSuper),
+									"id"=>$wb,
+									"lvl"=>$level,
+									"damage"=>$damage
+								));
+							}
+							flock($fp, LOCK_UN);
+							fclose($fp);
+						} else {
+							echo json_encode(array("success"=>false,"error"=>"Someone else is attacking"));
+						} 
+					}
+				} else {
+					echo json_encode(array("success"=>false,"error"=>"No World Boss available"));
+				}
             } else {
                 echo json_encode(array("success"=>false,"error"=>"JSON error"));
             }
@@ -1012,50 +952,27 @@ if (isset($_POST["action"])) {
                 $hid=$sql->real_escape_string($_POST["hid"]);
                 $bid=$sql->real_escape_string($_POST["bid"]);
                 $kid=$sql->real_escape_string($_POST["kid"]);
-                $res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
-                if ($res) {
-                    $uid=-1;
-                    if ($row=$res->fetch_assoc()) {
-                        $uid=$row["id"];
-                        if ($row["kid"]==0 && $kid!=0) {
-                            $sql->query("UPDATE `users` SET kid=$kid WHERE id=$uid LIMIT 1");
-                        }
-                        if ($row["name"]!=$name && $name!="") {
-                            $sql->query("UPDATE `users` SET `name`='$name' WHERE id=$uid LIMIT 1");
-                        }
-                    } else {
-                        if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '$name', '$pid', '0', '0', '$kid');")) {
-                            $uid=$sql->insert_id;
-                        }
-                    }
-                    $res->free();
-                    if ($uid!==-1) {
-                        $now=time();
-                        $res1 = $sql->query("SELECT * FROM auction WHERE `status`=0 AND hero=$hid LIMIT 1");
-                        if ($row1=$res1->fetch_assoc()) {
-                            $pbid = $row1["bid"];
-                            $pholder = $row1["holder"];
-                            $prize = json_encode(array("UM"=>$pbid));
-                            if (abs(intval(ceil($pbid*1.1))-intval($bid))<$bid*0.05) {
-                                $res=$sql->query("UPDATE auction SET holder=$uid, ends=ends+60, bid=$bid WHERE `status`=0 AND ends>$now AND bid=$pbid AND hero=$hid  LIMIT 1");
-                                if ($sql->affected_rows>0) {
-                                    $sql->query("INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, '0', '0', CURRENT_TIMESTAMP, '$pholder', '$prize');");
-                                    echo json_encode(array("success"=>true));
-                                } else {
-                                    echo json_encode(array("success"=>false,"error"=>"Bid desync2"));
-                                }
-                            } else {
-                                echo json_encode(array("success"=>false,"error"=>"Bid desync ".intval(ceil($pbid*1.1))." ".intval($bid)));
-                            }
-                        } else {
-                            echo json_encode(array("success"=>false,"error"=>"Unknown hero"));
-                        }
-                    } else {
-                        echo json_encode(array("success"=>false,"error"=>"user create DDBB error"));
-                    }
-                } else {
-                    echo json_encode(array("success"=>false,"error"=>"user DDBB error"));
-                }
+				$uid=ensureUserExists($pid, $kid, $name);
+				$now=time();
+				$res1 = $sql->query("SELECT * FROM auction WHERE `status`=0 AND hero=$hid LIMIT 1");
+				if ($row1=$res1->fetch_assoc()) {
+					$pbid = $row1["bid"];
+					$pholder = $row1["holder"];
+					$prize = json_encode(array("UM"=>$pbid));
+					if (abs(intval(ceil($pbid*1.1))-intval($bid))<$bid*0.05) {
+						$res=$sql->query("UPDATE auction SET holder=$uid, ends=ends+60, bid=$bid WHERE `status`=0 AND ends>$now AND bid=$pbid AND hero=$hid  LIMIT 1");
+						if ($sql->affected_rows>0) {
+							$sql->query("INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, '0', '0', CURRENT_TIMESTAMP, '$pholder', '$prize');");
+							echo json_encode(array("success"=>true));
+						} else {
+							echo json_encode(array("success"=>false,"error"=>"Someone bid just before you"));
+						}
+					} else {
+						echo json_encode(array("success"=>false,"error"=>"Someone bid just before you".));//intval(ceil($pbid*1.1))." ".intval($bid)
+					}
+				} else {
+					echo json_encode(array("success"=>false,"error"=>"Unknown hero"));
+				}
             } else {
                 echo json_encode(array("success"=>false,"error"=>"Wrong data"));
             }
@@ -1075,7 +992,7 @@ if (isset($_POST["action"])) {
                 $row0=$res0->fetch_assoc();
                 $uid=$row0["id"];
                 if ($row0["kid"]==0) {
-                    echo json_encode(array("success"=>false,"error"=>"Can't participate"));
+                    echo json_encode(array("success"=>false,"error"=>"Can't enter yet; try fighting WB once first"));
                     exit();
                 }
                 $setup=json_decode(urldecode($_POST["setup"]),true);
@@ -1214,7 +1131,6 @@ if (isset($_POST["action"])) {
             if ($row = $res1->fetch_assoc()) {
                 $cdata = json_decode($row["data"],true);
                 $solution = json_decode($_POST["solution"],true);
-                $valid = true;
                 $mistakes = 0;
                 for ($i=0; $i<count($solution); ++$i) {
                     if (in_array($cdata["all"][$solution[$i]],$cdata["picks"])) {
