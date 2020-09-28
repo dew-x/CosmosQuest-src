@@ -4478,7 +4478,7 @@ handlers.sjmission = function (args, context) {
                         if (currentSpecialEvent(endDay) == "Space Journey" && (endTime - data.city.space.hyperloop * 20*60*1000) < data.city.space.start+(DAY*5)) {
                             data.city.space.current.timer = Date.now() + getSJUpgrade(args.mission,"engine",data.city.space.upgrades);
                             data.city.space.current.mission = args.mission;
-							var hlNeeded = Math.ceil((endTime - (data.city.space.start+(DAY*5))) % 20*60*1000);
+							var hlNeeded = Math.ceil((endTime - (data.city.space.start+(DAY*5))) / (20*60*1000));
 							if (hlNeeded > 0) {
 								data.city.space.hyperloop-=hlNeeded;
 								data.city.space.current.timer = Math.max(Date.now(), data.city.space.current.timer - 20*60*1000*hlNeeded);
