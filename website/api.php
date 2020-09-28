@@ -515,7 +515,7 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
 
 function ensureUserExists($pid, $kid, $name="") {
 	$uid=-1;
-	$res=$sql->query("SELECT * FROM users WHERE pid=$pid LIMIT 1");
+	$res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
 	if ($res) {
 		if ($row=$res->fetch_assoc()) {
 			$uid=$row["id"];
@@ -526,7 +526,7 @@ function ensureUserExists($pid, $kid, $name="") {
 				$sql->query("UPDATE `users` SET `name`='$name' WHERE id=$uid LIMIT 1");
 			}
 		} else {
-			if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '$name', $pid, '0', '0', $kid);")) {
+			if ($sql->query("INSERT INTO `users` (`id`, `name`, `pid`, `public`, `score`, `kid`) VALUES (NULL, '$name', '$pid', '0', '0', $kid);")) {
 				$uid=$sql->insert_id;
 			}
 		}
@@ -540,7 +540,7 @@ function ensureUserExists($pid, $kid, $name="") {
 }
 if (isset($_POST["pid"]) && ctype_alnum($_POST["pid"]) && isset($_POST["kid"]) && ctype_digit($_POST["kid"])) {
 	$name = isset($_POST["name"]) ? $sql->real_escape_string($_POST["name"]) : "";
-	ensureUserExists((int)$_POST["pid"], (int)$_POST["kid"], $name);
+	ensureUserExists($_POST["pid"], (int)$_POST["kid"], $name);
 }
 
 if (isset($_POST["action"])) {
