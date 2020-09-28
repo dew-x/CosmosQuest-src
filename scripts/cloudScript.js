@@ -4475,9 +4475,15 @@ handlers.sjmission = function (args, context) {
                     if (data.city.space.current !== undefined && data.city.space.upgrades !== undefined && data.city.space.current.timer == -1) {
                         var endTime = Date.now()+getSJUpgrade(args.mission,"engine",data.city.space.upgrades);
                         var endDay = Math.floor(endTime/(24*60*60*1000));
-                        if (currentSpecialEvent(endDay) == "Space Journey" && endTime < data.city.space.start+(DAY*5)) {
+                        if (currentSpecialEvent(endDay) == "Space Journey" && (endTime - data.city.space.hyperloop * 20*60*1000) < data.city.space.start+(DAY*5)) {
                             data.city.space.current.timer = Date.now() + getSJUpgrade(args.mission,"engine",data.city.space.upgrades);
                             data.city.space.current.mission = args.mission;
+							var hlNeeded = Math.ceil((endTime - (data.city.space.start+(DAY*5))) % 20*60*1000);
+							if (hlNeeded > 0) {
+								data.city.space.hyperloop-=hlNeeded;
+								data.city.space.current.timer = Math.max(Date.now(), data.city.space.current.timer - 20*60*1000*hlNeeded);
+								log("[SPACE] "+hlNeeded+"Hyperloop"+(hlNeeded>1?"s":"")+" used. Reduced "+(20*hlNeeded)+" minutes of current mission");
+							}
                             server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)} });
                             return { ok: true, data:data, update: true}; 
                         } else return { ok: false, err: "Cant start mission"};
