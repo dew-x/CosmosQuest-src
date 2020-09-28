@@ -12361,8 +12361,8 @@ function Game() {
                     	if (CQW.dungeon.setup[4-skillInfo] < -1) {//Hero
             	            ctx.fillStyle="rgba(0,0,0,0.7)";
             	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
-                            text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");
-            	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05),"34px"+FONT,"white","center","middle");
+                            text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
+            	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
                     	} else {//Monster
                     		ctx.fillStyle="rgba(0,0,0,0.7)";
             	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-20,bgh+80-mh-42-H*0.1+20,40,H*0.1-20);
@@ -21466,8 +21466,8 @@ function Game() {
                         CQW.dungeon.setup=res.data.FunctionResult.battle.player;
                         CQW.dungeon.hero=res.data.FunctionResult.battle.phero;
                         CQW.dungeon.lvl=parseInt(res.data.FunctionResult.battle.enemy.match(/\d+/)[0]);
-                        _this.loadDungeonBattle(res.data.FunctionResult.battle);
-                        _this.wsync(); //if the dungeon battle was lost we don't need this call, but that's something to test on a live dungeon
+                        var battle_res = _this.loadDungeonBattle(res.data.FunctionResult.battle);
+                        if (battle_res.result == 1) _this.wsync(); //if the dungeon battle was lost we don't need this call, but that's something to test on a live dungeon
                     } else {
                         var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
                             msg:"PFdung",
@@ -21824,8 +21824,9 @@ function Game() {
         this.doAction("scene",{target:"battle"});
     }
     this.loadDungeonBattle = function (battle) {
-        beginBattle(battle.date,"You",battle.enemy,battle.setup,battle.player,"buildings",battle.shero,battle.phero,undefined,undefined,battle.spromo,battle.ppromo);
+    	var res = beginBattle(battle.date,"You",battle.enemy,battle.setup,battle.player,"buildings",battle.shero,battle.phero,undefined,undefined,battle.spromo,battle.ppromo);
         this.doAction("scene",{target:"battle"});
+        return res;
     }
     this.loadPlaygroundBattle = function (battle) {
         beginBattle(battle.date,"Player 01","Player 02",battle.rowA,battle.rowB,battle.back,battle.heroA,battle.heroB,undefined,undefined,battle.promoA,battle.promoB);
