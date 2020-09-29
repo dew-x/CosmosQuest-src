@@ -3371,7 +3371,7 @@ var HERO = [
       },
       upgrade: {
         pg: 1,
-        cc: 1,
+        cc: 0,
         as: 0,
         um: 0,
         none: 0
