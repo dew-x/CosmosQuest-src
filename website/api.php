@@ -972,7 +972,7 @@ if (isset($_POST["action"])) {
 							echo json_encode(array("success"=>false,"error"=>"Someone bid just before you"));
 						}
 					} else {
-						echo json_encode(array("success"=>false,"error"=>"Someone bid just before you".));//intval(ceil($pbid*1.1))." ".intval($bid)
+						echo json_encode(array("success"=>false,"error"=>"Someone bid just before you"));//intval(ceil($pbid*1.1))." ".intval($bid)
 					}
 				} else {
 					echo json_encode(array("success"=>false,"error"=>"Unknown hero"));
