@@ -3137,7 +3137,7 @@ handlers.etregister = function (args, context) {
         var ret=registerT2(name,currentPlayerId,args.setup,args.kid);
         if (ret===true) {
             //data.city.pass.tournaments+=1;
-            log("Registered to extra tournament paying");
+            log("Registered to extra tournament (T2).");
             return {ok:true};
         } else return { ok: false, err: ret};
     } else return { ok: false, err: "Server error"};
