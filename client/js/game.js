@@ -2252,7 +2252,6 @@ function Game() {
                 if (scene!="city" && this.isEnabled("city")) this.doAction("scene",{target:"city"});
                 else if (scene=="city" && this.isEnabled("pve")) this.doAction("scene",{target:"pve"});
             }
-            else if (code==120) ederase = true;
         }
     }
     this.keyDown = function (code) {
@@ -2260,6 +2259,8 @@ function Game() {
             if (code==16) {
                 mulLvl = true;
                 halllvlmode=1;
+            } else if (code == 88) { 
+            	ederase = true;
             } else if (code==37 && cc_direction!=="RIGHT" && cc_changed==false) {
                 cc_direction="LEFT";
                 cc_changed=true;
@@ -2294,7 +2295,7 @@ function Game() {
     }
     this.keyUp = function (code) {
         if (!searchTab) {
-            if (code==120) ederase = false;
+            if (code==88) ederase = false;
             else if (code==16) {
                 mulLvl = false;
                 halllvlmode = 0;
@@ -2307,6 +2308,16 @@ function Game() {
                 x100 = false;
             }
         }
+    }
+    this.unfocusGame = function () {
+    	//reset all keydown-variables when unfocussing the game
+    	ederase = false;
+        mulLvl = false;
+        halllvlmode = 0;
+        maxLvl = false;
+        mulChest = false;
+        mulGift = false;
+        x100 = false;
     }
     this.drawCamera = function (ctx) {
         var zx = 0;

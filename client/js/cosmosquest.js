@@ -191,6 +191,13 @@ function CosmosQuest() {
         if (keyDown(e.keyCode||e.charCode)) e.preventDefault();
     },false);
     
+    function unfocusGame() {
+    	if (scenes[scene].unfocusGame) scenes[scene].unfocusGame();
+    }
+    window.addEventListener("blur", function (e) {
+        unfocusGame();
+    },false);
+    
     this.update = function () {
         var now = Date.now();
         if (!last) last=now;
