@@ -3507,9 +3507,8 @@ handlers.auction = function(args, context) {
 }
 
 handlers.buylot = function(args, context) {
-    var data=loadData();
     var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
-    if (data && ret) {
+    if (ret) {
         if (ret.VirtualCurrency.AS>=1) {
             var headers = {};
             var content = "action=lottery&key="+CQ+"&pid="+currentPlayerId;
