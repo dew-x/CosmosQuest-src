@@ -3507,9 +3507,8 @@ handlers.auction = function(args, context) {
 }
 
 handlers.buylot = function(args, context) {
-    var data=loadData();
     var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
-    if (data && ret) {
+    if (ret) {
         if (ret.VirtualCurrency.AS>=1) {
             var headers = {};
             var content = "action=lottery&key="+CQ+"&pid="+currentPlayerId;
@@ -4274,8 +4273,8 @@ handlers.recycle = function (args, context) {
                     var levelsToGive = data.city.hero[hid] - 1;
                     if (kindOfHero == 0) {
                         var fee = 0;
-                        for (var i = 0; i < HERODROP[i].length; ++i) {
-                            if (hid == HERODROP) {
+                        for (var i = 0; i < HERODROP.length; ++i) {
+                            if (hid == HERODROP[i]) {
                                 if (HERO[hid].rarity < 2) fee=45;
                                 else fee=60;
                             }
