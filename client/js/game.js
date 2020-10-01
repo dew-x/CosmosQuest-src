@@ -13495,16 +13495,7 @@ function Game() {
                 } else if (action=="[G.A.M.E.S]") {
                     text(ctx,mdata.log[i].msg,W*0.5-bgw*0.5*0.9+120,H*0.23+line*H*0.05,"24px"+FONT,"black","left","middle");
                 } else if (action=="Registered") {
-                    var found=undefined;
-                    var pos=mdata.log[i].msg.length-4;
-                    while(found==undefined) {
-                        if (mdata.log[i].msg[pos]==" ") found=pos;
-                        else --pos;
-                    }
-                    found = mdata.log[i].msg.length-found-1;
-                    var l=found-3;
-                    var val=mdata.log[i].msg.substr(mdata.log[i].msg.length-found,l);
-                    text(ctx,"Succesfully registered into a Tournament. Enter cost is "+val+" UM.",W*0.5-bgw*0.5*0.9+120,H*0.23+line*H*0.05,"24px"+FONT,"black","left","middle");
+                    text(ctx,mdata.log[i].msg,W*0.5-bgw*0.5*0.9+120,H*0.23+line*H*0.05,"24px"+FONT,"black","left","middle");
                 } else if (action=="Fight") {
                     var found=undefined;
                     var pos=mdata.log[i].msg.length-8;
