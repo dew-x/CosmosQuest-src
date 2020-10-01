@@ -13731,9 +13731,9 @@ function Game() {
             ctx.fillStyle="rgba(0,0,0,0.9)";
             ctx.fillRect(W*0.5-bgw*0.5+10,H*0.5-bgh*0.5+10,bgw-20,bgh-20);
 
-            text(ctx,"VIP Points can be earned through Daily Tournaments and making Kred Purchases.",W*0.5,H*0.3,"40px "+FONT,"white","center","middle");
-            text(ctx,"Daily Tournaments award 25 VIP Points and Kred purchases award",W*0.5,H*0.3+40,"40px "+FONT,"white","center","middle");
-            text(ctx,"2.5 VIP points per Kred spent.",W*0.5,H*0.3+80,"40px "+FONT,"white","center","middle");
+            text(ctx,"VIP Points can be earned through Tournaments and making Kred Purchases.",W*0.5,H*0.3,"40px "+FONT,"white","center","middle");
+            text(ctx,"Daily Tournaments (T1) award 25 VIP Points and Flash Tournaments award 5 VIP points.",W*0.5,H*0.3+40,"40px "+FONT,"white","center","middle");
+            text(ctx,"Kred purchases award 2.5 VIP points per Kred spent.",W*0.5,H*0.3+80,"40px "+FONT,"white","center","middle");
             text(ctx,"Sometimes VIP Points are awarded through events, Seasonal Rewards,",W*0.5,H*0.3+160,"40px "+FONT,"white","center","middle");
             text(ctx,"or an increased amount through limited offers.",W*0.5,H*0.3+200,"40px "+FONT,"white","center","middle");
         }
