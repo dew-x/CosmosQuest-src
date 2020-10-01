@@ -785,7 +785,7 @@ if (isset($_POST["action"])) {
                         $sql->query("INSERT INTO easter VALUES ('$pid',".$_POST["point"].") ON DUPLICATE KEY UPDATE value = ".$_POST["point"]);
                     }
                 }
-                $res1=$sql->query("SELECT p.id,p.prize FROM prizes p, users u WHERE u.pid='$pid' AND u.id=p.uid AND p.status=0");
+                $res1=$sql->query("SELECT p.id,p.prize FROM prizes p, users u WHERE u.pid='$pid' AND u.id=p.uid AND p.status=0 LIMIT 3");
                 if ($res1->num_rows>0) {
                     $list="";
                     $prizes = array();
