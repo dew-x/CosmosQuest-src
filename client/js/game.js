@@ -23382,7 +23382,7 @@ function Game() {
             }
         } else if (skill.type=="bhit") {
             return {
-                short: "Targeted - Start of Battle/nDeals "+1+" Damage ("+lvl+") per level to lowest HP enemy",
+                short: "Targeted - Start of Battle/nDeals "+(value).toFixed(1)+" Damage ("+Math.floor(value*lvl)+") per level to lowest HP enemy",
                 long: "Targeted causes this units skill to target another specific unit. This unit will deal the displayed value in damage once, at the start of battle, to the enemy with the lowest HP.",
             }
         } else if (skill.type=="acum") {
