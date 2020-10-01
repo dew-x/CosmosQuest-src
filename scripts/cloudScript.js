@@ -4274,8 +4274,8 @@ handlers.recycle = function (args, context) {
                     var levelsToGive = data.city.hero[hid] - 1;
                     if (kindOfHero == 0) {
                         var fee = 0;
-                        for (var i = 0; i < HERODROP[i].length; ++i) {
-                            if (hid == HERODROP) {
+                        for (var i = 0; i < HERODROP.length; ++i) {
+                            if (hid == HERODROP[i]) {
                                 if (HERO[hid].rarity < 2) fee=45;
                                 else fee=60;
                             }
