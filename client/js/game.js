@@ -15531,7 +15531,7 @@ function Game() {
         } else T.draw(ctx,"cjq4",W*0.5+bgw*0.5-T.width("cjq4")*0.5-14,H*0.5-bgh*0.5,T.width("cjq4")*0.75,T.height("cjq4")*0.75);  
     }
     this.getSJPrice = function (level) {
-        return 5000 + (5000 * level);
+        return 2500 + (2500 * level);
     }
     this.getSJUpgrade = function(mission, mode, upgrades) {
         if (mode == "engine") {
