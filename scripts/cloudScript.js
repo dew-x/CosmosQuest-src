@@ -4880,7 +4880,7 @@ function randInt(min, max) {
 }
 
 function getSJPrice (level) {
-	return 5000 + (5000 * level);
+	return 2500 + (2500 * level);
 }
 
 function getSJUpgrade (mission, mode, upgrades) {
@@ -4963,7 +4963,7 @@ handlers.validateCaptcha = function(args, context) {
     try {
         var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
         if (response.success) {
-            data.city.captchats = Date.now() + 30*60*1000;
+            data.city.captchats = Date.now() + 4*60*60*1000; //4h
             server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)} });
             return {ok:true,data:data};
         }
