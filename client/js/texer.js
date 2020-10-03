@@ -95,6 +95,7 @@ function Texer(jsonurl,audioUrls,animationFrames) {
             var audio = new Audio();
 			if(!window.location.href.startsWith("file"))
 				loadBlob(audio,url,id);
+			audio.muted=true;
             return audio;
         }
         self.loadData.todo=this.json.sources.length+audioFiles.length;
@@ -398,9 +399,21 @@ function Texer(jsonurl,audioUrls,animationFrames) {
     }
     this.play = function (id) {
         try {
+			if (id == 16)
+				this.audios.forEach((el)=>{el.muted = false;})
             if (this.audios.length>id) {
                 this.audios[id].currentTime = 0;
-                this.audios[id].play();
+                if (!this.audios[id].muted) {
+					var playPromise = this.audios[id].play();
+					if (playPromise !== undefined) {
+						playPromise.then(_ => {
+							this.audios[id].playing = true;
+						})
+						.catch(error => {
+							this.audios[id].playing = false;
+						});
+					}
+				}
             }
         } catch (e) {
 
@@ -408,7 +421,7 @@ function Texer(jsonurl,audioUrls,animationFrames) {
     }
     this.stop = function (id) {
         try {
-            if (this.audios.length>id && !this.audios[id].paused) {
+            if (this.audios.length>id && !this.audios[id].paused && this.audios[id].playing) {
                 this.audios[id].pause();
                 this.audios[id].currentTime = 0;
             }
