@@ -465,7 +465,7 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
     if ($sql->query("INSERT INTO `WBD` (`bid`, `uid`, `damage`, `moment`) VALUES ('$bid', '$uid', '$damage', CURRENT_TIMESTAMP);")) {
         $res=$sql->query("SELECT COUNT(*) as atks FROM WBD WHERE bid=$bid GROUP BY bid");
         if ($row=$res->fetch_assoc()) {
-            $limit=($isSuper?1200:1600);
+            $limit=wbHitsRequired($isSuper);
             if ($row["atks"]>=$limit) { // wb is dead, spawn new
                 // kill previous boss
                 $sql->query("UPDATE WB SET `status`=1 WHERE id=$bid LIMIT 1");

@@ -680,6 +680,17 @@ function wbName($id,$isSuper=false) {
     return $HERO[$id]["name"];
 }
 
+function wbHitsRequired($isSuper=false) {
+    global $sql;
+	$res = $sql->query("SELECT bid, COUNT(uid) AS p FROM WBD GROUP BY bid ORDER BY bid DESC LIMIT 20");
+	$avg = 0;
+	while ($row=$res->fetch_assoc()) {
+		$avg += $row["p"];
+	}
+	$avg = ceil($avg/20);
+	return $avg * ($isSuper ? 2 : 3);
+}
+
 function wbHp($lvl,$mode) {
     $base=10000000;
     if ($mode==0) {
