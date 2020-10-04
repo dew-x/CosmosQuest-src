@@ -962,25 +962,26 @@ function pagerank(players, battles) {
             }
         }
     }
+	var dl = data.length;
 
     for (var i=0; i<1000; ++i) {
-        for (var j=0; j<data.length; ++j) {
+        for (var j=0; j<dl; ++j) {
             data[j].newrank = 0;
             for (var k=0; k<data[j].link.length; ++k) {
                 var other = data[data[j].link[k]];
                 data[j].newrank += other.rank/(other.d+other.l);
             }
         }
-        for (var j=0; j<data.length; ++j) {
-            data[j].rank = data[j].newrank; 
+        for (var j=0; j<dl; ++j) {
+            data[j].rank = 0.15 / dl + 0.85 * data[j].newrank;
         }
     }
     data.sort(function (a,b) {return b.rank-a.rank});
     var used = Array(players.length).fill(0);
-    for (var i=0; i<data.length; ++i) {
+    for (var i=0; i<dl; ++i) {
         players[data[i].id].pos=i+1;
         var done = used[data[i].id];
-        for (var j=0; j<data.length; ++j) {
+        for (var j=0; j<dl; ++j) {
             if (j!=i) {
                 if (data[i].link.indexOf(data[j].id)!==-1&&data[j].link.indexOf(data[i].id)===-1) {
                     battles.push({
@@ -996,7 +997,7 @@ function pagerank(players, battles) {
             }
         }
         if (done<25) {
-            for (var j=data.length-1; j>=0; --j) {
+            for (var j=dl-1; j>=0; --j) {
                 if (j!=i) {
                     if (data[i].link.indexOf(data[j].id)===-1&&data[j].link.indexOf(data[i].id)!==-1) {
                         battles.push({
