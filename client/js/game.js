@@ -11622,15 +11622,17 @@ function Game() {
         var damageDone = CQW.WB.dealt;
         var damageTotal = CQW.WB.dmg;
         var wbLvl = CQW.WB.lvl;
-        var reward = Math.log(CQW.WB.dmg)*750;
+        var modifier = parseFloat(CQW.WB.modifier);
+        var rewardBase = Math.log(CQW.WB.dmg/modifier)*modifier;
+        var reward = rewardBase*750;
         if (modes[CQW.WB.mode]=="No Heroes") {
-            reward = Math.log(CQW.WB.dmg)*1700;
+            reward = rewardBase*1700;
         } else {
-            if (CQW.WB.id==72) reward = Math.log(CQW.WB.dmg)*950;
-            else if (CQW.WB.id==87) reward = Math.log(CQW.WB.dmg)*900;
-            else if (CQW.WB.id==106) reward = Math.log(CQW.WB.dmg)*750;
-            else if (CQW.WB.id==126) reward = Math.log(CQW.WB.dmg)*1700;
-            else if (CQW.WB.id==186) reward = Math.log(CQW.WB.dmg)*1700;
+            if (CQW.WB.id==72) reward = rewardBase*950;
+            else if (CQW.WB.id==87) reward = rewardBase*900;
+            else if (CQW.WB.id==106) reward = rewardBase*750;
+            else if (CQW.WB.id==126) reward = rewardBase*1700;
+            else if (CQW.WB.id==186) reward = rewardBase*1700;
         }
         reward = Math.max(reward,0);
         if (CQW.WB.name.indexOf("SUPER")!==-1) reward*=2;

@@ -49,6 +49,18 @@ if (isset($_GET["id"])and ctype_digit($_GET["id"])) {
         $total+=$row["dmg"];
         $totalsq+=sqrt($row["dmg"]);
     }
+	$modifier = wbRewardModifier();
+	$rewardBase = round(log($total/$modifier)*$modifier);
+	$reward = $rewardBase*750;
+	if ($row1["mode"]==0) {
+		$reward = $rewardBase*1700;
+	} else {
+		if ($row1["mid"]==72) $reward = $rewardBase*950;
+		else if ($row1["mid"]==87) $reward = $rewardBase*900;
+		else if ($row1["mid"]==106) $reward = $rewardBase*750;
+		else if ($row1["mid"]==126) $reward = $rewardBase*1700;
+		else if ($row1["mid"]==186) $reward = $rewardBase*1700;
+	}
     $content='<table class="pure-table pure-table-striped center">
         <tr>
             <td>ID</td>
@@ -72,7 +84,7 @@ if (isset($_GET["id"])and ctype_digit($_GET["id"])) {
         </tr>
         <tr>
             <td>Reward</td>
-            <td>'.($row1["id"]<81?number_format(wbReward($row1["level"],$row1["id"]),0,",","."):number_format(round(log($total)*($row1["mode"]%2==0?$val:750)*($row1["mode"]>1?2:1)),0,",",".")).'</td>
+            <td>'.($row1["id"]<81?number_format(wbReward($row1["level"],$row1["id"]),0,",","."):number_format(round($reward*($row1["mode"]>1?2:1)),0,",",".")).'</td>
         </tr>
         <tr>
             <td>Status</td>
@@ -118,7 +130,7 @@ if (isset($_GET["id"])and ctype_digit($_GET["id"])) {
             else $cells[]=$row1["status"]==2?number_format($prize,0,",",".").'+<span class="hl">'.number_format(round($prize*($mul-1)),0,",",".").'</span>':"-";
         } else {
             $perc = pos2perc2($info[0],$pos);
-            $reward = round(log($total)*($row1["mode"]%2==0?$val:750)*($row1["mode"]>1?2:1));
+            $reward = round(log($total/$modifier)*$modifier*($row1["mode"]%2==0?$val:750)*($row1["mode"]>1?2:1));
             $cells[]=$row1["status"]==2?round(max($reward*$perc,1)):"-";
         }
         $content.='<tr><td class="big">'.implode('</td><td class="small">',$cells).'</td></tr>';
@@ -158,8 +170,19 @@ if (isset($_GET["id"])and ctype_digit($_GET["id"])) {
         } else {
             //$cells[]=number_format($row["damage"],0,",",".");
             $cells[]="-";
-            //$cells[]=number_format(round(log($row["damage"])*($row["mode"]==0?1000:750)),0,",",".");
-            $cells[]="-";
+			$modifier = wbRewardModifier();
+			$rewardBase = round(log($row["damage"]/$modifier)*$modifier);
+			$reward = $rewardBase*750;
+			if ($row["mode"]%2==0) {
+				$reward = $rewardBase*1700;
+			} else {
+				if ($row["mid"]==72) $reward = $rewardBase*950;
+				else if ($row["mid"]==87) $reward = $rewardBase*900;
+				else if ($row["mid"]==106) $reward = $rewardBase*750;
+				else if ($row["mid"]==126) $reward = $rewardBase*1700;
+				else if ($row["mid"]==186) $reward = $rewardBase*1700;
+			}
+			$cells[]=number_format(round($reward*($row["mode"]>1?2:1)),0,",",".");
         }
         $cells[]=$row["status"]==0?"Alive":($row["status"]==1?"Pending":"Killed");
         $content.='<tr><td class="big">'.implode('</td><td class="small">',$cells).'</td></tr>';

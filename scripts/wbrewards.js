@@ -177,7 +177,7 @@ connection.query('SELECT id,mid,level,spawn,mode FROM WB WHERE `status`=1 ORDER 
                 else if (mid==106) {base = 750}
                 else if (mid==126||mid==186) {base = 1700}
             }
-            var reward = Math.log(total)*base*(avg*3/1600);
+            var reward = Math.log(total*1600/(avg*3))*base*(avg*3/1600);
             if (isSuper) reward*=2;
             /*players.sort(function(a,b) {
                 return b.dmg-a.dmg;

@@ -691,6 +691,10 @@ function wbHitsRequired($isSuper=false) {
 	return $avg * ($isSuper ? 2 : 3);
 }
 
+function wbRewardModifier() {
+	return wbHitsRequired() * 3 / 1600;
+}
+
 function wbHp($lvl,$mode) {
     $base=10000000;
     if ($mode==0) {

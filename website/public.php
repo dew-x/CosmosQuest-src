@@ -2,6 +2,7 @@
     include_once("sql.php");
     include_once("questions.php");
     include_once("data.php");
+	include_once("functions.php");
     header("Access-Control-Allow-Origin: *");
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
@@ -117,6 +118,7 @@
     if ($row2 = $res2->fetch_assoc()) {
         $data["WB"]["dealt"]=bigintval($row2["dealt"]);
     }
+    $data["WB"]["modifier"]=wbRewardModifier();
     $res3 = $sql->query("SELECT score,public FROM users WHERE kid=$kid LIMIT 1");
     if ($row3 = $res3->fetch_assoc()) {
         $data["tournament"]["score"]=intval($row3["score"]);
