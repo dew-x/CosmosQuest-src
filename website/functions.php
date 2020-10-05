@@ -692,7 +692,7 @@ function wbHitsRequired($isSuper=false) {
 }
 
 function wbRewardModifier() {
-	return wbHitsRequired() * 3 / 1600;
+	return wbHitsRequired()  / 1600;
 }
 
 function wbHp($lvl,$mode) {
