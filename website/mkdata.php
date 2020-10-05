@@ -46,7 +46,7 @@
     $wbname = wbName($bid);
     if ($isSuper) $wbname="SUPER ".$wbname;
     $res1->free();
-    $limit=wbHitsRequired($isSuper);
+    $limit=wbHitsRequired($bid, $isSuper);
     $data=array(
         "version"=>"v4.8.5.1",
         "tournament"=>array(

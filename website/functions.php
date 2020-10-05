@@ -680,9 +680,9 @@ function wbName($id,$isSuper=false) {
     return $HERO[$id]["name"];
 }
 
-function wbHitsRequired($isSuper=false) {
+function wbHitsRequired($wbId, $isSuper=false) {
     global $sql;
-	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD GROUP BY bid ORDER BY bid DESC LIMIT 20");
+	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < ".(int)$wbId." GROUP BY bid ORDER BY bid DESC LIMIT 20");
 	$avg = 0;
 	while ($row=$res->fetch_assoc()) {
 		$avg += $row["p"];
@@ -691,8 +691,8 @@ function wbHitsRequired($isSuper=false) {
 	return $avg * ($isSuper ? 2 : 3);
 }
 
-function wbRewardModifier() {
-	return wbHitsRequired()  / 1600;
+function wbRewardModifier($wbId) {
+	return ($wbId > 1270 ? wbHitsRequired($wbId) / 1600 : 1);
 }
 
 function wbHp($lvl,$mode) {
@@ -738,5 +738,27 @@ function pos2perc2($pos,$total) {
         $sum+=1/($i*$k+$padding);
     }  
     return 1/($pos*$k+$padding)/$sum;
+}
+
+function bint($num, $mode = 0) {
+	$prefixes = [[" k"," M"," G"," T"," P"],[" k"," M"," B"," T"," Q"],[" k"," Mn"," Md"," Bn"," Bd"]];
+	if ($num>=1e17) {
+		if ($num>=1e18) return floor($num/1e15).$prefixes[$mode][4];
+		else return round($num/1e15, 2).$prefixes[mode][4];
+	} else if ($num>=1e14) {
+		if ($num>=1e15) return floor($num/1e12).$prefixes[$mode][3];
+		else return round($num/1e12, 2).$prefixes[mode][3];
+	} else if ($num>=1e11) {
+		if ($num>=1e12) return floor($num/1e9).$prefixes[$mode][2];
+		else return round($num/1e9, 2).$prefixes[mode][2];
+	} else if ($num>=1e8) {
+		if ($num>=1e9) return floor($num/1e6).$prefixes[$mode][1];
+		else return round($num/1e6, 2).$prefixes[mode][1];
+	} else if ($num>=1e5) {
+		if ($num>=1e6) return floor($num/1e3).$prefixes[$mode][0];
+		else return round($num/1e3, 2).$prefixes[mode][0];
+	} else {
+		return num;
+	}
 }
 ?>

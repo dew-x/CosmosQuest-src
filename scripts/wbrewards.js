@@ -97,7 +97,7 @@ connection.query('SELECT id,mid,level,spawn,mode FROM WB WHERE `status`=1 ORDER 
         else if (mid==186) name="BORNAG";
         if (isSuper) name="SUPER "+name;
 		var avg = 0;
-		connection.query('SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD GROUP BY bid ORDER BY bid DESC LIMIT 20', function (error, results, fields) {
+		connection.query('SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < '+bid+' GROUP BY bid ORDER BY bid DESC LIMIT 20', function (error, results, fields) {
 			for (var wbrow of results) {
 				avg += parseInt(wbrow.p);
 			}
