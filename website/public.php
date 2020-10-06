@@ -284,6 +284,7 @@
             $open=0;
             $ended=time()+60*60;
             $valid = true;
+			$amount = 0;
             if ($res->num_rows!=0) {
                 $row = $res->fetch_assoc();
                 $fid = $row["id"];
@@ -353,7 +354,8 @@
                     // unopen
                     "current"=>$slots,
                     "open"=>$opened,
-                    "timeleft"=>($ended)*1000
+                    "timeleft"=>($ended)*1000,
+					"completed"=>$amount
                 );
             }
         } else if ($row["type"]==5) {
