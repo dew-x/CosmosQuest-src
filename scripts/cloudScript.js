@@ -2332,7 +2332,9 @@ handlers.place = function (args, context) {
         if (data!==undefined) {
             if (args.pos>=0 && args.pos<data.city.setup.length) {
                 var valid=false;
-                if (args.id>=-1 && args.id<MONSTERS.length && args.id<140) {
+                if (args.id>=-1 && args.id<MONSTERS.length) {
+					if (args.id>=36*4)
+						return { ok: false, err: "Monsters up to T36 only"};
                     data.city.setup[args.pos]=args.id;
                     var score=0;
                     for (var i=0; i<data.city.setup.length; ++i) {
