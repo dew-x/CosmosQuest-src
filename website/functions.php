@@ -724,4 +724,20 @@ function pos2perc2($pos,$total) {
     }  
     return 1/($pos*$k+$padding)/$sum;
 }
+
+$aliases = ['ladyoftwilight'=>'lot','pyromancer'=>'pyro','forestdruid'=>'fdruid','werewolf'=>'ww','jackoknight'=>'jack','ladyodelith'=>'odelith',
+		'lordkirk'=>'kirk','neptunius'=>'nep','hosokawa'=>'hoso','hallinskidi'=>'hall','christmaself'=>'elf','leprechaun'=>'lep',
+		'dicemaster'=>'dice','luxuriusmaximus'=>'lux','pokerface'=>'poker','alordkirk'=>'akirk','aneptunius'=>'anep','ahosokawa'=>'ahoso',
+		'cliodhna'=>'clio','buccaneerbeatrice'=>'beatrice','corsaircharles'=>'charles','maraudermagnus'=>'magnus','raiderrose'=>'rose','5-12-6'=>'melf',
+		'thewanderer'=>'wanderer','b-day'=>'bday','masterlee'=>'lee','sharkjellyn'=>'shark','chocoknight'=>'choco','achocoknight'=>'achoco','yetithepostman'=>'yeti',
+		'babypyros'=>'bpyros','youngpyros'=>'ypyros','kingpyros'=>'kpyros','kirklee'=>'kyle',
+		'lordofchaos'=>'loc','motherofallkodamas'=>'moak','lord of chaos'=>'loc','mother of all kodamas'=>'moak','super lord of chaos'=>'super loc',
+		'super mother of all kodamas'=>'super moak','super kryton'=>'super kryton','super doyenne'=>'super doyenne','super bornag'=>'super bornag'];
+
+function getAlias($u) {
+	global $aliases;
+	$u = strtolower(str_replace("SUPER: ", "super ", $u));
+	$u2 = explode(":", $u);
+	return (array_key_exists($u2[0], $aliases) ? $aliases[$u2[0]] : $u2[0]).(count($u2) > 1 ? ":".$u2[1] : "");
+}
 ?>
