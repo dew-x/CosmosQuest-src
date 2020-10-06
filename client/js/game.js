@@ -3,7 +3,8 @@ function Game() {
     var BUILDINGS = computeBUILDINGS();
     var OITEMS = computeOITEMS();
     var caseData = computeChest();
-    var THEROtid = Math.floor((Date.now()/(24*60*60*1000)));
+    var TIDoffset = 0+0*11; //for testing purposes
+    var THEROtid = Math.floor((Date.now()/(24*60*60*1000)))+TIDoffset;
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
@@ -1190,7 +1191,7 @@ function Game() {
     }
     this.update = function (delta) {
         if (fbattleSync+2*60*1000<Date.now()) this.fsync();
-        var ntid = Math.floor((Date.now()/(24*60*60*1000)));
+        var ntid = Math.floor((Date.now()/(24*60*60*1000)))+TIDoffset;
         if (THEROtid != ntid) {
             THEROtid = ntid;
             THERO = computeTHERO(THEROtid);
@@ -7426,16 +7427,16 @@ function Game() {
         if (mode!=="flash" && mode!=="dungeon" && mode!=="halloween") T.draw(ctx,"065i",1024*0.16,(640*0.061)-T.height("0i5r")/2);
         var hmode=[
             "Your Heroes",
-            "No Heroes",
-            "Super Ascended",
+            "Boring Common",
+            "Ascended Tanks",
             "Your Legendary",
-            "Random P6",
+            "Air & Fire",
             "Your Common",
-            "Random",
-            "Random Legendary", 
+            "Random Rare",
+            "Super Legendary", 
             "Your Rare",
-            "Random Common",
-            "Super Rare",
+            "Random Chest",
+            "Water & Earth",
         ];
         var followerLeft=undefined;
         if (mode!=="flash" && mode!="dungeon" && mode!=="halloween") T.draw(ctx,"0le4",1024*0.019,640*0.095);
@@ -9159,36 +9160,23 @@ function Game() {
         var tmode=["Page Rank","5 Lives","Lane League"];
         var hmode=[
             "Your Heroes",
-            "No Heroes",
-            "Super Ascended",
+            "Boring Common",
+            "Ascended Tanks",
             "Your Legendary",
-            "Random P6",
+            "Air & Fire",
             "Your Common",
-            "Random",
-            "Random Legendary", 
+            "Random Rare",
+            "Super Legendary", 
             "Your Rare",
-            "Random Common",
-            "Super Rare",
-        ];
-        var hmode=[
-            "Your Heroes",
-            "No Heroes",
-            "Super Ascended",
-            "Your Legendary",
-            "Random P6",
-            "Your Common",
-            "Random",
-            "Random Legendary", 
-            "Your Rare",
-            "Random Common",
-            "Super Rare",
+            "Random Chest",
+            "Water & Earth",
         ];
         var btx=1024*0.66;
         var bty=640*0.185;
         var bw=T.width("0cq8");
         var bh=T.height("0cq8");
         T.draw(ctx,"0cq8",btx,bty+80);
-        var tid=Math.floor((Date.now()/(24*60*60*1000)));
+        var tid=Math.floor((Date.now()/(24*60*60*1000)))+TIDoffset;
         var fmode=tid2fol(tid).toLocaleString();
         if (ranquing==undefined || Date.now()-ranquing.time>5*60*1000) this.updateRanking();
 
