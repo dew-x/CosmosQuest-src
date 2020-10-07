@@ -7427,8 +7427,8 @@ function Game() {
         if (mode!=="flash" && mode!=="dungeon" && mode!=="halloween") T.draw(ctx,"065i",1024*0.16,(640*0.061)-T.height("0i5r")/2);
         var hmode=[
             "Your Heroes",
-            "Boring Common",
-            "Ascended Tanks",
+            "Boring Common & Rare",
+            "Tanks",
             "Your Legendary",
             "Air & Fire",
             "Your Common",
@@ -9160,8 +9160,8 @@ function Game() {
         var tmode=["Page Rank","5 Lives","Lane League"];
         var hmode=[
             "Your Heroes",
-            "Boring Common",
-            "Ascended Tanks",
+            "Boring Common & Rare",
+            "Tanks",
             "Your Legendary",
             "Air & Fire",
             "Your Common",

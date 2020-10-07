@@ -4831,6 +4831,7 @@ function computeTPROMO(tid) {
     var yhero=Array(HERO.length);
     var rng = new RNG(tid);
     var rnd = rng.next()%7;
+    var rnd4 = rng.next()%4;
     
     var rearthwater=Array(HERO.length);
     var rfireair=Array(HERO.length);
@@ -4847,7 +4848,7 @@ function computeTPROMO(tid) {
         rchest[i]=rng.next()%7;
         rasctank[i]=rnd;
         rsuperl[i]=(rng.next()%2)+5;
-        rborcommon[i]=(rnd>4)?rnd:0;
+        rborcommon[i]=(rnd4==0)?0:(7-rnd4-2*HERO[i].rarity);
         rrare[i]=rnd;
         // ycommon
         if (HERO[i].rarity==0) ycommon[i]=-1;
@@ -4896,10 +4897,13 @@ function computeTHERO(tid) {
             191,192,193,194
         ]);
     
-    var rasctank=doHeros(tid,-1,-1,undefined,[65, 66, 67, 68, 69, 70, 71, 80, 81, 82, 86, 92, 100, 102, 119, 130, 131, 132, 147, 156, 157, 158, 159, 160, 174, 179, 184, 190, 194, 198, 209, 213, 221, 229]);
+    //asc and leg tanks; no pyros or reflect+revive or aoyuki
+    var rasctank=doHeros(tid,-1,-1,undefined,[65, 66, 67, 68, 69, 70, 71, 80, 81, 82, 86, 92, 100, 119, 130, 131, 132, 147, 156, 157, 158, 159, 160, 174, 179, 184, 190, 194, 198, 213, 221, 229, //asc tanks
+    		2, 9, 12, 15, 18, 20, 23, 26, 33, 34, 35, 38, 42, 47, 48, 49, 50, 53, 56, 59, 60, 61, 64, 75, 79, 83, 84, 85, 96, 99, 101, 112, 113, 114, 115, 116, 117, 129, 133, 134, 135, 139, 148, 152, 155, 163, 168, 175, 178, 180, 193, 220, 228]); //leg tanks
     var rsuperl=doHeros(tid,[2],-1,1000);
-    //boring commons: no taint,raze,billy,galla,sparks,egg,pluvia,yuri,cloud
-    var rborcommon=doHeros(tid,-1,-1,undefined,[0, 3, 4, 5, 6, 7, 10, 13, 16, 21, 24, 30, 36, 45, 51, 62, 73, 77, 93, 107, 137, 149, 161, 165, 176, 181, 191, 195, 222, 226]);
+    //boring commons: no taint,raze,billy,galla,sparks,egg,pluvia,yuri,cloud; murphy, 4tzar, melf, yeti, ss, frosty, leaf, baby, silex, alan, ember, sanqueen
+    var rborcommon=doHeros(tid,-1,-1,undefined,[0, 3, 4, 5, 6, 7, 10, 13, 16, 21, 24, 30, 36, 45, 51, 62, 73, 77, 93, 107, 137, 149, 161, 165, 176, 181, 191, 195, 222, 226, //commons
+    		1, 8, 11, 14, 17, 19, 22, 25, 27, 28, 29, 31, 37, 39, 40, 41, 46, 52, 54, 63, 74, 78, 94, 108, 111, 141, 150, 162, 182, 192, 196, 199, 223, 227]); //rares
     var rrare=doHeros(tid,[1]);
 
     for (var i=0; i<HERO.length; ++i) {
