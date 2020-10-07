@@ -776,7 +776,7 @@ if (isset($_POST["action"])) {
         } else {
             echo json_encode(array("success"=>false,"error"=>"Wrong auth"));
         }
-    } else if ($action=="prizes") { // easter
+    } else if ($action=="prizes") { // easter & due currencies
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"]) and ctype_xdigit($_POST["pid"])) {
                 $pid=$_POST["pid"];
