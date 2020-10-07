@@ -12086,7 +12086,8 @@ function Game() {
 
                 text(ctx,"Lucky Followers",W*0.5,H*0.25,"60px"+FONT,"white","center","middle");
                 text(ctx,"You can open 3 cells every 15 minutes. Three of them have an amazing amount of followers!",W*0.5,H*0.75,"30px"+FONT,"black","center","middle");
-
+                if (CQW.followers.completed!==undefined) text(ctx,"You used "+CQW.followers.completed+" out of 8 attempts.",W*0.5,H*0.79,"30px"+FONT,"black","center","middle");
+                
                 var cw=W*0.095*0.8;
                 var ch=H*0.15*0.8;
                 var cx=W*0.233;
