@@ -1828,7 +1828,52 @@ handlers.status = function (args, context) {
                 }
             }
         }
-        server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,city:JSON.stringify(data.city)} });
+        
+		// also update currencies
+        var headers = {};
+        var content = "action=prizes&key="+CQ+"&pid="+currentPlayerId;
+        var httpMethod = "post";
+
+		var currUpdate=false;
+        try {
+            var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
+			if (response.success) {
+				for (var i=0; i<response.prizes.length; ++i) {
+					var key=response.prizes[i].key;
+					var value=response.prizes[i].value;
+					var extra=response.prizes[i].extra;
+					if (["AS","CC","KU","PG","PK","SD","UM"].indexOf(key)!==-1) award(currentPlayerId,key,value);
+					else if (key=="FOL") {
+						currUpdate=true;
+						data.followers+=(value||0);
+					} else if (key=="HERO" && value!==undefined && value!==null && value>=0) {
+						if (extra==undefined||extra==1) {
+							if (data.city.hero[value]<99) {
+								currUpdate=true;
+								++data.city.hero[value];
+							} else award(currentPlayerId,"PG",12);
+						} else {
+							if (value>=0 && data.city.hero[value]<99) {
+								currUpdate=true;
+								data.city.hero[value]=Math.min(99,data.city.hero[value]+extra);
+							} else {
+								var pgr = 1;
+								if (HERO[value].rarity==1) pgr=3;
+								else if (HERO[value].rarity==2) pgr=12; 
+								award(currentPlayerId,"PG",pgr);
+							}
+						}
+					}
+				} 
+			}
+        } catch (e) {
+        }
+		
+		if (currUpdate)
+			server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,followers:data.followers,city:JSON.stringify(data.city)}});
+		else
+			server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,city:JSON.stringify(data.city)} });
+		
         data.mlvl=mlvl;
         if (data!==undefined) {
             return {ok:true,data:data};
