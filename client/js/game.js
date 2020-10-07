@@ -16357,7 +16357,7 @@ function Game() {
                                         T.draw(ctx,img,pos[i].x-T.width(img)*scale/2,pos[i].y-105*bscale-T.height(img)*scale/2,T.width(img)*scale,T.height(img)*scale);
                                         //text(ctx,step.value,pos[i].x+34*bscale,pos[i].y-116*bscale,Math.round(bscale*44)+"px"+FONT,"lightblue","center","middle","black",4);
                                     }  else if (step.action=="EXTRA") {
-                                        if (step.data.val!==undefined) {
+                                        if (step.data.val!==undefined && step.data.type!==-1) {
                                             var plusmov=mapf(delta,0,0.8,0,20)*bscale;
                                             var scale=bscale*1.5;
                                             T.draw(ctx,"islj_"+step.data.type,pos[i].x-T.width("islj_0")*scale/2,pos[i].y-185*bscale-T.height("islj_0")*scale/2-plusmov,T.width("islj_0")*scale,T.height("islj_0")*scale);
