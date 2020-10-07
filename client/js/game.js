@@ -8706,7 +8706,7 @@ function Game() {
                 } else T.draw(ctx,"0ljk",W*0.87-T.width("0ij7")/2,H*0.89-T.height("0ij7")/2);
                 this.drawMonster(ctx,-2-pverewards[pvepage],W*0.797,H*0.95,undefined,false,0.85,1);
             } else {
-                T.draw(ctx,"0ljk",W*0.87-T.width("0ij7")/2,H*0.89-T.height("0ij7")/2);
+                T.draw(ctx,"vbxc",W*0.87-T.width("vbxc")/2,H*0.89-T.height("vbxc")/2);
                 this.drawMonster(ctx,-2-pverewards[pvepage],W*0.797,H*0.95,undefined,false,0.85,1,false);
             }
         } else {
