@@ -5846,7 +5846,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "TETRA",
@@ -6727,7 +6728,8 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
-      }
+      },
+      pve: true
     },
     {
       name: "ROB",
@@ -6927,7 +6929,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "YURI",
@@ -7227,7 +7230,8 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
-      }
+      },
+      pve: true
     }
   ];
 

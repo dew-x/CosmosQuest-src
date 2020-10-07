@@ -21643,24 +21643,8 @@ function Game() {
                 else T.negative(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
                 ctx.restore();
                 if (HERO[hid].rarity == 3 && HERO[hid].pve!==undefined) {
-                    var aura = ["fq9i","9b1q","ewf1","yrzo"];
+                    var aura = ["fq9i","9b1q","ewf1","yrzo","3i47"];
                     T.draw(ctx,aura[HERO[hid].type],x-T.width(aura[HERO[hid].type])*scale/2,y-(T.height(aura[HERO[hid].type])+10)*scale,T.width(aura[HERO[hid].type])*scale,T.height(aura[HERO[hid].type])*scale);
-                }
-                if (hid == 209) {
-                    var aura = "fq9i";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 217) {
-                    var aura = "ewf1";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 229) {
-                    var aura = "3i47";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 174) {
-                    var aura = "3i47";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
                 }
                 if (HERO[hid].rarity == 3 && false) {
                     text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":(atk>stats.atk?"lime":"red"),"center","middle","yellow",2);
