@@ -4240,7 +4240,7 @@ function Game() {
                 }
 
                 text(ctx,"Page "+(ltoPage+1)+"/"+ltoPages,W*0.99,y0+H*0.975,"28px"+FONT,"rgba(201,244,255,1)","right","middle");
-                if (drawArray.length > 3) {
+                if (drawArray.length > 6) {
                     var nw=T.width("09sg");
                     var nh=T.height("09sg");
                     T.draw(ctx,"09sg",W*0.94,y0+H*0.495);
