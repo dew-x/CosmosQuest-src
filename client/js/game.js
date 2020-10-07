@@ -9739,7 +9739,7 @@ function Game() {
     }
 
     this.drawPrana = function (ctx) {
-        var MARR = [
+        var MARR = [ //heroes in the hero manager, in order of appearance
             7,8,9,
             10,11,12,
             13,14,15,
@@ -9821,7 +9821,7 @@ function Game() {
             156,168,175,
             185
         ];
-        var PVEH = [
+        var PVEH = [ //heroes that can be leveled up with PG&CC or AS&CC
             0,1,2,
             51,52,53,
             127,128,129,
@@ -9844,7 +9844,7 @@ function Game() {
             204,205,
         ];
         // Season Cleaner
-        var SEHE = [
+        var SEHE = [ //heroes that get removed from hero manager if you don't own them
             33,34,35,
             48,49,50,
             51,52,53,
@@ -10447,7 +10447,7 @@ function Game() {
                         }
                     }
     
-                } else if (showHero == 42 || showHero == 43 || showHero == 44 || showHero == 101) {
+                } else if (showHero == 42 || showHero == 43 || showHero == 44 || showHero == 101) {//UM-levelable
                     var price = 750;
     
                     var prrect = (new Rect(btx+bw/4+15-T.width("0fp5")/2*0.9,bty+bh/3+320-T.height("0fp5")/2*0.81,T.width("0fp5")*0.9,T.height("0fp5")*0.82)).small();
