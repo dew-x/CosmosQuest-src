@@ -9135,9 +9135,9 @@ function playfab(params) {
 
 var bids = [
     {id:20,time:172800,price:454},
-    {id:33,time:86400,price:181},
+    /*{id:33,time:86400,price:181},
     {id:34,time:86400,price:181},
-    {id:35,time:86400,price:181},
+    {id:35,time:86400,price:181},*/
     {id:51,time:21600,price:9},
     {id:52,time:43200,price:45},
     {id:53,time:86400,price:181},
@@ -9149,17 +9149,17 @@ var bids = [
     {id:97,time:43200/2,price:9},
     {id:98,time:86400/2,price:45},
     {id:99,time:172800/2,price:181},
-    {id:48,time:86400,price:181},
+    /*{id:48,time:86400,price:181},
     {id:49,time:86400,price:181},
-    {id:50,time:86400,price:181},
+    {id:50,time:86400,price:181},*/
     {id:101,time:172800,price:454},
     {id:107,time:21600,price:9},
     {id:108,time:43200,price:45},
     {id:109,time:86400,price:181},
     {id:113,time:86400,price:4545},
-    {id:59,time:86400,price:181},
+    /*{id:59,time:86400,price:181},
     {id:60,time:86400,price:181},
-    {id:61,time:86400,price:181},
+    {id:61,time:86400,price:181},*/
     {id:127,time:21600,price:9},
     {id:128,time:43200,price:45},
     {id:129,time:86400,price:181},
