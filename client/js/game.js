@@ -1869,7 +1869,7 @@ function Game() {
                                                 for (var x=0; x<6; ++x) {
                                                     var b=x*6;
                                                     for (var y=0; y<6; ++y) {
-                                                        if (mdata.city.setup[b+y]>=0) ++rc[x];
+                                                        if (mdata.city.setup[b+y]!==-1) ++rc[x];
                                                     }
                                                     if (rc[x]==0) ++empty;
                                                 }
