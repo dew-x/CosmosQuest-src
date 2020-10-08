@@ -1941,8 +1941,6 @@ function Game() {
                             }
                         }
                         else {
-							// if ctrl...
-							//
                             if ((Date.now()-doubleClick.time)>=400  && cityClick.line == 0){
                                 var initialMonster=data.playground[0].line[i];
                                 var initialLevel=data.playground[0].level[i];
