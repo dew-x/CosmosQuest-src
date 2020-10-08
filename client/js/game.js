@@ -4085,6 +4085,10 @@ function Game() {
                                 text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 text(ctx,"Get 33 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                             }
+                            else if (hid==226||hid==227||hid==228||hid==229) { //eternals
+                                text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                                text(ctx,"Get 9 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                            }
                             else {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.028,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
