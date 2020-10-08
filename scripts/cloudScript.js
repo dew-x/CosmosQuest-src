@@ -2431,6 +2431,25 @@ handlers.swap = function (args, context) {
     }
 }
 
+handlers.swaprow = function (args, context) {
+    var data=loadData();
+    if (data!==undefined) {
+        if (args.row0>=0 && args.row0<data.city.setup.length/6 && args.row1>=0 && args.row1<data.city.setup.length/6) {
+			for (var k=0;k<6;++k) {
+				var tmp=data.city.setup[k+6*args.row0];
+				data.city.setup[k+6*args.row0]=data.city.setup[k+6*args.row1];
+				data.city.setup[k+6*args.row1]=tmp;
+			}
+            server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
+            return { ok:true, data:data };
+        } else {
+            return { ok: false, err: "Bad params"};
+        }
+    } else {
+        return { ok: false, err: "Bad internal"};
+    }
+}
+
 handlers.clearall = function (args, context) {
     if (authKong(args.kid,args.token)) {
         var data=loadData(void 0, args.kid);
