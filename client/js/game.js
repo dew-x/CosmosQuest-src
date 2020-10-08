@@ -1903,11 +1903,14 @@ function Game() {
                                         }
                                         this.place(position,cityClick.id);
                                     }
-                                }
-                                else {
+                                } else {
                                     if ((Date.now()-doubleClick.time)>=400 && swapping==true){
-                                        var initialMonster=mdata.city.setup[position];
-                                        this.swap(position,cityClick.initPos);
+										var initialMonster=mdata.city.setup[position];
+										if (mulChest) {
+											this.swaprow(position,cityClick.initPos);
+										} else {
+											this.swap(position,cityClick.initPos);
+										}
                                         swapping=false;
                                     } 
                                 }
@@ -2050,21 +2053,42 @@ function Game() {
                                 }
                                 else {
                                     if ((Date.now()-doubleClick.time)>=400){
-                                        var initialMonster=data.tour.setup[tournamentid][position];
-                                        if (tournamentid==1 && CQW!==undefined) {
-                                            if (CQW.tour.current.grid[position]!=4) {
-                                                if (CQW.tour.current.grid[position]==8 && cityClick.id>-1) {
-                                                    data.tour.setup[tournamentid][position] = cityClick.id;
-                                                    data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                                } else if (CQW.tour.current.grid[position]!=8) {
-                                                    data.tour.setup[tournamentid][position] = cityClick.id;
-                                                    data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                                }
-                                            } 
-                                        } else {
-                                            data.tour.setup[tournamentid][position] = cityClick.id;
-                                            data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                        }
+										if (mulChest) {
+											var rowa = j;
+											var rowb = Math.floor(cityClick.initPos/6);
+											var allowRowSwap = true;
+											if (tournamentid==1 && CQW!==undefined) { // check validity
+												for (var k=0;k<6;++k) {
+													var cella = CQW.tour.current.grid[k+6*rowa];
+													var cellb = CQW.tour.current.grid[k+6*rowb];
+													if ((cella==4 && data.tour.setup[tournamentid][k+6*rowb]!=-1) || (cellb==4 && data.tour.setup[tournamentid][k+6*rowa]!=-1) || (cella==8 && data.tour.setup[tournamentid][k+6*rowb]<-1) || (cellb==8 && data.tour.setup[tournamentid][k+6*rowa]<-1))
+														allowRowSwap = false;
+												}
+											}
+											if (allowRowSwap) {
+												for (var k=0;k<6;++k) {
+													var initialMonster=data.tour.setup[tournamentid][k+6*rowa];
+													data.tour.setup[tournamentid][k+6*rowa] = data.tour.setup[tournamentid][k+6*rowb];
+													data.tour.setup[tournamentid][k+6*rowb] = initialMonster;
+												}
+											}
+										} else {
+											var initialMonster=data.tour.setup[tournamentid][position];
+											if (tournamentid==1 && CQW!==undefined) {
+												if (CQW.tour.current.grid[position]!=4) {
+													if (CQW.tour.current.grid[position]==8 && cityClick.id>-1) {
+														data.tour.setup[tournamentid][position] = cityClick.id;
+														data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+													} else if (CQW.tour.current.grid[position]!=8) {
+														data.tour.setup[tournamentid][position] = cityClick.id;
+														data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+													}
+												} 
+											} else {
+												data.tour.setup[tournamentid][position] = cityClick.id;
+												data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+											}
+										}
                                         swapping=false;
                                     }
                                 }
@@ -2168,9 +2192,9 @@ function Game() {
                         }
                         else {
                             if ((Date.now()-doubleClick.time)>=400){
-                                var initialMonster=data.wb[data.wbline][i];
-                                data.wb[data.wbline][i] = cityClick.id;
-                                data.wb[data.wbline][cityClick.initPos] = initialMonster;
+								var initialMonster=data.wb[data.wbline][i];
+								data.wb[data.wbline][i] = cityClick.id;
+								data.wb[data.wbline][cityClick.initPos] = initialMonster;
                                 swapping=false;
                             }
                         }
@@ -21401,6 +21425,39 @@ function Game() {
                 "FunctionParameter": {
                     pos0: pos0,
                     pos1: pos1
+                }
+            }, function (res,err) {
+                swapSync[0]=undefined;
+                swapSync[1]=undefined;
+                if (_this.serverOk(res,err)) {
+                    if (res.data && res.data.FunctionResult && res.data.FunctionResult.ok==true) {
+                        battleSync=Date.now();
+                        _this.updateMData(res.data.FunctionResult.data);
+                    } else {
+                        var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
+                            msg:"PFswap",
+                            stk:res
+                        }));
+                        GA.getInstance().addEvent(ev);
+                        popup={
+                            text:"Swap failed try again",
+                            mode:"alert",
+                        }
+                    }
+                }
+            });
+        }
+    }
+    this.swaprow = function (pos0,pos1) {
+        if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined && swapSync[0]==undefined && swapSync[1]==undefined) {
+            swapSync[0]=pos0;
+            swapSync[1]=pos1;
+            PlayFab.ClientApi.ExecuteCloudScript({
+                "RevisionSelection":PFMODE,
+                "FunctionName": "swaprow",
+                "FunctionParameter": {
+                    row0: Math.floor(pos0 / 6),
+                    row1: Math.floor(pos1 / 6)
                 }
             }, function (res,err) {
                 swapSync[0]=undefined;
