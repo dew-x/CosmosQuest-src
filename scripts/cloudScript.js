@@ -1271,6 +1271,23 @@ function loadData(id,kid) {
                 quests: 0,
             }
         }
+        if (data.city.pass.id==6) {
+            data.city.pass = {
+                id: 7,
+                isSilver: 0,
+                isGold: 0,
+                claim: 0,
+                sclaim: 0,
+                gclaim: 0,
+                wb: 0,
+                chest: 0,
+                miracles: 0,
+                tournaments: 0,
+                ftournaments: 0,
+                pvp: 0,
+                quests: 0,
+            }
+        }
         if (data.city.pvp==undefined) {
             data.city.pvp = {
                 attacks: 4,
@@ -1311,12 +1328,13 @@ function loadData(id,kid) {
             data.city.halloween.hero[186]=0;
         }
         var tid2 = Math.min(18206,tid);
-        if (data.city.pass.isSilver==1) {
-            if (data.city.hero[190]==0) data.city.hero[190]=1;
+        /*if (data.city.pass.isSilver==1) {
+            if (data.city.hero[213]==0) data.city.hero[213]=1; //hetfield - if you change this also go to handlers.pur and remove him there ^^
+            if (data.city.hero[132]==0) data.city.hero[132]=1; //rose
         }
         if (data.city.pass.isGold) {
-            if (data.city.hero[213]==0) data.city.hero[213]=1;
-        }
+            if (data.city.hero[213]==0) data.city.hero[213]=1
+        }*/ //this shouldn't be needed anyway and causes visual bugs when p6ing pass-heros
         
         // Makes the reset on Saturdays 00:00 GMT
         CWC = Math.floor((now-3*DAY)/(7*DAY))+10000;
@@ -1704,7 +1722,8 @@ handlers.status = function (args, context) {
                 data.city.tm = -1;
             } else if (items[i].identifier=="seasonpass1") {
                 if (consumeItem(args.kid,args.token,items[i].id)) {
-                    data.city.pass.isGold = 1; 
+                    data.city.pass.isGold = 1;
+                    if (data.city.hero[213]==0) data.city.hero[213]=1; //TODO: New gold pass hero
                     award(currentPlayerId,"ET",650);
                     if (data.city.easter !== undefined) {
                         data.city.easter.points+=(1250*vipMultiplier);
@@ -3552,8 +3571,9 @@ handlers.pur = function (args, context) {
         } else if (args.id=="SP" && ret.VirtualCurrency.UM>=5000) {
             if (pay(currentPlayerId,"UM",5000)) {
                 data.city.pass.isSilver=1;
-                if (data.city.hero[132]!=0) award(currentPlayerId,"AS",100);
-                else data.city.hero[132]=1;
+                if (data.city.hero[213]!=0) award(currentPlayerId,"AS",100);
+                	else data.city.hero[213]=1;
+                if (data.city.hero[132]==0) data.city.hero[132]=1; //rose
                 server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 return {ok:true,data:data};
             } else return { ok: false, err: "Not enough UM" };

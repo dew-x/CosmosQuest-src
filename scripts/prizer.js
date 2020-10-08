@@ -9213,7 +9213,11 @@ var bids = [
     {id:226,time:86400/4,price:9}, //jalrok
     {id:227,time:86400/2,price:45}, //sylnir
     {id:228,time:86400,price:181}, //raelan
-    {id:229,time:86400*2,price:909} //arathon
+    {id:229,time:86400*2,price:909}, //arathon
+    {id:170,time:86400,price:181}, //agatha
+    {id:171,time:86400,price:181}, //ophelia
+    {id:172,time:86400,price:181}, //helga
+    {id:190,time:86400*3,price:3637} //retia
 ];
 
 var working=0;
