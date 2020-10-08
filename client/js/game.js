@@ -2516,6 +2516,13 @@ function Game() {
         }
         ctx.restore();
 
+        // Event Tickets
+        var etrect=(new Rect(W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75)).small();
+        if (etrect.isInside(GM.x,GM.y)) {
+            T.draw(ctx,"joy2",W*0.113-1,H-T.height("joy2")*1.75-17-1,T.width("joy2")*1.75+2,T.height("joy2")*1.75+2);
+            this.addZone("oetckm",etrect,"oetickets",{target:true});
+        } else T.draw(ctx,"joy2",W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75);
+
         // Task Manager Icon
         if (mdata!==undefined && mdata.tm!==undefined) {
             var tmrect=(new Rect(7,H-T.height("01i5")*0.95-5,T.width("01i5")*0.95,T.height("01i5")*0.95)).small();
@@ -2571,14 +2578,6 @@ function Game() {
                 this.addZone("tgsp",sprect,"tgsp",{target:true});
             } else T.draw(ctx,"4krx",W*0.22,H-T.height("4krx")*0.95-5,T.width("4krx")*0.95,T.height("4krx")*0.95);
         }
-
-        // Event Tickets
-        var etrect=(new Rect(W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75)).small();
-        if (etrect.isInside(GM.x,GM.y)) {
-            T.draw(ctx,"joy2",W*0.113-1,H-T.height("joy2")*1.75-17-1,T.width("joy2")*1.75+2,T.height("joy2")*1.75+2);
-            this.addZone("oetckm",etrect,"oetickets",{target:true});
-        } else T.draw(ctx,"joy2",W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75);
-
 
         // Right tabs
         var anyExperiment=false;
