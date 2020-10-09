@@ -51,6 +51,7 @@
     $data=array(
         "version"=>"v4.8.5.1",
         "tournament"=>array(
+            "tid"=>$row["tid"],
             "pool"=>$pool
         ),
         "WB"=>array(
