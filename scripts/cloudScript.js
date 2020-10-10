@@ -3577,7 +3577,7 @@ handlers.buylot = function(args, context) {
     if (ret) {
         if (ret.VirtualCurrency.AS>=1) {
             var headers = {};
-            var content = "action=lottery&key="+CQ+"&pid="+currentPlayerId;
+            var content = "action=lottery&key="+CQ+"&qty="+args.qty+"&pid="+currentPlayerId;
             var httpMethod = "post";
         
             try {
@@ -3587,7 +3587,7 @@ handlers.buylot = function(args, context) {
             }
 
             if (response.success) {
-                pay(currentPlayerId,"AS",1);
+                pay(currentPlayerId,"AS",parseInt(response.qtyDone));
                 return { ok: true };
             } else {
                 return { ok: false, err: response.error };

@@ -212,7 +212,7 @@
             $row2 = $res2->fetch_assoc();
             $data["lottery"]=array(
                 "numbers"=>$nums,
-                "pool"=>round($row2["pool"]*0.7),
+                "pool"=>round($row2["pool"]*1.05),
                 "expires"=>($row["end"]-time())*1000,
             );
         } else if ($row["type"]==1) {
