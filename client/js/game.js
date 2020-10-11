@@ -13741,7 +13741,7 @@ function Game() {
                     var bh = H*0.0475;
                     var b = "Inactive";
                     if (list[c].t !== undefined && list[c].t) {
-                        b = timer(list[c].b/1000) + " Hours";
+                        b = (list[c].b <= 0 ? "Expired" : timer(list[c].b/1000) + " Hours");
                     } else if (list[c].p !== undefined && list[c].p) {
                         b = list[c].b;
                     } else {
