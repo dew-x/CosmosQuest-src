@@ -57,9 +57,9 @@ connection.query('SELECT name,pid,score FROM `users` ORDER BY `users`.`score` DE
             ranking.push([name,score]);
         }
         udata.push(pid);
-        var hid=210;
-        if (pos<100) hid=212;
-        else if (pos<1000) hid=211;
+        var hid=230;
+        if (pos<100) hid=232;
+        else if (pos<1000) hid=231;
         if (score>0) {
             Q.push({
                 PlayFabId: pid,
@@ -68,11 +68,11 @@ connection.query('SELECT name,pid,score FROM `users` ORDER BY `users`.`score` DE
                     pid: pid,
                     UM: 0,
                     SD: Math.ceil(score),
-                    PG: Math.ceil(score/30000),
+                    PG: 0,
                     CC: 0,
-                    PK: 0,
+                    PK: Math.ceil(score/100000),
                     AS: 0,
-                    FOL: Math.ceil(score/800000),
+                    FOL: 0,
                     tid: 0,
                     top: 0,
                     amount: 0,

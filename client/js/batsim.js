@@ -7133,7 +7133,7 @@ var HERO = [
       }
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       type: 4,
       rarity: 0,
       img: "ohsj",
@@ -7232,10 +7232,111 @@ var HERO = [
         none: 1
       },
       pve: true
-    }
+    },
+	{
+      name: "STENCH",
+      type: 4,
+      rarity: 2,
+      img: "TODO",
+      hp: 58,
+      atk: 64,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.15,
+        hid: 230
+      },
+      passive: {
+        type: 10,
+        value: 100,
+		value2: 0.30
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      },
+	{
+      name: "RUMBLE",
+      type: 4,
+      rarity: 2,
+      img: "TODO",
+      hp: 59,
+      atk: 65,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.20,
+        hid: 231
+      },
+      passive: {
+        type: 10,
+        value: 100,
+		value2: 0.30
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      },
+	{
+      name: "MUNCHIES",
+      type: 4,
+      rarity: 2,
+      img: "TODO",
+      hp: 60,
+      atk: 66,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.25,
+        hid: 232
+      },
+      passive: {
+        type: 10,
+        value: 100,
+		value2: 0.30
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      },
+	{
+      name: "HIM",
+      type: 4,
+      rarity: 3,
+      img: "TODO",
+      hp: 110,
+      atk: 120,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.35,
+        hid: 233
+      },
+      passive: {
+        type: 10,
+        value: 100,
+		value2: 0.30
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
+      }
+    },
   ];
 
-  var promoData = [
+var promoData = [
     {
       name: "LADY OF TWILIGHT",
       atk: 25,
@@ -9072,6 +9173,38 @@ var HERO = [
       both: 108,
       skill: 0.01,
       quest: 168
+    },
+    {
+      name: "STENCH",
+      atk: 84,
+      hp: 58,
+      both: 56,
+      skill: 0.05,
+      quest: 121 // TODO
+    },
+    {
+      name: "RUMBLE",
+      atk: 86,
+      hp: 60,
+      both: 58,
+      skill: 0.05,
+      quest: 121 // TODO
+    },
+    {
+      name: "MUNCHIES",
+      atk: 88,
+      hp: 62,
+      both: 60,
+      skill: 0.05,
+      quest: 121 // TODO
+    },
+    {
+      name: "HIM",
+      atk: 258,
+      hp: 234,
+      both: 180,
+      skill: 0.05,
+      quest: 168 // TODO
     }
   ];
 
