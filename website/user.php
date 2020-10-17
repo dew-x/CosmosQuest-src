@@ -216,8 +216,8 @@ if ($uid!==-1) {
 			t.heroes AS `ther`, t.promo AS `tprom`,
 			t.grid AS `tgrid`, t.vals AS `vals`
         FROM battles2 b, tournaments2 t, users u1, users u2, setups2 s1, setups2 s2 
-        WHERE (b.aid=$uid OR b.bid=$uid) AND b.aid=u1.id AND b.bid=u2.id AND t.id = b.tid AND s1.tid=b.tid AND s1.uid=b.aid AND s2.tid=b.tid AND s2.uid=b.bid 
-        ORDER BY b.tid DESC, b.rid DESC LIMIT 10");
+        WHERE (b.aid=$uid OR b.bid=$uid) AND b.aid=u1.id AND b.bid=u2.id AND t.id = b.tid AND s1.tid=t.tid AND s1.uid=b.aid AND s2.tid=t.tid AND s2.uid=b.bid 
+        ORDER BY t.tid DESC, b.rid DESC LIMIT 10");
     $i=0;
     while ($row1=$res1->fetch_assoc()) {
         $cells=array();
