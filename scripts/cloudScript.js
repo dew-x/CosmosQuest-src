@@ -4694,13 +4694,13 @@ handlers.ggactivity = function (args, context) {
                                 data.city.games.activities.instant-=1;
                                 if (args.activity == 2) data.city.games.stamina-=110;
                                 if (args.activity == 0) {
-                                    if (Date.now() < data.city.games.victim[1]) data.city.games.stamina+=(25+(25*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(25+(25*10*data.city.games.upgrades[0]/100));
                                     else data.city.games.stamina+=(50+(50*10*data.city.games.upgrades[0]/100));
                                     data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
                                 } else if (args.activity == 1) {
                                     data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
                                 } else if (args.activity == 2) {
-                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(205+(205*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=Math.ceil(205+(205*10*data.city.games.upgrades[0]/100));
                                     else data.city.games.automatic.tickValue+=(410+(410*10*data.city.games.upgrades[0]/100));
                                 }
                                 data.city.games.activities.timer = -1;
@@ -4757,13 +4757,13 @@ handlers.ggclaim = function (args, context) {
                 }
                 
                 if (data.city.games.activities.activity == 0) {
-                    if (Date.now() < data.city.games.victim[1]) data.city.games.stamina+=(25+(25*10*data.city.games.upgrades[0]/100));
+                    if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(25+(25*10*data.city.games.upgrades[0]/100));
                     else data.city.games.stamina+=(50+(50*10*data.city.games.upgrades[0]/100));
                     data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
                 } else if (data.city.games.activities.activity == 1) {
                     data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
                 } else if (data.city.games.activities.activity == 2) {
-                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(205+(205*10*data.city.games.upgrades[0]/100));
+                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=Math.ceil(205+(205*10*data.city.games.upgrades[0]/100));
                     else data.city.games.automatic.tickValue+=(410+(410*10*data.city.games.upgrades[0]/100));
                 }
                 data.city.games.activities.timer = -1;
