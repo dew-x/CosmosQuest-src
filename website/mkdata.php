@@ -48,7 +48,7 @@
     $res1->free();
     $limit=wbHitsRequired($bid, $isSuper);
     $data=array(
-        "version"=>"v4.8.5.1",
+        "version"=>"v4.9.0.0",
         "tournament"=>array(
             "pool"=>$pool
         ),
@@ -61,7 +61,7 @@
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),
-        "news"=>"Third community update! Check changelog for details."
+        "news"=>"New season! Check changelog for details."
     );
     file_put_contents("data.json",json_encode($data));
      

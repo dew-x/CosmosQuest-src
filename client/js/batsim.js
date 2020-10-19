@@ -7133,7 +7133,7 @@ var HERO = [
       }
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       type: 4,
       rarity: 0,
       img: "ohsj",
@@ -7232,10 +7232,110 @@ var HERO = [
         none: 1
       },
       pve: true
+    },
+	{
+      name: "STENCH",
+      type: 0,
+      rarity: 2,
+      img: "1hit",
+      hp: 58,
+      atk: 64,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.15,
+        hid: 230
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "RUMBLE",
+      type: 2,
+      rarity: 2,
+      img: "6sgk",
+      hp: 59,
+      atk: 65,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.20,
+        hid: 231
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "VERMIN",
+      type: 1,
+      rarity: 2,
+      img: "1j53",
+      hp: 60,
+      atk: 66,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.25,
+        hid: 232
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "REAPER",
+      type: 4,
+      rarity: 3,
+      img: "h5w2",
+      hp: 110,
+      atk: 120,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.35,
+        hid: 233
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
+      }
     }
   ];
 
-  var promoData = [
+var promoData = [
     {
       name: "LADY OF TWILIGHT",
       atk: 25,
@@ -9042,7 +9142,7 @@ var HERO = [
       quest: 133
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       atk: 4,
       hp: 26,
       both: 18,
@@ -9072,6 +9172,38 @@ var HERO = [
       both: 108,
       skill: 0.01,
       quest: 168
+    },
+    {
+      name: "STENCH",
+      atk: 84,
+      hp: 58,
+      both: 56,
+      skill: 0.05,
+      quest: 140
+    },
+    {
+      name: "RUMBLE",
+      atk: 86,
+      hp: 60,
+      both: 58,
+      skill: 0.05,
+      quest: 141
+    },
+    {
+      name: "VERMIN",
+      atk: 88,
+      hp: 62,
+      both: 60,
+      skill: 0.05,
+      quest: 142
+    },
+    {
+      name: "REAPER",
+      atk: 258,
+      hp: 234,
+      both: 180,
+      skill: 0.05,
+      quest: 163
     }
   ];
 
@@ -9694,6 +9826,70 @@ function calcTurn0 (A,B,seed,side) {
                 });
             } else if (skill.type=="supershield") {
                 turn.buff.defPerc[i]+=skillVal*Math.floor(lvlVal/skill.target);
+            } else if (skill.type=="horseman") {
+            	if (B.setup[i] !== undefined) {
+	            	//get stats of enemy units. Reaching for base stats to prevent asymmetric combinations of stat changing skills.
+	            	var stats = (B.setup[i].id<-1) ? level2stats(-B.setup[i].id-2,B.setup[i].lvl,B.setup[i].prom) : MONSTERS[B.setup[i].id];
+	            	var atkval = Math.round(stats.atk*skillVal);
+	                A.setup[i].atk+=atkval;
+	                B.setup[i].atk-=atkval;
+	                gBattle.steps.push({
+	                    action:"DMG2",
+	                    target:side?"other":"you",
+	                    value: atkval,
+	                    pos: i,
+	                });
+	                gBattle.steps.push({
+	                    action:"DMG2",
+	                    target:side?"you":"other",
+	                    value: -atkval,
+	                    pos: i,
+	                });
+	                if (!(B.setup.length==1&&B.setup[0].id<-1&&HERO[-(2+B.setup[0].id)].rarity==5)) { //if non-wb-fight also steal hp
+		                var hpval = Math.round(stats.hp*skillVal);
+		                A.setup[i].hp+=hpval;
+		                B.setup[i].hp-=hpval;
+		                A.setup[i].mhp+=hpval;
+		                var tmpArr = Array(A.setup.length).fill(0);
+		                tmpArr[i]=hpval;
+		                gBattle.steps.push({
+		                    action:"HEAL2",
+		                    target:side?"other":"you",
+		                    val:tmpArr,
+		                });
+		                gBattle.steps.push({
+		                    action:"EXPLO",
+		                    target:side?"you":"other",
+		                    val:tmpArr,
+		                });
+	                }
+            	}
+            	//P6
+            	if (A.setup[i].prom >= 6) {
+            		var count = -1; //don't count yourself
+            		for (var j = 0; j < B.setup.length; j++) if (B.setup[j].skill !== undefined && B.setup[j].skill.type == "horseman") count++;
+            		for (var j = 0; j < A.setup.length; j++) if (A.setup[j].skill !== undefined && A.setup[j].skill.type == "horseman") count++;
+            		if (count > 0) {
+            			count*=A.setup[i].passive.value;
+            			A.setup[i].atk+=count;
+    	                gBattle.steps.push({
+    	                    action:"DMG2",
+    	                    target:side?"other":"you",
+    	                    value: count,
+    	                    pos: i,
+    	                });
+    	                A.setup[i].hp+=count;
+		                A.setup[i].mhp+=count;
+		                var tmpArr = Array(A.setup.length).fill(0);
+		                tmpArr[i]=count;
+		                gBattle.steps.push({
+		                    action:"HEAL2",
+		                    target:side?"other":"you",
+		                    val:tmpArr,
+		                });
+            		}
+            		
+            	}
             }
         } 
     }
