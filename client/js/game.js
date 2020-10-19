@@ -11868,22 +11868,23 @@ function Game() {
     }
 
     this.drawDailyEvent = function (ctx) {
-        if (this.isDailyEvent().mode!==undefined) {
-            if (this.isDailyEvent().mode=="flash") {
+		var demode = this.isDailyEvent().mode;
+        if (demode!==undefined) {
+            if (demode=="flash") {
                 if (CQW!==undefined && CQW.flash!==undefined) {
                     flashOpen=true;
                     this.drawFlash(ctx);
                 } else showDaily=false;
             }
-            else if (this.isDailyEvent().mode=="cc") {
+            else if (demode=="cc") {
                 eventCCopen=true;
                 this.drawEventCC(ctx);
             }
-            else if (this.isDailyEvent().mode=="adventure") {
+            else if (demode=="adventure") {
                 adventureOpen=true;
                 this.drawAdventure(ctx);
             }
-            else if (this.isDailyEvent().mode=="pge") {
+            else if (demode=="pge") {
                 var attempts = 10;
                 var pg = 0;
                 if (mdata.city !== undefined && mdata.city.pge !== undefined && mdata.city.pge.attempts !== undefined && mdata.city.pge.pg !== undefined) {
@@ -12177,7 +12178,7 @@ function Game() {
                     else text(ctx,"New opening available in: "+timer((CQW.followers.timeleft-Date.now())/1000),W*0.5,H*0.3,"40px"+FONT,"black","center","middle");
                 }
             }
-            else if (this.isDailyEvent().mode=="lottery") {
+            else if (demode=="lottery") {
                 var bw=W*0.6;
                 var bh=H*0.6;
                 roundedRect(ctx,W*0.5-(bw*0.5)-2,H*0.5-(bh*0.5)-2,bw+4,bh+4,5,"rgb(255,255,255)");
@@ -12209,7 +12210,7 @@ function Game() {
 
                 if (CQW!==undefined && CQW.lottery!==undefined) {
                     text(ctx,"- Each lottery ticket costs 1 Ascension Sphere",W*0.5-bw*0.5+10,H*0.3,"36px"+FONT,"white","left","middle");
-                    text(ctx,"- You can buy unlimited lottery tickets",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
+                    text(ctx,"- You can buy 1000 lottery tickets; quick buy: ctrl x10, shift x100",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
                     text(ctx,"- Prize Pool is 105% of total lottery tickets income. Currently: "+CQW.lottery.pool.toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+40,"36px"+FONT,"white","left","middle");
                     text(ctx,"* 40%/20%/10%/5%/5%/5%/5%/5%/5%/5% (10 winners).",W*0.5-bw*0.5+10,H*0.3+60,"36px"+FONT,"white","left","middle");
                     text(ctx,"* "+(0.4*CQW.lottery.pool).toFixed(0)+"/"+(0.2*CQW.lottery.pool).toFixed(0)+"/"+(0.1*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+80,"36px"+FONT,"white","left","middle");
@@ -12220,7 +12221,7 @@ function Game() {
                         T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.52-T.height("091m")/2);
                         this.addZone("buylot",buyrect,"buylot");
                     } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.52-T.height("091m")/2);
-                    text(ctx,"BUY TICKET 1",W*0.5-20,H*0.52,"36px"+FONT,"white","center","middle");
+                    text(ctx,"BUY TICKET x"+(mulChest ? 10 : (x100 ? 100 : 1)),W*0.5-20,H*0.52,"36px"+FONT,"white","center","middle");
                     T.draw(ctx,"08y7",W*0.5+35,H*0.52-T.height("091m")/2,T.width("02c9")*0.6,T.height("02c9")*0.6);
 
                     if (CQW.lottery.numbers!==undefined && CQW.lottery.numbers.length>0) {
@@ -12255,7 +12256,7 @@ function Game() {
                     }
                 }
             }
-            else if (this.isDailyEvent().mode=="dungeon") {
+            else if (demode=="dungeon") {
                 data.pveline = 0;
                 var skillInfo=undefined;
                 inDungeon=true;
@@ -24320,6 +24321,9 @@ function Game() {
             PlayFab.ClientApi.ExecuteCloudScript({
                 "RevisionSelection":PFMODE,
                 "FunctionName": "buylot",
+                "FunctionParameter": {
+                    qty: (mulChest ? 10 : (x100 ? 100 : 1)),
+                }
             }, function (res,err) {
                 if (_this.serverOk(res,err)) {
                     if (res.data && res.data.FunctionResult && res.data.FunctionResult.ok==true) {
