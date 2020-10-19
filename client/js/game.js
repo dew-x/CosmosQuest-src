@@ -16055,8 +16055,8 @@ function Game() {
     }
     this.updateLoopEventRanking = function (leaderboardName) {
         if (eventRanking==undefined) eventRanking={time: 0, ptime: 0};
-		if(Date.now() - eventRanking.time < 2*60*1000)
-			return false;
+		//if(Date.now() - eventRanking.time < 2*60*1000)
+			//return false;
         eventRanking.time=Date.now();
         if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined) {
             PlayFab.ClientApi.GetLeaderboard({
