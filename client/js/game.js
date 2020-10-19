@@ -9804,6 +9804,7 @@ function Game() {
             170,171,172,
             187,188,189,
             210,211,212,
+            230,231,232,
             42,43,44,
             51,52,53,
             127,128,129,
@@ -9832,7 +9833,7 @@ function Game() {
             179,184,194,
             80,102,132,
             147,173,190,
-            213,
+            213,233,
             0,1,2,
             20,180,96,
             205,
@@ -9907,6 +9908,7 @@ function Game() {
             221,222,223,
             224,225,226,
             227,228,229,
+            230,231,232,
         ];
 
         for (var i = MARR.length - 1; i >= 0; --i) {
@@ -23471,6 +23473,11 @@ function Game() {
                 short: "Empowered/nGains "+(value*100).toFixed(0)+"% ("+(value*lvl/skill.target*100).toFixed(0)+"%) of all damage received per "+(skill.target)+" levels as Attack",
                 long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will gain attack equal to a percentage of all damage received."
             }
+        } else if (skill.type=="horseman") {
+            return {
+                short: "Empowered - Start of Battlen/nGains "+(value*100).toFixed(0)+"% of first enemy units stats",
+                long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will gain attack and health based on the enemies front unit at the start of the battle."
+            }
         }
     }
     this.passive2text = function (passive,one_line) {
@@ -23493,6 +23500,8 @@ function Game() {
             description+="Passive skill/nReceives -"+(value*100).toFixed(0)+"% damage from skills";
         } else if (passive.type==9) {
             description+="Passive skill/nIncreases health by "+(value*100).toFixed(0)+"%";
+        } else if (passive.type==9) {
+            description+="Passive skill/nGains "+(value).toFixed(0)+"attack and health for each other horsemen";
         }
 
         if (passive==undefined) {
