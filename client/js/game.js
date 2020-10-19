@@ -23476,8 +23476,8 @@ function Game() {
             }
         } else if (skill.type=="horseman") {
             return {
-                short: "Empowered - Start of Battle/nGains "+(value*100).toFixed(0)+"% of first enemy units base stats",
-                long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will gain attack and health based on the enemies front unit at the start of the battle. It won't consider additional health or attack gained by skills."
+                short: "Empowered - Start of Battle/nSteals "+(value*100).toFixed(0)+"% of opposing enemy units base stats",
+                long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will steal attack and health from the enemy unit at the same position at the start of the battle. It won't consider additional health or attack gained by skills."
             }
         }
     }

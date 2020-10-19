@@ -9831,28 +9831,43 @@ function calcTurn0 (A,B,seed,side) {
             } else if (skill.type=="supershield") {
                 turn.buff.defPerc[i]+=skillVal*Math.floor(lvlVal/skill.target);
             } else if (skill.type=="horseman") {
-            	//get stats of enemy front units. Reaching for base stats to prevent asymmetric combinations of stat changing skills.
-            	var stats = (B.setup[0] == undefined) ? {hp:0,atk:0} : ((B.setup[0].id<-1) ? level2stats(-B.setup[0].id-2,B.setup[0].lvl,B.setup[0].prom) : MONSTERS[B.setup[0].id]);
-            	var atkval = Math.round(stats.atk*skillVal);
-                A.setup[i].atk+=atkval;
-                gBattle.steps.push({
-                    action:"DMG2",
-                    target:side?"other":"you",
-                    value: atkval,
-                    pos: i,
-                });
-                if (!(B.setup.length==1&&B.setup[0].id<-1&&HERO[-(2+B.setup[0].id)].rarity==5)) { //if non-wb-fight also steal hp
-	                var hpval = Math.round(stats.hp*skillVal);
-	                A.setup[i].hp+=hpval;
-	                A.setup[i].mhp+=hpval;
-	                var tmpArr = Array(A.setup.length).fill(0);
-	                tmpArr[i]=hpval;
+            	if (B.setup[i] !== undefined) {
+	            	//get stats of enemy units. Reaching for base stats to prevent asymmetric combinations of stat changing skills.
+	            	var stats = (B.setup[i].id<-1) ? level2stats(-B.setup[i].id-2,B.setup[i].lvl,B.setup[i].prom) : MONSTERS[B.setup[i].id];
+	            	var atkval = Math.round(stats.atk*skillVal);
+	                A.setup[i].atk+=atkval;
+	                B.setup[i].atk-=atkval;
 	                gBattle.steps.push({
-	                    action:"HEAL2",
+	                    action:"DMG2",
 	                    target:side?"other":"you",
-	                    val:tmpArr,
+	                    value: atkval,
+	                    pos: i,
 	                });
-                }
+	                gBattle.steps.push({
+	                    action:"DMG2",
+	                    target:side?"you":"other",
+	                    value: -atkval,
+	                    pos: i,
+	                });
+	                if (!(B.setup.length==1&&B.setup[0].id<-1&&HERO[-(2+B.setup[0].id)].rarity==5)) { //if non-wb-fight also steal hp
+		                var hpval = Math.round(stats.hp*skillVal);
+		                A.setup[i].hp+=hpval;
+		                B.setup[i].hp-=hpval;
+		                A.setup[i].mhp+=hpval;
+		                var tmpArr = Array(A.setup.length).fill(0);
+		                tmpArr[i]=hpval;
+		                gBattle.steps.push({
+		                    action:"HEAL2",
+		                    target:side?"other":"you",
+		                    val:tmpArr,
+		                });
+		                gBattle.steps.push({
+		                    action:"EXPLO",
+		                    target:side?"you":"other",
+		                    val:tmpArr,
+		                });
+	                }
+            	}
             }
         } 
     }
