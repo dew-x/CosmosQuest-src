@@ -13742,7 +13742,7 @@ function Game() {
                     var bh = H*0.0475;
                     var b = "Inactive";
                     if (list[c].t !== undefined && list[c].t) {
-                        b = timer(list[c].b/1000) + " Hours";
+                        b = (list[c].b <= 0 ? "Expired" : timer(list[c].b/1000) + " Hours");
                     } else if (list[c].p !== undefined && list[c].p) {
                         b = list[c].b;
                     } else {
@@ -13751,7 +13751,7 @@ function Game() {
                         else if (list[c].b == -1) b = "LifeTime";
                         else if (list[c].b > 1 && list[c].d == undefined) {
                             if ((list[c].b-Date.now())>86400000) b = Math.ceil((list[c].b-Date.now())/86400000)+" Days";
-                            else b = timer((list[c].b-Date.now())/1000);
+                            else b = ((list[c].b-Date.now()) <= 0 ? "Expired" : timer((list[c].b-Date.now())/1000));
                         }
                         else {
                             b = list[c].b+" days";
