@@ -4108,6 +4108,10 @@ function Game() {
                                 text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 text(ctx,"Get 33 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                             }
+                            else if (hid==226||hid==227||hid==228||hid==229) { //eternals
+                                text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                                text(ctx,"Get 9 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                            }
                             else {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.028,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
@@ -12639,7 +12643,7 @@ function Game() {
                     text(ctx,"- Each tournament will cost 100 Universe Marbles",W*0.572-tw*0.5+15,H*0.27+20,"36px"+FONT,"white","left","middle");
                     text(ctx,"- The tournament will start when 64 players have joined",W*0.572-tw*0.5+15,H*0.27+40,"36px"+FONT,"white","left","middle");
                     text(ctx,"- In results page, you can see each individual battle",W*0.572-tw*0.5+15,H*0.27+60,"36px"+FONT,"white","left","middle");
-                    text(ctx,"- Top 16 will get a Season 8 Hero",W*0.572-tw*0.5+15,H*0.27+80,"36px"+FONT,"white","left","middle");
+                    text(ctx,"- Top 16 will get a Season 9 Hero",W*0.572-tw*0.5+15,H*0.27+80,"36px"+FONT,"white","left","middle");
                     text(ctx,"- All participants will get 150.000 Star Dust and 5 VIP points",W*0.572-tw*0.5+15,H*0.27+100,"36px"+FONT,"white","left","middle");
                     text(ctx,"- Top 10 players will get 850, 765, 680, 595, 510, 425, 340, 255, 170, 85 UM",W*0.572-tw*0.5+15,H*0.27+130,"36px"+FONT,"white","left","middle");
 
@@ -12647,9 +12651,9 @@ function Game() {
                     text(ctx,"5th-9th",W*0.572-tw*0.5+tw*0.5,H*0.745,"32px"+FONT,"white","center","middle");
                     text(ctx,"10th-16th",W*0.572-tw*0.5+tw*0.8,H*0.745,"32px"+FONT,"white","center","middle");
 
-                    this.drawMonster(ctx,-174,W*0.572-tw*0.5+tw*0.2,H*0.77-35,undefined,false,1.5);
-                    this.drawMonster(ctx,-173,W*0.572-tw*0.5+tw*0.5,H*0.77-35,undefined,false,1.5);
-                    this.drawMonster(ctx,-172,W*0.572-tw*0.5+tw*0.8,H*0.77-35,undefined,false,1.5);
+                    this.drawMonster(ctx,-191,W*0.572-tw*0.5+tw*0.2,H*0.77-35,undefined,false,1.5);
+                    this.drawMonster(ctx,-190,W*0.572-tw*0.5+tw*0.5,H*0.77-35,undefined,false,1.5);
+                    this.drawMonster(ctx,-189,W*0.572-tw*0.5+tw*0.8,H*0.77-35,undefined,false,1.5);
                 }
             }
         } else if (flashPage=="results") {
@@ -13236,14 +13240,14 @@ function Game() {
                                     this.addZone("claim_"+i+j,crect,"claimsp",{target:i,extra:j});
                                 }
                             }
-                            if (i==1) this.drawMonster(ctx,-192,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
+                            if (i==1) this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
                             else if (i==2) {
                                 /*T.draw(ctx,"0luu",W*0.17+(i*W*0.33)-T.width("0luu")/2,H*0.91-T.height("0luu"),T.width("0luu"),T.height("0luu"))
                                 text(ctx,"?",W*0.17+(i*W*0.33),H*0.91-T.height("0luu")/2,"150px "+FONT,"rgba(255,255,255,1)","center","middle",3,"black");
                                 text(ctx,"???",W*0.17+(i*W*0.33)-18,H*0.91-9,Math.floor(20)+"px"+FONT,"white","center","middle");
                                 text(ctx,"???",W*0.17+(i*W*0.33)+18,H*0.91-9,Math.floor(20)+"px"+FONT,"white","center","middle");*/
                             
-                                this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
+                                this.drawMonster(ctx,-235,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
                             }
                             
                         }
@@ -13251,7 +13255,7 @@ function Game() {
                         if (i==1) {
                             var fSize = "27px";
                             roundedRect(ctx,W*0.17+(i*W*0.33)-(bgw/2)-1,H*0.55-(bgh/2)-1,bgw+2,bgh+2,15,"rgba(15,15,15,0.6)");
-                            text(ctx,"Upon purchase you'll receive Retia",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
+                            text(ctx,"Upon purchase you'll receive Hetfield",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"By completing various tasks you will receive",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+140,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"AS, Keys, Followers, PG, SD, CC & UM",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+170,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+200,fSize+FONT,"rgba(255,255,255,1)","center","middle");
@@ -13260,7 +13264,7 @@ function Game() {
                             //text(ctx,"By completing the different challenges, you will",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+320,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                            // text(ctx,"receive: AS, Keys, Followers, PG, SD, CC, UM and Heroes.",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+350,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             //text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+400,fSize+FONT,"rgba(255,255,255,1)","center","middle");
-                            this.drawMonster(ctx,-192,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
+                            this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
                             var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
                             if (bprect.isInside(GM.x,GM.y)) {
                                 T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
@@ -13274,7 +13278,7 @@ function Game() {
                         } else if (i==2) {
                             var fSize = "27px";
                             roundedRect(ctx,W*0.17+(i*W*0.33)-(bgw/2)-1,H*0.55-(bgh/2)-1,bgw+2,bgh+2,15,"rgba(15,15,15,0.6)");
-                            text(ctx,"Upon purchase, you’ll receive: \"HETFIELD\"",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
+                            text(ctx,"Upon purchase, you’ll receive: \"REAPER\"",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"By completing various tasks you will receive",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+140,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"AS, Keys, Followers, PG, SD, CC & UM",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+170,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+200,fSize+FONT,"rgba(255,255,255,1)","center","middle");
@@ -13282,7 +13286,7 @@ function Game() {
                             text(ctx,"?",W*0.17+(i*W*0.33),H*0.8-T.height("0luu"),"300px "+FONT,"rgba(255,255,255,1)","center","middle",3,"black");
                             text(ctx,"???",W*0.17+(i*W*0.33)-18*2,H*0.8-9*2,Math.floor(20*2)+"px"+FONT,"white","center","middle");
                             text(ctx,"???",W*0.17+(i*W*0.33)+18*2,H*0.8-9*2,Math.floor(20*2)+"px"+FONT,"white","center","middle");*/
-                            this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
+                            this.drawMonster(ctx,-235,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
                             var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
                             if (bprect.isInside(GM.x,GM.y)) {
                                 T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));

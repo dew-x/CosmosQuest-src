@@ -158,11 +158,11 @@ connection.query('SELECT id,heroes,followers FROM ftournaments WHERE status=1 OR
                 connection.query("UPDATE `fsetups` SET wr="+players[i].wr+",position="+players[i].wrp+" WHERE uid="+players[i].id+" AND tid="+id+" LIMIT 1", function (error, results, fields) {
                 });
                 if (players[i].wrp<=4) {
-                    HERO = 172;
+                    HERO = 189;
                 } else if (players[i].wrp<=9) {
-                    HERO=171;
+                    HERO = 188;
                 } else if (players[i].wrp<=16) {
-                    HERO = 170;
+                    HERO = 187;
                 }
                 if (players[i].wrp<=10) {
                     UMS = UM[players[i].wrp-1]; 

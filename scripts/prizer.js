@@ -9135,9 +9135,9 @@ function playfab(params) {
 
 var bids = [
     {id:20,time:172800,price:454},
-    {id:33,time:86400,price:181},
+    /*{id:33,time:86400,price:181},
     {id:34,time:86400,price:181},
-    {id:35,time:86400,price:181},
+    {id:35,time:86400,price:181},*/
     {id:51,time:21600,price:9},
     {id:52,time:43200,price:45},
     {id:53,time:86400,price:181},
@@ -9149,17 +9149,17 @@ var bids = [
     {id:97,time:43200/2,price:9},
     {id:98,time:86400/2,price:45},
     {id:99,time:172800/2,price:181},
-    {id:48,time:86400,price:181},
+    /*{id:48,time:86400,price:181},
     {id:49,time:86400,price:181},
-    {id:50,time:86400,price:181},
+    {id:50,time:86400,price:181},*/
     {id:101,time:172800,price:454},
     {id:107,time:21600,price:9},
     {id:108,time:43200,price:45},
     {id:109,time:86400,price:181},
     {id:113,time:86400,price:4545},
-    {id:59,time:86400,price:181},
+    /*{id:59,time:86400,price:181},
     {id:60,time:86400,price:181},
-    {id:61,time:86400,price:181},
+    {id:61,time:86400,price:181},*/
     {id:127,time:21600,price:9},
     {id:128,time:43200,price:45},
     {id:129,time:86400,price:181},
@@ -9185,7 +9185,7 @@ var bids = [
     {id:135,time:86400,price:181},
     {id:147,time:86400*3,price:3637},
     {id:132,time:86400*3,price:3637},
-    {id:168,time:48*60*60,price:7273},
+    {id:168,time:48*60*60,price:4545}, //mother
     {id:180,time:48*60*60,price:7273},
     {id:175,time:86400,price:4545},
     {id:144,time:86400,price:181},
@@ -9205,7 +9205,19 @@ var bids = [
     {id:206,time:21600,price:9}, //egg
     {id:207,time:43200,price:45}, //baby
     {id:208,time:86400,price:181}, //young
-    {id:209,time:86400*2,price:909} //king
+    {id:209,time:86400*2,price:909}, //king
+    {id:214,time:86400/4,price:9}, //pluvia
+    {id:215,time:86400/2,price:45}, //silex
+    {id:216,time:86400,price:181}, //caeli
+    {id:217,time:86400*2,price:909}, //ignis
+    {id:226,time:86400/4,price:9}, //jalrok
+    {id:227,time:86400/2,price:45}, //sylnir
+    {id:228,time:86400,price:181}, //raelan
+    {id:229,time:86400*2,price:909}, //arathon
+    {id:170,time:86400,price:181}, //agatha
+    {id:171,time:86400,price:181}, //ophelia
+    {id:172,time:86400,price:181}, //helga
+    {id:190,time:86400*3,price:3637} //retia
 ];
 
 var working=0;
@@ -9225,6 +9237,8 @@ function doUpdate(row) {
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":3}\');', function (error, results, fields) {});
             } else if (row.hero==206||row.hero==207||row.hero==208||row.hero==209) { //pyros
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":33}\');', function (error, results, fields) {});
+            } else if (row.hero==226||row.hero==227||row.hero==228||row.hero==229) { //eternals
+                connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":9}\');', function (error, results, fields) {});
             } else {
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+'}\');', function (error, results, fields) {});
             }
