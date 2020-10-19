@@ -847,7 +847,7 @@ function tid2fol(tid) {
     //console.log(fols);
     if (fols==0) return doRandomLog(30000,1000000000,tid);
     var base = (fols/amount);
-    var vals = [4,9,20];
+    var vals = [3,8,13,19];
     return Math.round(base*vals[tid%vals.length]);
 }
 

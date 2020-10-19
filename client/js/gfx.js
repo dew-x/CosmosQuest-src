@@ -4782,14 +4782,14 @@ function hero2score(i,lvl) {
     return score*Math.sqrt(score);
 }
 
-function doHeros(tid,rarity,level) {
-    var POOLS = [
-        [0,1,2,3,4,5,6,19,20,27,28,29,39,40,41,42,43,44,51,52,53,54,55,56,57,58,73,74,75,76,80,88,89,90,91,96,97,98,99,101,107,108,109,113,114,115,116,117,118,119,120,121,122,123,124,125,127,128,129,130,136,137,138,139,148,152,153,154,155,156,157,158,159,160,161,162,163,164,175,180,185],
-        [7,8,9,10,11,12,13,14,15,16,17,18,21,22,23,24,25,26,30,31,32,33,34,35,36,37,38,45,46,47,48,49,50,59,60,61,62,63,64,65,66,67,68,69,70,71,77,78,79,81,82,83,84,85,86,92,93,94,95,100,102,103,104,105,110,111,112,131,132,133,134,135,140,141,142,143,144,145,146,147,149,150,151,165,166,167,169,170,171,172,173,174,176,177,178,179,181,182,183,184,187,188,189,190,191,192,193,194]
-    ];
-    var AMOUNTS = [5,10,15,20,25];
+function doHeros(tid,rarity,elements,level,setpool) {
+	//console.log(tid);
+	if (elements==undefined) elements = -1;
+    var AMOUNTS = [10,15,20,25,30];
     var limit = AMOUNTS[tid%AMOUNTS.length];
-    var pool = POOLS[tid%POOLS.length];
+    var pool = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,73,74,75,76,77,78,79,80,81,82,83,84,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229];
+    if (setpool!==undefined) pool=setpool;
+    
     ret = [];
     for (i=0; i<HERO.length; ++i) {
         ret[i]=0;
@@ -4802,7 +4802,7 @@ function doHeros(tid,rarity,level) {
     while (amount<limit && --max) {
         rnd = rng.next()%pool.length;
         hid = pool[rnd];
-        if (ret[hid]==0 && ((rarity==-1&&HERO[hid].rarity<5) || (rarity.indexOf(HERO[hid].rarity)!==-1))) {
+        if (ret[hid]==0 && ((rarity==-1&&HERO[hid].rarity<5) || (rarity.indexOf(HERO[hid].rarity)!==-1)) && (elements==-1 ||elements.indexOf(HERO[hid].type)!==-1)) {
             if (amount==0) {
                 ret[hid]=(rng.next()%99)+1;
                 if (level!==undefined) ret[hid]=level;
@@ -4829,27 +4829,27 @@ function computeTPROMO(tid) {
     var yrare=Array(HERO.length);
     var ylegends=Array(HERO.length);
     var yhero=Array(HERO.length);
-    var none=Array(HERO.length);
     var rng = new RNG(tid);
-    var rnd = rng.next()%6;
-    var rcommon=Array(HERO.length);
-    var rfull=Array(HERO.length);
-    var rlegend=Array(HERO.length);
+    var rnd = rng.next()%7;
+    var rnd4 = rng.next()%4;
+    
+    var rearthwater=Array(HERO.length);
+    var rfireair=Array(HERO.length);
+    var rchest=Array(HERO.length);
 
-    var rsupera=Array(HERO.length);
-    var rsuperr=Array(HERO.length);
-
-    var rpromo6=Array(HERO.length);
+    var rasctank=Array(HERO.length);
+    var rsuperl=Array(HERO.length);
+    var rborcommon=Array(HERO.length);
+    var rrare=Array(HERO.length);
 
     for (var i=0; i<HERO.length; ++i) {
-        // none
-        none[i]=0; 
-        rpromo6[i]=6;
-        rcommon[i]=rnd;
-        rfull[i]=rng.next()%6;
-        rlegend[i]=rnd;
-        rsuperr[i]=rnd;
-        rsupera[i]=rnd;
+    	rearthwater[i]=rnd;
+        rfireair[i]=rnd;
+        rchest[i]=rng.next()%7;
+        rasctank[i]=rnd;
+        rsuperl[i]=(rng.next()%2)+5;
+        rborcommon[i]=(rnd4==0)?0:(7-rnd4-2*HERO[i].rarity);
+        rrare[i]=rnd;
         // ycommon
         if (HERO[i].rarity==0) ycommon[i]=-1;
         else ycommon[i]=0;
@@ -4863,29 +4863,50 @@ function computeTPROMO(tid) {
         yhero[i]=-1;
     }
 
-    return [yhero,none,rsupera,ylegends,rpromo6,ycommon,rfull,rlegend,yrare,rcommon,rsuperr];
+    return [yhero,rborcommon,rasctank,ylegends,rfireair,ycommon,rrare,rsuperl,yrare,rchest,rearthwater];
 
 }
 
-function computeTHERO(tid) {
+function computeTHERO(tid) {	
     var ycommon=Array(HERO.length);
     var yrare=Array(HERO.length);
     var ylegends=Array(HERO.length);
     var yhero=Array(HERO.length);
-    var none=Array(HERO.length);
 
-    var rcommon=doHeros(tid,[0]);
-    var rlegend=doHeros(tid,[2]);
-    var rfull=doHeros(tid,[0,1,2,3]);
-
-    var rsuperr=doHeros(tid,[1],1000);
-    var rsupera=doHeros(tid,[3],1000);
-    var rng = new RNG(tid);
-    var rpromo6=doHeros(tid,[rng.next()%4]);
+    var rearthwater=doHeros(tid,-1,[1,3]);
+    var rfireair=doHeros(tid,-1,[0,2]);
+    var rchest=doHeros(tid,-1,-1,undefined,[
+            7,8,9,65,
+            10,11,12,66,
+            13,14,15,67,
+            16,17,18,68,
+            21,22,23,69,
+            24,25,26,70,
+            30,31,32,71,
+            36,37,38,81,
+            45,46,47,82,
+            62,63,64,86,
+            77,78,79,92,
+            93,94,95,100,
+            110,111,112,131,
+            140,141,142,143,
+            149,150,151,174,
+            165,166,167,169,
+            176,177,178,179,
+            181,182,183,184,
+            191,192,193,194
+        ]);
+    
+    //asc and leg tanks; no pyros or reflect+revive or aoyuki
+    var rasctank=doHeros(tid,-1,-1,undefined,[65, 66, 67, 68, 69, 70, 71, 80, 81, 82, 86, 92, 100, 119, 130, 131, 132, 147, 156, 157, 158, 159, 160, 174, 179, 184, 190, 194, 198, 213, 221, 229, //asc tanks
+    		2, 9, 12, 15, 18, 20, 23, 26, 33, 34, 35, 38, 42, 47, 48, 49, 50, 53, 56, 59, 60, 61, 64, 75, 79, 83, 84, 85, 96, 99, 101, 112, 113, 114, 115, 116, 117, 129, 133, 134, 135, 139, 148, 152, 155, 163, 168, 175, 178, 180, 193, 220, 228]); //leg tanks
+    var rsuperl=doHeros(tid,[2],-1,1000);
+    //boring commons: no taint,raze,billy,galla,sparks,egg,pluvia,yuri,cloud; murphy, 4tzar, melf, yeti, ss, frosty, leaf, baby, silex, alan, ember, sanqueen
+    var rborcommon=doHeros(tid,-1,-1,undefined,[0, 3, 4, 5, 6, 7, 10, 13, 16, 21, 24, 30, 36, 45, 51, 62, 73, 77, 93, 107, 137, 149, 161, 165, 176, 181, 191, 195, 222, 226, //commons
+    		1, 8, 11, 14, 17, 19, 22, 25, 27, 28, 29, 31, 37, 39, 40, 41, 46, 52, 54, 63, 74, 78, 94, 108, 111, 141, 150, 162, 182, 192, 196, 199, 223, 227]); //rares
+    var rrare=doHeros(tid,[1]);
 
     for (var i=0; i<HERO.length; ++i) {
-        // none
-        none[i]=0; 
         // ycommon
         if (HERO[i].rarity==0) ycommon[i]=-1;
         else ycommon[i]=0;
@@ -4900,18 +4921,18 @@ function computeTHERO(tid) {
     }
     /*
     Your Heroes
-    No Heroes
-    Super Ascended (Level 1,000 Ascended)
+    Boring common
+    Random ascended Tanks
     Your Legendary
-    Random P6 (All same rarity)
+    Air & fire
     Your Common
-    Random (Complete random, random rarity, promo, everything)
-    Random Legendary 
+    Random Rare
+    Super Legendary (1000.6)
     Your Rare
-    Random Common
-    Super Rare (Level 1,000 Rares) 
+    Random Chest
+    Water & Earth 
     */
-    return [yhero,none,rsupera,ylegends,rpromo6,ycommon,rfull,rlegend,yrare,rcommon,rsuperr];
+    return [yhero,rborcommon,rasctank,ylegends,rfireair,ycommon,rrare,rsuperl,yrare,rchest,rearthwater];
 }
 
 function tid2max(tid) {
