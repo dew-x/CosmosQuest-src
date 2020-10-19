@@ -9831,6 +9831,7 @@ function calcTurn0 (A,B,seed,side) {
             } else if (skill.type=="supershield") {
                 turn.buff.defPerc[i]+=skillVal*Math.floor(lvlVal/skill.target);
             } else if (skill.type=="horseman") {
+            	//get stats of enemy front units. Reaching for base stats to prevent asymmetric combinations of stat changing skills.
             	var stats = (B.setup[0] == undefined) ? {hp:0,atk:0} : ((B.setup[0].id<-1) ? level2stats(-B.setup[0].id-2,B.setup[0].lvl,B.setup[0].prom) : MONSTERS[B.setup[0].id]);
             	var atkval = Math.round(stats.atk*skillVal);
                 A.setup[i].atk+=atkval;
