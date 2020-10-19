@@ -7235,9 +7235,9 @@ var HERO = [
     },
 	{
       name: "STENCH",
-      type: 4,
+      type: 0,
       rarity: 2,
-      img: "TODO",
+      img: "6sgk",
       hp: 58,
       atk: 64,
       skill: {
@@ -7257,12 +7257,13 @@ var HERO = [
         as: 0,
         um: 0,
         none: 0
-      },
+      }
+	},
 	{
       name: "RUMBLE",
       type: 4,
       rarity: 2,
-      img: "TODO",
+      img: "1hit",
       hp: 59,
       atk: 65,
       skill: {
@@ -7282,12 +7283,13 @@ var HERO = [
         as: 0,
         um: 0,
         none: 0
-      },
+      }
+	},
 	{
       name: "MUNCHIES",
       type: 4,
       rarity: 2,
-      img: "TODO",
+      img: "1j53",
       hp: 60,
       atk: 66,
       skill: {
@@ -7307,12 +7309,13 @@ var HERO = [
         as: 0,
         um: 0,
         none: 0
-      },
+      }
+	},
 	{
       name: "HIM",
       type: 4,
       rarity: 3,
-      img: "TODO",
+      img: "h5w2",
       hp: 110,
       atk: 120,
       skill: {
@@ -7333,7 +7336,7 @@ var HERO = [
         um: 0,
         none: 0
       }
-    },
+    }
   ];
 
 var promoData = [
@@ -9827,6 +9830,28 @@ function calcTurn0 (A,B,seed,side) {
                 });
             } else if (skill.type=="supershield") {
                 turn.buff.defPerc[i]+=skillVal*Math.floor(lvlVal/skill.target);
+            } else if (skill.type=="horseman") {
+            	var stats = (B.setup[0] == undefined) ? {hp:0,atk:0} : ((B.setup[0].id<-1) ? level2stats(-B.setup[0].id-2,B.setup[0].lvl,B.setup[0].prom) : MONSTERS[B.setup[0].id]);
+            	var atkval = Math.round(stats.atk*skillVal);
+                A.setup[i].atk+=atkval;
+                gBattle.steps.push({
+                    action:"DMG2",
+                    target:side?"other":"you",
+                    value: atkval,
+                    pos: i,
+                });
+                if (!(B.setup.length==1&&B.setup[0].id<-1&&HERO[-(2+B.setup[0].id)].rarity==5)) { //if non-wb-fight also steal hp
+	                var hpval = Math.round(stats.hp*skillVal);
+	                A.setup[i].hp+=hpval;
+	                A.setup[i].mhp+=hpval;
+	                var tmpArr = Array(A.setup.length).fill(0);
+	                tmpArr[i]=hpval;
+	                gBattle.steps.push({
+	                    action:"HEAL2",
+	                    target:side?"other":"you",
+	                    val:tmpArr,
+	                });
+                }
             }
         } 
     }

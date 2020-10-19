@@ -18828,7 +18828,8 @@ function Game() {
             if (cityPage == "hourly") cityPage = "playground";
             else cityPage = "hourly";
         } else if (action=="simulate") {
-            var anyA, anyB = false;
+            var anyA = false;
+            var anyB = false;
             for (var i = 0; i < 6; ++i) {
                 if (data.playground[0].line[i] !== -1) anyA = true;
                 if (data.playground[1].line[i] !== -1) anyB = true;
@@ -18861,8 +18862,7 @@ function Game() {
                     promoB: promoB,
                 };
                 this.loadPlaygroundBattle(battle);
-            }
-            else {
+            } else {
                 popup = {
                     text:"Need at least 1 unit in each player",
                     mode:"alert",
@@ -23476,7 +23476,7 @@ function Game() {
             }
         } else if (skill.type=="horseman") {
             return {
-                short: "Empowered - Start of Battlen/nGains "+(value*100).toFixed(0)+"% of first enemy units stats",
+                short: "Empowered - Start of Battle/nGains "+(value*100).toFixed(0)+"% of first enemy units stats",
                 long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will gain attack and health based on the enemies front unit at the start of the battle."
             }
         }
