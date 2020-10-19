@@ -5846,7 +5846,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "TETRA",
@@ -6727,7 +6728,8 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
-      }
+      },
+      pve: true
     },
     {
       name: "ROB",
@@ -6927,7 +6929,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "YURI",
@@ -7227,7 +7230,8 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
-      }
+      },
+      pve: true
     }
   ];
 
@@ -10017,15 +10021,16 @@ function doTurn (A,D,turnA,turnD,side) {
         var dmgAfterDefense = Math.max((attackDamage*(1-buff.defPerc[i]))-buff.def[i],0);
         if (i==0 && buff.tank[i]!=1) {
             for (var j=i+1; j<D.setup.length; ++j) {
-                var tankDamage = Math.round(dmgAfterDefense*buff.tank[j]);
+				let validJ = j < buff.tank.length?j:buff.tank.length-1; // workaround for NaN bug
+                var tankDamage = Math.round(dmgAfterDefense*buff.tank[validJ]);
                 if (tankDamage) {
-                    D.setup[j].hp -= tankDamage;
+                    D.setup[validJ].hp -= tankDamage;
                     gBattle.steps.push({
                         action:"HIT",
                         target:side?"you":"other",
                         damage:tankDamage,
                         isCrit:atk.typeMul[i]>=1.5,
-                        pos:j,
+                        pos:validJ,
                         silent: true,
                         dmg: tankDamage
                     });
@@ -10060,8 +10065,9 @@ function doTurn (A,D,turnA,turnD,side) {
             });
         }
         
-        var percAoe = Math.round(D.setup[i].hp*(1-atk.percAoe[i])*buff.ratio*buff.sdefPerc[i]);
-        var flatAoe = Math.round(atk.flatAoe[i]*buff.ratio*buff.sdefPerc[i]);
+		let sdefPercValue = i < buff.sdefPerc.length?buff.sdefPerc[i]:0; // workaround for NaN bug
+        var percAoe = Math.round(D.setup[i].hp*(1-atk.percAoe[i])*buff.ratio*sdefPercValue);
+        var flatAoe = Math.round(atk.flatAoe[i]*buff.ratio*sdefPercValue);
         aoeArr[i]=percAoe+flatAoe+buff.fmasochism[i];
         var totalDamage = finalDamage+percAoe+flatAoe+buff.fmasochism[i];
         var initHp = D.setup[i].hp;
@@ -10072,6 +10078,10 @@ function doTurn (A,D,turnA,turnD,side) {
             var skillVal = D.setup[i].skill.value;
             if (D.setup[i].prom>=5) skillVal = skillVal + promoData[-2*1-D.setup[i].id].skill;
             retturn.other.buff.iAtk[i]+=Math.round(totalDamage*(skillVal*Math.min(99,D.setup[i].lvl)/D.setup[i].skill.target));
+        }
+		if(isNaN(totalDamage)){ // workaround for NaN bug
+            //console.log("NaN");
+            totalDamage = 0;
         }
         turndmg += totalDamage;
         if (atk.leech>0 && totalDamage>0 && A.setup[0].hp>0) {
@@ -10278,6 +10288,10 @@ function doTurn (A,D,turnA,turnD,side) {
             val:healArr,
         });
     }
+	if(isNaN(turndmg)){ // workaround for NaN bug
+        //console.log("NaN");
+        turndmg = 0;
+    } 
     A.dmg += turndmg;
     if (retturn.other!==undefined) {
         retturn.other.buff.sdefPerc = turnD.buff.sdefPerc;

@@ -1828,7 +1828,52 @@ handlers.status = function (args, context) {
                 }
             }
         }
-        server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,city:JSON.stringify(data.city)} });
+        
+		// also update currencies
+        var headers = {};
+        var content = "action=prizes&key="+CQ+"&pid="+currentPlayerId;
+        var httpMethod = "post";
+
+		var currUpdate=false;
+        try {
+            var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
+			if (response.success) {
+				for (var i=0; i<response.prizes.length; ++i) {
+					var key=response.prizes[i].key;
+					var value=response.prizes[i].value;
+					var extra=response.prizes[i].extra;
+					if (["AS","CC","KU","PG","PK","SD","UM"].indexOf(key)!==-1) award(currentPlayerId,key,value);
+					else if (key=="FOL") {
+						currUpdate=true;
+						data.followers+=(value||0);
+					} else if (key=="HERO" && value!==undefined && value!==null && value>=0) {
+						if (extra==undefined||extra==1) {
+							if (data.city.hero[value]<99) {
+								currUpdate=true;
+								++data.city.hero[value];
+							} else award(currentPlayerId,"PG",12);
+						} else {
+							if (value>=0 && data.city.hero[value]<99) {
+								currUpdate=true;
+								data.city.hero[value]=Math.min(99,data.city.hero[value]+extra);
+							} else {
+								var pgr = 1;
+								if (HERO[value].rarity==1) pgr=3;
+								else if (HERO[value].rarity==2) pgr=12; 
+								award(currentPlayerId,"PG",pgr);
+							}
+						}
+					}
+				} 
+			}
+        } catch (e) {
+        }
+		
+		if (currUpdate)
+			server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,followers:data.followers,city:JSON.stringify(data.city)}});
+		else
+			server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,city:JSON.stringify(data.city)} });
+		
         data.mlvl=mlvl;
         if (data!==undefined) {
             return {ok:true,data:data};
@@ -2386,6 +2431,25 @@ handlers.swap = function (args, context) {
     }
 }
 
+handlers.swaprow = function (args, context) {
+    var data=loadData();
+    if (data!==undefined) {
+        if (args.row0>=0 && args.row0<data.city.setup.length/6 && args.row1>=0 && args.row1<data.city.setup.length/6) {
+			for (var k=0;k<6;++k) {
+				var tmp=data.city.setup[k+6*args.row0];
+				data.city.setup[k+6*args.row0]=data.city.setup[k+6*args.row1];
+				data.city.setup[k+6*args.row1]=tmp;
+			}
+            server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
+            return { ok:true, data:data };
+        } else {
+            return { ok: false, err: "Bad params"};
+        }
+    } else {
+        return { ok: false, err: "Bad internal"};
+    }
+}
+
 handlers.clearall = function (args, context) {
     if (authKong(args.kid,args.token)) {
         var data=loadData(void 0, args.kid);
@@ -2657,90 +2721,109 @@ handlers.pve = function (args, context) {
 }*/
 
 function hval(hid,lvl) {
-    var hp=HERO[hid].hp;
-    var atk=HERO[hid].atk;
-    var points = lvl - 1;
-    if (HERO[hid].rarity==1) points *= 2;
-    else if (HERO[hid].rarity==2) points *= 6;
-    else if (HERO[hid].rarity==3) points *= 12;
-    var nhp = HERO[hid].hp+Math.round(points*hp/(hp+atk));
-    var natk = HERO[hid].atk+Math.round(points*atk/(hp+atk));
-    var score = nhp*natk;
-    if (HERO[hid].skill.type=="pierce") score*=HERO[hid].skill.value/2;
-    else if (HERO[hid].skill.type=="buff") score*=HERO[hid].skill.value*2;
-    else if (HERO[hid].skill.type=="rico") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="anarchy") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="counter") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="cubetarget") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="payback") score*=HERO[hid].skill.value*3;
-    return score*Math.sqrt(score);
+	var hp=HERO[hid].hp;
+	var atk=HERO[hid].atk;
+	var points = lvl - 1;
+	if (HERO[hid].rarity==1) points *= 2;
+	else if (HERO[hid].rarity==2) points *= 6;
+	else if (HERO[hid].rarity==3) points *= 12;
+	var nhp = HERO[hid].hp+Math.round(points*hp/(hp+atk));
+	var natk = HERO[hid].atk+Math.round(points*atk/(hp+atk));
+	var score = nhp*natk;
+	if (HERO[hid].skill.type=="pierce") score*=HERO[hid].skill.value/2;
+	else if (HERO[hid].skill.type=="buff") score*=HERO[hid].skill.value*1.5;
+	else if (HERO[hid].skill.type=="backrico" || HERO[hid].skill.type=="infiltred") score*=HERO[hid].skill.value*3;
+	else if (HERO[hid].skill.type=="fromdeath") score*=2;
+	else if (HERO[hid].skill.type=="boom") score*=3;
+	else if (HERO[hid].skill.type=="anarchy" || HERO[hid].skill.type=="payback") score*=HERO[hid].skill.value*3;
+	else if (HERO[hid].skill.type=="debuff") score*=1.2;
+	else if (HERO[hid].skill.type=="ratio") score*=1.5;
+	else if (HERO[hid].skill.type=="bday") score*=4;
+	else if (HERO[hid].skill.type=="rico") score*=HERO[hid].skill.value*(HERO[hid].skill.target+2);
+	if(hp / atk > 1.5 && HERO[hid].skill.type!="ratio" && HERO[hid].skill.type!="debuff") score*=Math.pow(hp / atk, 0.4);
+	//if (HERO[hid].passive.type==1) score*=2;
+	return score*Math.sqrt(score);
 }
 
-function doDaily(lvl) {
-    var target=Math.pow(1.21-0.42*(1-(350+lvl)/(350+lvl*2)),lvl-1)*2500*(1+lvl/100)*0.8;
-    var root=[Math.floor(Math.random()*4),-1,-1,-1,-1,-1];
-    for (var i=1; i<5; ++i) {
-        root[i]=N[root[i-1]%4][Math.floor(Math.pow(Math.random()*2,2))];
-    }
-    var hero=PVEHERO.slice();
-    var bcost=0;
-    for (var i=0; i<5; ++i) {
-        if (bcost<target) {
-            var fam=root[i];
-            var avgleft=(target*0.8-bcost)/(5-i);
-            while (fam+4<MONSTERS.length && fam+4<132 && MONSTERS[fam+4].cost<avgleft) {
-                fam+=4;
-            }
-            root[i]=fam;
-            bcost+=MONSTERS[root[i]].cost;
-        }
-    }
-    // pick 2 commons, 2 rares, 2 legendaries
-    var ignore=[69,72,76,87,98,99,106,126,128,153,154,155,156,198];
-    var picks=[];
-    while (picks.length<20) {
-        var hid=Math.floor(Math.random()*HERO.length);
-        if (picks.length<5) {
-            if (HERO[hid].rarity==0 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else if (picks.length<10) {
-            if (HERO[hid].rarity==1 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else if (picks.length<15) {
-            if (HERO[hid].rarity==2 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else {
-            if (HERO[hid].rarity==3 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        }
-    }
-    var placed=[];
-    for (var pos=0; pos<=4; ++pos) {
-        var todo=target-(bcost-MONSTERS[root[pos]].cost);
-        var bestid=-1;
-        var bestlvl=0;
-        for (var i=0;i<picks.length;++i) {
-            if (placed.indexOf(picks[i])===-1) {
-                if (hval(picks[i],1)<todo) {
-                    var lvl=1;
-                    while (lvl<9000 && hval(picks[i],lvl<99?lvl+1:(lvl<1000?1000:lvl+1000))<todo) {
-                        lvl=lvl<99?lvl+1:(lvl<1000?1000:lvl+1000);
-                    }
-                    if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl)) {
-                        bestid=i;
-                        bestlvl=lvl;
-                    }
-                }
-            }
-        }
-        if (bestid!=-1 && hval(picks[bestid],bestlvl)>1.5*MONSTERS[root[pos]].cost) {
-            bcost-=MONSTERS[root[pos]].cost;
-            bcost+=hval(picks[bestid],bestlvl);
-            placed.push(picks[bestid]);
-            root[pos]=-(2+picks[bestid]);
-            hero[picks[bestid]]=bestlvl;
-        }
-    }
-    return {
-        setup:root,
-        hero:hero
-    };
+function mval(mid, type) { // 0 dq, 1 dg
+	if(type == 1)
+		return MONSTERS[mid].cost;
+	return Math.pow(MONSTERS[mid].cost*2.5,1.05);
+}
+
+function doDaily(lvl) { // DQ
+	var target=Math.pow(1.21-0.42*(1-(300+lvl)/(300+lvl*2)),lvl-1)*2600*(1+lvl/100)*(lvl<=250 ? 0.9 : Math.pow(lvl/250, 4.5)-0.1);
+	var root=[Math.floor(Math.random()*4),-1,-1,-1,-1,-1];
+	for (var i=1; i<5; ++i) {
+		root[i]=N[root[i-1]%4][Math.floor(Math.pow(Math.random()*2,2))];
+	}
+	var hero=PVEHERO.slice();
+	var bcost=0;
+	for (var i=0; i<5; ++i) {
+		if (bcost<target) {
+			var fam=root[i];
+			var avgleft=(target*0.8-bcost)/(5-i);
+			while (fam+4<MONSTERS.length && mval(fam+4, 0)<avgleft) {
+				fam+=4;
+			}
+			root[i]=fam;
+			bcost+=mval(fam, 0);
+		}
+	}
+	var ignore=[];
+	var favor=[205,96,80]; // kilkenny, lep, bubbles
+	var picks=[];
+	while (picks.length<30) {
+		var hid=Math.floor(Math.random()*HERO.length);
+		if(type == 0 && favor.indexOf(hid)===-1 && Math.random()<0.1) {
+			hid=Math.floor(Math.random()*favor.length);
+		}
+		if (picks.length<7) {
+			if (HERO[hid].rarity==0 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else if (picks.length<14) {
+			if (HERO[hid].rarity==1 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else if (picks.length<21) {
+			if (HERO[hid].rarity==2 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else {
+			if (HERO[hid].rarity==3 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		}
+	}
+	var placed=[];
+	var heroProbaModifier = 0.5;
+	if(lvl < 150)
+		heroProbaModifier = 0.1;
+	if(lvl < 100)
+		heroProbaModifier = 0;
+	for (var pos=0; pos<=4; ++pos) {
+		var todo=target-(bcost-mval(root[pos], 0));
+		var bestid=-1;
+		var bestlvl=0;
+		for (var i=0;i<picks.length;++i) {
+			if (placed.indexOf(picks[i])===-1) {
+				if (hval(picks[i],1)<todo) {
+					var lvl=1;
+					while (lvl<9000 && hval(picks[i],lvl<99?lvl+1:(lvl<1000?1000:lvl+1000))<todo) {
+						lvl=lvl<99?lvl+1:(lvl<1000?1000:lvl+1000);
+					}
+					if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl) || (favor.indexOf(picks[i])!==-1 && Math.random()>0.7)) {
+						bestid=i;
+						bestlvl=lvl;
+					}
+				}
+			}
+		}
+		if (bestid!=-1 && ((hval(picks[bestid],bestlvl)>1.5*mval(root[pos], 0) && hval(picks[bestid],bestlvl)<2.5*mval(root[pos], 0)) || favor.indexOf(picks[bestid])!==-1 || Math.random() < (heroProbaModifier + (4-pos)*0.1))) {
+			bcost-=MONSTERS[root[pos]].cost;
+			bcost+=hval(picks[bestid],bestlvl);
+			placed.push(picks[bestid]);
+			root[pos]=-(2+picks[bestid]);
+			hero[picks[bestid]]=bestlvl;
+		}
+	}
+	return {
+		setup:root,
+		hero:hero
+	};
 }
 
 handlers.pved = function (args, context) {
@@ -3511,9 +3594,9 @@ handlers.auction = function(args, context) {
 handlers.buylot = function(args, context) {
     var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
     if (ret) {
-        if (ret.VirtualCurrency.AS>=1) {
+        if (ret.VirtualCurrency.AS>=parseInt(args.qty)) {
             var headers = {};
-            var content = "action=lottery&key="+CQ+"&pid="+currentPlayerId;
+            var content = "action=lottery&key="+CQ+"&qty="+args.qty+"&pid="+currentPlayerId;
             var httpMethod = "post";
         
             try {
@@ -3523,7 +3606,7 @@ handlers.buylot = function(args, context) {
             }
 
             if (response.success) {
-                pay(currentPlayerId,"AS",1);
+                pay(currentPlayerId,"AS",parseInt(response.qtyDone));
                 return { ok: true };
             } else {
                 return { ok: false, err: response.error };
@@ -4630,13 +4713,15 @@ handlers.ggactivity = function (args, context) {
                                 data.city.games.activities.instant-=1;
                                 if (args.activity == 2) data.city.games.stamina-=110;
                                 if (args.activity == 0) {
-                                    if (Date.now() < data.city.games.victim[1]) data.city.games.stamina+=(25+(25*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(25+(25*10*data.city.games.upgrades[0]/100));
                                     else data.city.games.stamina+=(50+(50*10*data.city.games.upgrades[0]/100));
-                                    data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(50+(50*10*data.city.games.upgrades[0]/100));
+                                    else data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
                                 } else if (args.activity == 1) {
-                                    data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
+                                	if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(55+(55*10*data.city.games.upgrades[0]/100));
+                                    else data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
                                 } else if (args.activity == 2) {
-                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(205+(205*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=Math.ceil(205+(205*10*data.city.games.upgrades[0]/100));
                                     else data.city.games.automatic.tickValue+=(410+(410*10*data.city.games.upgrades[0]/100));
                                 }
                                 data.city.games.activities.timer = -1;
@@ -4692,14 +4777,16 @@ handlers.ggclaim = function (args, context) {
                     log("[G.A.M.E.S] Won "+favourAmount+" favours");
                 }
                 
-                if (data.city.games.activities.activity == 0) {
-                    if (Date.now() < data.city.games.victim[1]) data.city.games.stamina+=(25+(25*10*data.city.games.upgrades[0]/100));
+                if (args.activity == 0) {
+                    if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(25+(25*10*data.city.games.upgrades[0]/100));
                     else data.city.games.stamina+=(50+(50*10*data.city.games.upgrades[0]/100));
-                    data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
-                } else if (data.city.games.activities.activity == 1) {
-                    data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
-                } else if (data.city.games.activities.activity == 2) {
-                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(205+(205*10*data.city.games.upgrades[0]/100));
+                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(50+(50*10*data.city.games.upgrades[0]/100));
+                    else data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
+                } else if (args.activity == 1) {
+                	if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(55+(55*10*data.city.games.upgrades[0]/100));
+                    else data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
+                } else if (args.activity == 2) {
+                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=Math.ceil(205+(205*10*data.city.games.upgrades[0]/100));
                     else data.city.games.automatic.tickValue+=(410+(410*10*data.city.games.upgrades[0]/100));
                 }
                 data.city.games.activities.timer = -1;

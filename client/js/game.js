@@ -1869,7 +1869,7 @@ function Game() {
                                                 for (var x=0; x<6; ++x) {
                                                     var b=x*6;
                                                     for (var y=0; y<6; ++y) {
-                                                        if (mdata.city.setup[b+y]>=0) ++rc[x];
+                                                        if (mdata.city.setup[b+y]!==-1) ++rc[x];
                                                     }
                                                     if (rc[x]==0) ++empty;
                                                 }
@@ -1903,11 +1903,14 @@ function Game() {
                                         }
                                         this.place(position,cityClick.id);
                                     }
-                                }
-                                else {
+                                } else {
                                     if ((Date.now()-doubleClick.time)>=400 && swapping==true){
-                                        var initialMonster=mdata.city.setup[position];
-                                        this.swap(position,cityClick.initPos);
+										var initialMonster=mdata.city.setup[position];
+										if (mulChest) {
+											this.swaprow(position,cityClick.initPos);
+										} else {
+											this.swap(position,cityClick.initPos);
+										}
                                         swapping=false;
                                     } 
                                 }
@@ -2050,21 +2053,42 @@ function Game() {
                                 }
                                 else {
                                     if ((Date.now()-doubleClick.time)>=400){
-                                        var initialMonster=data.tour.setup[tournamentid][position];
-                                        if (tournamentid==1 && CQW!==undefined) {
-                                            if (CQW.tour.current.grid[position]!=4) {
-                                                if (CQW.tour.current.grid[position]==8 && cityClick.id>-1) {
-                                                    data.tour.setup[tournamentid][position] = cityClick.id;
-                                                    data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                                } else if (CQW.tour.current.grid[position]!=8) {
-                                                    data.tour.setup[tournamentid][position] = cityClick.id;
-                                                    data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                                }
-                                            } 
-                                        } else {
-                                            data.tour.setup[tournamentid][position] = cityClick.id;
-                                            data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                        }
+										if (mulChest) {
+											var rowa = j;
+											var rowb = Math.floor(cityClick.initPos/6);
+											var allowRowSwap = true;
+											if (tournamentid==1 && CQW!==undefined) { // check validity
+												for (var k=0;k<6;++k) {
+													var cella = CQW.tour.current.grid[k+6*rowa];
+													var cellb = CQW.tour.current.grid[k+6*rowb];
+													if ((cella==4 && data.tour.setup[tournamentid][k+6*rowb]!=-1) || (cellb==4 && data.tour.setup[tournamentid][k+6*rowa]!=-1) || (cella==8 && data.tour.setup[tournamentid][k+6*rowb]<-1) || (cellb==8 && data.tour.setup[tournamentid][k+6*rowa]<-1))
+														allowRowSwap = false;
+												}
+											}
+											if (allowRowSwap) {
+												for (var k=0;k<6;++k) {
+													var initialMonster=data.tour.setup[tournamentid][k+6*rowa];
+													data.tour.setup[tournamentid][k+6*rowa] = data.tour.setup[tournamentid][k+6*rowb];
+													data.tour.setup[tournamentid][k+6*rowb] = initialMonster;
+												}
+											}
+										} else {
+											var initialMonster=data.tour.setup[tournamentid][position];
+											if (tournamentid==1 && CQW!==undefined) {
+												if (CQW.tour.current.grid[position]!=4) {
+													if (CQW.tour.current.grid[position]==8 && cityClick.id>-1) {
+														data.tour.setup[tournamentid][position] = cityClick.id;
+														data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+													} else if (CQW.tour.current.grid[position]!=8) {
+														data.tour.setup[tournamentid][position] = cityClick.id;
+														data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+													}
+												} 
+											} else {
+												data.tour.setup[tournamentid][position] = cityClick.id;
+												data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+											}
+										}
                                         swapping=false;
                                     }
                                 }
@@ -2168,9 +2192,9 @@ function Game() {
                         }
                         else {
                             if ((Date.now()-doubleClick.time)>=400){
-                                var initialMonster=data.wb[data.wbline][i];
-                                data.wb[data.wbline][i] = cityClick.id;
-                                data.wb[data.wbline][cityClick.initPos] = initialMonster;
+								var initialMonster=data.wb[data.wbline][i];
+								data.wb[data.wbline][i] = cityClick.id;
+								data.wb[data.wbline][cityClick.initPos] = initialMonster;
                                 swapping=false;
                             }
                         }
@@ -2516,6 +2540,13 @@ function Game() {
         }
         ctx.restore();
 
+        // Event Tickets
+        var etrect=(new Rect(W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75)).small();
+        if (etrect.isInside(GM.x,GM.y)) {
+            T.draw(ctx,"joy2",W*0.113-1,H-T.height("joy2")*1.75-17-1,T.width("joy2")*1.75+2,T.height("joy2")*1.75+2);
+            this.addZone("oetckm",etrect,"oetickets",{target:true});
+        } else T.draw(ctx,"joy2",W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75);
+
         // Task Manager Icon
         if (mdata!==undefined && mdata.tm!==undefined) {
             var tmrect=(new Rect(7,H-T.height("01i5")*0.95-5,T.width("01i5")*0.95,T.height("01i5")*0.95)).small();
@@ -2571,14 +2602,6 @@ function Game() {
                 this.addZone("tgsp",sprect,"tgsp",{target:true});
             } else T.draw(ctx,"4krx",W*0.22,H-T.height("4krx")*0.95-5,T.width("4krx")*0.95,T.height("4krx")*0.95);
         }
-
-        // Event Tickets
-        var etrect=(new Rect(W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75)).small();
-        if (etrect.isInside(GM.x,GM.y)) {
-            T.draw(ctx,"joy2",W*0.113-1,H-T.height("joy2")*1.75-17-1,T.width("joy2")*1.75+2,T.height("joy2")*1.75+2);
-            this.addZone("oetckm",etrect,"oetickets",{target:true});
-        } else T.draw(ctx,"joy2",W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75);
-
 
         // Right tabs
         var anyExperiment=false;
@@ -4240,7 +4263,7 @@ function Game() {
                 }
 
                 text(ctx,"Page "+(ltoPage+1)+"/"+ltoPages,W*0.99,y0+H*0.975,"28px"+FONT,"rgba(201,244,255,1)","right","middle");
-                if (drawArray.length > 3) {
+                if (drawArray.length > 6) {
                     var nw=T.width("09sg");
                     var nh=T.height("09sg");
                     T.draw(ctx,"09sg",W*0.94,y0+H*0.495);
@@ -5766,16 +5789,16 @@ function Game() {
 
         //Set all experiments
         if (unlocked == 12) {
-	        var x = zx+tzw/2-tallw/2-5-T.width("twbw");
-	        T.draw(ctx,"twbw",x,zy+tzh-tallh);
+	        var x = zx+tzw/2-tallw/2-5-T.width("9wxp");
+	        T.draw(ctx,"9wxp",x,zy+tzh-tallh);
 	        var any = false;
 	        for (var i = 0; i < 12; ++i) if (i<=data.specie && !nn(data.lab[i])) any = true;
 	        if (any) {
 		        for (var i = 0; i < 3; ++i) {
-			        if (mouse) this.addZone("setAll"+i,(new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small(),"setAllExp",{target:i,max:unlocked});
-			        if ((new Rect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6)).small().isInside(GM.x,GM.y)) {
+			        if (mouse) this.addZone("setAll"+i,(new Rect(x+101+i*T.height("9wxp")*0.6,zy+tzh-T.height("02pq")+T.height("9wxp")*0.2+1,T.height("9wxp")*0.6,T.height("9wxp")*0.6)).small(),"setAllExp",{target:i,max:unlocked});
+			        if ((new Rect(x+101+i*T.height("9wxp")*0.6,zy+tzh-T.height("02pq")+T.height("9wxp")*0.2+1,T.height("9wxp")*0.6,T.height("9wxp")*0.6)).small().isInside(GM.x,GM.y)) {
 			            ctx.fillStyle="rgba(255,255,255,0.3)";
-			            ctx.fillRect(x+101+i*T.height("twbw")*0.6,zy+tzh-T.height("02pq")+T.height("twbw")*0.2+1,T.height("twbw")*0.6,T.height("twbw")*0.6);
+			            ctx.fillRect(x+101+i*T.height("9wxp")*0.6,zy+tzh-T.height("02pq")+T.height("9wxp")*0.2+1,T.height("9wxp")*0.6,T.height("9wxp")*0.6);
 			        }
 		        }
 	        }
@@ -8706,7 +8729,7 @@ function Game() {
                 } else T.draw(ctx,"0ljk",W*0.87-T.width("0ij7")/2,H*0.89-T.height("0ij7")/2);
                 this.drawMonster(ctx,-2-pverewards[pvepage],W*0.797,H*0.95,undefined,false,0.85,1);
             } else {
-                T.draw(ctx,"0ljk",W*0.87-T.width("0ij7")/2,H*0.89-T.height("0ij7")/2);
+                T.draw(ctx,"4bbd",W*0.87-T.width("4bbd")/2,H*0.89-T.height("4bbd")/2);
                 this.drawMonster(ctx,-2-pverewards[pvepage],W*0.797,H*0.95,undefined,false,0.85,1,false);
             }
         } else {
@@ -9739,7 +9762,7 @@ function Game() {
     }
 
     this.drawPrana = function (ctx) {
-        var MARR = [
+        var MARR = [ //heroes in the hero manager, in order of appearance
             7,8,9,
             10,11,12,
             13,14,15,
@@ -9821,7 +9844,7 @@ function Game() {
             156,168,175,
             185
         ];
-        var PVEH = [
+        var PVEH = [ //heroes that can be leveled up with PG&CC or AS&CC
             0,1,2,
             51,52,53,
             127,128,129,
@@ -9844,7 +9867,7 @@ function Game() {
             204,205,
         ];
         // Season Cleaner
-        var SEHE = [
+        var SEHE = [ //heroes that get removed from hero manager if you don't own them
             33,34,35,
             48,49,50,
             51,52,53,
@@ -10447,7 +10470,7 @@ function Game() {
                         }
                     }
     
-                } else if (showHero == 42 || showHero == 43 || showHero == 44 || showHero == 101) {
+                } else if (showHero == 42 || showHero == 43 || showHero == 44 || showHero == 101) {//UM-levelable
                     var price = 750;
     
                     var prrect = (new Rect(btx+bw/4+15-T.width("0fp5")/2*0.9,bty+bh/3+320-T.height("0fp5")/2*0.81,T.width("0fp5")*0.9,T.height("0fp5")*0.82)).small();
@@ -11622,15 +11645,17 @@ function Game() {
         var damageDone = CQW.WB.dealt;
         var damageTotal = CQW.WB.dmg;
         var wbLvl = CQW.WB.lvl;
-        var reward = Math.log(CQW.WB.dmg)*750;
+        var modifier = parseFloat(CQW.WB.modifier);
+        var rewardBase = Math.log(CQW.WB.dmg/modifier)*modifier;
+        var reward = rewardBase*750;
         if (modes[CQW.WB.mode]=="No Heroes") {
-            reward = Math.log(CQW.WB.dmg)*1700;
+            reward = rewardBase*1700;
         } else {
-            if (CQW.WB.id==72) reward = Math.log(CQW.WB.dmg)*950;
-            else if (CQW.WB.id==87) reward = Math.log(CQW.WB.dmg)*900;
-            else if (CQW.WB.id==106) reward = Math.log(CQW.WB.dmg)*750;
-            else if (CQW.WB.id==126) reward = Math.log(CQW.WB.dmg)*1700;
-            else if (CQW.WB.id==186) reward = Math.log(CQW.WB.dmg)*1700;
+            if (CQW.WB.id==72) reward = rewardBase*950;
+            else if (CQW.WB.id==87) reward = rewardBase*900;
+            else if (CQW.WB.id==106) reward = rewardBase*750;
+            else if (CQW.WB.id==126) reward = rewardBase*1700;
+            else if (CQW.WB.id==186) reward = rewardBase*1700;
         }
         reward = Math.max(reward,0);
         if (CQW.WB.name.indexOf("SUPER")!==-1) reward*=2;
@@ -11845,22 +11870,23 @@ function Game() {
     }
 
     this.drawDailyEvent = function (ctx) {
-        if (this.isDailyEvent().mode!==undefined) {
-            if (this.isDailyEvent().mode=="flash") {
+		var demode = this.isDailyEvent().mode;
+        if (demode!==undefined) {
+            if (demode=="flash") {
                 if (CQW!==undefined && CQW.flash!==undefined) {
                     flashOpen=true;
                     this.drawFlash(ctx);
                 } else showDaily=false;
             }
-            else if (this.isDailyEvent().mode=="cc") {
+            else if (demode=="cc") {
                 eventCCopen=true;
                 this.drawEventCC(ctx);
             }
-            else if (this.isDailyEvent().mode=="adventure") {
+            else if (demode=="adventure") {
                 adventureOpen=true;
                 this.drawAdventure(ctx);
             }
-            else if (this.isDailyEvent().mode=="pge") {
+            else if (demode=="pge") {
                 var attempts = 10;
                 var pg = 0;
                 if (mdata.city !== undefined && mdata.city.pge !== undefined && mdata.city.pge.attempts !== undefined && mdata.city.pge.pg !== undefined) {
@@ -12086,7 +12112,8 @@ function Game() {
 
                 text(ctx,"Lucky Followers",W*0.5,H*0.25,"60px"+FONT,"white","center","middle");
                 text(ctx,"You can open 3 cells every 15 minutes. Three of them have an amazing amount of followers!",W*0.5,H*0.75,"30px"+FONT,"black","center","middle");
-
+                if (CQW.followers.completed!==undefined) text(ctx,"You used "+CQW.followers.completed+" out of 8 attempts.",W*0.5,H*0.79,"30px"+FONT,"black","center","middle");
+                
                 var cw=W*0.095*0.8;
                 var ch=H*0.15*0.8;
                 var cx=W*0.233;
@@ -12153,7 +12180,7 @@ function Game() {
                     else text(ctx,"New opening available in: "+timer((CQW.followers.timeleft-Date.now())/1000),W*0.5,H*0.3,"40px"+FONT,"black","center","middle");
                 }
             }
-            else if (this.isDailyEvent().mode=="lottery") {
+            else if (demode=="lottery") {
                 var bw=W*0.6;
                 var bh=H*0.6;
                 roundedRect(ctx,W*0.5-(bw*0.5)-2,H*0.5-(bh*0.5)-2,bw+4,bh+4,5,"rgb(255,255,255)");
@@ -12185,7 +12212,7 @@ function Game() {
 
                 if (CQW!==undefined && CQW.lottery!==undefined) {
                     text(ctx,"- Each lottery ticket costs 1 Ascension Sphere",W*0.5-bw*0.5+10,H*0.3,"36px"+FONT,"white","left","middle");
-                    text(ctx,"- You can buy unlimited lottery tickets",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
+                    text(ctx,"- You can buy 1000 lottery tickets; quick buy: ctrl x10, shift x100",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
                     text(ctx,"- Prize Pool is 105% of total lottery tickets income. Currently: "+CQW.lottery.pool.toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+40,"36px"+FONT,"white","left","middle");
                     text(ctx,"* 40%/20%/10%/5%/5%/5%/5%/5%/5%/5% (10 winners).",W*0.5-bw*0.5+10,H*0.3+60,"36px"+FONT,"white","left","middle");
                     text(ctx,"* "+(0.4*CQW.lottery.pool).toFixed(0)+"/"+(0.2*CQW.lottery.pool).toFixed(0)+"/"+(0.1*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+80,"36px"+FONT,"white","left","middle");
@@ -12196,7 +12223,7 @@ function Game() {
                         T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.52-T.height("091m")/2);
                         this.addZone("buylot",buyrect,"buylot");
                     } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.52-T.height("091m")/2);
-                    text(ctx,"BUY TICKET 1",W*0.5-20,H*0.52,"36px"+FONT,"white","center","middle");
+                    text(ctx,"BUY TICKET x"+(mulChest ? 10 : (x100 ? 100 : 1)),W*0.5-20,H*0.52,"36px"+FONT,"white","center","middle");
                     T.draw(ctx,"08y7",W*0.5+35,H*0.52-T.height("091m")/2,T.width("02c9")*0.6,T.height("02c9")*0.6);
 
                     if (CQW.lottery.numbers!==undefined && CQW.lottery.numbers.length>0) {
@@ -12231,7 +12258,7 @@ function Game() {
                     }
                 }
             }
-            else if (this.isDailyEvent().mode=="dungeon") {
+            else if (demode=="dungeon") {
                 data.pveline = 0;
                 var skillInfo=undefined;
                 inDungeon=true;
@@ -13717,7 +13744,7 @@ function Game() {
                     var bh = H*0.0475;
                     var b = "Inactive";
                     if (list[c].t !== undefined && list[c].t) {
-                        b = timer(list[c].b/1000) + " Hours";
+                        b = (list[c].b <= 0 ? "Expired" : timer(list[c].b/1000) + " Hours");
                     } else if (list[c].p !== undefined && list[c].p) {
                         b = list[c].b;
                     } else {
@@ -13726,7 +13753,7 @@ function Game() {
                         else if (list[c].b == -1) b = "LifeTime";
                         else if (list[c].b > 1 && list[c].d == undefined) {
                             if ((list[c].b-Date.now())>86400000) b = Math.ceil((list[c].b-Date.now())/86400000)+" Days";
-                            else b = timer((list[c].b-Date.now())/1000);
+                            else b = ((list[c].b-Date.now()) <= 0 ? "Expired" : timer((list[c].b-Date.now())/1000));
                         }
                         else {
                             b = list[c].b+" days";
@@ -16054,7 +16081,9 @@ function Game() {
         } else T.draw(ctx,"cjq4",W*0.5+bgw*0.5-T.width("cjq4")*0.5-14,H*0.5-bgh*0.5,T.width("cjq4")*0.75,T.height("cjq4")*0.75); 
     }
     this.updateLoopEventRanking = function (leaderboardName) {
-        if (eventRanking==undefined) eventRanking={};
+        if (eventRanking==undefined) eventRanking={time: 0, ptime: 0};
+		//if(Date.now() - eventRanking.time < 2*60*1000)
+			//return false;
         eventRanking.time=Date.now();
         if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined) {
             PlayFab.ClientApi.GetLeaderboard({
@@ -16065,21 +16094,24 @@ function Game() {
                 if (_this.serverOk(res,err)) {
                     if (res.data && res.data.Leaderboard) {
                         eventRanking.top=res.data.Leaderboard;
-                        PlayFab.ClientApi.GetLeaderboardAroundPlayer({
-                            "StatisticName": leaderboardName,
-                            "MaxResultsCount": 1,
-                        }, function (res,err) {
-                            if (_this.serverOk(res,err)) {
-                                eventRanking.player=res.data.Leaderboard[0];
-                            } else {
-                                eventRanking.time-=2*60*1000;
-                                var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
-                                    msg:"PFsjyou",
-                                    stk:res
-                                }));
-                                GA.getInstance().addEvent(ev);
-                            }
-                        });
+						if(Date.now() - eventRanking.ptime > 5*60*1000) {
+							eventRanking.ptime=Date.now();
+							PlayFab.ClientApi.GetLeaderboardAroundPlayer({
+								"StatisticName": leaderboardName,
+								"MaxResultsCount": 1,
+							}, function (res,err) {
+								if (_this.serverOk(res,err)) {
+									eventRanking.player=res.data.Leaderboard[0];
+								} else {
+									eventRanking.time-=2*60*1000;
+									var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
+										msg:"PFsjyou",
+										stk:res
+									}));
+									GA.getInstance().addEvent(ev);
+								}
+							});
+						}
                     }
                 } else {
                     eventRanking.time-=2*60*1000;
@@ -16356,7 +16388,7 @@ function Game() {
                                         T.draw(ctx,img,pos[i].x-T.width(img)*scale/2,pos[i].y-105*bscale-T.height(img)*scale/2,T.width(img)*scale,T.height(img)*scale);
                                         //text(ctx,step.value,pos[i].x+34*bscale,pos[i].y-116*bscale,Math.round(bscale*44)+"px"+FONT,"lightblue","center","middle","black",4);
                                     }  else if (step.action=="EXTRA") {
-                                        if (step.data.val!==undefined) {
+                                        if (step.data.val!==undefined && step.data.type!==-1) {
                                             var plusmov=mapf(delta,0,0.8,0,20)*bscale;
                                             var scale=bscale*1.5;
                                             T.draw(ctx,"islj_"+step.data.type,pos[i].x-T.width("islj_0")*scale/2,pos[i].y-185*bscale-T.height("islj_0")*scale/2-plusmov,T.width("islj_0")*scale,T.height("islj_0")*scale);
@@ -21424,6 +21456,39 @@ function Game() {
             });
         }
     }
+    this.swaprow = function (pos0,pos1) {
+        if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined && swapSync[0]==undefined && swapSync[1]==undefined) {
+            swapSync[0]=pos0;
+            swapSync[1]=pos1;
+            PlayFab.ClientApi.ExecuteCloudScript({
+                "RevisionSelection":PFMODE,
+                "FunctionName": "swaprow",
+                "FunctionParameter": {
+                    row0: Math.floor(pos0 / 6),
+                    row1: Math.floor(pos1 / 6)
+                }
+            }, function (res,err) {
+                swapSync[0]=undefined;
+                swapSync[1]=undefined;
+                if (_this.serverOk(res,err)) {
+                    if (res.data && res.data.FunctionResult && res.data.FunctionResult.ok==true) {
+                        battleSync=Date.now();
+                        _this.updateMData(res.data.FunctionResult.data);
+                    } else {
+                        var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
+                            msg:"PFswap",
+                            stk:res
+                        }));
+                        GA.getInstance().addEvent(ev);
+                        popup={
+                            text:"Swap failed try again",
+                            mode:"alert",
+                        }
+                    }
+                }
+            });
+        }
+    }
     var pvesync=false;
     this.pve = function (id) {
         if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined) {
@@ -21642,24 +21707,8 @@ function Game() {
                 else T.negative(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
                 ctx.restore();
                 if (HERO[hid].rarity == 3 && HERO[hid].pve!==undefined) {
-                    var aura = ["fq9i","9b1q","ewf1","yrzo"];
+                    var aura = ["fq9i","9b1q","ewf1","yrzo","3i47"];
                     T.draw(ctx,aura[HERO[hid].type],x-T.width(aura[HERO[hid].type])*scale/2,y-(T.height(aura[HERO[hid].type])+10)*scale,T.width(aura[HERO[hid].type])*scale,T.height(aura[HERO[hid].type])*scale);
-                }
-                if (hid == 209) {
-                    var aura = "fq9i";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 217) {
-                    var aura = "ewf1";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 229) {
-                    var aura = "3i47";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 174) {
-                    var aura = "3i47";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
                 }
                 if (HERO[hid].rarity == 3 && false) {
                     text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":(atk>stats.atk?"lime":"red"),"center","middle","yellow",2);
@@ -24279,6 +24328,9 @@ function Game() {
             PlayFab.ClientApi.ExecuteCloudScript({
                 "RevisionSelection":PFMODE,
                 "FunctionName": "buylot",
+                "FunctionParameter": {
+                    qty: (mulChest ? 10 : (x100 ? 100 : 1)),
+                }
             }, function (res,err) {
                 if (_this.serverOk(res,err)) {
                     if (res.data && res.data.FunctionResult && res.data.FunctionResult.ok==true) {
@@ -25270,7 +25322,8 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
+							eventRanking.ptime = 0;
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;
@@ -25302,7 +25355,8 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
+							eventRanking.ptime = 0;
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;
@@ -25334,7 +25388,7 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;

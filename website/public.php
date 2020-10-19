@@ -2,6 +2,7 @@
     include_once("sql.php");
     include_once("questions.php");
     include_once("data.php");
+	include_once("functions.php");
     header("Access-Control-Allow-Origin: *");
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
@@ -101,7 +102,8 @@
         );
     }
     $data["WB"]["dealt"]=0;
-    $res2 = $sql->query("SELECT SUM(WBD.damage) AS dealt FROM WBD, WB, users WHERE users.kid=$kid AND WB.status=0 AND WB.id=WBD.bid AND WBD.uid=users.id GROUP BY WBD.bid");
+	$data["WB"]["modifier"]=1;
+    $res2 = $sql->query("SELECT WBD.bid, SUM(WBD.damage) AS dealt FROM WBD, WB, users WHERE users.kid=$kid AND WB.status=0 AND WB.id=WBD.bid AND WBD.uid=users.id GROUP BY WBD.bid");
 	function bigintval($value) {
 		$value = trim($value);
 		if (ctype_digit($value)) {
@@ -116,6 +118,7 @@
 	}
     if ($row2 = $res2->fetch_assoc()) {
         $data["WB"]["dealt"]=bigintval($row2["dealt"]);
+		$data["WB"]["modifier"]=wbRewardModifier($row2["bid"]);
     }
     $res3 = $sql->query("SELECT score,public FROM users WHERE kid=$kid LIMIT 1");
     if ($row3 = $res3->fetch_assoc()) {
@@ -212,7 +215,7 @@
             $row2 = $res2->fetch_assoc();
             $data["lottery"]=array(
                 "numbers"=>$nums,
-                "pool"=>round($row2["pool"]*0.7),
+                "pool"=>round($row2["pool"]*1.05),
                 "expires"=>($row["end"]-time())*1000,
             );
         } else if ($row["type"]==1) {
@@ -284,6 +287,7 @@
             $open=0;
             $ended=time()+60*60;
             $valid = true;
+			$amount = 0;
             if ($res->num_rows!=0) {
                 $row = $res->fetch_assoc();
                 $fid = $row["id"];
@@ -353,7 +357,8 @@
                     // unopen
                     "current"=>$slots,
                     "open"=>$opened,
-                    "timeleft"=>($ended)*1000
+                    "timeleft"=>($ended)*1000,
+					"completed"=>$amount
                 );
             }
         } else if ($row["type"]==5) {
