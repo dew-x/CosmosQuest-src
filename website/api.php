@@ -759,17 +759,25 @@ if (isset($_POST["action"])) {
     } else if ($action=="lottery") { // lottery
         if (isset($_POST["key"]) and $_POST["key"]==$__SECRET) {
             if (isset($_POST["pid"])) {
+				$qty = isset($_POST["qty"]) ? $_POST["qty"] : 1;
                 $now=time();
                 $res1=$sql->query("SELECT * FROM events WHERE `end`>$now LIMIT 1");
                 $row1=$res1->fetch_assoc();
                 $eid=$row1["id"];
                 $pid=$_POST["pid"];
-                $res=$sql->query("INSERT INTO `lottery` (`id`, `uid`, `num`, `eid`) VALUES (NULL, (SELECT id FROM users WHERE pid='$pid' LIMIT 1), (SELECT `val` FROM (SELECT MAX(num)+1 as `val` FROM lottery WHERE eid=$eid) subquery), $eid)");
-                if ($sql->affected_rows>0) {
-                    echo json_encode(array("success"=>true));
-                } else {
-                    echo json_encode(array("success"=>false,"error"=>"Error"));
-                }
+				$count = 0;
+                $res2=$sql->query("SELECT id FROM users WHERE pid='$pid' LIMIT 1");
+                $row2=$res2->fetch_assoc();
+				$uid = (int)$row2["id"];
+                $res3=$sql->query("SELECT COUNT(*) AS `currCount` FROM lottery WHERE eid=$eid AND uid=".$uid);
+                $row3=$res3->fetch_assoc();
+				$currCount = (int)$row3["currCount"];
+				for($i = 0; $i < min($qty, 1000-$currCount); $i++) {
+					$res=$sql->query("INSERT INTO `lottery` (`id`, `uid`, `num`, `eid`) VALUES (NULL, ".$uid.", (SELECT `val` FROM (SELECT MAX(num)+1 as `val` FROM lottery WHERE eid=$eid) subquery), $eid)");
+					if ($sql->affected_rows>0)
+						$count++;
+				}
+				echo json_encode(array("success"=>true, "qtyDone"=>$count));
             } else {
                 echo json_encode(array("success"=>false,"error"=>"Bad params"));
             }

@@ -9652,14 +9652,22 @@ connection.query('SELECT COUNT(*) as `wip`, MAX(tid) AS `mtid` FROM tournaments2
         var heroes = Array(HERO.length).fill(0);
         var promo = Array(HERO.length).fill(0);
         var picks = [];
-        while (picks.length<50) {
+		var res = [];
+        while (picks.length<70) {
             var hid = Math.floor(Math.random()*HERO.length);
             if (HERO[hid].rarity<=3 && picks.indexOf(hid)===-1) picks.push(hid);
         }
         var lvls = [1,10,25,50,99,1000,2000,3000,4000,5000,6000,7000,8000,9000];
         for (var i=0; i<picks.length; ++i) {
-            heroes[picks[i]]=lvls[Math.floor(Math.random()*lvls.length)];
+		    heroes[picks[i]]=lvls[Math.max(0, Math.min(lvls.length-1, Math.floor(Math.random()*lvls.length) + 3 - 2*HERO[picks[i]].rarity))];
             promo[i]=Math.floor(Math.random()*6);
+			let stats=level2stats(picks[i], heroes[picks[i]], promo[i]);
+			res.push({score: stats.hp*stats.atk, id: picks[i], name: hnames[baseIndex-picks[i]-2]+":"+heroes[picks[i]]+"."+promo[i]});
+        }
+		res.sort((a,b) => (a.score < b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
+        for (var i=50; i<res.length; ++i) {
+			heroes[res[i].id]=0;
+			promo[res[i].id]=0;
         }
         var followers = Math.floor(Math.random()*Math.pow(2,41));
         var grid = Array(30).fill(-1);
