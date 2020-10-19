@@ -9143,7 +9143,7 @@ var promoData = [
       quest: 133
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       atk: 4,
       hp: 26,
       both: 18,
