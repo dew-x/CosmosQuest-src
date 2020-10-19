@@ -7237,7 +7237,7 @@ var HERO = [
       name: "STENCH",
       type: 0,
       rarity: 2,
-      img: "6sgk",
+      img: "1hit",
       hp: 58,
       atk: 64,
       skill: {
@@ -7261,9 +7261,9 @@ var HERO = [
 	},
 	{
       name: "RUMBLE",
-      type: 4,
+      type: 2,
       rarity: 2,
-      img: "1hit",
+      img: "6sgk",
       hp: 59,
       atk: 65,
       skill: {
@@ -7287,7 +7287,7 @@ var HERO = [
 	},
 	{
       name: "MUNCHIES",
-      type: 4,
+      type: 1,
       rarity: 2,
       img: "1j53",
       hp: 60,
