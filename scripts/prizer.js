@@ -7262,7 +7262,107 @@ var HERO = [
         um: 0,
         none: 1
       }
-    }
+    },
+	{
+        name: "STENCH",
+        type: 0,
+        rarity: 2,
+        img: "1hit",
+        hp: 58,
+        atk: 64,
+        skill: {
+          type: "horseman",
+          target: 1,
+          value: 0.15,
+          hid: 230
+        },
+        passive: {
+          type: 10,
+          value: 100
+        },
+        upgrade: {
+          pg: 1,
+          cc: 0,
+          as: 0,
+          um: 0,
+          none: 0
+        }
+  	},
+  	{
+        name: "RUMBLE",
+        type: 2,
+        rarity: 2,
+        img: "6sgk",
+        hp: 59,
+        atk: 65,
+        skill: {
+          type: "horseman",
+          target: 1,
+          value: 0.20,
+          hid: 231
+        },
+        passive: {
+          type: 10,
+          value: 100
+        },
+        upgrade: {
+          pg: 1,
+          cc: 0,
+          as: 0,
+          um: 0,
+          none: 0
+        }
+  	},
+  	{
+        name: "VERMIN",
+        type: 1,
+        rarity: 2,
+        img: "1j53",
+        hp: 60,
+        atk: 66,
+        skill: {
+          type: "horseman",
+          target: 1,
+          value: 0.25,
+          hid: 232
+        },
+        passive: {
+          type: 10,
+          value: 100
+        },
+        upgrade: {
+          pg: 1,
+          cc: 0,
+          as: 0,
+          um: 0,
+          none: 0
+        }
+  	},
+  	{
+        name: "REAPER",
+        type: 4,
+        rarity: 3,
+        img: "h5w2",
+        hp: 110,
+        atk: 120,
+        skill: {
+          type: "horseman",
+          target: 1,
+          value: 0.35,
+          hid: 233
+        },
+        passive: {
+          type: 10,
+          value: 100
+        },
+        upgrade: {
+          pg: 0,
+          cc: 0,
+          as: 1,
+          um: 0,
+          none: 0
+        }
+      }
   ];
 
   var promoData = [
@@ -9102,7 +9202,39 @@ var HERO = [
       both: 108,
       skill: 0.01,
       quest: 168
-    }
+    },
+    {
+	    name: "STENCH",
+	    atk: 84,
+	    hp: 58,
+	    both: 56,
+	    skill: 0.05,
+	    quest: 140
+	  },
+	  {
+	    name: "RUMBLE",
+	    atk: 86,
+	    hp: 60,
+	    both: 58,
+	    skill: 0.05,
+	    quest: 141
+	  },
+	  {
+	    name: "VERMIN",
+	    atk: 88,
+	    hp: 62,
+	    both: 60,
+	    skill: 0.05,
+	    quest: 142
+	  },
+	  {
+	    name: "REAPER",
+	    atk: 258,
+	    hp: 234,
+	    both: 180,
+	    skill: 0.05,
+	    quest: 163
+	  }
   ];
 
 
