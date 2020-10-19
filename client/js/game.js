@@ -16081,7 +16081,9 @@ function Game() {
         } else T.draw(ctx,"cjq4",W*0.5+bgw*0.5-T.width("cjq4")*0.5-14,H*0.5-bgh*0.5,T.width("cjq4")*0.75,T.height("cjq4")*0.75); 
     }
     this.updateLoopEventRanking = function (leaderboardName) {
-        if (eventRanking==undefined) eventRanking={};
+        if (eventRanking==undefined) eventRanking={time: 0, ptime: 0};
+		//if(Date.now() - eventRanking.time < 2*60*1000)
+			//return false;
         eventRanking.time=Date.now();
         if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined) {
             PlayFab.ClientApi.GetLeaderboard({
@@ -16092,21 +16094,24 @@ function Game() {
                 if (_this.serverOk(res,err)) {
                     if (res.data && res.data.Leaderboard) {
                         eventRanking.top=res.data.Leaderboard;
-                        PlayFab.ClientApi.GetLeaderboardAroundPlayer({
-                            "StatisticName": leaderboardName,
-                            "MaxResultsCount": 1,
-                        }, function (res,err) {
-                            if (_this.serverOk(res,err)) {
-                                eventRanking.player=res.data.Leaderboard[0];
-                            } else {
-                                eventRanking.time-=2*60*1000;
-                                var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
-                                    msg:"PFsjyou",
-                                    stk:res
-                                }));
-                                GA.getInstance().addEvent(ev);
-                            }
-                        });
+						if(Date.now() - eventRanking.ptime > 5*60*1000) {
+							eventRanking.ptime=Date.now();
+							PlayFab.ClientApi.GetLeaderboardAroundPlayer({
+								"StatisticName": leaderboardName,
+								"MaxResultsCount": 1,
+							}, function (res,err) {
+								if (_this.serverOk(res,err)) {
+									eventRanking.player=res.data.Leaderboard[0];
+								} else {
+									eventRanking.time-=2*60*1000;
+									var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
+										msg:"PFsjyou",
+										stk:res
+									}));
+									GA.getInstance().addEvent(ev);
+								}
+							});
+						}
                     }
                 } else {
                     eventRanking.time-=2*60*1000;
@@ -25317,7 +25322,8 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
+							eventRanking.ptime = 0;
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;
@@ -25349,7 +25355,8 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
+							eventRanking.ptime = 0;
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;
@@ -25381,7 +25388,7 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;
