@@ -7248,8 +7248,7 @@ var HERO = [
       },
       passive: {
         type: 10,
-        value: 100,
-		value2: 0.30
+        value: 100
       },
       upgrade: {
         pg: 1,
@@ -7274,8 +7273,7 @@ var HERO = [
       },
       passive: {
         type: 10,
-        value: 100,
-		value2: 0.30
+        value: 100
       },
       upgrade: {
         pg: 1,
@@ -7286,7 +7284,7 @@ var HERO = [
       }
 	},
 	{
-      name: "MUNCHIES",
+      name: "VERMIN",
       type: 1,
       rarity: 2,
       img: "1j53",
@@ -7300,8 +7298,7 @@ var HERO = [
       },
       passive: {
         type: 10,
-        value: 100,
-		value2: 0.30
+        value: 100
       },
       upgrade: {
         pg: 1,
@@ -7312,7 +7309,7 @@ var HERO = [
       }
 	},
 	{
-      name: "HIM",
+      name: "REAPER",
       type: 4,
       rarity: 3,
       img: "h5w2",
@@ -7326,8 +7323,7 @@ var HERO = [
       },
       passive: {
         type: 10,
-        value: 100,
-		value2: 0.30
+        value: 100
       },
       upgrade: {
         pg: 0,
@@ -9183,7 +9179,7 @@ var promoData = [
       hp: 58,
       both: 56,
       skill: 0.05,
-      quest: 121 // TODO
+      quest: 140
     },
     {
       name: "RUMBLE",
@@ -9191,23 +9187,23 @@ var promoData = [
       hp: 60,
       both: 58,
       skill: 0.05,
-      quest: 121 // TODO
+      quest: 141
     },
     {
-      name: "MUNCHIES",
+      name: "VERMIN",
       atk: 88,
       hp: 62,
       both: 60,
       skill: 0.05,
-      quest: 121 // TODO
+      quest: 142
     },
     {
-      name: "HIM",
+      name: "REAPER",
       atk: 258,
       hp: 234,
       both: 180,
       skill: 0.05,
-      quest: 168 // TODO
+      quest: 163
     }
   ];
 
@@ -9867,6 +9863,32 @@ function calcTurn0 (A,B,seed,side) {
 		                    val:tmpArr,
 		                });
 	                }
+            	}
+            	//P6
+            	if (A.setup[i].prom >= 6) {
+            		var count = -1; //don't count yourself
+            		for (var j = 0; j < B.setup.length; j++) if (B.setup[j].skill !== undefined && B.setup[j].skill.type == "horseman") count++;
+            		for (var j = 0; j < A.setup.length; j++) if (A.setup[j].skill !== undefined && A.setup[j].skill.type == "horseman") count++;
+            		if (count > 0) {
+            			count*=A.setup[i].passive.value;
+            			A.setup[i].atk+=count;
+    	                gBattle.steps.push({
+    	                    action:"DMG2",
+    	                    target:side?"other":"you",
+    	                    value: count,
+    	                    pos: i,
+    	                });
+    	                A.setup[i].hp+=count;
+		                A.setup[i].mhp+=count;
+		                var tmpArr = Array(A.setup.length).fill(0);
+		                tmpArr[i]=count;
+		                gBattle.steps.push({
+		                    action:"HEAL2",
+		                    target:side?"other":"you",
+		                    val:tmpArr,
+		                });
+            		}
+            		
             	}
             }
         } 

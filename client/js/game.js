@@ -23501,7 +23501,7 @@ function Game() {
             description+="Passive skill/nReceives -"+(value*100).toFixed(0)+"% damage from skills";
         } else if (passive.type==9) {
             description+="Passive skill/nIncreases health by "+(value*100).toFixed(0)+"%";
-        } else if (passive.type==9) {
+        } else if (passive.type==10) {
             description+="Passive skill/nGains "+(value).toFixed(0)+"attack and health for each other horsemen";
         }
 
