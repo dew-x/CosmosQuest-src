@@ -13750,7 +13750,7 @@ function Game() {
                         else if (list[c].b == -1) b = "LifeTime";
                         else if (list[c].b > 1 && list[c].d == undefined) {
                             if ((list[c].b-Date.now())>86400000) b = Math.ceil((list[c].b-Date.now())/86400000)+" Days";
-                            else b = timer((list[c].b-Date.now())/1000);
+                            else b = (list[c].b <= 0 ? "Expired" : timer((list[c].b-Date.now())/1000));
                         }
                         else {
                             b = list[c].b+" days";
