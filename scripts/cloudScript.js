@@ -1723,7 +1723,7 @@ handlers.status = function (args, context) {
             } else if (items[i].identifier=="seasonpass1") {
                 if (consumeItem(args.kid,args.token,items[i].id)) {
                     data.city.pass.isGold = 1;
-                    if (data.city.hero[213]==0) data.city.hero[213]=1; //TODO: New gold pass hero
+                    if (data.city.hero[233]==0) data.city.hero[233]=1;
                     award(currentPlayerId,"ET",650);
                     if (data.city.easter !== undefined) {
                         data.city.easter.points+=(1250*vipMultiplier);

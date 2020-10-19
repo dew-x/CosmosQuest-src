@@ -13221,7 +13221,7 @@ function Game() {
                                 text(ctx,"???",W*0.17+(i*W*0.33)-18,H*0.91-9,Math.floor(20)+"px"+FONT,"white","center","middle");
                                 text(ctx,"???",W*0.17+(i*W*0.33)+18,H*0.91-9,Math.floor(20)+"px"+FONT,"white","center","middle");*/
                             
-                                this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1); //TODO: new gold pass hero
+                                this.drawMonster(ctx,-235,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
                             }
                             
                         }
@@ -13252,7 +13252,7 @@ function Game() {
                         } else if (i==2) {
                             var fSize = "27px";
                             roundedRect(ctx,W*0.17+(i*W*0.33)-(bgw/2)-1,H*0.55-(bgh/2)-1,bgw+2,bgh+2,15,"rgba(15,15,15,0.6)");
-                            text(ctx,"Upon purchase, you’ll receive: \"HETFIELD\"",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle"); //TODO: new gold pass hero name
+                            text(ctx,"Upon purchase, you’ll receive: \"REAPER\"",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"By completing various tasks you will receive",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+140,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"AS, Keys, Followers, PG, SD, CC & UM",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+170,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+200,fSize+FONT,"rgba(255,255,255,1)","center","middle");
@@ -13260,7 +13260,7 @@ function Game() {
                             text(ctx,"?",W*0.17+(i*W*0.33),H*0.8-T.height("0luu"),"300px "+FONT,"rgba(255,255,255,1)","center","middle",3,"black");
                             text(ctx,"???",W*0.17+(i*W*0.33)-18*2,H*0.8-9*2,Math.floor(20*2)+"px"+FONT,"white","center","middle");
                             text(ctx,"???",W*0.17+(i*W*0.33)+18*2,H*0.8-9*2,Math.floor(20*2)+"px"+FONT,"white","center","middle");*/
-                            this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2); //TODO: new gold pass hero
+                            this.drawMonster(ctx,-235,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
                             var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
                             if (bprect.isInside(GM.x,GM.y)) {
                                 T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
