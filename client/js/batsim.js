@@ -9827,7 +9827,7 @@ function calcTurn0 (A,B,seed,side) {
             } else if (skill.type=="supershield") {
                 turn.buff.defPerc[i]+=skillVal*Math.floor(lvlVal/skill.target);
             } else if (skill.type=="horseman") {
-            	if (B.setup[i] !== undefined) {
+            	if (B.setup[i] !== undefined && !(B.setup[i].id<-1&&HERO[-(2+B.setup[i].id)].rarity==5)) { //only works if there is a non-wb opposing unit
 	            	//get stats of enemy units. Reaching for base stats to prevent asymmetric combinations of stat changing skills.
 	            	var stats = (B.setup[i].id<-1) ? level2stats(-B.setup[i].id-2,B.setup[i].lvl,B.setup[i].prom) : MONSTERS[B.setup[i].id];
 	            	var atkval = Math.round(stats.atk*skillVal);
@@ -9845,24 +9845,22 @@ function calcTurn0 (A,B,seed,side) {
 	                    value: -atkval,
 	                    pos: i,
 	                });
-	                if (!(B.setup.length==1&&B.setup[0].id<-1&&HERO[-(2+B.setup[0].id)].rarity==5)) { //if non-wb-fight also steal hp
-		                var hpval = Math.round(stats.hp*skillVal);
-		                A.setup[i].hp+=hpval;
-		                B.setup[i].hp-=hpval;
-		                A.setup[i].mhp+=hpval;
-		                var tmpArr = Array(A.setup.length).fill(0);
-		                tmpArr[i]=hpval;
-		                gBattle.steps.push({
-		                    action:"HEAL2",
-		                    target:side?"other":"you",
-		                    val:tmpArr,
-		                });
-		                gBattle.steps.push({
-		                    action:"EXPLO",
-		                    target:side?"you":"other",
-		                    val:tmpArr,
-		                });
-	                }
+	                var hpval = Math.round(stats.hp*skillVal);
+	                A.setup[i].hp+=hpval;
+	                B.setup[i].hp-=hpval;
+	                A.setup[i].mhp+=hpval;
+	                var tmpArr = Array(A.setup.length).fill(0);
+	                tmpArr[i]=hpval;
+	                gBattle.steps.push({
+	                    action:"HEAL2",
+	                    target:side?"other":"you",
+	                    val:tmpArr,
+	                });
+	                gBattle.steps.push({
+	                    action:"EXPLO",
+	                    target:side?"you":"other",
+	                    val:tmpArr,
+	                });
             	}
             	//P6
             	if (A.setup[i].prom >= 6) {
