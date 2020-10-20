@@ -6914,13 +6914,13 @@ function Game() {
             ctx.fillRect(W*0.27-1,H*0.916+5-1,W*0.26+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.27,H*0.916+5,W*0.26,H*0.05);
-            text(ctx,"Hold ctrl to open 10 keys in one click",W*0.27+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
+            text(ctx,"Hold ctrl to use 10 keys in one click",W*0.27+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.66-1,H*0.615-32-5-1,W*0.31+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.66,H*0.615-32-5,W*0.31,H*0.05);
-            text(ctx,"At zero you will receive a free chest opening",W*0.66+3,H*0.615-16-5,"32px"+FONT,"white","left","middle");
+            text(ctx,"You can open a free chest every 24 hours",W*0.66+3,H*0.615-16-5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.63-1,H*0.90+5-1,W*0.36+2,H*0.09+2);
@@ -15296,6 +15296,9 @@ function Game() {
                 this.addZone("startSJ",startRect,"startEL");
                 roundedRect(ctx,W*0.5-W*0.3*0.5+4,H*0.5-H*0.075*0.5+4,W*0.3-8,H*0.075-8,5,"rgba(0,0,0,0.3)");
             }
+
+            text(ctx,"You can start the event whenever you want. It'll run 5 days or until midnight on sunday (GMT).",W*0.5,H*0.8,"32px"+FONT,"white","center","middle");
+            text(ctx,"If you start at any time on tuesday you'll be able to play the full event.",W*0.5,H*0.8+20,"32px"+FONT,"white","center","middle");
         } else if (Date.now() > mdata.city.space.start+(86400000*5)) {
             // Left Zone
             roundedRect(ctx,W*0.5-bgw*0.475,H*0.5-bgh*0.55*0.5+30,bgw*0.45,bgh*0.55,5,"rgba(255,255,255,0.3)");
@@ -15666,6 +15669,8 @@ function Game() {
                 this.addZone("startGG",startRect,"startEL");
                 roundedRect(ctx,W*0.5-W*0.3*0.5+4,H*0.5-H*0.075*0.5+4,W*0.3-8,H*0.075-8,5,"rgba(0,0,0,0.3)");
             }
+            text(ctx,"You can start the event whenever you want. It'll run 5 days or until midnight on sunday (GMT).",W*0.5,H*0.8,"32px"+FONT,"black","center","middle");
+            text(ctx,"If you start at any time on tuesday you'll be able to play the full event.",W*0.5,H*0.8+20,"32px"+FONT,"black","center","middle");
         } else if (Date.now() > mdata.city.games.start+(86400000*5)) {
             roundedRect(ctx,W*0.5-bgw*0.475,H*0.5-bgh*0.7*0.5,bgw*0.45,bgh*0.75,5,"rgba(255,255,255,0.3)");
             if (eventRanking !== undefined && eventRanking.top !== undefined && eventRanking.player !== undefined) {
@@ -15736,7 +15741,7 @@ function Game() {
                     }
     
     
-                    if (gamesTab == 0 && mdata.city.games.activities.activity == i && Date.now() < mdata.city.games.activities.timer) etext(ctx,"Activity on Progress/n"+timer((mdata.city.games.activities.timer-Date.now())/1000),W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
+                    if (gamesTab == 0 && mdata.city.games.activities.activity == i && Date.now() < mdata.city.games.activities.timer) etext(ctx,"Activity in Progress/n"+timer((mdata.city.games.activities.timer-Date.now())/1000),W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
                     else if (gamesTab == 0 && mdata.city.games.activities.activity == i && Date.now() >= mdata.city.games.activities.timer) etext(ctx,"CLAIM!",W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
                     else if (gamesTab == 0 && mdata.city.games.activities.activity != -1) etext(ctx,"Blocked",W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
                     else if (gamesTab == 1 && mdata.city.games.upgrades[i] == 10) etext(ctx,"Already at Max",W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
