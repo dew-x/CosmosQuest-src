@@ -4012,12 +4012,13 @@ handlers.training = function (args, context) {
     var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
     if (data && ret) {
         if (data.city.promo[args.hid] == 5) {
-                if (data.city.promotokens !== undefined && data.city.promotokens.promo6 !== undefined && data.city.promotokens.promo6>=1) {
-                    data.city.promotokens.promo6-=1;
-                    ++data.city.promo[args.hid];
-                    server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
-                    return {ok:true,data:data,update:true};
-                } else if (args.um) {
+                if (args.um) {
+                	if (data.city.promotokens !== undefined && data.city.promotokens.promo6 !== undefined && data.city.promotokens.promo6>=1) {
+                        data.city.promotokens.promo6-=1;
+                        ++data.city.promo[args.hid];
+                        server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
+                        return {ok:true,data:data,update:true};
+                    }
                     var price = [1000,2000,4000,8000];
                     if (ret.VirtualCurrency.UM<price[HERO[args.hid].rarity]) return { ok: false, err: "Not enough UM"};
                     else {

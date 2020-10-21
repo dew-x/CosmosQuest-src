@@ -10652,9 +10652,15 @@ function Game() {
                                 if (i !== 5)  this.addZone("umprom",umrect,"promo",{target:promHero,mode:true});
                                 else this.addZone("umprom",umrect,"train",{target:promHero,mode:true});
                             } else T.draw(ctx,"nskb",x+T.width(tab)*0.5-T.width("nskb")*0.5,y+T.height(tab)*0.4-T.height("nskb")*0.5);
-                            text(ctx,"Unlock by ",x+T.width(tab)*0.225,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","left","middle");
-                            text(ctx,currentPrice,x+T.width(tab)*0.48,y+T.height(tab)*0.4,"38px"+FONT,"rgb(255,255,240)","left","middle");
-                            T.draw(ctx,"02c9",x+T.width(tab)*0.63,y+T.height(tab)*0.4-T.height("02c9")*0.5*0.5-2,T.width("02c9")*0.5,T.height("02c9")*0.5);
+                            if (i == 3 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) {
+                            	text(ctx,"Free Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
+                            } else if (i == 5 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1) {
+                            	text(ctx,"Instant Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
+                            } else {
+		                        text(ctx,"Unlock by ",x+T.width(tab)*0.225,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","left","middle");
+		                        text(ctx,currentPrice,x+T.width(tab)*0.48,y+T.height(tab)*0.4,"38px"+FONT,"rgb(255,255,240)","left","middle");
+		                        T.draw(ctx,"02c9",x+T.width(tab)*0.63,y+T.height(tab)*0.4-T.height("02c9")*0.5*0.5-2,T.width("02c9")*0.5,T.height("02c9")*0.5);
+                            }
                             
                             text(ctx,"OR",x+T.width(tab)*0.5,y+T.height(tab)*0.615,"38px"+FONT,"rgba(255,250,210,1)","center","middle");
     
@@ -10670,9 +10676,7 @@ function Game() {
                                 text(ctx,promPrice[i][0][HERO[promHero].rarity],x+T.width(tab)*0.5,y+T.height(tab)*0.8,"38px"+FONT,"rgb(255,255,240)","left","middle");
                                 */
                                 var hours = [6,12,24,48];
-                                if (mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1) {
-                                    text(ctx,"Instant Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","center","middle");
-                                } else text(ctx,"Train for "+hours[HERO[promHero].rarity]+" Hours",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","center","middle");
+                                text(ctx,"Train for "+hours[HERO[promHero].rarity]+" Hours",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","center","middle");
                                 //T.draw(ctx,p6c[HERO[promHero].rarity].icon,x+T.width(tab)*p6c[HERO[promHero].rarity].x,y+T.height(tab)*0.8-T.height(p6c[HERO[promHero].rarity].icon)*p6c[HERO[promHero].rarity].scale*0.5,T.width(p6c[HERO[promHero].rarity].icon)*p6c[HERO[promHero].rarity].scale,T.height(p6c[HERO[promHero].rarity].icon)*p6c[HERO[promHero].rarity].scale);
                                 
                                 if (obrect.isInside(GM.x,GM.y) && !promsync) {
@@ -10691,12 +10695,8 @@ function Game() {
                                     text(ctx,"*Use max 3 Units",x+T.width(tab)*0.5,y+T.height(tab)*0.8+8,"18px"+FONT,"rgb(255,255,240)","center","middle");
                                     if (obrect.isInside(GM.x,GM.y) && !promsync) this.addZone("pveprom",obrect,"pveprom",{target:promHero});
                                 } else {
-                                    if (mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) {
-                                        text(ctx,"FREE with Token",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"24px"+FONT,"rgb(255,255,240)","center","middle");
-                                    } else {
-                                        text(ctx,"Attack WB with "+HERO[promHero].name,x+T.width(tab)*0.5,y+T.height(tab)*0.8-5,"20px"+FONT,"rgb(255,255,240)","center","middle");
-                                        text(ctx,mdata.city.herowb[promHero]+"/"+(HERO[promHero].rarity+1)+" times",x+T.width(tab)*0.5,y+T.height(tab)*0.8+8,"18px"+FONT,"rgb(255,255,240)","center","middle");
-                                    }
+                                    text(ctx,"Attack WB with "+HERO[promHero].name,x+T.width(tab)*0.5,y+T.height(tab)*0.8-5,"20px"+FONT,"rgb(255,255,240)","center","middle");
+                                    text(ctx,mdata.city.herowb[promHero]+"/"+(HERO[promHero].rarity+1)+" times",x+T.width(tab)*0.5,y+T.height(tab)*0.8+8,"18px"+FONT,"rgb(255,255,240)","center","middle");
                                     if (obrect.isInside(GM.x,GM.y) && mdata.city.herowb[promHero]<(HERO[promHero].rarity+1) &&!promsync) this.addZone("wbprom",obrect,"wbprom",{target:promHero});
                                 }
                             }
@@ -13712,7 +13712,8 @@ function Game() {
             {a: "Ascension Spheres Dispenser: ",b: mdata.city.easter.asdispenser,d:true},
             {a: "Universe Marbles Dispenser: ",b: mdata.city.easter.umdispenser,d:true},
             {a: "Chests Dispenser: ",b: mdata.city.easter.freesilver},
-            {a: "Free Promotion 4: ",b: mdata.city.easter.freep4},
+            {a: "Free Promotion 4: ",b: mdata.city.easter.freep4, c: (mdata.city.promotokens === undefined) ? undefined : mdata.city.promotokens.promo4},
+            {a: "Instant Promotion 6: ", b: false, c: (mdata.city.promotokens === undefined) ? undefined : mdata.city.promotokens.promo6},
             {a: "EM Grants x4: ",b: mdata.city.easter.doubleem},
             {a: "Quest Solver: ",b: mdata.city.easter.questsolver},
             {a: "Daily Quest Solver: ",b: mdata.city.easter.dailysolver},
@@ -13743,8 +13744,12 @@ function Game() {
                         b = list[c].b;
                     } else {
                         if (list[c].b == 1 || list[c].b == true) b = "Active";
-                        else if (list[c].b == 0 || list[c].b == false) b = "Inactive";
-                        else if (list[c].b == -1) b = "LifeTime";
+                        else if (list[c].b == 0 || list[c].b == false) {
+                        	b = "Inactive";
+                        	if (list[c].c > 0) {
+                        		b = list[c].c + ((list[c].c == 1) ? " Token" : " Tokens");
+                        	}
+                        } else if (list[c].b == -1) b = "LifeTime";
                         else if (list[c].b > 1 && list[c].d == undefined) {
                             if ((list[c].b-Date.now())>86400000) b = Math.ceil((list[c].b-Date.now())/86400000)+" Days";
                             else b = ((list[c].b-Date.now()) <= 0 ? "Expired" : timer((list[c].b-Date.now())/1000));
@@ -18701,16 +18706,7 @@ function Game() {
             promHero=extra.target;
         } else if (action=="wbprom") {
             var modes = ["No Heroes","Heroes Allowed"];
-            if (mdata.city.promotokens!==undefined&&mdata.city.promotokens.promo4>=1) {
-                popup = {
-                    text: "Do you want to promote this hero?",
-                    mode: "confirm",
-                    center:true,
-                    action: function () {
-                        _this.doPromotion(extra.target,extra.mode);
-                    }
-                }
-            } else if (modes[CQW.WB.mode]==="Heroes Allowed"){
+            if (modes[CQW.WB.mode]==="Heroes Allowed"){
                 data.wbline=9;
                 data.wb[data.wbline]=[-1,-1,-1,(-2-extra.target),-1,-1];
                 scene="worldboss";
