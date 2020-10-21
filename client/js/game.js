@@ -536,7 +536,7 @@ function Game() {
     var CC=0;
     var AS=0;
     var SD=0;
-    var SG=0;
+    var ZG=0;
     var ET=0;
     var BKS=undefined;
     var zones = {};
@@ -14880,7 +14880,7 @@ function Game() {
 
             text(ctx,"Free SG: "+timer(((mdata.city.halloween.dailyClaimed+1)*24*60*60*1000-Date.now())/1000),W*0.685,H*0.225,"40px"+HFONT,"black","left","middle");
 
-            text(ctx,SG,mid-15,H*0.222,"56px"+HFONT,"white","center","middle");
+            text(ctx,ZG,mid-15,H*0.222,"56px"+HFONT,"white","center","middle");
             T.draw(ctx,sg_icon,mid-T.width(sg_icon)*0.9*0.5+42,H*0.225-T.height(sg_icon)*0.9*0.5,T.width(sg_icon)*0.9,T.height(sg_icon)*0.9);
 
             var reward = "20 Shadow Gems";
@@ -14961,12 +14961,12 @@ function Game() {
                 text(ctx,"- For every kred spent, you will receive one Shadow Gem",W*0.13,H*0.25+125,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- Every time that you spend a Shadow Gem on level up a Hero, you will receive PG/AS",W*0.13,H*0.25+150,"32px"+HFONT,"white","left","middle");
                 text(ctx,"  Common Level: 1PG, Rare Level: 3PG, Legendary Level: 12PG and Ascended Level: 30AS.",W*0.13,H*0.25+175,"32px"+HFONT,"white","left","middle");
-                text(ctx,"- The event will be available till 10th of October at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
+                text(ctx,"- The event will be available till 2nd of November at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
 
                 text(ctx,"EVENT REWARDS:",W*0.5,H*0.65,"40px"+HFONT,"white","center","middle");
                 var floors = [100,250,500,1000];
                 for (var i = 0; i < 4; ++i) {
-                    this.drawMonster(ctx,-2-195-i,W*0.3+i*W*0.138,H*0.87,undefined,false,1.25,1,true,true);
+                    this.drawMonster(ctx,-2-231-i,W*0.3+i*W*0.138,H*0.87,undefined,false,1.25,1,true,true);
                     text(ctx,"Floor "+floors[i],W*0.3+i*W*0.138,H*0.895,"30px"+FONT,"white","center","middle");
                 }
             }
@@ -15044,7 +15044,7 @@ function Game() {
 
                 if (halllvlmode == 1) price*=10 ;
                 if (halllvlmode == 2) {
-                    var maxreachable=Math.floor(SG/price);
+                    var maxreachable=Math.floor(ZG/price);
                     if (maxreachable+halloweenHero[halloweenHero[halloweenLevelUp].id].level>98) maxreachable=98;
                     price*=maxreachable;
                 }
@@ -15081,7 +15081,7 @@ function Game() {
                 }
  
                 var lupRect=(new Rect(W*0.5-W*0.16*0.5,H*0.725-H*0.09*0.5,W*0.16,H*0.09)).small();
-                if (lupRect.isInside(GM.x,GM.y) && price >=1 && SG >= price && !halloweenSync) {
+                if (lupRect.isInside(GM.x,GM.y) && price >=1 && ZG >= price && !halloweenSync) {
                     T.negative(ctx,"0gcg",W*0.5-W*0.16*0.5,H*0.725-H*0.09*0.5,W*0.16,H*0.09);
                     this.addZone("lupH",lupRect,"lupH",{target:halloweenHero[halloweenLevelUp].id,mode:halllvlmode});
                 } else T.negative(ctx,"00kg",W*0.5-W*0.16*0.5,H*0.725-H*0.09*0.5,W*0.16,H*0.09);
@@ -22163,7 +22163,7 @@ function Game() {
         AS=val.AS;
         SD=val.SD;
         BKS=NBKS;
-        SG=val.SG;
+        ZG=val.ZG;
         ET=val.ET;
     }
     this.getHC = function () {
@@ -23569,7 +23569,7 @@ function Game() {
     }
     this.isHalloween = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
-        return tid>=18199 && tid<=18210;
+        return tid>=18552 && tid<=18568;//18562
     }
     this.isChristmas = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
