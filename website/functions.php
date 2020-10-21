@@ -692,7 +692,7 @@ function wbHitsRequired($wbId, $isSuper=false) {
 }
 
 function wbRewardModifier($wbId) {
-	return ($wbId > 1277 ? wbHitsRequired($wbId) / 1600 : 1);
+	return ($wbId > 1278 ? wbHitsRequired($wbId) / 1600 : 1);
 }
 
 function wbHp($lvl,$mode) {
