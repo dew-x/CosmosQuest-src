@@ -15909,7 +15909,7 @@ function Game() {
                     {title: "Max Favour", stat: mdata.city.games.maxFavour},
                     {title: "Favour Tick Value", stat: mdata.city.games.automatic.tickValue},
                     {title: "Favour Tick Rate", stat: timer((1440000 - (mdata.city.games.upgrades[1] * 72000))/1000)},
-                    {title: "Expected Final Favour", stat: eventRanking.player.StatValue+(Math.floor((mdata.city.games.start+(86400000*5)-Date.now())/(1440000 - (mdata.city.games.upgrades[1] * 72000)))*mdata.city.games.automatic.tickValue)},
+                    {title: "Expected Final Favour", stat: eventRanking.player.StatValue+(Math.floor((mdata.city.games.start+(86400000*5)-Date.now())/(1440000 - (mdata.city.games.upgrades[1] * 72000)))*mdata.city.games.automatic.tickValue*(1+mdata.city.games.upgrades[2]/10))},
                     {title: "Current Stamina", stat: mdata.city.games.stamina},
                     {title: "Current Hunt Chances", stat: mdata.city.games.rolls[0]+"%"},
                     {title: "Hunt Effects Active till", stat: ((huntdate.getMonth()>8)?(huntdate.getMonth()+1):('0'+(huntdate.getMonth()+1)))+'/'+((huntdate.getDate()>9)?huntdate.getDate():('0'+huntdate.getDate()))+'/'+huntdate.getFullYear()+' - '+huntdate.getHours()+':'+((huntdate.getMinutes()>9)?huntdate.getMinutes():('0'+huntdate.getMinutes()))},
