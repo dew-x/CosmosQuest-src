@@ -210,7 +210,7 @@ function tid2fol($tid) {
         $num = $rnd%50;
         $num = ($num+30)/floatval(100);
         return round(($fols/$amount)*10*$num);
-    } else if ($tid<=18556) {
+    } else if ($tid<=18557) {
         $arr = array();
         $parr = array();
         for ($i=0; $i<count($HERO); ++$i) {
@@ -1134,7 +1134,7 @@ function tid2heroes($tid,$hero) {
             for ($i=0; $i<count($HERO); ++$i) $ret[]=0;
             return $ret;
         }
-    } else if ($tid<=18556) { // S11
+    } else if ($tid<=18557) { // S11
         // "Your Heroes","No Heroes","Super Ascended","Your Legendary","Random P6","Your Common","Random","Random Legendary","Your Rare","Random Common","Super Rare",
         seedRNG($tid);
         $tmp = getRNG()%4;
@@ -1603,7 +1603,7 @@ function tid2promo($tid,$promo) {
             for ($i=0; $i<count($HERO); ++$i) $ret[]=0;
             return $ret;
         }
-	} else if ($tid<=18556) { // S11
+	} else if ($tid<=18557) { // S11
         // yhero,none,rsupera,ylegends,rpromo6,ycommon,rfull,rlegend,yrare,rcommon,rsuperr
         seedRNG($tid);
         $rnd = getRNG()%6;
