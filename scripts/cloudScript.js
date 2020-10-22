@@ -1315,7 +1315,7 @@ function loadData(id,kid) {
                 data.city.hllwn.UM += 400;
             }
         }
-        if (data.city.halloween === undefined) {
+        if (data.city.halloween === undefined || data.city.halloween.dailyClaimed < 18561) {
             data.city.halloween = {
                 hero: Array(HERO.length).fill(1),
                 dailyClaimed: 18561,
