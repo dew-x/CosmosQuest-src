@@ -4832,6 +4832,7 @@ function computeTPROMO(tid) {
     var rng = new RNG(tid);
     var rnd = rng.next()%7;
     var rnd4 = rng.next()%4;
+    var rngN = 0;
     
     var rearthwater=Array(HERO.length);
     var rfireair=Array(HERO.length);
@@ -4843,11 +4844,12 @@ function computeTPROMO(tid) {
     var rrare=Array(HERO.length);
 
     for (var i=0; i<HERO.length; ++i) {
+    	rngN = rng.next();
     	rearthwater[i]=rnd;
         rfireair[i]=rnd;
-        rchest[i]=rng.next()%7;
+        rchest[i]=rngN%7;
         rasctank[i]=rnd;
-        rsuperl[i]=(rng.next()%2)+5;
+        rsuperl[i]=(rngN%2)+5;
         rborcommon[i]=(rnd4==0)?0:(7-rnd4-2*HERO[i].rarity);
         rrare[i]=rnd;
         // ycommon
@@ -4864,7 +4866,6 @@ function computeTPROMO(tid) {
     }
 
     return [yhero,rborcommon,rasctank,ylegends,rfireair,ycommon,rrare,rsuperl,yrare,rchest,rearthwater];
-
 }
 
 function computeTHERO(tid) {	
