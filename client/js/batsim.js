@@ -9765,6 +9765,9 @@ function getTurnData (AL,BL) {
             moob: 0,
             absorb: 0,
         },
+        revg: {
+        	nerfAtk: 0, 
+        },
     };
     return turn;
 } 
@@ -10330,6 +10333,17 @@ function doTurn (A,D,turnA,turnD,side) {
     }
 
     for (var i=0;i<D.setup.length;++i) {
+    	if (turnD.revg.nerfAtk !== 0) {
+        	var atkval = -Math.round(D.setup[i].atk*turnD.revg.nerfAtk);
+            D.setup[i].atk+=atkval;
+            D.setup[i].matk+=atkval;
+            gBattle.steps.push({
+                action:"DMG2",
+                target:side?"you":"other",
+                value:atkval,
+                pos:i
+            });
+    	}
         if (maxhp==i&&atk.anarchy2>0) {
             if (D.setup[i].id <= -2 && D.setup[i].skill.type == "antireflect" && D.setup.length > 0) {
                 var skillVal = D.setup[i].skill.value;
@@ -10610,17 +10624,8 @@ function doTurn (A,D,turnA,turnD,side) {
                             retturn.other.atk.flatAoe[j]+=(skillVal*Math.min(99,D.setup[i].lvl));
                         }
                     } else if (D.setup[i].skill.type=="revgnerf") {
-                        for (var j=0; j<A.setup.length; ++j) {
-                        	var atkval = -Math.round(A.setup[j].atk*skillVal);
-                            A.setup[j].atk+=atkval;
-                            A.setup[j].matk+=atkval;
-                            gBattle.steps.push({
-                                action:"DMG2",
-                                target:side?"other":"you",
-                                value:atkval,
-                                pos:j
-                            });
-                        }
+                        if (retturn.self===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
+                        retturn.self.revg.nerfAtk = skillVal;
                     }
                 }
             }
