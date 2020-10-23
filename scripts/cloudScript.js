@@ -1315,17 +1315,21 @@ function loadData(id,kid) {
                 data.city.hllwn.UM += 400;
             }
         }
-        if (data.city.halloween === undefined) {
+        if (data.city.halloween === undefined || data.city.halloween.dailyClaimed < 18561) {
             data.city.halloween = {
                 hero: Array(HERO.length).fill(1),
-                dailyClaimed: 18198,
+                dailyClaimed: 18561,
             } 
-            data.city.halloween.hero[96]=0;
-            data.city.halloween.hero[72]=0;
-            data.city.halloween.hero[87]=0;
-            data.city.halloween.hero[106]=0;
-            data.city.halloween.hero[126]=0;
-            data.city.halloween.hero[186]=0;
+            data.city.halloween.hero[96]=0; // lep
+            data.city.halloween.hero[72]=0; // loc
+            data.city.halloween.hero[87]=0; // moak
+            data.city.halloween.hero[106]=0; // kry
+            data.city.halloween.hero[126]=0; // doy
+            data.city.halloween.hero[186]=0; // bor
+            data.city.halloween.hero[206]=0; // pyroses
+            data.city.halloween.hero[207]=0;
+            data.city.halloween.hero[208]=0;
+            data.city.halloween.hero[209]=0;
         }
         var tid2 = Math.min(18206,tid);
         /*if (data.city.pass.isSilver==1) {
@@ -4450,19 +4454,19 @@ handlers.fightH = function (args, context) {
         if (response.success) {
             if (response.data.beat>0) {
                 log("Halloween event beat floor "+response.data.beat);
-                award(currentPlayerId,"SG",20);
-                statKong(args.kid,"halloween2019",response.data.beat);
+                award(currentPlayerId,"ZG",20);
+                statKong(args.kid,"halloween2020",response.data.beat);
                 if (response.data.beat==100) {
-                    data.city.hero[195]=1;
+                    data.city.hero[234]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 } else if (response.data.beat==250) {
-                    data.city.hero[196]=1;
+                    data.city.hero[235]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 } else if (response.data.beat==500) {
-                    data.city.hero[197]=1;
+                    data.city.hero[236]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 } else if (response.data.beat==1000) {
-                    data.city.hero[198]=1;
+                    data.city.hero[237]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 }
             }
@@ -4478,6 +4482,40 @@ handlers.fightH = function (args, context) {
         } else return { ok: false, err: response.error };
     } else return { ok: false, err: "Server error" };
 }
+
+handlers.levelHalloween = function (args, context) {
+    var data=loadData();
+    var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
+    var prices = [1,3,12,60];
+    if (data&&ret) {
+        if (data.city.halloween !== undefined) {
+            var price = prices[HERO[args.id].rarity];
+            if (args.mode == 1) price*=10 ;
+            if (args.mode == 2) {
+                var maxreachable=Math.floor(ret.VirtualCurrency["ZG"]/price);
+                if (maxreachable+data.city.halloween.hero[args.id]>98) maxreachable=99-data.city.halloween.hero[args.id];
+                price*=maxreachable;
+            }
+            if (args.id>=0 && args.id<HERO.length) {
+                if (data.city.halloween.hero[args.id]>=99) return { ok: false, err: "Max level"};
+                else if (data.city.halloween.hero[args.id]<=0) return { ok: false, err: "Hero not Obtained"};
+                else if (ret.VirtualCurrency["ZG"]<price) return { ok: false, err: "Not enough SG"};
+                if (pay(currentPlayerId,"ZG",price)) {
+                    data.city.halloween.hero[args.id]=Math.min(99,data.city.halloween.hero[args.id]+Math.floor(price/prices[HERO[args.id].rarity]));
+                    try {
+                        if (HERO[args.id].rarity == 3) award(currentPlayerId,"AS",price/2);
+                        else award(currentPlayerId,"PG",price);
+                        server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
+                    } catch (e) {
+                        award(currentPlayerId,"ZG",price);
+                        return {ok: false, err: "DB unavailable"};
+                    }
+                    return {ok:true,data:data,update:true};
+                } else return { ok: false, err: "Can't buy" };
+            } else return { ok: false, err: "Unknown hero"};
+        } else return { ok: false, err: "Not halloween yet"};
+    } else return { ok: false, err: "Server error"};
+} 
 
 handlers.finder = function (args, context) {
     var data=loadData();
