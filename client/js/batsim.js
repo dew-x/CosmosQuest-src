@@ -10512,7 +10512,10 @@ function doTurn (A,D,turnA,turnD,side) {
         
         // new turns
         if (D.setup[i].hp<=0 && initHp>0) {
+        	var killUnit = true;
             if (buff.angel[i]>0) {
+            	killUnit = false;
+            	var overkill = -D.setup[i].hp;
                 D.setup[i].hp = Math.round(D.setup[i].mhp * buff.angel[i]);
                 D.setup[i].extra = undefined;
                 D.setup[i].tatk = 0;
@@ -10524,7 +10527,22 @@ function doTurn (A,D,turnA,turnD,side) {
                     target:side?"you":"other",
                     val:tmpArr,
                 });
-            } else {
+                if (i == 0 && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                	var factor = A.setup[0].skill.value;
+                	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
+                	D.setup[i].hp -= Math.round(overkill*factor);
+                	var tmpArr2 = Array(D.setup.length).fill(0);
+	                tmpArr2[i]= Math.round(overkill*factor);
+	                console.log(tmpArr2);
+	                gBattle.steps.push({
+	                    action:"EXPLO",
+	                    target:side?"you":"other",
+	                    val:tmpArr2,
+	                });
+                	if (D.setup[i].hp <= 0) killUnit = true;
+                }
+            }
+            if (killUnit) {
                 if (turnA.onkill.moob!==0&&i==0) {
                     if (retturn.self===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
                     for (var j=0; j<retturn.self.atk.flatAoe.length; ++j) {
@@ -10536,6 +10554,11 @@ function doTurn (A,D,turnA,turnD,side) {
                     retturn.self.buff.iAtk[0]+=turnA.onkill.absorb;
                     retturn.self.buff.fheal[0]+=turnA.onkill.absorb;
                     retturn.self.buff.cond=turnA.units;
+                }
+                if (i == 0 &&A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                	var factor = A.setup[0].skill.value;
+                	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
+                	if (atk.flatAoe.length > i+1) atk.flatAoe[i+1] -= Math.round(D.setup[i].hp*factor);
                 }
                 if (D.setup[i].skill!==undefined) {
                     var skill = D.setup[i].skill;
@@ -10586,10 +10609,21 @@ function doTurn (A,D,turnA,turnD,side) {
                         for (var j=0; j<retturn.other.atk.flatAoe.length && j<2; ++j) {
                             retturn.other.atk.flatAoe[j]+=(skillVal*Math.min(99,D.setup[i].lvl));
                         }
+                    } else if (D.setup[i].skill.type=="revgnerf") {
+                        for (var j=0; j<A.setup.length; ++j) {
+                        	var atkval = -Math.round(A.setup[j].atk*skillVal);
+                            A.setup[j].atk+=atkval;
+                            A.setup[j].matk+=atkval;
+                            gBattle.steps.push({
+                                action:"DMG2",
+                                target:side?"other":"you",
+                                value:atkval,
+                                pos:j
+                            });
+                        }
                     }
                 }
             }
-
         } else {
             if (buff.evolve>0&&i==0&&atk.damage>0) {
                 if (retturn.other===undefined) retturn.other=getTurnData(D.setup.length,A.setup.length);

@@ -1930,7 +1930,7 @@ function Game() {
                     if (rect1.isInside(x,y)) {
                         if (swapping===undefined || !swapping) {
                             var any = false;
-                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[0].line[j]) any = true;
+                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[0].line[j] && i !== j) any = true;
                             if (any) {
                                 popup={
                                     text:"Cant place repeated heroes",
@@ -1960,7 +1960,7 @@ function Game() {
                     if (rect2.isInside(x,y)) {
                         if (swapping===undefined || !swapping) {
                             var any = false;
-                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[1].line[j]) any = true;
+                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[1].line[j] && i !== j) any = true;
                             if (any) {
                                 popup={
                                     text:"Cant place repeated heroes",
