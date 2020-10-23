@@ -1930,7 +1930,7 @@ function Game() {
                     if (rect1.isInside(x,y)) {
                         if (swapping===undefined || !swapping) {
                             var any = false;
-                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[0].line[j]) any = true;
+                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[0].line[j] && i !== j) any = true;
                             if (any) {
                                 popup={
                                     text:"Cant place repeated heroes",
@@ -1960,7 +1960,7 @@ function Game() {
                     if (rect2.isInside(x,y)) {
                         if (swapping===undefined || !swapping) {
                             var any = false;
-                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[1].line[j]) any = true;
+                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[1].line[j] && i !== j) any = true;
                             if (any) {
                                 popup={
                                     text:"Cant place repeated heroes",
@@ -9810,6 +9810,8 @@ function Game() {
             127,128,129,
             195,196,197,
             198,
+            234,235,236,
+			237,
             97,98,99,
             161,162,163,
             164,206,207,
@@ -9909,6 +9911,9 @@ function Game() {
             224,225,226,
             227,228,229,
             230,231,232,
+            230,231,232,
+			234,235,236,
+			237,
         ];
 
         for (var i = MARR.length - 1; i >= 0; --i) {
@@ -23493,6 +23498,16 @@ function Game() {
             return {
                 short: "Empowered - Start of Battle/nSteals "+(value*100).toFixed(0)+"% of opposing enemy units base stats",
                 long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will steal attack and health from the enemy unit at the same position at the start of the battle. It won't consider additional health or attack gained by skills. It won't work against world bosses."
+            }
+        } else if (skill.type=="revgnerf") {
+            return {
+                short: "Revenge/nLowers all enemies attack by "+(value*100).toFixed(0)+"%",
+                long: "When the hero dies, reduces the base attack of all units in enemy lane."
+            }
+        } else if (skill.type=="overload") {
+            return {
+                short: "Pierce & On Kill/nPropagates "+(value*100).toFixed(0)+"% unused damage when killing a unit",
+                long: "When it kills another unit with a direct damage attack, the remaining damage is done (with a multiplier) on the next enemy to come (it can be the same unit once revived).",
             }
         }
     }
