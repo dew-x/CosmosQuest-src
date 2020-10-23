@@ -14984,7 +14984,7 @@ function Game() {
                 text(ctx,"EVENT REWARDS:",W*0.5,H*0.65,"40px"+HFONT,"white","center","middle");
                 var floors = [100,250,500,1000];
                 for (var i = 0; i < 4; ++i) {
-                    this.drawMonster(ctx,-2-231-i,W*0.3+i*W*0.138,H*0.87,undefined,false,1.25,1,true,true);
+                    this.drawMonster(ctx,-2-234-i,W*0.3+i*W*0.138,H*0.87,undefined,false,1.25,1,true,true);
                     text(ctx,"Floor "+floors[i],W*0.3+i*W*0.138,H*0.895,"30px"+FONT,"white","center","middle");
                 }
             }

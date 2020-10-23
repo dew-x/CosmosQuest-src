@@ -61,7 +61,7 @@
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),
-        "news"=>"New season! Check changelog for details."
+        "news"=>"Welcome to Season 12! New heroes, new tournament modes, pvp- and tournament-rewards. Dynamic world boss hits, improved DQ and many minor changes. Check discord for a detailed changelog."
     );
     file_put_contents("data.json",json_encode($data));
      
