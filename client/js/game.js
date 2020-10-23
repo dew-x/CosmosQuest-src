@@ -15353,7 +15353,7 @@ function Game() {
             // Left Zone
             roundedRect(ctx,W*0.5-bgw*0.475,H*0.5-bgh*0.55*0.5+30,bgw*0.45,bgh*0.55,5,"rgba(255,255,255,0.3)");
             text(ctx,"Space Journey",W*0.5-bgw*0.475+bgw*0.45*0.5,H*0.345-10,"58px"+FONT,"white","center","middle");
-            var timerResult = (mdata.city.space.start + (86400000*5))-Date.now();
+            var timerResult = Math.min(mdata.city.space.start + (86400000*5),mdata.city.space.end)-Date.now();
             if (timerResult>86400000) text(ctx,"Personal Event Time Left: "+Math.ceil(timerResult/86400000)+" Days",W*0.5-bgw*0.475+bgw*0.45*0.5,H*0.345+12,"22px"+FONT,"black","center","middle");
             else text(ctx,"Personal Event Time Left: "+timer(timerResult/1000),W*0.5-bgw*0.475+bgw*0.45*0.5,H*0.345+12,"22px"+FONT,"black","center","middle");
 
@@ -15903,7 +15903,8 @@ function Game() {
                 var cookdate = new Date(mdata.city.games.victim[1]);
                 var killdate = new Date(mdata.city.games.victim[2]);
                 var eventStats = [
-                    {title: "Entered Event", stat: ((date.getMonth()>8)?(date.getMonth()+1):('0'+(date.getMonth()+1)))+'/'+((date.getDate()>9)?date.getDate():('0'+date.getDate()))+'/'+date.getFullYear()+' - '+date.getHours()+':'+((date.getMinutes()>9)?date.getMinutes():('0'+date.getMinutes()))},
+                    {title: "Entered Event", stat: ((date.getDate()>9)?date.getDate():('0'+date.getDate()))+'/'+((date.getMonth()>8)?(date.getMonth()+1):('0'+(date.getMonth()+1)))+'/'+date.getFullYear()+' - '+date.getHours()+':'+((date.getMinutes()>9)?date.getMinutes():('0'+date.getMinutes()))},
+                    {title: "Personal Time left", stat: timer((Math.min(mdata.city.games.start + (86400000*5),mdata.city.games.end)-Date.now())/1000)},
                     {title: "Activity Points", stat: mdata.city.games.activities.points},
                     {title: "Instant Points", stat: mdata.city.games.activities.instant},
                     {title: "Max Favour", stat: mdata.city.games.maxFavour},
@@ -15912,11 +15913,11 @@ function Game() {
                     {title: "Expected Final Favour", stat: eventRanking.player.StatValue+(Math.floor((mdata.city.games.start+(86400000*5)-Date.now())/(1440000 - (mdata.city.games.upgrades[1] * 72000)))*mdata.city.games.automatic.tickValue*(1+mdata.city.games.upgrades[2]/10))},
                     {title: "Current Stamina", stat: mdata.city.games.stamina},
                     {title: "Current Hunt Chances", stat: mdata.city.games.rolls[0]+"%"},
-                    {title: "Hunt Effects Active till", stat: ((huntdate.getMonth()>8)?(huntdate.getMonth()+1):('0'+(huntdate.getMonth()+1)))+'/'+((huntdate.getDate()>9)?huntdate.getDate():('0'+huntdate.getDate()))+'/'+huntdate.getFullYear()+' - '+huntdate.getHours()+':'+((huntdate.getMinutes()>9)?huntdate.getMinutes():('0'+huntdate.getMinutes()))},
+                    {title: "Hunt Effects Active till", stat: ((huntdate.getDate()>9)?huntdate.getDate():('0'+huntdate.getDate()))+'/'+((huntdate.getMonth()>8)?(huntdate.getMonth()+1):('0'+(huntdate.getMonth()+1)))+'/'+huntdate.getFullYear()+' - '+huntdate.getHours()+':'+((huntdate.getMinutes()>9)?huntdate.getMinutes():('0'+huntdate.getMinutes()))},
                     {title: "Current Cook Chances", stat: mdata.city.games.rolls[1]+"%"},
-                    {title: "Cook Effects Active till", stat: ((cookdate.getMonth()>8)?(cookdate.getMonth()+1):('0'+(cookdate.getMonth()+1)))+'/'+((cookdate.getDate()>9)?cookdate.getDate():('0'+cookdate.getDate()))+'/'+cookdate.getFullYear()+' - '+cookdate.getHours()+':'+((cookdate.getMinutes()>9)?cookdate.getMinutes():('0'+cookdate.getMinutes()))},
+                    {title: "Cook Effects Active till", stat: ((cookdate.getDate()>9)?cookdate.getDate():('0'+cookdate.getDate()))+'/'+((cookdate.getMonth()>8)?(cookdate.getMonth()+1):('0'+(cookdate.getMonth()+1)))+'/'+cookdate.getFullYear()+' - '+cookdate.getHours()+':'+((cookdate.getMinutes()>9)?cookdate.getMinutes():('0'+cookdate.getMinutes()))},
                     {title: "Current Kill Chances", stat: mdata.city.games.rolls[2]+"%"},
-                    {title: "Kill Effects Active till", stat: ((killdate.getMonth()>8)?(killdate.getMonth()+1):('0'+(killdate.getMonth()+1)))+'/'+((killdate.getDate()>9)?killdate.getDate():('0'+killdate.getDate()))+'/'+killdate.getFullYear()+' - '+killdate.getHours()+':'+((killdate.getMinutes()>9)?killdate.getMinutes():('0'+killdate.getMinutes()))},
+                    {title: "Kill Effects Active till", stat: ((killdate.getDate()>9)?killdate.getDate():('0'+killdate.getDate()))+'/'+((killdate.getMonth()>8)?(killdate.getMonth()+1):('0'+(killdate.getMonth()+1)))+'/'+killdate.getFullYear()+' - '+killdate.getHours()+':'+((killdate.getMinutes()>9)?killdate.getMinutes():('0'+killdate.getMinutes()))},
                 ];
                 if (mdata.city.games.victim[0] <= Date.now()) eventStats[9].stat = "Not active";
                 if (mdata.city.games.victim[1] <= Date.now()) eventStats[11].stat = "Not active";
