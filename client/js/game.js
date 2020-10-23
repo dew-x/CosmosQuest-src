@@ -7483,10 +7483,6 @@ function Game() {
 
         if (mode=="halloween") {
             heroes=mdata.city.halloween.hero.slice();
-            for (var i=0;i<heroes.length&&i<HERO.length;++i) {
-                if (HERO[i].rarity==5) heroes[i] = 0;
-                else if (i == 195 || i == 196 || i == 197 || i == 198) heroes[i] = 0;
-            }
         }
     
         if (mode=="pve") {
@@ -7742,8 +7738,21 @@ function Game() {
             var avaHero=false;
             for (var i=0;i<HERO.length;++i) if (heroes[i]!=0) avaHero=true;
             typeTab=4;
-            if (!searchTab) T.draw(ctx,tabOFF,ftx,H*(fty+0.7)-3,T.width(tabOFF),T.height(tabOFF)*0.6);
-            else T.draw(ctx,tabON,ftx,H*(fty+0.7)-3,T.width(tabON)*5,T.height(tabON)*0.6);
+            for (var i=4;i<elements.length; ++i) {
+                if (typeTab==i && !searchTab) T.negative(ctx,tabON,ftx,H*(fty+0.12*i+0.1)-3);
+                else T.negative(ctx,tabOFF,ftx,H*(fty+0.12*i+0.1)-3);
+                if ((new Rect(ftx,H*(fty+0.12*i+0.1)-3,T.width(tabON),T.height(tabON))).small().isInside(GM.x,GM.y)&&typeTab!=i) {
+                    T.negative(ctx,tabON,ftx,H*(fty+0.12*i+0.1)-3)
+                }
+                T.negative(ctx,elements[i],ftx,H*(fty+0.12*i+0.1)-3);
+                this.addZone("sTab_"+i,(new Rect(ftx,H*(fty+0.12*i+0.1),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
+            }
+            if (!searchTab) {
+                T.negative(ctx,tabOFF,ftx,H*(fty+0.7)-6,T.width(tabOFF),T.height(tabOFF)*0.6);
+                this.addZone("osearchTab",(new Rect(ftx,H*(fty+0.7),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
+            } else {
+                T.negative(ctx,tabON,ftx,H*(fty+0.7)-6,T.width(tabON)*5,T.height(tabON)*0.6);
+            }
         } else {
             var fx=W*0.12-5;
             var fy=H*0.10-3;
@@ -7762,7 +7771,6 @@ function Game() {
                 T.draw(ctx,elements[i],ftx,H*(fty+0.12*i)-3);
                 this.addZone("sTab_"+i,(new Rect(ftx,H*(fty+0.12*i),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
             }
-
             if (!searchTab) {
                 T.draw(ctx,tabOFF,ftx,H*(fty+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
                 this.addZone("osearchTab",(new Rect(ftx,H*(fty+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
@@ -19172,6 +19180,9 @@ function Game() {
                 if (showDaily) { //Dungeon, flash
                 	document.getElementById("herosearch").style.left = "232px";
                 	document.getElementById("herosearch").style.top = "463px";
+                } else  if (halloweenOpen) {
+                	document.getElementById("herosearch").style.left = "232px";
+                	document.getElementById("herosearch").style.top = "520px";
                 } else {
                 	document.getElementById("herosearch").style.left = "132px";
                 	document.getElementById("herosearch").style.top = "516px";
