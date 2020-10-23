@@ -15904,7 +15904,7 @@ function Game() {
                 var killdate = new Date(mdata.city.games.victim[2]);
                 var eventStats = [
                     {title: "Entered Event", stat: ((date.getDate()>9)?date.getDate():('0'+date.getDate()))+'/'+((date.getMonth()>8)?(date.getMonth()+1):('0'+(date.getMonth()+1)))+'/'+date.getFullYear()+' - '+date.getHours()+':'+((date.getMinutes()>9)?date.getMinutes():('0'+date.getMinutes()))},
-                    {title: "Personal Time left", stat: timer((Math.min(mdata.city.games.start + (86400000*5),mdata.city.games.end)-Date.now())/1000)},
+                    {title: "Personal Time left", stat: timer((Math.max(0,Math.min(mdata.city.games.start + (86400000*5),mdata.city.games.end)-Date.now()))/1000)},
                     {title: "Activity Points", stat: mdata.city.games.activities.points},
                     {title: "Instant Points", stat: mdata.city.games.activities.instant},
                     {title: "Max Favour", stat: mdata.city.games.maxFavour},
