@@ -19031,6 +19031,9 @@ function Game() {
             window.open("https://discord.gg/YyUpGsj");
         } else if (action=="ohall") {
             halloweenOpen = !halloweenOpen;
+            searchTab = false;
+            document.getElementById("herosearch").style.display="none";
+            document.getElementById("herosearch").value="";
         } else if (action=="shal") {
             halloweenMode=extra.target;
         } else if (action=="upHal") {
