@@ -3405,7 +3405,7 @@ var HERO = [
       },
       upgrade: {
         pg: 1,
-        cc: 1,
+        cc: 0,
         as: 0,
         um: 0,
         none: 0
@@ -5880,7 +5880,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "TETRA",
@@ -6761,7 +6762,8 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
-      }
+      },
+      pve: true
     },
     {
       name: "ROB",
@@ -6961,7 +6963,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "YURI",
@@ -7164,7 +7167,7 @@ var HERO = [
       }
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       type: 4,
       rarity: 0,
       img: "ohsj",
@@ -7261,111 +7264,212 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
+      },
+      pve: true
+    },
+	{
+      name: "STENCH",
+      type: 0,
+      rarity: 2,
+      img: "1hit",
+      hp: 58,
+      atk: 64,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.15,
+        hid: 230
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "RUMBLE",
+      type: 2,
+      rarity: 2,
+      img: "6sgk",
+      hp: 59,
+      atk: 65,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.20,
+        hid: 231
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "VERMIN",
+      type: 1,
+      rarity: 2,
+      img: "1j53",
+      hp: 60,
+      atk: 66,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.25,
+        hid: 232
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "REAPER",
+      type: 4,
+      rarity: 3,
+      img: "h5w2",
+      hp: 110,
+      atk: 120,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.35,
+        hid: 233
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
       }
     },
 	{
-        name: "STENCH",
-        type: 0,
-        rarity: 2,
-        img: "1hit",
-        hp: 58,
-        atk: 64,
-        skill: {
-          type: "horseman",
-          target: 1,
-          value: 0.15,
-          hid: 230
-        },
-        passive: {
-          type: 10,
-          value: 100
-        },
-        upgrade: {
-          pg: 1,
-          cc: 0,
-          as: 0,
-          um: 0,
-          none: 0
-        }
-  	},
-  	{
-        name: "RUMBLE",
-        type: 2,
-        rarity: 2,
-        img: "6sgk",
-        hp: 59,
-        atk: 65,
-        skill: {
-          type: "horseman",
-          target: 1,
-          value: 0.20,
-          hid: 231
-        },
-        passive: {
-          type: 10,
-          value: 100
-        },
-        upgrade: {
-          pg: 1,
-          cc: 0,
-          as: 0,
-          um: 0,
-          none: 0
-        }
-  	},
-  	{
-        name: "VERMIN",
-        type: 1,
-        rarity: 2,
-        img: "1j53",
-        hp: 60,
-        atk: 66,
-        skill: {
-          type: "horseman",
-          target: 1,
-          value: 0.25,
-          hid: 232
-        },
-        passive: {
-          type: 10,
-          value: 100
-        },
-        upgrade: {
-          pg: 1,
-          cc: 0,
-          as: 0,
-          um: 0,
-          none: 0
-        }
-  	},
-  	{
-        name: "REAPER",
-        type: 4,
-        rarity: 3,
-        img: "h5w2",
-        hp: 110,
-        atk: 120,
-        skill: {
-          type: "horseman",
-          target: 1,
-          value: 0.35,
-          hid: 233
-        },
-        passive: {
-          type: 10,
-          value: 100
-        },
-        upgrade: {
-          pg: 0,
-          cc: 0,
-          as: 1,
-          um: 0,
-          none: 0
-        }
+      name: "ESMERALDA",
+      type: 0,
+      rarity: 0,
+      img: "34ox",
+      hp: 41,
+      atk: 27,
+      skill: {
+        type: "amplify",
+        target: 9,
+        value: 0.025,
+        hid: 234
+      },
+      passive: {
+        type: 3,
+        value: 0.25
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
       }
+    },
+    {
+      name: "MARIONETTE",
+      type: 3,
+      rarity: 1,
+      img: "v2q5",
+      hp: 72,
+      atk: 30,
+      skill: {
+        type: "rico",
+        target: 3,
+        value: 0.9,
+        hid: 235
+      },
+      passive: {
+        type: 3,
+        value: 0.27
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "ANTOINETTE",
+      type: 2,
+      rarity: 2,
+      img: "tbac",
+      hp: 38,
+      atk: 128,
+      skill: {
+        type: "revgnerf",
+        target: -1,
+        value: 0.1,
+        hid: 236
+      },
+      passive: {
+        type: 3,
+        value: 0.29
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "LADY MALIGRYN",
+      type: 1,
+      rarity: 3,
+      img: "w4cm",
+      hp: 164,
+      atk: 98,
+      skill: {
+        type: "overload",
+        target: -1,
+        value: 1.5,
+        hid: 237
+      },
+      passive: {
+        type: 3,
+        value: 0.35
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
+      }
+    }
   ];
 
-  var promoData = [
+var promoData = [
     {
       name: "LADY OF TWILIGHT",
       atk: 25,
@@ -8976,7 +9080,7 @@ var HERO = [
       atk: 40,
       hp: 40,
       both: 40,
-      skill: 1,
+      skill: 0.2021,
       quest: 63
     },
     {
@@ -9172,7 +9276,7 @@ var HERO = [
       quest: 133
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       atk: 4,
       hp: 26,
       both: 18,
@@ -9204,37 +9308,69 @@ var HERO = [
       quest: 168
     },
     {
-	    name: "STENCH",
-	    atk: 84,
-	    hp: 58,
-	    both: 56,
-	    skill: 0.05,
-	    quest: 140
-	  },
-	  {
-	    name: "RUMBLE",
-	    atk: 86,
-	    hp: 60,
-	    both: 58,
-	    skill: 0.05,
-	    quest: 141
-	  },
-	  {
-	    name: "VERMIN",
-	    atk: 88,
-	    hp: 62,
-	    both: 60,
-	    skill: 0.05,
-	    quest: 142
-	  },
-	  {
-	    name: "REAPER",
-	    atk: 258,
-	    hp: 234,
-	    both: 180,
-	    skill: 0.05,
-	    quest: 163
-	  }
+      name: "STENCH",
+      atk: 84,
+      hp: 58,
+      both: 56,
+      skill: 0.05,
+      quest: 140
+    },
+    {
+      name: "RUMBLE",
+      atk: 86,
+      hp: 60,
+      both: 58,
+      skill: 0.05,
+      quest: 141
+    },
+    {
+      name: "VERMIN",
+      atk: 88,
+      hp: 62,
+      both: 60,
+      skill: 0.05,
+      quest: 142
+    },
+    {
+      name: "REAPER",
+      atk: 258,
+      hp: 234,
+      both: 180,
+      skill: 0.05,
+      quest: 163
+    },
+	{
+      name: "ESMERALDA",
+      atk: 38,
+      hp: 68,
+      both: 16,
+      skill: 0.005,
+      quest: 122
+    },
+	{
+      name: "MARIONETTE",
+      atk: 22,
+      hp: 58,
+      both: 32,
+      skill: 0.1,
+      quest: 134
+    },
+	{
+      name: "ANTOINETTE",
+      atk: 188,
+      hp: 42,
+      both: 64,
+      skill: 0.05,
+      quest: 146
+    },
+	{
+      name: "LADY MALIGRYN",
+      atk: 136,
+      hp: 228,
+      both: 128,
+      skill: 0.5,
+      quest: 158
+    }
   ];
 
 
