@@ -23600,7 +23600,7 @@ function Game() {
     }
     this.isHalloween = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
-        return tid>=18552 && tid<=18568;//18562
+        return tid>=18562 && tid<=18568;
     }
     this.isChristmas = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
