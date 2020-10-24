@@ -11652,7 +11652,7 @@ function Game() {
         var damageDone = CQW.WB.dealt;
         var damageTotal = CQW.WB.dmg;
         var wbLvl = CQW.WB.lvl;
-        var modifier = parseFloat(CQW.WB.modifier);
+        var modifier = parseFloat(CQW.WB.modifier) || 1;
         var rewardBase = Math.log(CQW.WB.dmg/modifier)*modifier;
         var reward = rewardBase*750;
         if (modes[CQW.WB.mode]=="No Heroes") {
