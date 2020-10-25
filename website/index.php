@@ -26,22 +26,18 @@ $content='
         	- <span class="hl">5 lives</span>: Players will fight against a random opponent (without repetition). After losing 5 times players are eliminated. Players are then ranked based on the round they lost in first, and then damage dealt as a decider.<br>
 	        - <span class="hl">Lane League</span>: Players will fight against all other players earning points based on wins for each lane. After playing a fixed amount of players everyone will be ranked based on their total score of points and then damage dealt will be a deciding factor. <br>
         	- <span class="hl">Page Rank</span>: Players will fight against all other players earning points based on wins. Wins against a player with a higher win ratio are more valuable than wins against a player with a lower win ratio. Players are ranked based on their points, and then damage dealt as a decider.<br>
-	<h3>Hero Pools</h3>
-		- Each tournament that does not include a players personal Heroes will select from 2 Hero Pools as follows
-		- Chest Heroes + Seasonal Heroes (Heroes obtained from Chests or as Seasonal Rewards are in this pool)
-		- Quest Heroes + Event Heroes (Heroes obtained from Quests, Events or others (Auction House/Shop) are in the pool)
         <h3>Hero modes</h3>
 		- <span class="hl">Your Heroes</span>: Players can use all Heroes they have unlocked.<br>
-		- <span class="hl">No Heroes</span>: Players cannot use any Heroes.<br>
-	        - <span class="hl">Super Ascended</span>: Players can use a random selection of Level 1,000 Ascended Heroes (All players have the same selection).<br>
+		- <span class="hl">Boring Common & Rare</span>: Players cannot use a random selection of heroes without too complicated skills (All players have the same selection).<br>
+	        - <span class="hl">Tanks</span>: Players can use a random selection of tanky Legenendaries and Ascendeds (All players have the same selection).<br>
         	- <span class="hl">Your Legendary</span>: Players can use all Legendary Heroes they have unlocked.<br>
-        	- <span class="hl">Random Promotion 6</span>: Players can use a random selection of Heroes set to Promotion Level 5 (All players have the same selection).<br>
+        	- <span class="hl">Air & Fire</span>: Players can use a random selection of Heroes with the Air or Fire element (All players have the same selection).<br>
 		- <span class="hl">Your Common</span>: Players can use all Common Heroes they have unlocked.<br>
-        	- <span class="hl">Random</span>: Players can use a random selection of Heroes (All players have the same selection).<br>
-        	- <span class="hl">Random Legendary</span>: Players can use a random selection of Legendary Heroes (All players have the same selection).<br>
+        	- <span class="hl">Random Rare</span>: Players can use a random selection of Rare Heroes (All players have the same selection).<br>
+        	- <span class="hl">Super Legendary</span>: Players can use a random selection of Legendary Heroes with high level and promotions (All players have the same selection).<br>
 		- <span class="hl">Your Rare</span>: Players can use all Rare Heroes they have unlocked.<br>
-        	- <span class="hl">Random Common</span>: Players can use a random selection of Common Heroes (All players have the same selection).<br>
-        	- <span class="hl">Super Rare</span>: Players can use a random selection of Level 1,000 Rare Heroes (All players have the same selection).<br>
+        	- <span class="hl">Random Chest</span>: Players can use a random selection of Chest Heroes (All players have the same selection).<br>
+        	- <span class="hl">Water & Earth</span>: Players can use a random selection of Heroes with the Water or Fire element (All players have the same selection).<br>
 
         <h3>Follower modes</h3>
         - Each tournament players have access to an amount of Followers that is generated based on the strength of Heroes available in that tournament. Players will find in most tournaments they should be able to use a strong balance of the Heroes available as well as the Followers available to purchase Monsters. <br>

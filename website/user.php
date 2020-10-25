@@ -136,8 +136,9 @@ if ($uid!==-1) {
         </tr>';
     }
     $content.='</tbody></table>';
+	// T1
     $content.='
-        <h3>Last 50 battles</h3>
+        <h3>Last 50 T1 battles</h3>
         <table class="pure-table pure-table-striped center">
         <thead>
             <tr>
@@ -192,7 +193,77 @@ if ($uid!==-1) {
         $content.='<tr><td>'.implode('</td><td>',$cells).'</td></tr>';
         ++$i;
     }
-    $content.='</tbody></table><script>
+    $content.='</tbody></table>';
+	// T2
+    $content.='
+        <h3>Last 10 T2 battles</h3>
+        <table class="pure-table pure-table-striped center">
+        <thead>
+            <tr>
+                <th>Tournament</th>
+                <th>Round</th>
+                <th>Fight</th>
+                <th>Result</th>
+                <th>Grids</th>
+            </tr>
+        </thead>
+        <tbody>
+    ';
+    $res->free();
+    $res1=$sql->query("SELECT t.tid AS rtid,b.tid,b.rid,b.aid,b.bid,b.result,
+            u1.name AS an,u1.public AS ap,u2.name AS bn,u2.public AS bp,
+            s1.setup AS `as`, s2.setup AS `bs`,
+			t.heroes AS `ther`, t.promo AS `tprom`,
+			t.grid AS `tgrid`, t.vals AS `vals`
+        FROM battles2 b, tournaments2 t, users u1, users u2, setups2 s1, setups2 s2 
+        WHERE (b.aid=$uid OR b.bid=$uid) AND b.aid=u1.id AND b.bid=u2.id AND t.id = b.tid AND s1.tid=t.tid AND s1.uid=b.aid AND s2.tid=t.tid AND s2.uid=b.bid 
+        ORDER BY t.tid DESC, b.rid DESC LIMIT 10");
+    $i=0;
+    while ($row1=$res1->fetch_assoc()) {
+        $cells=array();
+        $cells[]='<a href="tournament.php?id='.$row1["tid"].'">'.number_format($row1["tid"],0,",",".").'</a>';
+        $cells[]=number_format($row1["rid"]+1,0,",",".");
+        $cells[]='<a href="user.php?id='.$row1["aid"].'">'.($row1["ap"]?$row1["an"]:$row1["aid"]).'</a> vs <a href="user.php?id='.$row1["bid"].'">'.($row1["bp"]?$row1["bn"]:$row1["bid"]).'</a>';
+        $cells[]=($row1["result"]?($row1["bp"]?$row1["bn"]:$row1["bid"]):($row1["ap"]?$row1["an"]:$row1["aid"]))." WINS";
+        $th=tid2heroes($row1["rtid"],json_decode($row1["ther"],true));
+		$tp=($row1["tprom"]==""?array_fill(0,count($HERO),0):tid2promo($row1["rtid"],json_decode($row1["tprom"],true)));
+		$setupa=json_decode($row1["as"],true);
+		$setupb=json_decode($row1["bs"],true);
+		/*$battle=encodeBattle($row1["result"],($row1["ap"]?$row1["an"]:$row1["aid"]),($row1["bp"]?$row1["bn"]:$row1["bid"]),$row1["rtid"],$row1["rid"],
+            $setupa,
+            $th,
+            $tp,
+            $setupb,
+            $th,
+            $tp
+        );
+        $cells[]='<button class="btn" data-clipboard-text="'.$battle.'">
+            Copy
+        </button>';*/
+		$g="<table class='table-grid'>";
+		for($i = 0; $i < 30; $i++) {
+			if($i % 6 == 0)
+				$g.="<tr>";
+			$g.="<td>".getAlias($setupa[$i])."&nbsp;</td>";
+			if($i % 6 == 5)
+				$g.="</tr>";
+		}
+		$g.="</table><br>";
+		$g.="<table class='table-grid'>";
+		for($i = 0; $i < 30; $i++) {
+			if($i % 6 == 0)
+				$g.="<tr>";
+			$g.="<td>".getAlias($setupb[$i])."&nbsp;</td>";
+			if($i % 6 == 5)
+				$g.="</tr>";
+		}
+		$g.="</table>";
+		$cells[]=$g; // no replay for now, we just display grids
+        $content.='<tr><td>'.implode('</td><td>',$cells).'</td></tr>';
+        ++$i;
+    }
+    $content.='</tbody></table>';
+	$content.='<script>
         new Clipboard(\'.btn\');
     </script>';
     $res1->free();

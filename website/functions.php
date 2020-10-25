@@ -680,6 +680,21 @@ function wbName($id,$isSuper=false) {
     return $HERO[$id]["name"];
 }
 
+function wbHitsRequired($wbId, $isSuper=false) {
+    global $sql;
+	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < ".(int)$wbId." GROUP BY bid ORDER BY bid DESC LIMIT 20");
+	$avg = 0;
+	while ($row=$res->fetch_assoc()) {
+		$avg += $row["p"];
+	}
+	$avg = ceil($avg/20);
+	return $avg * ($isSuper ? 2 : 3);
+}
+
+function wbRewardModifier($wbId) {
+	return ($wbId > 1280 ? wbHitsRequired($wbId) / 1600 : 1);
+}
+
 function wbHp($lvl,$mode) {
     $base=10000000;
     if ($mode==0) {
@@ -723,5 +738,43 @@ function pos2perc2($pos,$total) {
         $sum+=1/($i*$k+$padding);
     }  
     return 1/($pos*$k+$padding)/$sum;
+}
+
+$aliases = ['ladyoftwilight'=>'lot','pyromancer'=>'pyro','forestdruid'=>'fdruid','werewolf'=>'ww','jackoknight'=>'jack','ladyodelith'=>'odelith',
+		'lordkirk'=>'kirk','neptunius'=>'nep','hosokawa'=>'hoso','hallinskidi'=>'hall','christmaself'=>'elf','leprechaun'=>'lep',
+		'dicemaster'=>'dice','luxuriusmaximus'=>'lux','pokerface'=>'poker','alordkirk'=>'akirk','aneptunius'=>'anep','ahosokawa'=>'ahoso',
+		'cliodhna'=>'clio','buccaneerbeatrice'=>'beatrice','corsaircharles'=>'charles','maraudermagnus'=>'magnus','raiderrose'=>'rose','5-12-6'=>'melf',
+		'thewanderer'=>'wanderer','b-day'=>'bday','masterlee'=>'lee','sharkjellyn'=>'shark','chocoknight'=>'choco','achocoknight'=>'achoco','yetithepostman'=>'yeti',
+		'babypyros'=>'bpyros','youngpyros'=>'ypyros','kingpyros'=>'kpyros','kirklee'=>'kyle',
+		'lordofchaos'=>'loc','motherofallkodamas'=>'moak','lord of chaos'=>'loc','mother of all kodamas'=>'moak','super lord of chaos'=>'super loc',
+		'super mother of all kodamas'=>'super moak','super kryton'=>'super kryton','super doyenne'=>'super doyenne','super bornag'=>'super bornag'];
+
+function getAlias($u) {
+	global $aliases;
+	$u = strtolower(str_replace("SUPER: ", "super ", $u));
+	$u2 = explode(":", $u);
+	return (array_key_exists($u2[0], $aliases) ? $aliases[$u2[0]] : $u2[0]).(count($u2) > 1 ? ":".$u2[1] : "");
+}
+
+function bint($num, $mode = 0) {
+	$prefixes = [[" k"," M"," G"," T"," P"],[" k"," M"," B"," T"," Q"],[" k"," Mn"," Md"," Bn"," Bd"]];
+	if ($num>=1e17) {
+		if ($num>=1e18) return floor($num/1e15).$prefixes[$mode][4];
+		else return round($num/1e15, 2).$prefixes[mode][4];
+	} else if ($num>=1e14) {
+		if ($num>=1e15) return floor($num/1e12).$prefixes[$mode][3];
+		else return round($num/1e12, 2).$prefixes[mode][3];
+	} else if ($num>=1e11) {
+		if ($num>=1e12) return floor($num/1e9).$prefixes[$mode][2];
+		else return round($num/1e9, 2).$prefixes[mode][2];
+	} else if ($num>=1e8) {
+		if ($num>=1e9) return floor($num/1e6).$prefixes[$mode][1];
+		else return round($num/1e6, 2).$prefixes[mode][1];
+	} else if ($num>=1e5) {
+		if ($num>=1e6) return floor($num/1e3).$prefixes[$mode][0];
+		else return round($num/1e3, 2).$prefixes[mode][0];
+	} else {
+		return num;
+	}
 }
 ?>

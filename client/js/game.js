@@ -3,11 +3,12 @@ function Game() {
     var BUILDINGS = computeBUILDINGS();
     var OITEMS = computeOITEMS();
     var caseData = computeChest();
-    var THEROtid = Math.floor((Date.now()/(24*60*60*1000)));
+    var TIDoffset = 0+0*11; //for testing purposes
+    var THEROtid = Math.floor((Date.now()/(24*60*60*1000)))+TIDoffset;
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.8.5.1";
+    var VERSION = "v4.9.0.0";
     var _this = this;
     var data = undefined;
     var production = 0;
@@ -535,7 +536,7 @@ function Game() {
     var CC=0;
     var AS=0;
     var SD=0;
-    var SG=0;
+    var ZG=0;
     var ET=0;
     var BKS=undefined;
     var zones = {};
@@ -1190,7 +1191,7 @@ function Game() {
     }
     this.update = function (delta) {
         if (fbattleSync+2*60*1000<Date.now()) this.fsync();
-        var ntid = Math.floor((Date.now()/(24*60*60*1000)));
+        var ntid = Math.floor((Date.now()/(24*60*60*1000)))+TIDoffset;
         if (THEROtid != ntid) {
             THEROtid = ntid;
             THERO = computeTHERO(THEROtid);
@@ -1869,7 +1870,7 @@ function Game() {
                                                 for (var x=0; x<6; ++x) {
                                                     var b=x*6;
                                                     for (var y=0; y<6; ++y) {
-                                                        if (mdata.city.setup[b+y]>=0) ++rc[x];
+                                                        if (mdata.city.setup[b+y]!==-1) ++rc[x];
                                                     }
                                                     if (rc[x]==0) ++empty;
                                                 }
@@ -1903,11 +1904,14 @@ function Game() {
                                         }
                                         this.place(position,cityClick.id);
                                     }
-                                }
-                                else {
+                                } else {
                                     if ((Date.now()-doubleClick.time)>=400 && swapping==true){
-                                        var initialMonster=mdata.city.setup[position];
-                                        this.swap(position,cityClick.initPos);
+										var initialMonster=mdata.city.setup[position];
+										if (mulChest) {
+											this.swaprow(position,cityClick.initPos);
+										} else {
+											this.swap(position,cityClick.initPos);
+										}
                                         swapping=false;
                                     } 
                                 }
@@ -1926,7 +1930,7 @@ function Game() {
                     if (rect1.isInside(x,y)) {
                         if (swapping===undefined || !swapping) {
                             var any = false;
-                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[0].line[j]) any = true;
+                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[0].line[j] && i !== j) any = true;
                             if (any) {
                                 popup={
                                     text:"Cant place repeated heroes",
@@ -1956,7 +1960,7 @@ function Game() {
                     if (rect2.isInside(x,y)) {
                         if (swapping===undefined || !swapping) {
                             var any = false;
-                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[1].line[j]) any = true;
+                            for (var j = 0; j < 6; ++j) if (cityClick.id <-1 && cityClick.id == data.playground[1].line[j] && i !== j) any = true;
                             if (any) {
                                 popup={
                                     text:"Cant place repeated heroes",
@@ -2050,21 +2054,42 @@ function Game() {
                                 }
                                 else {
                                     if ((Date.now()-doubleClick.time)>=400){
-                                        var initialMonster=data.tour.setup[tournamentid][position];
-                                        if (tournamentid==1 && CQW!==undefined) {
-                                            if (CQW.tour.current.grid[position]!=4) {
-                                                if (CQW.tour.current.grid[position]==8 && cityClick.id>-1) {
-                                                    data.tour.setup[tournamentid][position] = cityClick.id;
-                                                    data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                                } else if (CQW.tour.current.grid[position]!=8) {
-                                                    data.tour.setup[tournamentid][position] = cityClick.id;
-                                                    data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                                }
-                                            } 
-                                        } else {
-                                            data.tour.setup[tournamentid][position] = cityClick.id;
-                                            data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
-                                        }
+										if (mulChest) {
+											var rowa = j;
+											var rowb = Math.floor(cityClick.initPos/6);
+											var allowRowSwap = true;
+											if (tournamentid==1 && CQW!==undefined) { // check validity
+												for (var k=0;k<6;++k) {
+													var cella = CQW.tour.current.grid[k+6*rowa];
+													var cellb = CQW.tour.current.grid[k+6*rowb];
+													if ((cella==4 && data.tour.setup[tournamentid][k+6*rowb]!=-1) || (cellb==4 && data.tour.setup[tournamentid][k+6*rowa]!=-1) || (cella==8 && data.tour.setup[tournamentid][k+6*rowb]<-1) || (cellb==8 && data.tour.setup[tournamentid][k+6*rowa]<-1))
+														allowRowSwap = false;
+												}
+											}
+											if (allowRowSwap) {
+												for (var k=0;k<6;++k) {
+													var initialMonster=data.tour.setup[tournamentid][k+6*rowa];
+													data.tour.setup[tournamentid][k+6*rowa] = data.tour.setup[tournamentid][k+6*rowb];
+													data.tour.setup[tournamentid][k+6*rowb] = initialMonster;
+												}
+											}
+										} else {
+											var initialMonster=data.tour.setup[tournamentid][position];
+											if (tournamentid==1 && CQW!==undefined) {
+												if (CQW.tour.current.grid[position]!=4) {
+													if (CQW.tour.current.grid[position]==8 && cityClick.id>-1) {
+														data.tour.setup[tournamentid][position] = cityClick.id;
+														data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+													} else if (CQW.tour.current.grid[position]!=8) {
+														data.tour.setup[tournamentid][position] = cityClick.id;
+														data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+													}
+												} 
+											} else {
+												data.tour.setup[tournamentid][position] = cityClick.id;
+												data.tour.setup[tournamentid][cityClick.initPos] = initialMonster;
+											}
+										}
                                         swapping=false;
                                     }
                                 }
@@ -2168,9 +2193,9 @@ function Game() {
                         }
                         else {
                             if ((Date.now()-doubleClick.time)>=400){
-                                var initialMonster=data.wb[data.wbline][i];
-                                data.wb[data.wbline][i] = cityClick.id;
-                                data.wb[data.wbline][cityClick.initPos] = initialMonster;
+								var initialMonster=data.wb[data.wbline][i];
+								data.wb[data.wbline][i] = cityClick.id;
+								data.wb[data.wbline][cityClick.initPos] = initialMonster;
                                 swapping=false;
                             }
                         }
@@ -2252,7 +2277,6 @@ function Game() {
                 if (scene!="city" && this.isEnabled("city")) this.doAction("scene",{target:"city"});
                 else if (scene=="city" && this.isEnabled("pve")) this.doAction("scene",{target:"pve"});
             }
-            else if (code==120) ederase = true;
         }
     }
     this.keyDown = function (code) {
@@ -2260,6 +2284,8 @@ function Game() {
             if (code==16) {
                 mulLvl = true;
                 halllvlmode=1;
+            } else if (code == 88) { 
+            	ederase = true;
             } else if (code==37 && cc_direction!=="RIGHT" && cc_changed==false) {
                 cc_direction="LEFT";
                 cc_changed=true;
@@ -2294,7 +2320,7 @@ function Game() {
     }
     this.keyUp = function (code) {
         if (!searchTab) {
-            if (code==120) ederase = false;
+            if (code==88) ederase = false;
             else if (code==16) {
                 mulLvl = false;
                 halllvlmode = 0;
@@ -2307,6 +2333,16 @@ function Game() {
                 x100 = false;
             }
         }
+    }
+    this.unfocusGame = function () {
+    	//reset all keydown-variables when unfocussing the game
+    	ederase = false;
+        mulLvl = false;
+        halllvlmode = 0;
+        maxLvl = false;
+        mulChest = false;
+        mulGift = false;
+        x100 = false;
     }
     this.drawCamera = function (ctx) {
         var zx = 0;
@@ -2505,6 +2541,13 @@ function Game() {
         }
         ctx.restore();
 
+        // Event Tickets
+        var etrect=(new Rect(W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75)).small();
+        if (etrect.isInside(GM.x,GM.y)) {
+            T.draw(ctx,"joy2",W*0.113-1,H-T.height("joy2")*1.75-17-1,T.width("joy2")*1.75+2,T.height("joy2")*1.75+2);
+            this.addZone("oetckm",etrect,"oetickets",{target:true});
+        } else T.draw(ctx,"joy2",W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75);
+
         // Task Manager Icon
         if (mdata!==undefined && mdata.tm!==undefined) {
             var tmrect=(new Rect(7,H-T.height("01i5")*0.95-5,T.width("01i5")*0.95,T.height("01i5")*0.95)).small();
@@ -2560,14 +2603,6 @@ function Game() {
                 this.addZone("tgsp",sprect,"tgsp",{target:true});
             } else T.draw(ctx,"4krx",W*0.22,H-T.height("4krx")*0.95-5,T.width("4krx")*0.95,T.height("4krx")*0.95);
         }
-
-        // Event Tickets
-        var etrect=(new Rect(W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75)).small();
-        if (etrect.isInside(GM.x,GM.y)) {
-            T.draw(ctx,"joy2",W*0.113-1,H-T.height("joy2")*1.75-17-1,T.width("joy2")*1.75+2,T.height("joy2")*1.75+2);
-            this.addZone("oetckm",etrect,"oetickets",{target:true});
-        } else T.draw(ctx,"joy2",W*0.113,H-T.height("joy2")*1.75-17,T.width("joy2")*1.75,T.height("joy2")*1.75);
-
 
         // Right tabs
         var anyExperiment=false;
@@ -4074,6 +4109,10 @@ function Game() {
                                 text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 text(ctx,"Get 33 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                             }
+                            else if (hid==226||hid==227||hid==228||hid==229) { //eternals
+                                text(ctx,"Can't be leveled",ix+(W*0.15/2)+i*W*0.2,y0+H*0.245,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                                text(ctx,"Get 9 levels per auction",ix+(W*0.15/2)+i*W*0.2,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
+                            }
                             else {
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.028,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
@@ -4229,7 +4268,7 @@ function Game() {
                 }
 
                 text(ctx,"Page "+(ltoPage+1)+"/"+ltoPages,W*0.99,y0+H*0.975,"28px"+FONT,"rgba(201,244,255,1)","right","middle");
-                if (drawArray.length > 3) {
+                if (drawArray.length > 6) {
                     var nw=T.width("09sg");
                     var nh=T.height("09sg");
                     T.draw(ctx,"09sg",W*0.94,y0+H*0.495);
@@ -5753,9 +5792,25 @@ function Game() {
             }
         }
 
-        T.draw(ctx,fAllSprite,zx+tzw/2-tallw-5,zy+tzh-tallh);
-        var x = zx+tzw/2-tallw/2;
-        var y = zy+tzh-tallh;
+        //Set all experiments
+        if (unlocked == 12) {
+	        var x = zx+tzw/2-tallw/2-5-T.width("9wxp");
+	        T.draw(ctx,"9wxp",x,zy+tzh-tallh);
+	        var any = false;
+	        for (var i = 0; i < 12; ++i) if (i<=data.specie && !nn(data.lab[i])) any = true;
+	        if (any) {
+		        for (var i = 0; i < 3; ++i) {
+			        if (mouse) this.addZone("setAll"+i,(new Rect(x+101+i*T.height("9wxp")*0.6,zy+tzh-T.height("02pq")+T.height("9wxp")*0.2+1,T.height("9wxp")*0.6,T.height("9wxp")*0.6)).small(),"setAllExp",{target:i,max:unlocked});
+			        if ((new Rect(x+101+i*T.height("9wxp")*0.6,zy+tzh-T.height("02pq")+T.height("9wxp")*0.2+1,T.height("9wxp")*0.6,T.height("9wxp")*0.6)).small().isInside(GM.x,GM.y)) {
+			            ctx.fillStyle="rgba(255,255,255,0.3)";
+			            ctx.fillRect(x+101+i*T.height("9wxp")*0.6,zy+tzh-T.height("02pq")+T.height("9wxp")*0.2+1,T.height("9wxp")*0.6,T.height("9wxp")*0.6);
+			        }
+		        }
+	        }
+        }
+        
+        //Finish all for 250 UM
+        T.draw(ctx,fAllSprite,zx+tzw/2-tallw/2,zy+tzh-tallh);
         var AllEnergyObtain = 0;
         var CurrentInvestigations = 0;
         for (var i = 0; i < unlocked; i++){
@@ -5765,25 +5820,28 @@ function Game() {
             }
         }
         if (AllEnergyObtain!=0 && CurrentInvestigations >= 1){
-            if (mouse && purchasing===undefined) this.addZone("buyfall",(new Rect(zx+tzw/2-tallw-5,zy+tzh-tallh,tallw,tallh)).small(),"buy",{target:"fall"});
-            if ((new Rect(zx+tzw/2-tallw-5,zy+tzh-tallh,tallw,tallh)).small().isInside(GM.x,GM.y)) {
+            if (mouse && purchasing===undefined) this.addZone("buyfall",(new Rect(zx+tzw/2-tallw/2,zy+tzh-tallh,tallw,tallh)).small(),"buy",{target:"fall"});
+            if ((new Rect(zx+tzw/2-tallw/2,zy+tzh-tallh,tallw,tallh)).small().isInside(GM.x,GM.y)) {
                 ctx.fillStyle="rgba(255,255,255,0.1)";
-                ctx.fillRect(zx+tzw/2-tallw-5,zy+tzh-tallh,tallw,tallh*0.95);
-                text(ctx,"You will obtain: "+this.pn(AllEnergyObtain,"J"),zx+tzw/2-tallw-5-tallw/1.4,zy+tzh-tallh+18,"26px"+FONT,"white","left","left");
+                ctx.fillRect(zx+tzw/2-tallw/2,zy+tzh-tallh,tallw,tallh*0.95);
+                ctx.fillStyle="rgba(0,0,0,0.8)";
+                ctx.fillRect(zx+tzw/2-tallw/2,zy+tzh-1.5*tallh,tallw,tallh*0.5);
+                text(ctx,"You will obtain: "+this.pn(AllEnergyObtain,"J"),zx+tzw/2-tallw/2+8,zy+tzh-tallh-10,"26px"+FONT,"white","left","left");
             }
         }
 
-        T.draw(ctx,"02pq",zx+tzw/2+5,zy+tzh-tallh);
+        //Claim all experiments
+        T.draw(ctx,"02pq",zx+tzw/2+5+tallw/2,zy+tzh-tallh);
         var anyClaim = false;
         for (var i = 0; i < unlocked; i++){
             if (nn(data.lab[i]) && data.lab[i].todo <= 0) anyClaim = true;
         }
         
         if (anyClaim) {
-            if (mouse) this.addZone("clall",(new Rect(zx+tzw/2-5,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small(),"clall",{target:unlocked});
-            if ((new Rect(zx+tzw/2-5,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small().isInside(GM.x,GM.y)) {
+            if (mouse) this.addZone("clall",(new Rect(zx+tzw/2+5+tallw/2,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small(),"clall",{target:unlocked});
+            if ((new Rect(zx+tzw/2+5+tallw/2,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq"))).small().isInside(GM.x,GM.y)) {
                 ctx.fillStyle="rgba(255,255,255,0.1)";
-                ctx.fillRect(zx+tzw/2-5,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq")*0.95);
+                ctx.fillRect(zx+tzw/2+5+tallw/2,zy+tzh-T.height("02pq"),T.width("02pq"),T.height("02pq")*0.95);
             }
         }
 
@@ -6844,7 +6902,7 @@ function Game() {
             ctx.fillRect(W*0.043-1,H*0.695-32-5-1,W*0.21+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.043,H*0.695-32-5,W*0.21,H*0.05);
-            text(ctx,"Avaiable keys to open chests",W*0.043+3,H*0.695-16-5,"32px"+FONT,"white","left","middle");
+            text(ctx,"Available keys to open chests",W*0.043+3,H*0.695-16-5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.043-1,H*0.916+5-1,W*0.22+2,H*0.05+2);
@@ -6856,20 +6914,20 @@ function Game() {
             ctx.fillRect(W*0.27-1,H*0.916+5-1,W*0.26+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.27,H*0.916+5,W*0.26,H*0.05);
-            text(ctx,"Hold ctrl to open 10 keys in one click",W*0.27+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
+            text(ctx,"Hold ctrl to use 10 keys in one click",W*0.27+3,H*0.916+16+5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.66-1,H*0.615-32-5-1,W*0.31+2,H*0.05+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.66,H*0.615-32-5,W*0.31,H*0.05);
-            text(ctx,"At zero you will receive a free chest opening",W*0.66+3,H*0.615-16-5,"32px"+FONT,"white","left","middle");
+            text(ctx,"You can open a free chest every 24 hours",W*0.66+3,H*0.615-16-5,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.63-1,H*0.90+5-1,W*0.36+2,H*0.09+2);
             ctx.fillStyle="rgba(36,36,36,0.95)";
             ctx.fillRect(W*0.63,H*0.90+5,W*0.36,H*0.09);
             text(ctx,"Every 10 chests opened, you'll receive a Hero Chest",W*0.63+3,H*0.90+16+5,"32px"+FONT,"white","left","middle");
-            text(ctx,"Top number is the amount of avaiable Hero Chests",W*0.63+3,H*0.90+16+5+27,"32px"+FONT,"white","left","middle");
+            text(ctx,"Top number is the amount of available Hero Chests",W*0.63+3,H*0.90+16+5+27,"32px"+FONT,"white","left","middle");
 
             ctx.fillStyle="rgba(255,255,255,0.95)";
             ctx.fillRect(W*0.1-2,H*0.05-2,W*0.8+4,H*0.45+4);
@@ -7396,16 +7454,16 @@ function Game() {
         if (mode!=="flash" && mode!=="dungeon" && mode!=="halloween") T.draw(ctx,"065i",1024*0.16,(640*0.061)-T.height("0i5r")/2);
         var hmode=[
             "Your Heroes",
-            "No Heroes",
-            "Super Ascended",
+            "Boring Common & Rare",
+            "Tanks",
             "Your Legendary",
-            "Random P6",
+            "Air & Fire",
             "Your Common",
-            "Random",
-            "Random Legendary", 
+            "Random Rare",
+            "Super Legendary", 
             "Your Rare",
-            "Random Common",
-            "Super Rare",
+            "Random Chest",
+            "Water & Earth",
         ];
         var followerLeft=undefined;
         if (mode!=="flash" && mode!="dungeon" && mode!=="halloween") T.draw(ctx,"0le4",1024*0.019,640*0.095);
@@ -7425,10 +7483,6 @@ function Game() {
 
         if (mode=="halloween") {
             heroes=mdata.city.halloween.hero.slice();
-            for (var i=0;i<heroes.length&&i<HERO.length;++i) {
-                if (HERO[i].rarity==5) heroes[i] = 0;
-                else if (i == 195 || i == 196 || i == 197 || i == 198) heroes[i] = 0;
-            }
         }
     
         if (mode=="pve") {
@@ -7684,8 +7738,21 @@ function Game() {
             var avaHero=false;
             for (var i=0;i<HERO.length;++i) if (heroes[i]!=0) avaHero=true;
             typeTab=4;
-            if (!searchTab) T.draw(ctx,tabOFF,ftx,H*(fty+0.7)-3,T.width(tabOFF),T.height(tabOFF)*0.6);
-            else T.draw(ctx,tabON,ftx,H*(fty+0.7)-3,T.width(tabON)*5,T.height(tabON)*0.6);
+            for (var i=4;i<elements.length; ++i) {
+                if (typeTab==i && !searchTab) T.negative(ctx,tabON,ftx,H*(fty+0.12*i+0.1)-3);
+                else T.negative(ctx,tabOFF,ftx,H*(fty+0.12*i+0.1)-3);
+                if ((new Rect(ftx,H*(fty+0.12*i+0.1)-3,T.width(tabON),T.height(tabON))).small().isInside(GM.x,GM.y)&&typeTab!=i) {
+                    T.negative(ctx,tabON,ftx,H*(fty+0.12*i+0.1)-3)
+                }
+                T.negative(ctx,elements[i],ftx,H*(fty+0.12*i+0.1)-3);
+                this.addZone("sTab_"+i,(new Rect(ftx,H*(fty+0.12*i+0.1),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
+            }
+            if (!searchTab) {
+                T.negative(ctx,tabOFF,ftx,H*(fty+0.7)-6,T.width(tabOFF),T.height(tabOFF)*0.6);
+                this.addZone("osearchTab",(new Rect(ftx,H*(fty+0.7),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
+            } else {
+                T.negative(ctx,tabON,ftx,H*(fty+0.7)-6,T.width(tabON)*5,T.height(tabON)*0.6);
+            }
         } else {
             var fx=W*0.12-5;
             var fy=H*0.10-3;
@@ -7704,7 +7771,6 @@ function Game() {
                 T.draw(ctx,elements[i],ftx,H*(fty+0.12*i)-3);
                 this.addZone("sTab_"+i,(new Rect(ftx,H*(fty+0.12*i),T.width(tabON),T.height(tabON))).small(),"sTab",{target: i});
             }
-
             if (!searchTab) {
                 T.draw(ctx,tabOFF,ftx,H*(fty+0.6),T.width(tabOFF),T.height(tabOFF)*0.6);
                 this.addZone("osearchTab",(new Rect(ftx,H*(fty+0.6),T.width(tabOFF),T.height(tabOFF)*0.6)).small(),"ost",{target: true});
@@ -7982,24 +8048,24 @@ function Game() {
         var numtabs=elements.length;
         var pos=0;
         var drawMonsters = [];
-        var avaiableFollowers = mdata.followers;
+        var availableFollowers = mdata.followers;
         var initMons = 60;
         if (mode=="tournaments") {
-            if (tournamentid==0) avaiableFollowers = tid2fol(tid);
-            else avaiableFollowers = CQW.tour.current.followers;
+            if (tournamentid==0) availableFollowers = tid2fol(tid);
+            else availableFollowers = CQW.tour.current.followers;
         }
-        else if (mode=="extratournament") avaiableFollowers = CQW.tour.current.followers;
-        else if (mode=="flash") avaiableFollowers = CQW.flash.current.followers;
-        else if (mode=="playground") avaiableFollowers = -1;
-        else if (mode=="halloween") avaiableFollowers = 0;
+        else if (mode=="extratournament") availableFollowers = CQW.tour.current.followers;
+        else if (mode=="flash") availableFollowers = CQW.flash.current.followers;
+        else if (mode=="playground") availableFollowers = -1;
+        else if (mode=="halloween") availableFollowers = 0;
         if (!data.hideafford) initMons = 180;
         for (var i=0;i<initMons;++i) drawMonsters.push(MONSTERS[i]);
         if (data.hideafford) {
             for (var i=60;i<MONSTERS.length;i=i+4) {
                 var canAfford=false;
                 for (var j=0;j<4;++j) {
-                    if (avaiableFollowers == -1) canAfford = true;
-                    else if (MONSTERS[i+j].cost <= avaiableFollowers) canAfford = true;
+                    if (availableFollowers == -1) canAfford = true;
+                    else if (MONSTERS[i+j].cost <= availableFollowers) canAfford = true;
                 }
                 if (canAfford == true) {
                     for (var j=0;j<4;++j) drawMonsters.push(MONSTERS[i+j]);
@@ -8065,24 +8131,24 @@ function Game() {
 
                 T.draw(ctx,"0fj5",mx,H*(my+0.145*i)-3);
 
-                var avaiable=true;
+                var available=true;
                 if (mode=="city") {
-                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="tournaments" || mode =="extratournament") {
-                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="pve" || mode=="pved" || mode=="dungeon") {
-                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="wb") {
-                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="flash") {
-                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-fullHeroArray[i].pos) available=false;
                 } else if (mode=="playground") {
-                    avaiable=true;
+                    available=true;
                 } else if (mode=="halloween") {
-                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-fullHeroArray[i].pos) avaiable=false;
+                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-fullHeroArray[i].pos) available=false;
                 }
-                this.drawMonster(ctx,inithero-fullHeroArray[i].pos,dmx+T.width("0fj5")/2,(640*(dmy+0.145*i))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],avaiable,true,promotion[fullHeroArray[i].pos]);
-                if (placeSync===undefined && avaiable) {
+                this.drawMonster(ctx,inithero-fullHeroArray[i].pos,dmx+T.width("0fj5")/2,(640*(dmy+0.145*i))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],available,true,promotion[fullHeroArray[i].pos]);
+                if (placeSync===undefined && available) {
                     if (mode=="flash") {
                         if (this.canJoinFlash()) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-fullHeroArray[i].pos});
@@ -8327,24 +8393,24 @@ function Game() {
 
                 T.draw(ctx,"0fj5",mx,H*(my+0.145*pos)-3);
 
-                var avaiable=true;
+                var available=true;
                 if (mode=="city") {
-                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<mdata.city.setup.length;++j) if (mdata.city.setup[j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="tournaments" || mode =="extratournament") {
-                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.tour.setup[tournamentid].length;++j) if (data.tour.setup[tournamentid][j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="pve" || mode=="pved" || mode=="dungeon") {
-                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.pve[data.pveline].length;++j) if (data.pve[data.pveline][j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="wb") {
-                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.wb[data.wbline].length;++j) if (data.wb[data.wbline][j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="flash") {
-                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.flash.setup.length;++j) if (data.flash.setup[j]==inithero-myHeroPos[realpos]) available=false;
                 } else if (mode=="playground") {
-                    avaiable=true;
+                    available=true;
                 } else if (mode=="halloween") {
-                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-myHeroPos[realpos]) avaiable=false;
+                    for (var j=0;j<data.halloween.length;++j) if (data.halloween[j]==inithero-myHeroPos[realpos]) available=false;
                 }
-                this.drawMonster(ctx,inithero-myHeroPos[realpos],dmx+T.width("0fj5")/2,(640*(dmy+0.145*pos))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],avaiable,true,promotion[myHeroPos[realpos]]);
-                if (placeSync===undefined && avaiable) {
+                this.drawMonster(ctx,inithero-myHeroPos[realpos],dmx+T.width("0fj5")/2,(640*(dmy+0.145*pos))+T.height("0fj5")-3,undefined,false,0.9,myHeroArray[realpos],available,true,promotion[myHeroPos[realpos]]);
+                if (placeSync===undefined && available) {
                     if (mode=="flash") {
                         if (this.canJoinFlash()) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-myHeroPos[realpos]});
@@ -8676,7 +8742,7 @@ function Game() {
                 } else T.draw(ctx,"0ljk",W*0.87-T.width("0ij7")/2,H*0.89-T.height("0ij7")/2);
                 this.drawMonster(ctx,-2-pverewards[pvepage],W*0.797,H*0.95,undefined,false,0.85,1);
             } else {
-                T.draw(ctx,"0ljk",W*0.87-T.width("0ij7")/2,H*0.89-T.height("0ij7")/2);
+                T.draw(ctx,"4bbd",W*0.87-T.width("4bbd")/2,H*0.89-T.height("4bbd")/2);
                 this.drawMonster(ctx,-2-pverewards[pvepage],W*0.797,H*0.95,undefined,false,0.85,1,false);
             }
         } else {
@@ -9129,36 +9195,23 @@ function Game() {
         var tmode=["Page Rank","5 Lives","Lane League"];
         var hmode=[
             "Your Heroes",
-            "No Heroes",
-            "Super Ascended",
+            "Boring Common & Rare",
+            "Tanks",
             "Your Legendary",
-            "Random P6",
+            "Air & Fire",
             "Your Common",
-            "Random",
-            "Random Legendary", 
+            "Random Rare",
+            "Super Legendary", 
             "Your Rare",
-            "Random Common",
-            "Super Rare",
-        ];
-        var hmode=[
-            "Your Heroes",
-            "No Heroes",
-            "Super Ascended",
-            "Your Legendary",
-            "Random P6",
-            "Your Common",
-            "Random",
-            "Random Legendary", 
-            "Your Rare",
-            "Random Common",
-            "Super Rare",
+            "Random Chest",
+            "Water & Earth",
         ];
         var btx=1024*0.66;
         var bty=640*0.185;
         var bw=T.width("0cq8");
         var bh=T.height("0cq8");
         T.draw(ctx,"0cq8",btx,bty+80);
-        var tid=Math.floor((Date.now()/(24*60*60*1000)));
+        var tid=Math.floor((Date.now()/(24*60*60*1000)))+TIDoffset;
         var fmode=tid2fol(tid).toLocaleString();
         if (ranquing==undefined || Date.now()-ranquing.time>5*60*1000) this.updateRanking();
 
@@ -9709,7 +9762,7 @@ function Game() {
     }
 
     this.drawPrana = function (ctx) {
-        var MARR = [
+        var MARR = [ //heroes in the hero manager, in order of appearance
             7,8,9,
             10,11,12,
             13,14,15,
@@ -9751,11 +9804,14 @@ function Game() {
             170,171,172,
             187,188,189,
             210,211,212,
+            230,231,232,
             42,43,44,
             51,52,53,
             127,128,129,
             195,196,197,
             198,
+            234,235,236,
+			237,
             97,98,99,
             161,162,163,
             164,206,207,
@@ -9777,10 +9833,10 @@ function Game() {
             92,100,131,
             143,174,169,
             179,184,194,
-            80,102,132,
+            102,132,
             147,173,190,
-            213,
-            0,1,2,
+            213,233,
+            0,1,2,80,
             20,180,96,
             205,
             148,101,
@@ -9791,7 +9847,7 @@ function Game() {
             156,168,175,
             185
         ];
-        var PVEH = [
+        var PVEH = [ //heroes that can be leveled up with PG&CC or AS&CC
             0,1,2,
             51,52,53,
             127,128,129,
@@ -9814,7 +9870,7 @@ function Game() {
             204,205,
         ];
         // Season Cleaner
-        var SEHE = [
+        var SEHE = [ //heroes that get removed from hero manager if you don't own them
             33,34,35,
             48,49,50,
             51,52,53,
@@ -9833,10 +9889,10 @@ function Game() {
             133,134,135,
             144,145,146,
             105,20,96,
-            101,102,131,
+            101,131,
             143,174,169,
             107,108,109,
-            132,136,137,
+            136,137,
             138,139,146,
             148,152,153,
             154,155,156,
@@ -9854,6 +9910,11 @@ function Game() {
             221,222,223,
             224,225,226,
             227,228,229,
+            230,231,232,
+			234,235,236,
+			237,
+			184,194,
+			180,113,130,185,175,
         ];
 
         for (var i = MARR.length - 1; i >= 0; --i) {
@@ -10417,7 +10478,7 @@ function Game() {
                         }
                     }
     
-                } else if (showHero == 42 || showHero == 43 || showHero == 44 || showHero == 101) {
+                } else if (showHero == 42 || showHero == 43 || showHero == 44 || showHero == 101) {//UM-levelable
                     var price = 750;
     
                     var prrect = (new Rect(btx+bw/4+15-T.width("0fp5")/2*0.9,bty+bh/3+320-T.height("0fp5")/2*0.81,T.width("0fp5")*0.9,T.height("0fp5")*0.82)).small();
@@ -10605,9 +10666,15 @@ function Game() {
                                 if (i !== 5)  this.addZone("umprom",umrect,"promo",{target:promHero,mode:true});
                                 else this.addZone("umprom",umrect,"train",{target:promHero,mode:true});
                             } else T.draw(ctx,"nskb",x+T.width(tab)*0.5-T.width("nskb")*0.5,y+T.height(tab)*0.4-T.height("nskb")*0.5);
-                            text(ctx,"Unlock by ",x+T.width(tab)*0.225,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","left","middle");
-                            text(ctx,currentPrice,x+T.width(tab)*0.48,y+T.height(tab)*0.4,"38px"+FONT,"rgb(255,255,240)","left","middle");
-                            T.draw(ctx,"02c9",x+T.width(tab)*0.63,y+T.height(tab)*0.4-T.height("02c9")*0.5*0.5-2,T.width("02c9")*0.5,T.height("02c9")*0.5);
+                            if (i == 3 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) {
+                            	text(ctx,"Free Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
+                            } else if (i == 5 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1) {
+                            	text(ctx,"Instant Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
+                            } else {
+		                        text(ctx,"Unlock by ",x+T.width(tab)*0.225,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","left","middle");
+		                        text(ctx,currentPrice,x+T.width(tab)*0.48,y+T.height(tab)*0.4,"38px"+FONT,"rgb(255,255,240)","left","middle");
+		                        T.draw(ctx,"02c9",x+T.width(tab)*0.63,y+T.height(tab)*0.4-T.height("02c9")*0.5*0.5-2,T.width("02c9")*0.5,T.height("02c9")*0.5);
+                            }
                             
                             text(ctx,"OR",x+T.width(tab)*0.5,y+T.height(tab)*0.615,"38px"+FONT,"rgba(255,250,210,1)","center","middle");
     
@@ -10623,9 +10690,7 @@ function Game() {
                                 text(ctx,promPrice[i][0][HERO[promHero].rarity],x+T.width(tab)*0.5,y+T.height(tab)*0.8,"38px"+FONT,"rgb(255,255,240)","left","middle");
                                 */
                                 var hours = [6,12,24,48];
-                                if (mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1) {
-                                    text(ctx,"Instant Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","center","middle");
-                                } else text(ctx,"Train for "+hours[HERO[promHero].rarity]+" Hours",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","center","middle");
+                                text(ctx,"Train for "+hours[HERO[promHero].rarity]+" Hours",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","center","middle");
                                 //T.draw(ctx,p6c[HERO[promHero].rarity].icon,x+T.width(tab)*p6c[HERO[promHero].rarity].x,y+T.height(tab)*0.8-T.height(p6c[HERO[promHero].rarity].icon)*p6c[HERO[promHero].rarity].scale*0.5,T.width(p6c[HERO[promHero].rarity].icon)*p6c[HERO[promHero].rarity].scale,T.height(p6c[HERO[promHero].rarity].icon)*p6c[HERO[promHero].rarity].scale);
                                 
                                 if (obrect.isInside(GM.x,GM.y) && !promsync) {
@@ -10644,12 +10709,8 @@ function Game() {
                                     text(ctx,"*Use max 3 Units",x+T.width(tab)*0.5,y+T.height(tab)*0.8+8,"18px"+FONT,"rgb(255,255,240)","center","middle");
                                     if (obrect.isInside(GM.x,GM.y) && !promsync) this.addZone("pveprom",obrect,"pveprom",{target:promHero});
                                 } else {
-                                    if (mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) {
-                                        text(ctx,"FREE with Token",x+T.width(tab)*0.5,y+T.height(tab)*0.8,"24px"+FONT,"rgb(255,255,240)","center","middle");
-                                    } else {
-                                        text(ctx,"Attack WB with "+HERO[promHero].name,x+T.width(tab)*0.5,y+T.height(tab)*0.8-5,"20px"+FONT,"rgb(255,255,240)","center","middle");
-                                        text(ctx,mdata.city.herowb[promHero]+"/"+(HERO[promHero].rarity+1)+" times",x+T.width(tab)*0.5,y+T.height(tab)*0.8+8,"18px"+FONT,"rgb(255,255,240)","center","middle");
-                                    }
+                                    text(ctx,"Attack WB with "+HERO[promHero].name,x+T.width(tab)*0.5,y+T.height(tab)*0.8-5,"20px"+FONT,"rgb(255,255,240)","center","middle");
+                                    text(ctx,mdata.city.herowb[promHero]+"/"+(HERO[promHero].rarity+1)+" times",x+T.width(tab)*0.5,y+T.height(tab)*0.8+8,"18px"+FONT,"rgb(255,255,240)","center","middle");
                                     if (obrect.isInside(GM.x,GM.y) && mdata.city.herowb[promHero]<(HERO[promHero].rarity+1) &&!promsync) this.addZone("wbprom",obrect,"wbprom",{target:promHero});
                                 }
                             }
@@ -11592,15 +11653,17 @@ function Game() {
         var damageDone = CQW.WB.dealt;
         var damageTotal = CQW.WB.dmg;
         var wbLvl = CQW.WB.lvl;
-        var reward = Math.log(CQW.WB.dmg)*750;
+        var modifier = parseFloat(CQW.WB.modifier) || 1;
+        var rewardBase = Math.log(CQW.WB.dmg/modifier)*modifier;
+        var reward = rewardBase*750;
         if (modes[CQW.WB.mode]=="No Heroes") {
-            reward = Math.log(CQW.WB.dmg)*1700;
+            reward = rewardBase*1700;
         } else {
-            if (CQW.WB.id==72) reward = Math.log(CQW.WB.dmg)*950;
-            else if (CQW.WB.id==87) reward = Math.log(CQW.WB.dmg)*900;
-            else if (CQW.WB.id==106) reward = Math.log(CQW.WB.dmg)*750;
-            else if (CQW.WB.id==126) reward = Math.log(CQW.WB.dmg)*1700;
-            else if (CQW.WB.id==186) reward = Math.log(CQW.WB.dmg)*1700;
+            if (CQW.WB.id==72) reward = rewardBase*950;
+            else if (CQW.WB.id==87) reward = rewardBase*900;
+            else if (CQW.WB.id==106) reward = rewardBase*750;
+            else if (CQW.WB.id==126) reward = rewardBase*1700;
+            else if (CQW.WB.id==186) reward = rewardBase*1700;
         }
         reward = Math.max(reward,0);
         if (CQW.WB.name.indexOf("SUPER")!==-1) reward*=2;
@@ -11815,22 +11878,23 @@ function Game() {
     }
 
     this.drawDailyEvent = function (ctx) {
-        if (this.isDailyEvent().mode!==undefined) {
-            if (this.isDailyEvent().mode=="flash") {
+		var demode = this.isDailyEvent().mode;
+        if (demode!==undefined) {
+            if (demode=="flash") {
                 if (CQW!==undefined && CQW.flash!==undefined) {
                     flashOpen=true;
                     this.drawFlash(ctx);
                 } else showDaily=false;
             }
-            else if (this.isDailyEvent().mode=="cc") {
+            else if (demode=="cc") {
                 eventCCopen=true;
                 this.drawEventCC(ctx);
             }
-            else if (this.isDailyEvent().mode=="adventure") {
+            else if (demode=="adventure") {
                 adventureOpen=true;
                 this.drawAdventure(ctx);
             }
-            else if (this.isDailyEvent().mode=="pge") {
+            else if (demode=="pge") {
                 var attempts = 10;
                 var pg = 0;
                 if (mdata.city !== undefined && mdata.city.pge !== undefined && mdata.city.pge.attempts !== undefined && mdata.city.pge.pg !== undefined) {
@@ -12056,7 +12120,8 @@ function Game() {
 
                 text(ctx,"Lucky Followers",W*0.5,H*0.25,"60px"+FONT,"white","center","middle");
                 text(ctx,"You can open 3 cells every 15 minutes. Three of them have an amazing amount of followers!",W*0.5,H*0.75,"30px"+FONT,"black","center","middle");
-
+                if (CQW.followers.completed!==undefined) text(ctx,"You used "+CQW.followers.completed+" out of 8 attempts.",W*0.5,H*0.79,"30px"+FONT,"black","center","middle");
+                
                 var cw=W*0.095*0.8;
                 var ch=H*0.15*0.8;
                 var cx=W*0.233;
@@ -12120,10 +12185,10 @@ function Game() {
                 }
                 if (unlocked === 3) {
                     if (CQW.followers.timeleft<Date.now()) this.wsync();
-                    else text(ctx,"New opening avaiable in: "+timer((CQW.followers.timeleft-Date.now())/1000),W*0.5,H*0.3,"40px"+FONT,"black","center","middle");
+                    else text(ctx,"New opening available in: "+timer((CQW.followers.timeleft-Date.now())/1000),W*0.5,H*0.3,"40px"+FONT,"black","center","middle");
                 }
             }
-            else if (this.isDailyEvent().mode=="lottery") {
+            else if (demode=="lottery") {
                 var bw=W*0.6;
                 var bh=H*0.6;
                 roundedRect(ctx,W*0.5-(bw*0.5)-2,H*0.5-(bh*0.5)-2,bw+4,bh+4,5,"rgb(255,255,255)");
@@ -12155,7 +12220,7 @@ function Game() {
 
                 if (CQW!==undefined && CQW.lottery!==undefined) {
                     text(ctx,"- Each lottery ticket costs 1 Ascension Sphere",W*0.5-bw*0.5+10,H*0.3,"36px"+FONT,"white","left","middle");
-                    text(ctx,"- You can buy unlimited lottery tickets",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
+                    text(ctx,"- You can buy 1000 lottery tickets; quick buy: ctrl x10, shift x100",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
                     text(ctx,"- Prize Pool is 105% of total lottery tickets income. Currently: "+CQW.lottery.pool.toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+40,"36px"+FONT,"white","left","middle");
                     text(ctx,"* 40%/20%/10%/5%/5%/5%/5%/5%/5%/5% (10 winners).",W*0.5-bw*0.5+10,H*0.3+60,"36px"+FONT,"white","left","middle");
                     text(ctx,"* "+(0.4*CQW.lottery.pool).toFixed(0)+"/"+(0.2*CQW.lottery.pool).toFixed(0)+"/"+(0.1*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+80,"36px"+FONT,"white","left","middle");
@@ -12166,7 +12231,7 @@ function Game() {
                         T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.52-T.height("091m")/2);
                         this.addZone("buylot",buyrect,"buylot");
                     } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.52-T.height("091m")/2);
-                    text(ctx,"BUY TICKET 1",W*0.5-20,H*0.52,"36px"+FONT,"white","center","middle");
+                    text(ctx,"BUY TICKET x"+(mulChest ? 10 : (x100 ? 100 : 1)),W*0.5-20,H*0.52,"36px"+FONT,"white","center","middle");
                     T.draw(ctx,"08y7",W*0.5+35,H*0.52-T.height("091m")/2,T.width("02c9")*0.6,T.height("02c9")*0.6);
 
                     if (CQW.lottery.numbers!==undefined && CQW.lottery.numbers.length>0) {
@@ -12201,7 +12266,7 @@ function Game() {
                     }
                 }
             }
-            else if (this.isDailyEvent().mode=="dungeon") {
+            else if (demode=="dungeon") {
                 data.pveline = 0;
                 var skillInfo=undefined;
                 inDungeon=true;
@@ -12361,8 +12426,8 @@ function Game() {
                     	if (CQW.dungeon.setup[4-skillInfo] < -1) {//Hero
             	            ctx.fillStyle="rgba(0,0,0,0.7)";
             	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-W*0.3,bgh+80-mh-42-H*0.1-20,W*0.6,H*0.1+20);
-                            text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20,"40px"+FONT,"white","center","middle");
-            	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05),"34px"+FONT,"white","center","middle");
+                            text(ctx,HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].name,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-20-10,"40px"+FONT,"white","center","middle");
+            	            mltext(ctx,"SKILL: "+this.skill2text(HERO[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.hero[-(CQW.dungeon.setup[4-skillInfo]+2)],false,promoData[-(CQW.dungeon.setup[4-skillInfo]+2)].skill,CQW.dungeon.promo[-(CQW.dungeon.setup[4-skillInfo]+2)]).short,center-bw*0.9*0.5+72+(skillInfo*110),bgh+80-mh-42-(H*0.05)-10,"34px"+FONT,"white","center","middle");
                     	} else {//Monster
                     		ctx.fillStyle="rgba(0,0,0,0.7)";
             	            ctx.fillRect(center-bw*0.9*0.5+72+(skillInfo*110)-20,bgh+80-mh-42-H*0.1+20,40,H*0.1-20);
@@ -12582,7 +12647,7 @@ function Game() {
                     text(ctx,"- Each tournament will cost 100 Universe Marbles",W*0.572-tw*0.5+15,H*0.27+20,"36px"+FONT,"white","left","middle");
                     text(ctx,"- The tournament will start when 64 players have joined",W*0.572-tw*0.5+15,H*0.27+40,"36px"+FONT,"white","left","middle");
                     text(ctx,"- In results page, you can see each individual battle",W*0.572-tw*0.5+15,H*0.27+60,"36px"+FONT,"white","left","middle");
-                    text(ctx,"- Top 16 will get a Season 8 Hero",W*0.572-tw*0.5+15,H*0.27+80,"36px"+FONT,"white","left","middle");
+                    text(ctx,"- Top 16 will get a Season 9 Hero",W*0.572-tw*0.5+15,H*0.27+80,"36px"+FONT,"white","left","middle");
                     text(ctx,"- All participants will get 150.000 Star Dust and 5 VIP points",W*0.572-tw*0.5+15,H*0.27+100,"36px"+FONT,"white","left","middle");
                     text(ctx,"- Top 10 players will get 850, 765, 680, 595, 510, 425, 340, 255, 170, 85 UM",W*0.572-tw*0.5+15,H*0.27+130,"36px"+FONT,"white","left","middle");
 
@@ -12590,9 +12655,9 @@ function Game() {
                     text(ctx,"5th-9th",W*0.572-tw*0.5+tw*0.5,H*0.745,"32px"+FONT,"white","center","middle");
                     text(ctx,"10th-16th",W*0.572-tw*0.5+tw*0.8,H*0.745,"32px"+FONT,"white","center","middle");
 
-                    this.drawMonster(ctx,-174,W*0.572-tw*0.5+tw*0.2,H*0.77-35,undefined,false,1.5);
-                    this.drawMonster(ctx,-173,W*0.572-tw*0.5+tw*0.5,H*0.77-35,undefined,false,1.5);
-                    this.drawMonster(ctx,-172,W*0.572-tw*0.5+tw*0.8,H*0.77-35,undefined,false,1.5);
+                    this.drawMonster(ctx,-191,W*0.572-tw*0.5+tw*0.2,H*0.77-35,undefined,false,1.5);
+                    this.drawMonster(ctx,-190,W*0.572-tw*0.5+tw*0.5,H*0.77-35,undefined,false,1.5);
+                    this.drawMonster(ctx,-189,W*0.572-tw*0.5+tw*0.8,H*0.77-35,undefined,false,1.5);
                 }
             }
         } else if (flashPage=="results") {
@@ -13179,14 +13244,14 @@ function Game() {
                                     this.addZone("claim_"+i+j,crect,"claimsp",{target:i,extra:j});
                                 }
                             }
-                            if (i==1) this.drawMonster(ctx,-192,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
+                            if (i==1) this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
                             else if (i==2) {
                                 /*T.draw(ctx,"0luu",W*0.17+(i*W*0.33)-T.width("0luu")/2,H*0.91-T.height("0luu"),T.width("0luu"),T.height("0luu"))
                                 text(ctx,"?",W*0.17+(i*W*0.33),H*0.91-T.height("0luu")/2,"150px "+FONT,"rgba(255,255,255,1)","center","middle",3,"black");
                                 text(ctx,"???",W*0.17+(i*W*0.33)-18,H*0.91-9,Math.floor(20)+"px"+FONT,"white","center","middle");
                                 text(ctx,"???",W*0.17+(i*W*0.33)+18,H*0.91-9,Math.floor(20)+"px"+FONT,"white","center","middle");*/
                             
-                                this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
+                                this.drawMonster(ctx,-235,W*0.17+(i*W*0.33),H*0.91,undefined,undefined,1);
                             }
                             
                         }
@@ -13194,7 +13259,7 @@ function Game() {
                         if (i==1) {
                             var fSize = "27px";
                             roundedRect(ctx,W*0.17+(i*W*0.33)-(bgw/2)-1,H*0.55-(bgh/2)-1,bgw+2,bgh+2,15,"rgba(15,15,15,0.6)");
-                            text(ctx,"Upon purchase you'll receive Retia",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
+                            text(ctx,"Upon purchase you'll receive Hetfield",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"By completing various tasks you will receive",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+140,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"AS, Keys, Followers, PG, SD, CC & UM",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+170,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+200,fSize+FONT,"rgba(255,255,255,1)","center","middle");
@@ -13203,7 +13268,7 @@ function Game() {
                             //text(ctx,"By completing the different challenges, you will",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+320,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                            // text(ctx,"receive: AS, Keys, Followers, PG, SD, CC, UM and Heroes.",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+350,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             //text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+400,fSize+FONT,"rgba(255,255,255,1)","center","middle");
-                            this.drawMonster(ctx,-192,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
+                            this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
                             var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
                             if (bprect.isInside(GM.x,GM.y)) {
                                 T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
@@ -13217,7 +13282,7 @@ function Game() {
                         } else if (i==2) {
                             var fSize = "27px";
                             roundedRect(ctx,W*0.17+(i*W*0.33)-(bgw/2)-1,H*0.55-(bgh/2)-1,bgw+2,bgh+2,15,"rgba(15,15,15,0.6)");
-                            text(ctx,"Upon purchase, you’ll receive: \"HETFIELD\"",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
+                            text(ctx,"Upon purchase, you’ll receive: \"REAPER\"",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+110,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"By completing various tasks you will receive",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+140,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"AS, Keys, Followers, PG, SD, CC & UM",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+170,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+200,fSize+FONT,"rgba(255,255,255,1)","center","middle");
@@ -13225,7 +13290,7 @@ function Game() {
                             text(ctx,"?",W*0.17+(i*W*0.33),H*0.8-T.height("0luu"),"300px "+FONT,"rgba(255,255,255,1)","center","middle",3,"black");
                             text(ctx,"???",W*0.17+(i*W*0.33)-18*2,H*0.8-9*2,Math.floor(20*2)+"px"+FONT,"white","center","middle");
                             text(ctx,"???",W*0.17+(i*W*0.33)+18*2,H*0.8-9*2,Math.floor(20*2)+"px"+FONT,"white","center","middle");*/
-                            this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
+                            this.drawMonster(ctx,-235,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
                             var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
                             if (bprect.isInside(GM.x,GM.y)) {
                                 T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
@@ -13495,16 +13560,7 @@ function Game() {
                 } else if (action=="[G.A.M.E.S]") {
                     text(ctx,mdata.log[i].msg,W*0.5-bgw*0.5*0.9+120,H*0.23+line*H*0.05,"24px"+FONT,"black","left","middle");
                 } else if (action=="Registered") {
-                    var found=undefined;
-                    var pos=mdata.log[i].msg.length-4;
-                    while(found==undefined) {
-                        if (mdata.log[i].msg[pos]==" ") found=pos;
-                        else --pos;
-                    }
-                    found = mdata.log[i].msg.length-found-1;
-                    var l=found-3;
-                    var val=mdata.log[i].msg.substr(mdata.log[i].msg.length-found,l);
-                    text(ctx,"Succesfully registered into a Tournament. Enter cost is "+val+" UM.",W*0.5-bgw*0.5*0.9+120,H*0.23+line*H*0.05,"24px"+FONT,"black","left","middle");
+                    text(ctx,mdata.log[i].msg,W*0.5-bgw*0.5*0.9+120,H*0.23+line*H*0.05,"24px"+FONT,"black","left","middle");
                 } else if (action=="Fight") {
                     var found=undefined;
                     var pos=mdata.log[i].msg.length-8;
@@ -13670,7 +13726,8 @@ function Game() {
             {a: "Ascension Spheres Dispenser: ",b: mdata.city.easter.asdispenser,d:true},
             {a: "Universe Marbles Dispenser: ",b: mdata.city.easter.umdispenser,d:true},
             {a: "Chests Dispenser: ",b: mdata.city.easter.freesilver},
-            {a: "Free Promotion 4: ",b: mdata.city.easter.freep4},
+            {a: "Free Promotion 4: ",b: mdata.city.easter.freep4, c: (mdata.city.promotokens === undefined) ? undefined : mdata.city.promotokens.promo4},
+            {a: "Instant Promotion 6: ", b: false, c: (mdata.city.promotokens === undefined) ? undefined : mdata.city.promotokens.promo6},
             {a: "EM Grants x4: ",b: mdata.city.easter.doubleem},
             {a: "Quest Solver: ",b: mdata.city.easter.questsolver},
             {a: "Daily Quest Solver: ",b: mdata.city.easter.dailysolver},
@@ -13696,16 +13753,20 @@ function Game() {
                     var bh = H*0.0475;
                     var b = "Inactive";
                     if (list[c].t !== undefined && list[c].t) {
-                        b = timer(list[c].b/1000) + " Hours";
+                        b = (list[c].b <= 0 ? "Expired" : timer(list[c].b/1000) + " Hours");
                     } else if (list[c].p !== undefined && list[c].p) {
                         b = list[c].b;
                     } else {
                         if (list[c].b == 1 || list[c].b == true) b = "Active";
-                        else if (list[c].b == 0 || list[c].b == false) b = "Inactive";
-                        else if (list[c].b == -1) b = "LifeTime";
+                        else if (list[c].b == 0 || list[c].b == false) {
+                        	b = "Inactive";
+                        	if (list[c].c > 0) {
+                        		b = list[c].c + ((list[c].c == 1) ? " Token" : " Tokens");
+                        	}
+                        } else if (list[c].b == -1) b = "LifeTime";
                         else if (list[c].b > 1 && list[c].d == undefined) {
                             if ((list[c].b-Date.now())>86400000) b = Math.ceil((list[c].b-Date.now())/86400000)+" Days";
-                            else b = timer((list[c].b-Date.now())/1000);
+                            else b = ((list[c].b-Date.now()) <= 0 ? "Expired" : timer((list[c].b-Date.now())/1000));
                         }
                         else {
                             b = list[c].b+" days";
@@ -13731,9 +13792,9 @@ function Game() {
             ctx.fillStyle="rgba(0,0,0,0.9)";
             ctx.fillRect(W*0.5-bgw*0.5+10,H*0.5-bgh*0.5+10,bgw-20,bgh-20);
 
-            text(ctx,"VIP Points can be earned through Daily Tournaments and making Kred Purchases.",W*0.5,H*0.3,"40px "+FONT,"white","center","middle");
-            text(ctx,"Daily Tournaments award 25 VIP Points and Kred purchases award",W*0.5,H*0.3+40,"40px "+FONT,"white","center","middle");
-            text(ctx,"2.5 VIP points per Kred spent.",W*0.5,H*0.3+80,"40px "+FONT,"white","center","middle");
+            text(ctx,"VIP Points can be earned through Tournaments and making Kred Purchases.",W*0.5,H*0.3,"40px "+FONT,"white","center","middle");
+            text(ctx,"Daily Tournaments (T1) award 25 VIP Points and Flash Tournaments award 5 VIP points.",W*0.5,H*0.3+40,"40px "+FONT,"white","center","middle");
+            text(ctx,"Kred purchases award 2.5 VIP points per Kred spent.",W*0.5,H*0.3+80,"40px "+FONT,"white","center","middle");
             text(ctx,"Sometimes VIP Points are awarded through events, Seasonal Rewards,",W*0.5,H*0.3+160,"40px "+FONT,"white","center","middle");
             text(ctx,"or an increased amount through limited offers.",W*0.5,H*0.3+200,"40px "+FONT,"white","center","middle");
         }
@@ -14838,7 +14899,7 @@ function Game() {
 
             text(ctx,"Free SG: "+timer(((mdata.city.halloween.dailyClaimed+1)*24*60*60*1000-Date.now())/1000),W*0.685,H*0.225,"40px"+HFONT,"black","left","middle");
 
-            text(ctx,SG,mid-15,H*0.222,"56px"+HFONT,"white","center","middle");
+            text(ctx,ZG,mid-15,H*0.222,"56px"+HFONT,"white","center","middle");
             T.draw(ctx,sg_icon,mid-T.width(sg_icon)*0.9*0.5+42,H*0.225-T.height(sg_icon)*0.9*0.5,T.width(sg_icon)*0.9,T.height(sg_icon)*0.9);
 
             var reward = "20 Shadow Gems";
@@ -14919,12 +14980,12 @@ function Game() {
                 text(ctx,"- For every kred spent, you will receive one Shadow Gem",W*0.13,H*0.25+125,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- Every time that you spend a Shadow Gem on level up a Hero, you will receive PG/AS",W*0.13,H*0.25+150,"32px"+HFONT,"white","left","middle");
                 text(ctx,"  Common Level: 1PG, Rare Level: 3PG, Legendary Level: 12PG and Ascended Level: 30AS.",W*0.13,H*0.25+175,"32px"+HFONT,"white","left","middle");
-                text(ctx,"- The event will be available till 10th of October at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
+                text(ctx,"- The event will be available till 2nd of November at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
 
                 text(ctx,"EVENT REWARDS:",W*0.5,H*0.65,"40px"+HFONT,"white","center","middle");
                 var floors = [100,250,500,1000];
                 for (var i = 0; i < 4; ++i) {
-                    this.drawMonster(ctx,-2-195-i,W*0.3+i*W*0.138,H*0.87,undefined,false,1.25,1,true,true);
+                    this.drawMonster(ctx,-2-234-i,W*0.3+i*W*0.138,H*0.87,undefined,false,1.25,1,true,true);
                     text(ctx,"Floor "+floors[i],W*0.3+i*W*0.138,H*0.895,"30px"+FONT,"white","center","middle");
                 }
             }
@@ -15002,7 +15063,7 @@ function Game() {
 
                 if (halllvlmode == 1) price*=10 ;
                 if (halllvlmode == 2) {
-                    var maxreachable=Math.floor(SG/price);
+                    var maxreachable=Math.floor(ZG/price);
                     if (maxreachable+halloweenHero[halloweenHero[halloweenLevelUp].id].level>98) maxreachable=98;
                     price*=maxreachable;
                 }
@@ -15039,7 +15100,7 @@ function Game() {
                 }
  
                 var lupRect=(new Rect(W*0.5-W*0.16*0.5,H*0.725-H*0.09*0.5,W*0.16,H*0.09)).small();
-                if (lupRect.isInside(GM.x,GM.y) && price >=1 && SG >= price && !halloweenSync) {
+                if (lupRect.isInside(GM.x,GM.y) && price >=1 && ZG >= price && !halloweenSync) {
                     T.negative(ctx,"0gcg",W*0.5-W*0.16*0.5,H*0.725-H*0.09*0.5,W*0.16,H*0.09);
                     this.addZone("lupH",lupRect,"lupH",{target:halloweenHero[halloweenLevelUp].id,mode:halllvlmode});
                 } else T.negative(ctx,"00kg",W*0.5-W*0.16*0.5,H*0.725-H*0.09*0.5,W*0.16,H*0.09);
@@ -15254,6 +15315,9 @@ function Game() {
                 this.addZone("startSJ",startRect,"startEL");
                 roundedRect(ctx,W*0.5-W*0.3*0.5+4,H*0.5-H*0.075*0.5+4,W*0.3-8,H*0.075-8,5,"rgba(0,0,0,0.3)");
             }
+
+            text(ctx,"You can start the event whenever you want. It'll run 5 days or until midnight on sunday (GMT).",W*0.5,H*0.8,"32px"+FONT,"white","center","middle");
+            text(ctx,"If you start at any time on tuesday you'll be able to play the full event.",W*0.5,H*0.8+20,"32px"+FONT,"white","center","middle");
         } else if (Date.now() > mdata.city.space.start+(86400000*5)) {
             // Left Zone
             roundedRect(ctx,W*0.5-bgw*0.475,H*0.5-bgh*0.55*0.5+30,bgw*0.45,bgh*0.55,5,"rgba(255,255,255,0.3)");
@@ -15303,7 +15367,7 @@ function Game() {
             // Left Zone
             roundedRect(ctx,W*0.5-bgw*0.475,H*0.5-bgh*0.55*0.5+30,bgw*0.45,bgh*0.55,5,"rgba(255,255,255,0.3)");
             text(ctx,"Space Journey",W*0.5-bgw*0.475+bgw*0.45*0.5,H*0.345-10,"58px"+FONT,"white","center","middle");
-            var timerResult = (mdata.city.space.start + (86400000*5))-Date.now();
+            var timerResult = Math.min(mdata.city.space.start + (86400000*5),mdata.city.space.end)-Date.now();
             if (timerResult>86400000) text(ctx,"Personal Event Time Left: "+Math.ceil(timerResult/86400000)+" Days",W*0.5-bgw*0.475+bgw*0.45*0.5,H*0.345+12,"22px"+FONT,"black","center","middle");
             else text(ctx,"Personal Event Time Left: "+timer(timerResult/1000),W*0.5-bgw*0.475+bgw*0.45*0.5,H*0.345+12,"22px"+FONT,"black","center","middle");
 
@@ -15510,7 +15574,7 @@ function Game() {
         } else T.draw(ctx,"cjq4",W*0.5+bgw*0.5-T.width("cjq4")*0.5-14,H*0.5-bgh*0.5,T.width("cjq4")*0.75,T.height("cjq4")*0.75);  
     }
     this.getSJPrice = function (level) {
-        return 5000 + (5000 * level);
+        return 2500 + (2500 * level);
     }
     this.getSJUpgrade = function(mission, mode, upgrades) {
         if (mode == "engine") {
@@ -15624,6 +15688,8 @@ function Game() {
                 this.addZone("startGG",startRect,"startEL");
                 roundedRect(ctx,W*0.5-W*0.3*0.5+4,H*0.5-H*0.075*0.5+4,W*0.3-8,H*0.075-8,5,"rgba(0,0,0,0.3)");
             }
+            text(ctx,"You can start the event whenever you want. It'll run 5 days or until midnight on sunday (GMT).",W*0.5,H*0.8,"32px"+FONT,"black","center","middle");
+            text(ctx,"If you start at any time on tuesday you'll be able to play the full event.",W*0.5,H*0.8+20,"32px"+FONT,"black","center","middle");
         } else if (Date.now() > mdata.city.games.start+(86400000*5)) {
             roundedRect(ctx,W*0.5-bgw*0.475,H*0.5-bgh*0.7*0.5,bgw*0.45,bgh*0.75,5,"rgba(255,255,255,0.3)");
             if (eventRanking !== undefined && eventRanking.top !== undefined && eventRanking.player !== undefined) {
@@ -15694,7 +15760,7 @@ function Game() {
                     }
     
     
-                    if (gamesTab == 0 && mdata.city.games.activities.activity == i && Date.now() < mdata.city.games.activities.timer) etext(ctx,"Activity on Progress/n"+timer((mdata.city.games.activities.timer-Date.now())/1000),W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
+                    if (gamesTab == 0 && mdata.city.games.activities.activity == i && Date.now() < mdata.city.games.activities.timer) etext(ctx,"Activity in Progress/n"+timer((mdata.city.games.activities.timer-Date.now())/1000),W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
                     else if (gamesTab == 0 && mdata.city.games.activities.activity == i && Date.now() >= mdata.city.games.activities.timer) etext(ctx,"CLAIM!",W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
                     else if (gamesTab == 0 && mdata.city.games.activities.activity != -1) etext(ctx,"Blocked",W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
                     else if (gamesTab == 1 && mdata.city.games.upgrades[i] == 10) etext(ctx,"Already at Max",W*0.25+(i*W*0.25),H*0.80,"24px"+FONT,"black","center","middle",undefined,undefined,W*0.2-30-6,20);
@@ -15851,20 +15917,21 @@ function Game() {
                 var cookdate = new Date(mdata.city.games.victim[1]);
                 var killdate = new Date(mdata.city.games.victim[2]);
                 var eventStats = [
-                    {title: "Entered Event", stat: ((date.getMonth()>8)?(date.getMonth()+1):('0'+(date.getMonth()+1)))+'/'+((date.getDate()>9)?date.getDate():('0'+date.getDate()))+'/'+date.getFullYear()+' - '+date.getHours()+':'+((date.getMinutes()>9)?date.getMinutes():('0'+date.getMinutes()))},
+                    {title: "Entered Event", stat: ((date.getDate()>9)?date.getDate():('0'+date.getDate()))+'/'+((date.getMonth()>8)?(date.getMonth()+1):('0'+(date.getMonth()+1)))+'/'+date.getFullYear()+' - '+date.getHours()+':'+((date.getMinutes()>9)?date.getMinutes():('0'+date.getMinutes()))},
+                    {title: "Personal Time left", stat: timer((Math.max(0,Math.min(mdata.city.games.start + (86400000*5),mdata.city.games.end)-Date.now()))/1000)},
                     {title: "Activity Points", stat: mdata.city.games.activities.points},
                     {title: "Instant Points", stat: mdata.city.games.activities.instant},
                     {title: "Max Favour", stat: mdata.city.games.maxFavour},
                     {title: "Favour Tick Value", stat: mdata.city.games.automatic.tickValue},
                     {title: "Favour Tick Rate", stat: timer((1440000 - (mdata.city.games.upgrades[1] * 72000))/1000)},
-                    {title: "Expected Final Favour", stat: eventRanking.player.StatValue+(Math.floor((mdata.city.games.start+(86400000*5)-Date.now())/(1440000 - (mdata.city.games.upgrades[1] * 72000)))*mdata.city.games.automatic.tickValue)},
+                    {title: "Expected Final Favour", stat: eventRanking.player.StatValue+(Math.floor((mdata.city.games.start+(86400000*5)-Date.now())/(1440000 - (mdata.city.games.upgrades[1] * 72000)))*mdata.city.games.automatic.tickValue*(1+mdata.city.games.upgrades[2]/10))},
                     {title: "Current Stamina", stat: mdata.city.games.stamina},
                     {title: "Current Hunt Chances", stat: mdata.city.games.rolls[0]+"%"},
-                    {title: "Hunt Effects Active till", stat: ((huntdate.getMonth()>8)?(huntdate.getMonth()+1):('0'+(huntdate.getMonth()+1)))+'/'+((huntdate.getDate()>9)?huntdate.getDate():('0'+huntdate.getDate()))+'/'+huntdate.getFullYear()+' - '+huntdate.getHours()+':'+((huntdate.getMinutes()>9)?huntdate.getMinutes():('0'+huntdate.getMinutes()))},
+                    {title: "Hunt Effects Active till", stat: ((huntdate.getDate()>9)?huntdate.getDate():('0'+huntdate.getDate()))+'/'+((huntdate.getMonth()>8)?(huntdate.getMonth()+1):('0'+(huntdate.getMonth()+1)))+'/'+huntdate.getFullYear()+' - '+huntdate.getHours()+':'+((huntdate.getMinutes()>9)?huntdate.getMinutes():('0'+huntdate.getMinutes()))},
                     {title: "Current Cook Chances", stat: mdata.city.games.rolls[1]+"%"},
-                    {title: "Cook Effects Active till", stat: ((cookdate.getMonth()>8)?(cookdate.getMonth()+1):('0'+(cookdate.getMonth()+1)))+'/'+((cookdate.getDate()>9)?cookdate.getDate():('0'+cookdate.getDate()))+'/'+cookdate.getFullYear()+' - '+cookdate.getHours()+':'+((cookdate.getMinutes()>9)?cookdate.getMinutes():('0'+cookdate.getMinutes()))},
+                    {title: "Cook Effects Active till", stat: ((cookdate.getDate()>9)?cookdate.getDate():('0'+cookdate.getDate()))+'/'+((cookdate.getMonth()>8)?(cookdate.getMonth()+1):('0'+(cookdate.getMonth()+1)))+'/'+cookdate.getFullYear()+' - '+cookdate.getHours()+':'+((cookdate.getMinutes()>9)?cookdate.getMinutes():('0'+cookdate.getMinutes()))},
                     {title: "Current Kill Chances", stat: mdata.city.games.rolls[2]+"%"},
-                    {title: "Kill Effects Active till", stat: ((killdate.getMonth()>8)?(killdate.getMonth()+1):('0'+(killdate.getMonth()+1)))+'/'+((killdate.getDate()>9)?killdate.getDate():('0'+killdate.getDate()))+'/'+killdate.getFullYear()+' - '+killdate.getHours()+':'+((killdate.getMinutes()>9)?killdate.getMinutes():('0'+killdate.getMinutes()))},
+                    {title: "Kill Effects Active till", stat: ((killdate.getDate()>9)?killdate.getDate():('0'+killdate.getDate()))+'/'+((killdate.getMonth()>8)?(killdate.getMonth()+1):('0'+(killdate.getMonth()+1)))+'/'+killdate.getFullYear()+' - '+killdate.getHours()+':'+((killdate.getMinutes()>9)?killdate.getMinutes():('0'+killdate.getMinutes()))},
                 ];
                 if (mdata.city.games.victim[0] <= Date.now()) eventStats[9].stat = "Not active";
                 if (mdata.city.games.victim[1] <= Date.now()) eventStats[11].stat = "Not active";
@@ -16033,7 +16100,9 @@ function Game() {
         } else T.draw(ctx,"cjq4",W*0.5+bgw*0.5-T.width("cjq4")*0.5-14,H*0.5-bgh*0.5,T.width("cjq4")*0.75,T.height("cjq4")*0.75); 
     }
     this.updateLoopEventRanking = function (leaderboardName) {
-        if (eventRanking==undefined) eventRanking={};
+        if (eventRanking==undefined) eventRanking={time: 0, ptime: 0};
+		//if(Date.now() - eventRanking.time < 2*60*1000)
+			//return false;
         eventRanking.time=Date.now();
         if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined) {
             PlayFab.ClientApi.GetLeaderboard({
@@ -16044,21 +16113,24 @@ function Game() {
                 if (_this.serverOk(res,err)) {
                     if (res.data && res.data.Leaderboard) {
                         eventRanking.top=res.data.Leaderboard;
-                        PlayFab.ClientApi.GetLeaderboardAroundPlayer({
-                            "StatisticName": leaderboardName,
-                            "MaxResultsCount": 1,
-                        }, function (res,err) {
-                            if (_this.serverOk(res,err)) {
-                                eventRanking.player=res.data.Leaderboard[0];
-                            } else {
-                                eventRanking.time-=2*60*1000;
-                                var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
-                                    msg:"PFsjyou",
-                                    stk:res
-                                }));
-                                GA.getInstance().addEvent(ev);
-                            }
-                        });
+						if(Date.now() - eventRanking.ptime > 5*60*1000) {
+							eventRanking.ptime=Date.now();
+							PlayFab.ClientApi.GetLeaderboardAroundPlayer({
+								"StatisticName": leaderboardName,
+								"MaxResultsCount": 1,
+							}, function (res,err) {
+								if (_this.serverOk(res,err)) {
+									eventRanking.player=res.data.Leaderboard[0];
+								} else {
+									eventRanking.time-=2*60*1000;
+									var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
+										msg:"PFsjyou",
+										stk:res
+									}));
+									GA.getInstance().addEvent(ev);
+								}
+							});
+						}
                     }
                 } else {
                     eventRanking.time-=2*60*1000;
@@ -16335,7 +16407,7 @@ function Game() {
                                         T.draw(ctx,img,pos[i].x-T.width(img)*scale/2,pos[i].y-105*bscale-T.height(img)*scale/2,T.width(img)*scale,T.height(img)*scale);
                                         //text(ctx,step.value,pos[i].x+34*bscale,pos[i].y-116*bscale,Math.round(bscale*44)+"px"+FONT,"lightblue","center","middle","black",4);
                                     }  else if (step.action=="EXTRA") {
-                                        if (step.data.val!==undefined) {
+                                        if (step.data.val!==undefined && step.data.type!==-1) {
                                             var plusmov=mapf(delta,0,0.8,0,20)*bscale;
                                             var scale=bscale*1.5;
                                             T.draw(ctx,"islj_"+step.data.type,pos[i].x-T.width("islj_0")*scale/2,pos[i].y-185*bscale-T.height("islj_0")*scale/2-plusmov,T.width("islj_0")*scale,T.height("islj_0")*scale);
@@ -17641,6 +17713,43 @@ function Game() {
                 mode: extra.target,
             }
             this.save();
+        } else if (action=="setAllExp") {
+            while (data.lab.length<extra.max) data.lab.push(undefined);
+            var todo=60*60*1000;
+            var nrg = (data.stats.t.m.prod*24*60*60)/((Math.min(12,data.specie+1))*14);
+            if (extra.target==1) {
+                todo*=4;
+                nrg*=3;
+            } else if (extra.target==2) {
+                todo*=12;
+                nrg*=7;
+            }
+            data.lab[extra.specie] = {
+                start: Date.now(),
+                todo: todo*this.dimBuff("labtimer"),
+                nrg: nrg*this.dimBuff("labmul"),
+                init: todo*this.dimBuff("labtimer"),
+                mode: extra.target,
+            }
+            for (var i = 0; i < extra.max; ++i) {
+            	if (i<=data.specie && !nn(data.lab[i])) {
+            		data.lab[i] = {
+                        start: Date.now(),
+                        todo: todo*this.dimBuff("labtimer"),
+                        nrg: nrg*this.dimBuff("labmul"),
+                        init: todo*this.dimBuff("labtimer"),
+                        mode: extra.target,
+                    }
+                    if (extra.target==1) {
+                        this.doStat("v","ltimes4",1);
+                    } else if (extra.target==2) {
+                        this.doStat("v","ltimes12",1);
+                    } else {
+                        this.doStat("v","ltimes1",1);
+                    }
+                }
+            }
+            this.save();
         } else if (action=="Finish5k") {
             //Cridar Event Botiga
             if (kongregate!==undefined && kongregate.services.isGuest()) {
@@ -18612,16 +18721,7 @@ function Game() {
             promHero=extra.target;
         } else if (action=="wbprom") {
             var modes = ["No Heroes","Heroes Allowed"];
-            if (mdata.city.promotokens!==undefined&&mdata.city.promotokens.promo4>=1) {
-                popup = {
-                    text: "Do you want to promote this hero?",
-                    mode: "confirm",
-                    center:true,
-                    action: function () {
-                        _this.doPromotion(extra.target,extra.mode);
-                    }
-                }
-            } else if (modes[CQW.WB.mode]==="Heroes Allowed"){
+            if (modes[CQW.WB.mode]==="Heroes Allowed"){
                 data.wbline=9;
                 data.wb[data.wbline]=[-1,-1,-1,(-2-extra.target),-1,-1];
                 scene="worldboss";
@@ -18743,7 +18843,8 @@ function Game() {
             if (cityPage == "hourly") cityPage = "playground";
             else cityPage = "hourly";
         } else if (action=="simulate") {
-            var anyA, anyB = false;
+            var anyA = false;
+            var anyB = false;
             for (var i = 0; i < 6; ++i) {
                 if (data.playground[0].line[i] !== -1) anyA = true;
                 if (data.playground[1].line[i] !== -1) anyB = true;
@@ -18776,8 +18877,7 @@ function Game() {
                     promoB: promoB,
                 };
                 this.loadPlaygroundBattle(battle);
-            }
-            else {
+            } else {
                 popup = {
                     text:"Need at least 1 unit in each player",
                     mode:"alert",
@@ -18939,6 +19039,9 @@ function Game() {
             window.open("https://discord.gg/YyUpGsj");
         } else if (action=="ohall") {
             halloweenOpen = !halloweenOpen;
+            searchTab = false;
+            document.getElementById("herosearch").style.display="none";
+            document.getElementById("herosearch").value="";
         } else if (action=="shal") {
             halloweenMode=extra.target;
         } else if (action=="upHal") {
@@ -19010,11 +19113,11 @@ function Game() {
         } else if (action == "missj") {
             var endTime = Date.now()+this.getSJUpgrade(extra.target,"engine",mdata.city.space.upgrades);
             var endDay = Math.floor(endTime/(24*60*60*1000));
-            if (currentSpecialEvent(endDay) == "Space Journey" && endTime < (mdata.city.space.start+((24*60*60*1000)*5))) {
+            if (currentSpecialEvent(endDay) == "Space Journey" && (endTime - mdata.city.space.hyperloop * 20*60*1000) < (mdata.city.space.start+((24*60*60*1000)*5))) {
                 this.startSpaceJourneyMission(extra.target);
             } else {
                 popup={
-                    text:"Mission have to end inside Event period",
+                    text:"Mission has to end inside event period",
                     mode:"alert",
                 }
             }
@@ -19088,6 +19191,9 @@ function Game() {
                 if (showDaily) { //Dungeon, flash
                 	document.getElementById("herosearch").style.left = "232px";
                 	document.getElementById("herosearch").style.top = "463px";
+                } else  if (halloweenOpen) {
+                	document.getElementById("herosearch").style.left = "232px";
+                	document.getElementById("herosearch").style.top = "520px";
                 } else {
                 	document.getElementById("herosearch").style.left = "132px";
                 	document.getElementById("herosearch").style.top = "516px";
@@ -21366,6 +21472,39 @@ function Game() {
             });
         }
     }
+    this.swaprow = function (pos0,pos1) {
+        if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined && swapSync[0]==undefined && swapSync[1]==undefined) {
+            swapSync[0]=pos0;
+            swapSync[1]=pos1;
+            PlayFab.ClientApi.ExecuteCloudScript({
+                "RevisionSelection":PFMODE,
+                "FunctionName": "swaprow",
+                "FunctionParameter": {
+                    row0: Math.floor(pos0 / 6),
+                    row1: Math.floor(pos1 / 6)
+                }
+            }, function (res,err) {
+                swapSync[0]=undefined;
+                swapSync[1]=undefined;
+                if (_this.serverOk(res,err)) {
+                    if (res.data && res.data.FunctionResult && res.data.FunctionResult.ok==true) {
+                        battleSync=Date.now();
+                        _this.updateMData(res.data.FunctionResult.data);
+                    } else {
+                        var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
+                            msg:"PFswap",
+                            stk:res
+                        }));
+                        GA.getInstance().addEvent(ev);
+                        popup={
+                            text:"Swap failed try again",
+                            mode:"alert",
+                        }
+                    }
+                }
+            });
+        }
+    }
     var pvesync=false;
     this.pve = function (id) {
         if (kongregate!==undefined && kid!==undefined && kid!=0 && pfdata!==undefined) {
@@ -21466,8 +21605,8 @@ function Game() {
                         CQW.dungeon.setup=res.data.FunctionResult.battle.player;
                         CQW.dungeon.hero=res.data.FunctionResult.battle.phero;
                         CQW.dungeon.lvl=parseInt(res.data.FunctionResult.battle.enemy.match(/\d+/)[0]);
-                        _this.loadDungeonBattle(res.data.FunctionResult.battle);
-                        _this.wsync(); //if the dungeon battle was lost we don't need this call, but that's something to test on a live dungeon
+                        var battle_res = _this.loadDungeonBattle(res.data.FunctionResult.battle);
+                        if (battle_res.result == 1) _this.wsync(); //if the dungeon battle was lost we don't need this call, but that's something to test on a live dungeon
                     } else {
                         var ev = new GA.Events.Exception(GA.Events.ErrorSeverity.warning, JSON.stringify({
                             msg:"PFdung",
@@ -21515,11 +21654,11 @@ function Game() {
             });
         }
     }
-    this.drawMonster = function (ctx,id,x,y,bstats,reverse,scale,level,avaiable,base,prom,hide_prom) {
+    this.drawMonster = function (ctx,id,x,y,bstats,reverse,scale,level,available,base,prom,hide_prom) {
         reverse=reverse||false;
         scale=scale||1;
         level=level||1;
-        if (avaiable==undefined) avaiable=true;
+        if (available==undefined) available=true;
         if (base==undefined) base=true;
         if (prom==undefined) prom=0;
         if (hide_prom==undefined) hide_prom=false;
@@ -21556,7 +21695,7 @@ function Game() {
             ctx.save();
             ctx.translate(x,y);
             if (HERO[hid].rarity != 5){
-                if (avaiable) T.draw(ctx,peana,-T.width(peana)*scale/2,-T.height(peana)*scale,T.width(peana)*scale,T.height(peana)*scale);
+                if (available) T.draw(ctx,peana,-T.width(peana)*scale/2,-T.height(peana)*scale,T.width(peana)*scale,T.height(peana)*scale);
                 else T.negative(ctx,peana,-T.width(peana)*scale/2,-T.height(peana)*scale,T.width(peana)*scale,T.height(peana)*scale);
                 if (reverse) ctx.scale(-1,1);
                 if (hid==130 && scene=="prana" && mdata.city.hero[hid]!==0) {
@@ -21574,34 +21713,18 @@ function Game() {
                         fixx = -2*scale;
                         fixy = 4*scale;
                     }
-                    if (avaiable) T.draw(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
+                    if (available) T.draw(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     else T.negative(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     if (hid==185) {
                         T.draw(ctx,"8tvj",-T.width(HERO[hid].img)*scale/2,-(T.height(HERO[hid].img)+15 )*scale,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     }
                 }
-                if (avaiable) T.draw(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
+                if (available) T.draw(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
                 else T.negative(ctx,sphere,-T.width(sphere)*scale/2,-T.height(sphere)*scale,T.width(sphere)*scale,T.height(sphere)*scale);
                 ctx.restore();
                 if (HERO[hid].rarity == 3 && HERO[hid].pve!==undefined) {
-                    var aura = ["fq9i","9b1q","ewf1","yrzo"];
+                    var aura = ["fq9i","9b1q","ewf1","yrzo","3i47"];
                     T.draw(ctx,aura[HERO[hid].type],x-T.width(aura[HERO[hid].type])*scale/2,y-(T.height(aura[HERO[hid].type])+10)*scale,T.width(aura[HERO[hid].type])*scale,T.height(aura[HERO[hid].type])*scale);
-                }
-                if (hid == 209) {
-                    var aura = "fq9i";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 217) {
-                    var aura = "ewf1";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 229) {
-                    var aura = "3i47";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
-                }
-                if (hid == 174) {
-                    var aura = "3i47";
-                    T.draw(ctx,aura,x-T.width(aura)*scale/2,y-(T.height(aura)+10)*scale,T.width(aura)*scale,T.height(aura)*scale);
                 }
                 if (HERO[hid].rarity == 3 && false) {
                     text(ctx,Math.ceil(atk),x-18*scale,y-9*scale,Math.floor(20*scale)+"px"+FONT,atk==stats.atk?"yellow":(atk>stats.atk?"lime":"red"),"center","middle","yellow",2);
@@ -21824,8 +21947,9 @@ function Game() {
         this.doAction("scene",{target:"battle"});
     }
     this.loadDungeonBattle = function (battle) {
-        beginBattle(battle.date,"You",battle.enemy,battle.setup,battle.player,"buildings",battle.shero,battle.phero,undefined,undefined,battle.spromo,battle.ppromo);
+    	var res = beginBattle(battle.date,"You",battle.enemy,battle.setup,battle.player,"buildings",battle.shero,battle.phero,undefined,undefined,battle.spromo,battle.ppromo);
         this.doAction("scene",{target:"battle"});
+        return res;
     }
     this.loadPlaygroundBattle = function (battle) {
         beginBattle(battle.date,"Player 01","Player 02",battle.rowA,battle.rowB,battle.back,battle.heroA,battle.heroB,undefined,undefined,battle.promoA,battle.promoB);
@@ -22061,7 +22185,7 @@ function Game() {
         AS=val.AS;
         SD=val.SD;
         BKS=NBKS;
-        SG=val.SG;
+        ZG=val.ZG;
         ET=val.ET;
     }
     this.getHC = function () {
@@ -23323,7 +23447,7 @@ function Game() {
             }
         } else if (skill.type=="bhit") {
             return {
-                short: "Targeted - Start of Battle/nDeals "+1+" Damage ("+lvl+") per level to lowest HP enemy",
+                short: "Targeted - Start of Battle/nDeals "+(value).toFixed(1)+" Damage ("+Math.floor(value*lvl)+") per level to lowest HP enemy",
                 long: "Targeted causes this units skill to target another specific unit. This unit will deal the displayed value in damage once, at the start of battle, to the enemy with the lowest HP.",
             }
         } else if (skill.type=="acum") {
@@ -23368,8 +23492,23 @@ function Game() {
             }
         } else if (skill.type=="voidmaster") {
             return {
-                short: "Empowered/nGains 2% ("+(value*lvl/skill.target*100).toFixed(1)+"%) of all damage received per "+(skill.target)+" levels as Attack",
+                short: "Empowered/nGains "+(value*100).toFixed(0)+"% ("+(value*lvl/skill.target*100).toFixed(0)+"%) of all damage received per "+(skill.target)+" levels as Attack",
                 long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will gain attack equal to a percentage of all damage received."
+            }
+        } else if (skill.type=="horseman") {
+            return {
+                short: "Empowered - Start of Battle/nSteals "+(value*100).toFixed(0)+"% of opposing enemy units base stats",
+                long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will steal attack and health from the enemy unit at the same position at the start of the battle. It won't consider additional health or attack gained by skills. It won't work against world bosses."
+            }
+        } else if (skill.type=="revgnerf") {
+            return {
+                short: "Revenge/nLowers all enemies attack by "+(value*100).toFixed(0)+"%",
+                long: "When the hero dies, reduces the base attack of all units in enemy lane."
+            }
+        } else if (skill.type=="overload") {
+            return {
+                short: "Pierce & On Kill/nPropagates "+(value*100).toFixed(0)+"% unused damage when killing a unit",
+                long: "When it kills another unit with a direct damage attack, the remaining damage is done (with a multiplier) on the next enemy to come (it can be the same unit once revived).",
             }
         }
     }
@@ -23393,6 +23532,8 @@ function Game() {
             description+="Passive skill/nReceives -"+(value*100).toFixed(0)+"% damage from skills";
         } else if (passive.type==9) {
             description+="Passive skill/nIncreases health by "+(value*100).toFixed(0)+"%";
+        } else if (passive.type==10) {
+            description+="Passive skill/nGains "+(value).toFixed(0)+"attack and health for each other horsemen";
         }
 
         if (passive==undefined) {
@@ -23460,7 +23601,7 @@ function Game() {
     }
     this.isHalloween = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
-        return tid>=18199 && tid<=18210;
+        return tid>=18562 && tid<=18568;
     }
     this.isChristmas = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
@@ -24220,6 +24361,9 @@ function Game() {
             PlayFab.ClientApi.ExecuteCloudScript({
                 "RevisionSelection":PFMODE,
                 "FunctionName": "buylot",
+                "FunctionParameter": {
+                    qty: (mulChest ? 10 : (x100 ? 100 : 1)),
+                }
             }, function (res,err) {
                 if (_this.serverOk(res,err)) {
                     if (res.data && res.data.FunctionResult && res.data.FunctionResult.ok==true) {
@@ -25211,7 +25355,8 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
+							eventRanking.ptime = 0;
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;
@@ -25243,7 +25388,8 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
+							eventRanking.ptime = 0;
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;
@@ -25275,7 +25421,7 @@ function Game() {
                         battleSync=Date.now();
                         _this.updateMData(res.data.FunctionResult.data);
                         if (res.data.FunctionResult.update) {
-                            _this.loadInventory();
+                            //_this.loadInventory();
                             _this.updateLoopEventRanking("games");
                         }
                         if (res.data.FunctionResult.log !== undefined) gamesReceivedActions = res.data.FunctionResult.log;

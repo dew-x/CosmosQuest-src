@@ -46,10 +46,9 @@
     $wbname = wbName($bid);
     if ($isSuper) $wbname="SUPER ".$wbname;
     $res1->free();
-    $limit=1600;
-    if ($isSuper) $limit=1200;
+    $limit=wbHitsRequired($bid, $isSuper);
     $data=array(
-        "version"=>"v4.8.5.1",
+        "version"=>"v4.9.0.0",
         "tournament"=>array(
             "pool"=>$pool
         ),
@@ -62,7 +61,7 @@
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),
-        "news"=>"Third community update! Check changelog for details."
+        "news"=>"Welcome to Season 12! New heroes, new tournament modes, pvp- and tournament-rewards. Dynamic world boss hits, improved DQ and many minor changes. Check discord for a detailed changelog."
     );
     file_put_contents("data.json",json_encode($data));
      

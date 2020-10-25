@@ -1271,6 +1271,23 @@ function loadData(id,kid) {
                 quests: 0,
             }
         }
+        if (data.city.pass.id==6) {
+            data.city.pass = {
+                id: 7,
+                isSilver: 0,
+                isGold: 0,
+                claim: 0,
+                sclaim: 0,
+                gclaim: 0,
+                wb: 0,
+                chest: 0,
+                miracles: 0,
+                tournaments: 0,
+                ftournaments: 0,
+                pvp: 0,
+                quests: 0,
+            }
+        }
         if (data.city.pvp==undefined) {
             data.city.pvp = {
                 attacks: 4,
@@ -1298,25 +1315,30 @@ function loadData(id,kid) {
                 data.city.hllwn.UM += 400;
             }
         }
-        if (data.city.halloween === undefined) {
+        if (data.city.halloween === undefined || data.city.halloween.dailyClaimed < 18561) {
             data.city.halloween = {
                 hero: Array(HERO.length).fill(1),
-                dailyClaimed: 18198,
+                dailyClaimed: 18561,
             } 
-            data.city.halloween.hero[96]=0;
-            data.city.halloween.hero[72]=0;
-            data.city.halloween.hero[87]=0;
-            data.city.halloween.hero[106]=0;
-            data.city.halloween.hero[126]=0;
-            data.city.halloween.hero[186]=0;
+            data.city.halloween.hero[96]=0; // lep
+            data.city.halloween.hero[72]=0; // loc
+            data.city.halloween.hero[87]=0; // moak
+            data.city.halloween.hero[106]=0; // kry
+            data.city.halloween.hero[126]=0; // doy
+            data.city.halloween.hero[186]=0; // bor
+            data.city.halloween.hero[206]=0; // pyroses
+            data.city.halloween.hero[207]=0;
+            data.city.halloween.hero[208]=0;
+            data.city.halloween.hero[209]=0;
         }
         var tid2 = Math.min(18206,tid);
-        if (data.city.pass.isSilver==1) {
-            if (data.city.hero[190]==0) data.city.hero[190]=1;
+        /*if (data.city.pass.isSilver==1) {
+            if (data.city.hero[213]==0) data.city.hero[213]=1; //hetfield - if you change this also go to handlers.pur and remove him there ^^
+            if (data.city.hero[132]==0) data.city.hero[132]=1; //rose
         }
         if (data.city.pass.isGold) {
-            if (data.city.hero[213]==0) data.city.hero[213]=1;
-        }
+            if (data.city.hero[213]==0) data.city.hero[213]=1
+        }*/ //this shouldn't be needed anyway and causes visual bugs when p6ing pass-heros
         
         // Makes the reset on Saturdays 00:00 GMT
         CWC = Math.floor((now-3*DAY)/(7*DAY))+10000;
@@ -1704,7 +1726,8 @@ handlers.status = function (args, context) {
                 data.city.tm = -1;
             } else if (items[i].identifier=="seasonpass1") {
                 if (consumeItem(args.kid,args.token,items[i].id)) {
-                    data.city.pass.isGold = 1; 
+                    data.city.pass.isGold = 1;
+                    if (data.city.hero[233]==0) data.city.hero[233]=1;
                     award(currentPlayerId,"ET",650);
                     if (data.city.easter !== undefined) {
                         data.city.easter.points+=(1250*vipMultiplier);
@@ -1828,7 +1851,52 @@ handlers.status = function (args, context) {
                 }
             }
         }
-        server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,city:JSON.stringify(data.city)} });
+        
+		// also update currencies
+        var headers = {};
+        var content = "action=prizes&key="+CQ+"&pid="+currentPlayerId;
+        var httpMethod = "post";
+
+		var currUpdate=false;
+        try {
+            var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
+			if (response.success) {
+				for (var i=0; i<response.prizes.length; ++i) {
+					var key=response.prizes[i].key;
+					var value=response.prizes[i].value;
+					var extra=response.prizes[i].extra;
+					if (["AS","CC","KU","PG","PK","SD","UM"].indexOf(key)!==-1) award(currentPlayerId,key,value);
+					else if (key=="FOL") {
+						currUpdate=true;
+						data.followers+=(value||0);
+					} else if (key=="HERO" && value!==undefined && value!==null && value>=0) {
+						if (extra==undefined||extra==1) {
+							if (data.city.hero[value]<99) {
+								currUpdate=true;
+								++data.city.hero[value];
+							} else award(currentPlayerId,"PG",12);
+						} else {
+							if (value>=0 && data.city.hero[value]<99) {
+								currUpdate=true;
+								data.city.hero[value]=Math.min(99,data.city.hero[value]+extra);
+							} else {
+								var pgr = 1;
+								if (HERO[value].rarity==1) pgr=3;
+								else if (HERO[value].rarity==2) pgr=12; 
+								award(currentPlayerId,"PG",pgr);
+							}
+						}
+					}
+				} 
+			}
+        } catch (e) {
+        }
+		
+		if (currUpdate)
+			server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,followers:data.followers,city:JSON.stringify(data.city)}});
+		else
+			server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {mlvl:mlvl,city:JSON.stringify(data.city)} });
+		
         data.mlvl=mlvl;
         if (data!==undefined) {
             return {ok:true,data:data};
@@ -1944,7 +2012,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL"],
                 });
-                log("Buy 1 Enchant Miracles for 560000 SD");
+                log("Buy 1 Enhance Miracles for 560000 SD");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="EM10") {
@@ -1953,7 +2021,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 10 Enchant Miracles for 5300000 SD");
+                log("Buy 10 Enhance Miracles for 5300000 SD");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="EM20") {
@@ -1962,7 +2030,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 20 Enchant Miracles for 10000000 SD");
+                log("Buy 20 Enhance Miracles for 10000000 SD");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="FOL5") {
@@ -1971,7 +2039,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 5 Enchant Miracles for 2300 UM");
+                log("Buy 5 Enhance Miracles for 2300 UM");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="FOL15") {
@@ -1980,7 +2048,7 @@ handlers.purchaseBundle = function (args, context) {
                     "PlayFabId" : currentPlayerId,
                     "ItemIds": ["FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL","FOL"],
                 });
-                log("Buy 15 Enchant Miracles for 6000 UM");
+                log("Buy 15 Enhance Miracles for 6000 UM");
                 return { ok: true, update: true};   
             } else return { ok: false, err: "Can't buy" };
         } else if (args.bundle=="MUL5") {
@@ -2332,7 +2400,9 @@ handlers.place = function (args, context) {
         if (data!==undefined) {
             if (args.pos>=0 && args.pos<data.city.setup.length) {
                 var valid=false;
-                if (args.id>=-1 && args.id<MONSTERS.length && args.id<140) {
+                if (args.id>=-1 && args.id<MONSTERS.length) {
+					if (args.id>=36*4)
+						return { ok: false, err: "Monsters up to T36 only"};
                     data.city.setup[args.pos]=args.id;
                     var score=0;
                     for (var i=0; i<data.city.setup.length; ++i) {
@@ -2374,6 +2444,25 @@ handlers.swap = function (args, context) {
             var tmp=data.city.setup[args.pos0];
             data.city.setup[args.pos0]=data.city.setup[args.pos1];
             data.city.setup[args.pos1]=tmp;
+            server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
+            return { ok:true, data:data };
+        } else {
+            return { ok: false, err: "Bad params"};
+        }
+    } else {
+        return { ok: false, err: "Bad internal"};
+    }
+}
+
+handlers.swaprow = function (args, context) {
+    var data=loadData();
+    if (data!==undefined) {
+        if (args.row0>=0 && args.row0<data.city.setup.length/6 && args.row1>=0 && args.row1<data.city.setup.length/6) {
+			for (var k=0;k<6;++k) {
+				var tmp=data.city.setup[k+6*args.row0];
+				data.city.setup[k+6*args.row0]=data.city.setup[k+6*args.row1];
+				data.city.setup[k+6*args.row1]=tmp;
+			}
             server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
             return { ok:true, data:data };
         } else {
@@ -2655,90 +2744,109 @@ handlers.pve = function (args, context) {
 }*/
 
 function hval(hid,lvl) {
-    var hp=HERO[hid].hp;
-    var atk=HERO[hid].atk;
-    var points = lvl - 1;
-    if (HERO[hid].rarity==1) points *= 2;
-    else if (HERO[hid].rarity==2) points *= 6;
-    else if (HERO[hid].rarity==3) points *= 12;
-    var nhp = HERO[hid].hp+Math.round(points*hp/(hp+atk));
-    var natk = HERO[hid].atk+Math.round(points*atk/(hp+atk));
-    var score = nhp*natk;
-    if (HERO[hid].skill.type=="pierce") score*=HERO[hid].skill.value/2;
-    else if (HERO[hid].skill.type=="buff") score*=HERO[hid].skill.value*2;
-    else if (HERO[hid].skill.type=="rico") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="anarchy") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="counter") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="cubetarget") score*=HERO[hid].skill.value*3;
-    else if (HERO[hid].skill.type=="payback") score*=HERO[hid].skill.value*3;
-    return score*Math.sqrt(score);
+	var hp=HERO[hid].hp;
+	var atk=HERO[hid].atk;
+	var points = lvl - 1;
+	if (HERO[hid].rarity==1) points *= 2;
+	else if (HERO[hid].rarity==2) points *= 6;
+	else if (HERO[hid].rarity==3) points *= 12;
+	var nhp = HERO[hid].hp+Math.round(points*hp/(hp+atk));
+	var natk = HERO[hid].atk+Math.round(points*atk/(hp+atk));
+	var score = nhp*natk;
+	if (HERO[hid].skill.type=="pierce") score*=HERO[hid].skill.value/2;
+	else if (HERO[hid].skill.type=="buff") score*=HERO[hid].skill.value*1.5;
+	else if (HERO[hid].skill.type=="backrico" || HERO[hid].skill.type=="infiltred") score*=HERO[hid].skill.value*3;
+	else if (HERO[hid].skill.type=="fromdeath") score*=2;
+	else if (HERO[hid].skill.type=="boom") score*=3;
+	else if (HERO[hid].skill.type=="anarchy" || HERO[hid].skill.type=="payback") score*=HERO[hid].skill.value*3;
+	else if (HERO[hid].skill.type=="debuff") score*=1.2;
+	else if (HERO[hid].skill.type=="ratio") score*=1.5;
+	else if (HERO[hid].skill.type=="bday") score*=4;
+	else if (HERO[hid].skill.type=="rico") score*=HERO[hid].skill.value*(HERO[hid].skill.target+2);
+	if(hp / atk > 1.5 && HERO[hid].skill.type!="ratio" && HERO[hid].skill.type!="debuff") score*=Math.pow(hp / atk, 0.4);
+	//if (HERO[hid].passive.type==1) score*=2;
+	return score*Math.sqrt(score);
 }
 
-function doDaily(lvl) {
-    var target=Math.pow(1.21-0.42*(1-(350+lvl)/(350+lvl*2)),lvl-1)*2500*(1+lvl/100)*0.8;
-    var root=[Math.floor(Math.random()*4),-1,-1,-1,-1,-1];
-    for (var i=1; i<5; ++i) {
-        root[i]=N[root[i-1]%4][Math.floor(Math.pow(Math.random()*2,2))];
-    }
-    var hero=PVEHERO.slice();
-    var bcost=0;
-    for (var i=0; i<5; ++i) {
-        if (bcost<target) {
-            var fam=root[i];
-            var avgleft=(target*0.8-bcost)/(5-i);
-            while (fam+4<MONSTERS.length && fam+4<132 && MONSTERS[fam+4].cost<avgleft) {
-                fam+=4;
-            }
-            root[i]=fam;
-            bcost+=MONSTERS[root[i]].cost;
-        }
-    }
-    // pick 2 commons, 2 rares, 2 legendaries
-    var ignore=[69,72,76,87,98,99,106,126,128,153,154,155,156,198];
-    var picks=[];
-    while (picks.length<20) {
-        var hid=Math.floor(Math.random()*HERO.length);
-        if (picks.length<5) {
-            if (HERO[hid].rarity==0 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else if (picks.length<10) {
-            if (HERO[hid].rarity==1 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else if (picks.length<15) {
-            if (HERO[hid].rarity==2 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        } else {
-            if (HERO[hid].rarity==3 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
-        }
-    }
-    var placed=[];
-    for (var pos=0; pos<=4; ++pos) {
-        var todo=target-(bcost-MONSTERS[root[pos]].cost);
-        var bestid=-1;
-        var bestlvl=0;
-        for (var i=0;i<picks.length;++i) {
-            if (placed.indexOf(picks[i])===-1) {
-                if (hval(picks[i],1)<todo) {
-                    var lvl=1;
-                    while (lvl<9000 && hval(picks[i],lvl<99?lvl+1:(lvl<1000?1000:lvl+1000))<todo) {
-                        lvl=lvl<99?lvl+1:(lvl<1000?1000:lvl+1000);
-                    }
-                    if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl)) {
-                        bestid=i;
-                        bestlvl=lvl;
-                    }
-                }
-            }
-        }
-        if (bestid!=-1 && hval(picks[bestid],bestlvl)>1.5*MONSTERS[root[pos]].cost) {
-            bcost-=MONSTERS[root[pos]].cost;
-            bcost+=hval(picks[bestid],bestlvl);
-            placed.push(picks[bestid]);
-            root[pos]=-(2+picks[bestid]);
-            hero[picks[bestid]]=bestlvl;
-        }
-    }
-    return {
-        setup:root,
-        hero:hero
-    };
+function mval(mid, type) { // 0 dq, 1 dg
+	if(type == 1)
+		return MONSTERS[mid].cost;
+	return Math.pow(MONSTERS[mid].cost*2.5,1.05);
+}
+
+function doDaily(lvl) { // DQ
+	var target=Math.pow(1.21-0.42*(1-(300+lvl)/(300+lvl*2)),lvl-1)*2600*(1+lvl/100)*(lvl<=250 ? 0.9 : Math.pow(lvl/250, 4.5)-0.1);
+	var root=[Math.floor(Math.random()*4),-1,-1,-1,-1,-1];
+	for (var i=1; i<5; ++i) {
+		root[i]=N[root[i-1]%4][Math.floor(Math.pow(Math.random()*2,2))];
+	}
+	var hero=PVEHERO.slice();
+	var bcost=0;
+	for (var i=0; i<5; ++i) {
+		if (bcost<target) {
+			var fam=root[i];
+			var avgleft=(target*0.8-bcost)/(5-i);
+			while (fam+4<MONSTERS.length && mval(fam+4, 0)<avgleft) {
+				fam+=4;
+			}
+			root[i]=fam;
+			bcost+=mval(fam, 0);
+		}
+	}
+	var ignore=[];
+	var favor=[205,96,80]; // kilkenny, lep, bubbles
+	var picks=[];
+	while (picks.length<30) {
+		var hid=Math.floor(Math.random()*HERO.length);
+		if(type == 0 && favor.indexOf(hid)===-1 && Math.random()<0.1) {
+			hid=Math.floor(Math.random()*favor.length);
+		}
+		if (picks.length<7) {
+			if (HERO[hid].rarity==0 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else if (picks.length<14) {
+			if (HERO[hid].rarity==1 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else if (picks.length<21) {
+			if (HERO[hid].rarity==2 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		} else {
+			if (HERO[hid].rarity==3 && picks.indexOf(hid)===-1 && ignore.indexOf(hid)===-1) picks.push(hid);
+		}
+	}
+	var placed=[];
+	var heroProbaModifier = 0.5;
+	if(lvl < 150)
+		heroProbaModifier = 0.1;
+	if(lvl < 100)
+		heroProbaModifier = 0;
+	for (var pos=0; pos<=4; ++pos) {
+		var todo=target-(bcost-mval(root[pos], 0));
+		var bestid=-1;
+		var bestlvl=0;
+		for (var i=0;i<picks.length;++i) {
+			if (placed.indexOf(picks[i])===-1) {
+				if (hval(picks[i],1)<todo) {
+					var lvl=1;
+					while (lvl<9000 && hval(picks[i],lvl<99?lvl+1:(lvl<1000?1000:lvl+1000))<todo) {
+						lvl=lvl<99?lvl+1:(lvl<1000?1000:lvl+1000);
+					}
+					if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl) || (favor.indexOf(picks[i])!==-1 && Math.random()>0.7)) {
+						bestid=i;
+						bestlvl=lvl;
+					}
+				}
+			}
+		}
+		if (bestid!=-1 && ((hval(picks[bestid],bestlvl)>1.5*mval(root[pos], 0) && hval(picks[bestid],bestlvl)<2.5*mval(root[pos], 0)) || favor.indexOf(picks[bestid])!==-1 || Math.random() < (heroProbaModifier + (4-pos)*0.1))) {
+			bcost-=MONSTERS[root[pos]].cost;
+			bcost+=hval(picks[bestid],bestlvl);
+			placed.push(picks[bestid]);
+			root[pos]=-(2+picks[bestid]);
+			hero[picks[bestid]]=bestlvl;
+		}
+	}
+	return {
+		setup:root,
+		hero:hero
+	};
 }
 
 handlers.pved = function (args, context) {
@@ -3137,7 +3245,7 @@ handlers.etregister = function (args, context) {
         var ret=registerT2(name,currentPlayerId,args.setup,args.kid);
         if (ret===true) {
             //data.city.pass.tournaments+=1;
-            log("Registered to extra tournament paying");
+            log("Registered to extra tournament (T2).");
             return {ok:true};
         } else return { ok: false, err: ret};
     } else return { ok: false, err: "Server error"};
@@ -3507,12 +3615,11 @@ handlers.auction = function(args, context) {
 }
 
 handlers.buylot = function(args, context) {
-    var data=loadData();
     var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
-    if (data && ret) {
-        if (ret.VirtualCurrency.AS>=1) {
+    if (ret) {
+        if (ret.VirtualCurrency.AS>=parseInt(args.qty)) {
             var headers = {};
-            var content = "action=lottery&key="+CQ+"&pid="+currentPlayerId;
+            var content = "action=lottery&key="+CQ+"&qty="+args.qty+"&pid="+currentPlayerId;
             var httpMethod = "post";
         
             try {
@@ -3522,7 +3629,7 @@ handlers.buylot = function(args, context) {
             }
 
             if (response.success) {
-                pay(currentPlayerId,"AS",1);
+                pay(currentPlayerId,"AS",parseInt(response.qtyDone));
                 return { ok: true };
             } else {
                 return { ok: false, err: response.error };
@@ -3551,8 +3658,9 @@ handlers.pur = function (args, context) {
         } else if (args.id=="SP" && ret.VirtualCurrency.UM>=5000) {
             if (pay(currentPlayerId,"UM",5000)) {
                 data.city.pass.isSilver=1;
-                if (data.city.hero[132]!=0) award(currentPlayerId,"AS",100);
-                else data.city.hero[132]=1;
+                if (data.city.hero[213]!=0) award(currentPlayerId,"AS",100);
+                	else data.city.hero[213]=1;
+                if (data.city.hero[132]==0) data.city.hero[132]=1; //rose
                 server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 return {ok:true,data:data};
             } else return { ok: false, err: "Not enough UM" };
@@ -3908,12 +4016,13 @@ handlers.training = function (args, context) {
     var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
     if (data && ret) {
         if (data.city.promo[args.hid] == 5) {
-                if (data.city.promotokens !== undefined && data.city.promotokens.promo6 !== undefined && data.city.promotokens.promo6>=1) {
-                    data.city.promotokens.promo6-=1;
-                    ++data.city.promo[args.hid];
-                    server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
-                    return {ok:true,data:data,update:true};
-                } else if (args.um) {
+                if (args.um) {
+                	if (data.city.promotokens !== undefined && data.city.promotokens.promo6 !== undefined && data.city.promotokens.promo6>=1) {
+                        data.city.promotokens.promo6-=1;
+                        ++data.city.promo[args.hid];
+                        server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
+                        return {ok:true,data:data,update:true};
+                    }
                     var price = [1000,2000,4000,8000];
                     if (ret.VirtualCurrency.UM<price[HERO[args.hid].rarity]) return { ok: false, err: "Not enough UM"};
                     else {
@@ -4274,8 +4383,8 @@ handlers.recycle = function (args, context) {
                     var levelsToGive = data.city.hero[hid] - 1;
                     if (kindOfHero == 0) {
                         var fee = 0;
-                        for (var i = 0; i < HERODROP[i].length; ++i) {
-                            if (hid == HERODROP) {
+                        for (var i = 0; i < HERODROP.length; ++i) {
+                            if (hid == HERODROP[i]) {
                                 if (HERO[hid].rarity < 2) fee=45;
                                 else fee=60;
                             }
@@ -4345,19 +4454,19 @@ handlers.fightH = function (args, context) {
         if (response.success) {
             if (response.data.beat>0) {
                 log("Halloween event beat floor "+response.data.beat);
-                award(currentPlayerId,"SG",20);
-                statKong(args.kid,"halloween2019",response.data.beat);
+                award(currentPlayerId,"ZG",20);
+                statKong(args.kid,"halloween2020",response.data.beat);
                 if (response.data.beat==100) {
-                    data.city.hero[195]=1;
+                    data.city.hero[234]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 } else if (response.data.beat==250) {
-                    data.city.hero[196]=1;
+                    data.city.hero[235]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 } else if (response.data.beat==500) {
-                    data.city.hero[197]=1;
+                    data.city.hero[236]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 } else if (response.data.beat==1000) {
-                    data.city.hero[198]=1;
+                    data.city.hero[237]=1;
                     server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
                 }
             }
@@ -4373,6 +4482,40 @@ handlers.fightH = function (args, context) {
         } else return { ok: false, err: response.error };
     } else return { ok: false, err: "Server error" };
 }
+
+handlers.levelHalloween = function (args, context) {
+    var data=loadData();
+    var ret = server.GetUserInventory({"PlayFabId" : currentPlayerId});
+    var prices = [1,3,12,60];
+    if (data&&ret) {
+        if (data.city.halloween !== undefined) {
+            var price = prices[HERO[args.id].rarity];
+            if (args.mode == 1) price*=10 ;
+            if (args.mode == 2) {
+                var maxreachable=Math.floor(ret.VirtualCurrency["ZG"]/price);
+                if (maxreachable+data.city.halloween.hero[args.id]>98) maxreachable=99-data.city.halloween.hero[args.id];
+                price*=maxreachable;
+            }
+            if (args.id>=0 && args.id<HERO.length) {
+                if (data.city.halloween.hero[args.id]>=99) return { ok: false, err: "Max level"};
+                else if (data.city.halloween.hero[args.id]<=0) return { ok: false, err: "Hero not Obtained"};
+                else if (ret.VirtualCurrency["ZG"]<price) return { ok: false, err: "Not enough SG"};
+                if (pay(currentPlayerId,"ZG",price)) {
+                    data.city.halloween.hero[args.id]=Math.min(99,data.city.halloween.hero[args.id]+Math.floor(price/prices[HERO[args.id].rarity]));
+                    try {
+                        if (HERO[args.id].rarity == 3) award(currentPlayerId,"AS",price/2);
+                        else award(currentPlayerId,"PG",price);
+                        server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)}});
+                    } catch (e) {
+                        award(currentPlayerId,"ZG",price);
+                        return {ok: false, err: "DB unavailable"};
+                    }
+                    return {ok:true,data:data,update:true};
+                } else return { ok: false, err: "Can't buy" };
+            } else return { ok: false, err: "Unknown hero"};
+        } else return { ok: false, err: "Not halloween yet"};
+    } else return { ok: false, err: "Server error"};
+} 
 
 handlers.finder = function (args, context) {
     var data=loadData();
@@ -4475,9 +4618,15 @@ handlers.sjmission = function (args, context) {
                     if (data.city.space.current !== undefined && data.city.space.upgrades !== undefined && data.city.space.current.timer == -1) {
                         var endTime = Date.now()+getSJUpgrade(args.mission,"engine",data.city.space.upgrades);
                         var endDay = Math.floor(endTime/(24*60*60*1000));
-                        if (currentSpecialEvent(endDay) == "Space Journey" && endTime < data.city.space.start+(DAY*5)) {
+                        if (currentSpecialEvent(endDay) == "Space Journey" && (endTime - data.city.space.hyperloop * 20*60*1000) < data.city.space.start+(DAY*5)) {
                             data.city.space.current.timer = Date.now() + getSJUpgrade(args.mission,"engine",data.city.space.upgrades);
                             data.city.space.current.mission = args.mission;
+							var hlNeeded = Math.ceil((endTime - (data.city.space.start+(DAY*5))) / (20*60*1000));
+							if (hlNeeded > 0) {
+								data.city.space.hyperloop-=hlNeeded;
+								data.city.space.current.timer = Math.max(Date.now(), data.city.space.current.timer - 20*60*1000*hlNeeded);
+								log("[SPACE] "+hlNeeded+"Hyperloop"+(hlNeeded>1?"s":"")+" used. Reduced "+(20*hlNeeded)+" minutes of current mission");
+							}
                             server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)} });
                             return { ok: true, data:data, update: true}; 
                         } else return { ok: false, err: "Cant start mission"};
@@ -4510,7 +4659,7 @@ handlers.sjclaim = function () {
                             mission: -1,
                             timer: -1,
                         }
-                        log("[SPACE] Won "+data.city.space.last.gears+" gears, and "+data.city.space.last.asteroids+" Asteroids on Mission "+(data.city.space.current.mission+1));
+                        log("[SPACE] Won "+data.city.space.last.gears+" gears, and "+data.city.space.last.asteroids+" Asteroids on Mission "+(data.city.space.last.mission+1));
                         server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)} });
                         return { ok: true, data:data, update: true}; 
                     } else return { ok: false, err: "Nothing to claim"};
@@ -4623,13 +4772,15 @@ handlers.ggactivity = function (args, context) {
                                 data.city.games.activities.instant-=1;
                                 if (args.activity == 2) data.city.games.stamina-=110;
                                 if (args.activity == 0) {
-                                    if (Date.now() < data.city.games.victim[1]) data.city.games.stamina+=(25+(25*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(25+(25*10*data.city.games.upgrades[0]/100));
                                     else data.city.games.stamina+=(50+(50*10*data.city.games.upgrades[0]/100));
-                                    data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(50+(50*10*data.city.games.upgrades[0]/100));
+                                    else data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
                                 } else if (args.activity == 1) {
-                                    data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
+                                	if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(55+(55*10*data.city.games.upgrades[0]/100));
+                                    else data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
                                 } else if (args.activity == 2) {
-                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(205+(205*10*data.city.games.upgrades[0]/100));
+                                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=Math.ceil(205+(205*10*data.city.games.upgrades[0]/100));
                                     else data.city.games.automatic.tickValue+=(410+(410*10*data.city.games.upgrades[0]/100));
                                 }
                                 data.city.games.activities.timer = -1;
@@ -4685,14 +4836,16 @@ handlers.ggclaim = function (args, context) {
                     log("[G.A.M.E.S] Won "+favourAmount+" favours");
                 }
                 
-                if (data.city.games.activities.activity == 0) {
-                    if (Date.now() < data.city.games.victim[1]) data.city.games.stamina+=(25+(25*10*data.city.games.upgrades[0]/100));
+                if (args.activity == 0) {
+                    if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(25+(25*10*data.city.games.upgrades[0]/100));
                     else data.city.games.stamina+=(50+(50*10*data.city.games.upgrades[0]/100));
-                    data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
-                } else if (data.city.games.activities.activity == 1) {
-                    data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
-                } else if (data.city.games.activities.activity == 2) {
-                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(205+(205*10*data.city.games.upgrades[0]/100));
+                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(50+(50*10*data.city.games.upgrades[0]/100));
+                    else data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
+                } else if (args.activity == 1) {
+                	if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(55+(55*10*data.city.games.upgrades[0]/100));
+                    else data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
+                } else if (args.activity == 2) {
+                    if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=Math.ceil(205+(205*10*data.city.games.upgrades[0]/100));
                     else data.city.games.automatic.tickValue+=(410+(410*10*data.city.games.upgrades[0]/100));
                 }
                 data.city.games.activities.timer = -1;
@@ -4875,7 +5028,7 @@ function randInt(min, max) {
 }
 
 function getSJPrice (level) {
-	return 5000 + (5000 * level);
+	return 2500 + (2500 * level);
 }
 
 function getSJUpgrade (mission, mode, upgrades) {
@@ -4958,7 +5111,7 @@ handlers.validateCaptcha = function(args, context) {
     try {
         var response = JSON.parse(http.request(CQW, httpMethod, content, XWWW, {}));
         if (response.success) {
-            data.city.captchats = Date.now() + 30*60*1000;
+            data.city.captchats = Date.now() + 4*60*60*1000; //4h
             server.UpdateUserInternalData({"PlayFabId" : currentPlayerId, "Data" : {city:JSON.stringify(data.city)} });
             return {ok:true,data:data};
         }

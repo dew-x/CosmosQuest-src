@@ -20,7 +20,7 @@ var Q = [];
 var start=Date.now();
 connection.connect();
 
-function kongstat(kid,score) {
+/*function kongstat(kid,score) {
     if (kid!==0) {
         var url="https://api.kongregate.com/api/submit_statistics.json";
         var res = request('POST', url, {
@@ -30,7 +30,7 @@ function kongstat(kid,score) {
             body: "api_key="+KONGAPI+"&user_id="+kid+"&tournaments4="+score
         });
     }
-}
+}*/
 
 function doQueue() {
     if (Q.length>0) {
@@ -77,6 +77,7 @@ function isSWB(ts) {
     return (!isWeekend) && base==6;
 }
 
+
 connection.query('SELECT id,mid,level,spawn,mode FROM WB WHERE `status`=1 ORDER BY id ASC', function (error, results, fields) {
     if (error) throw error;
     if (results.length==0) connection.end();
@@ -95,6 +96,13 @@ connection.query('SELECT id,mid,level,spawn,mode FROM WB WHERE `status`=1 ORDER 
         else if (mid==126) name="DOYENNE";
         else if (mid==186) name="BORNAG";
         if (isSuper) name="SUPER "+name;
+		var avg = 0;
+		connection.query('SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < '+bid+' GROUP BY bid ORDER BY bid DESC LIMIT 20', function (error, results, fields) {
+			for (var wbrow of results) {
+				avg += parseInt(wbrow.p);
+			}
+		});
+		avg = Math.ceil(avg/20);
         connection.query('SELECT users.name,users.pid,users.id,UNIX_TIMESTAMP(WBD.moment) as mmnt,WBD.damage as dmg, WBD.bid FROM WBD, users WHERE (WBD.bid='+bid+' OR WBD.moment>= DATE_SUB(Now(),INTERVAL 48 HOUR)) AND WBD.uid=users.id', function (error, results, fields) {
             if (error) throw error;
             var playerdata={};
@@ -169,8 +177,7 @@ connection.query('SELECT id,mid,level,spawn,mode FROM WB WHERE `status`=1 ORDER 
                 else if (mid==106) {base = 750}
                 else if (mid==126||mid==186) {base = 1700}
             }
-            var reward = Math.log(total)*base;
-            //reward*=2;
+            var reward = Math.log(total*1600/(avg*3))*base*(avg*3/1600);
             if (isSuper) reward*=2;
             /*players.sort(function(a,b) {
                 return b.dmg-a.dmg;

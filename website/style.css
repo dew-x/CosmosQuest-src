@@ -456,3 +456,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 option,select {
     color: black;
 }
+
+.table-grid {
+	border: 1px solid #ddd;
+}

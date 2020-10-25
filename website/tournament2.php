@@ -1,8 +1,8 @@
 <?php
 include_once("sql.php");
 include_once("functions.php");
-doHeader("Cosmos Quest - Tournaments");
-doMenu("tournament.php");
+doHeader("Cosmos Quest - Tournaments 2");
+doMenu("tournament2.php");
 $offset=0;
 $page=0;
 $_PAGE=25;

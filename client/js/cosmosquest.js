@@ -64,7 +64,7 @@ var SFX = [
 ];
 
 window.onload = function () {
-    var v="4.8.5.0"
+    var v="4.9.0.0"
     window.T1 = new Texer("img/gb.json?v="+v,SFX);
     if (localStorage.res==1) {
         window.T = new Texer("img/CosmosQuestLow.json?v="+v,SFX);
@@ -189,6 +189,13 @@ function CosmosQuest() {
     }
     document.addEventListener("keydown", function (e) {
         if (keyDown(e.keyCode||e.charCode)) e.preventDefault();
+    },false);
+    
+    function unfocusGame() {
+    	if (scenes[scene].unfocusGame) scenes[scene].unfocusGame();
+    }
+    window.addEventListener("blur", function (e) {
+        unfocusGame();
     },false);
     
     this.update = function () {

@@ -3371,7 +3371,7 @@ var HERO = [
       },
       upgrade: {
         pg: 1,
-        cc: 1,
+        cc: 0,
         as: 0,
         um: 0,
         none: 0
@@ -5846,7 +5846,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "TETRA",
@@ -6727,7 +6728,8 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
-      }
+      },
+      pve: true
     },
     {
       name: "ROB",
@@ -6927,7 +6929,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "YURI",
@@ -7130,7 +7133,7 @@ var HERO = [
       }
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       type: 4,
       rarity: 0,
       img: "ohsj",
@@ -7227,11 +7230,212 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
+      },
+      pve: true
+    },
+	{
+      name: "STENCH",
+      type: 0,
+      rarity: 2,
+      img: "1hit",
+      hp: 58,
+      atk: 64,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.15,
+        hid: 230
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "RUMBLE",
+      type: 2,
+      rarity: 2,
+      img: "6sgk",
+      hp: 59,
+      atk: 65,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.20,
+        hid: 231
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "VERMIN",
+      type: 1,
+      rarity: 2,
+      img: "1j53",
+      hp: 60,
+      atk: 66,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.25,
+        hid: 232
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "REAPER",
+      type: 4,
+      rarity: 3,
+      img: "h5w2",
+      hp: 110,
+      atk: 120,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.35,
+        hid: 233
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
+      }
+    },
+	{
+      name: "ESMERALDA",
+      type: 0,
+      rarity: 0,
+      img: "34ox",
+      hp: 41,
+      atk: 27,
+      skill: {
+        type: "amplify",
+        target: 9,
+        value: 0.025,
+        hid: 234
+      },
+      passive: {
+        type: 3,
+        value: 0.25
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "MARIONETTE",
+      type: 3,
+      rarity: 1,
+      img: "v2q5",
+      hp: 72,
+      atk: 30,
+      skill: {
+        type: "rico",
+        target: 3,
+        value: 0.9,
+        hid: 235
+      },
+      passive: {
+        type: 3,
+        value: 0.27
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "ANTOINETTE",
+      type: 2,
+      rarity: 2,
+      img: "tbac",
+      hp: 38,
+      atk: 128,
+      skill: {
+        type: "revgnerf",
+        target: -1,
+        value: 0.1,
+        hid: 236
+      },
+      passive: {
+        type: 3,
+        value: 0.29
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "LADY MALIGRYN",
+      type: 1,
+      rarity: 3,
+      img: "w4cm",
+      hp: 164,
+      atk: 98,
+      skill: {
+        type: "overload",
+        target: -1,
+        value: 1.5,
+        hid: 237
+      },
+      passive: {
+        type: 3,
+        value: 0.35
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
       }
     }
   ];
 
-  var promoData = [
+var promoData = [
     {
       name: "LADY OF TWILIGHT",
       atk: 25,
@@ -9038,7 +9242,7 @@ var HERO = [
       quest: 133
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       atk: 4,
       hp: 26,
       both: 18,
@@ -9068,6 +9272,70 @@ var HERO = [
       both: 108,
       skill: 0.01,
       quest: 168
+    },
+    {
+      name: "STENCH",
+      atk: 84,
+      hp: 58,
+      both: 56,
+      skill: 0.05,
+      quest: 140
+    },
+    {
+      name: "RUMBLE",
+      atk: 86,
+      hp: 60,
+      both: 58,
+      skill: 0.05,
+      quest: 141
+    },
+    {
+      name: "VERMIN",
+      atk: 88,
+      hp: 62,
+      both: 60,
+      skill: 0.05,
+      quest: 142
+    },
+    {
+      name: "REAPER",
+      atk: 258,
+      hp: 234,
+      both: 180,
+      skill: 0.05,
+      quest: 163
+    },
+	{
+      name: "ESMERALDA",
+      atk: 38,
+      hp: 68,
+      both: 16,
+      skill: 0.005,
+      quest: 122
+    },
+	{
+      name: "MARIONETTE",
+      atk: 22,
+      hp: 58,
+      both: 32,
+      skill: 0.1,
+      quest: 134
+    },
+	{
+      name: "ANTOINETTE",
+      atk: 188,
+      hp: 42,
+      both: 64,
+      skill: 0.05,
+      quest: 146
+    },
+	{
+      name: "LADY MALIGRYN",
+      atk: 136,
+      hp: 228,
+      both: 128,
+      skill: 0.5,
+      quest: 158
     }
   ];
 
@@ -9497,6 +9765,9 @@ function getTurnData (AL,BL) {
             moob: 0,
             absorb: 0,
         },
+        revg: {
+        	nerfAtk: 0, 
+        },
     };
     return turn;
 } 
@@ -9690,6 +9961,68 @@ function calcTurn0 (A,B,seed,side) {
                 });
             } else if (skill.type=="supershield") {
                 turn.buff.defPerc[i]+=skillVal*Math.floor(lvlVal/skill.target);
+            } else if (skill.type=="horseman") {
+            	if (B.setup[i] !== undefined && !(B.setup[i].id<-1&&HERO[-(2+B.setup[i].id)].rarity==5)) { //only works if there is a non-wb opposing unit
+	            	//get stats of enemy units. Reaching for base stats to prevent asymmetric combinations of stat changing skills.
+	            	var stats = (B.setup[i].id<-1) ? level2stats(-B.setup[i].id-2,B.setup[i].lvl,B.setup[i].prom) : MONSTERS[B.setup[i].id];
+	            	var atkval = Math.round(stats.atk*skillVal);
+	                A.setup[i].atk+=atkval;
+	                B.setup[i].atk-=atkval;
+	                gBattle.steps.push({
+	                    action:"DMG2",
+	                    target:side?"other":"you",
+	                    value: atkval,
+	                    pos: i,
+	                });
+	                gBattle.steps.push({
+	                    action:"DMG2",
+	                    target:side?"you":"other",
+	                    value: -atkval,
+	                    pos: i,
+	                });
+	                var hpval = Math.round(stats.hp*skillVal);
+	                A.setup[i].hp+=hpval;
+	                B.setup[i].hp-=hpval;
+	                A.setup[i].mhp+=hpval;
+	                var tmpArr = Array(A.setup.length).fill(0);
+	                tmpArr[i]=hpval;
+	                gBattle.steps.push({
+	                    action:"HEAL2",
+	                    target:side?"other":"you",
+	                    val:tmpArr,
+	                });
+	                gBattle.steps.push({
+	                    action:"EXPLO",
+	                    target:side?"you":"other",
+	                    val:tmpArr,
+	                });
+            	}
+            	//P6
+            	if (A.setup[i].prom >= 6) {
+            		var count = -1; //don't count yourself
+            		for (var j = 0; j < B.setup.length; j++) if (B.setup[j].skill !== undefined && B.setup[j].skill.type == "horseman") count++;
+            		for (var j = 0; j < A.setup.length; j++) if (A.setup[j].skill !== undefined && A.setup[j].skill.type == "horseman") count++;
+            		if (count > 0) {
+            			count*=A.setup[i].passive.value;
+            			A.setup[i].atk+=count;
+    	                gBattle.steps.push({
+    	                    action:"DMG2",
+    	                    target:side?"other":"you",
+    	                    value: count,
+    	                    pos: i,
+    	                });
+    	                A.setup[i].hp+=count;
+		                A.setup[i].mhp+=count;
+		                var tmpArr = Array(A.setup.length).fill(0);
+		                tmpArr[i]=count;
+		                gBattle.steps.push({
+		                    action:"HEAL2",
+		                    target:side?"other":"you",
+		                    val:tmpArr,
+		                });
+            		}
+            		
+            	}
             }
         } 
     }
@@ -10000,6 +10333,17 @@ function doTurn (A,D,turnA,turnD,side) {
     }
 
     for (var i=0;i<D.setup.length;++i) {
+    	if (turnD.revg.nerfAtk !== 0) {
+        	var atkval = -Math.round(D.setup[i].atk*turnD.revg.nerfAtk);
+            D.setup[i].atk+=atkval;
+            D.setup[i].matk+=atkval;
+            gBattle.steps.push({
+                action:"DMG2",
+                target:side?"you":"other",
+                value:atkval,
+                pos:i
+            });
+    	}
         if (maxhp==i&&atk.anarchy2>0) {
             if (D.setup[i].id <= -2 && D.setup[i].skill.type == "antireflect" && D.setup.length > 0) {
                 var skillVal = D.setup[i].skill.value;
@@ -10017,15 +10361,16 @@ function doTurn (A,D,turnA,turnD,side) {
         var dmgAfterDefense = Math.max((attackDamage*(1-buff.defPerc[i]))-buff.def[i],0);
         if (i==0 && buff.tank[i]!=1) {
             for (var j=i+1; j<D.setup.length; ++j) {
-                var tankDamage = Math.round(dmgAfterDefense*buff.tank[j]);
+				let validJ = j < buff.tank.length?j:buff.tank.length-1; // workaround for NaN bug
+                var tankDamage = Math.round(dmgAfterDefense*buff.tank[validJ]);
                 if (tankDamage) {
-                    D.setup[j].hp -= tankDamage;
+                    D.setup[validJ].hp -= tankDamage;
                     gBattle.steps.push({
                         action:"HIT",
                         target:side?"you":"other",
                         damage:tankDamage,
                         isCrit:atk.typeMul[i]>=1.5,
-                        pos:j,
+                        pos:validJ,
                         silent: true,
                         dmg: tankDamage
                     });
@@ -10060,12 +10405,9 @@ function doTurn (A,D,turnA,turnD,side) {
             });
         }
         
-        defvalue = function(a,b) {
-        	return (a == 0 || a)?a:b;
-        }
-        
-        var percAoe = Math.round(defvalue(D.setup[i].hp,0)*(1-defvalue(atk.percAoe[i],1))*buff.ratio*defvalue(buff.sdefPerc[i],1));
-        var flatAoe = Math.round(defvalue(atk.flatAoe[i],0)*buff.ratio*defvalue(buff.sdefPerc[i],1));
+		let sdefPercValue = i < buff.sdefPerc.length?buff.sdefPerc[i]:0; // workaround for NaN bug
+        var percAoe = Math.round(D.setup[i].hp*(1-atk.percAoe[i])*buff.ratio*sdefPercValue);
+        var flatAoe = Math.round(atk.flatAoe[i]*buff.ratio*sdefPercValue);
         aoeArr[i]=percAoe+flatAoe+buff.fmasochism[i];
         var totalDamage = finalDamage+percAoe+flatAoe+buff.fmasochism[i];
         var initHp = D.setup[i].hp;
@@ -10076,6 +10418,10 @@ function doTurn (A,D,turnA,turnD,side) {
             var skillVal = D.setup[i].skill.value;
             if (D.setup[i].prom>=5) skillVal = skillVal + promoData[-2*1-D.setup[i].id].skill;
             retturn.other.buff.iAtk[i]+=Math.round(totalDamage*(skillVal*Math.min(99,D.setup[i].lvl)/D.setup[i].skill.target));
+        }
+		if(isNaN(totalDamage)){ // workaround for NaN bug
+            //console.log("NaN");
+            totalDamage = 0;
         }
         turndmg += totalDamage;
         if (atk.leech>0 && totalDamage>0 && A.setup[0].hp>0) {
@@ -10180,7 +10526,10 @@ function doTurn (A,D,turnA,turnD,side) {
         
         // new turns
         if (D.setup[i].hp<=0 && initHp>0) {
+        	var killUnit = true;
             if (buff.angel[i]>0) {
+            	killUnit = false;
+            	var overkill = -D.setup[i].hp;
                 D.setup[i].hp = Math.round(D.setup[i].mhp * buff.angel[i]);
                 D.setup[i].extra = undefined;
                 D.setup[i].tatk = 0;
@@ -10192,7 +10541,22 @@ function doTurn (A,D,turnA,turnD,side) {
                     target:side?"you":"other",
                     val:tmpArr,
                 });
-            } else {
+                if (i == 0 && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                	var factor = A.setup[0].skill.value;
+                	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
+                	D.setup[i].hp -= Math.round(overkill*factor);
+                	var tmpArr2 = Array(D.setup.length).fill(0);
+	                tmpArr2[i]= Math.round(overkill*factor);
+	                console.log(tmpArr2);
+	                gBattle.steps.push({
+	                    action:"EXPLO",
+	                    target:side?"you":"other",
+	                    val:tmpArr2,
+	                });
+                	if (D.setup[i].hp <= 0) killUnit = true;
+                }
+            }
+            if (killUnit) {
                 if (turnA.onkill.moob!==0&&i==0) {
                     if (retturn.self===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
                     for (var j=0; j<retturn.self.atk.flatAoe.length; ++j) {
@@ -10204,6 +10568,11 @@ function doTurn (A,D,turnA,turnD,side) {
                     retturn.self.buff.iAtk[0]+=turnA.onkill.absorb;
                     retturn.self.buff.fheal[0]+=turnA.onkill.absorb;
                     retturn.self.buff.cond=turnA.units;
+                }
+                if (i == 0 &&A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                	var factor = A.setup[0].skill.value;
+                	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
+                	if (atk.flatAoe.length > i+1) atk.flatAoe[i+1] -= Math.round(D.setup[i].hp*factor);
                 }
                 if (D.setup[i].skill!==undefined) {
                     var skill = D.setup[i].skill;
@@ -10254,10 +10623,12 @@ function doTurn (A,D,turnA,turnD,side) {
                         for (var j=0; j<retturn.other.atk.flatAoe.length && j<2; ++j) {
                             retturn.other.atk.flatAoe[j]+=(skillVal*Math.min(99,D.setup[i].lvl));
                         }
+                    } else if (D.setup[i].skill.type=="revgnerf") {
+                        if (retturn.self===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
+                        retturn.self.revg.nerfAtk = skillVal;
                     }
                 }
             }
-
         } else {
             if (buff.evolve>0&&i==0&&atk.damage>0) {
                 if (retturn.other===undefined) retturn.other=getTurnData(D.setup.length,A.setup.length);
@@ -10282,6 +10653,10 @@ function doTurn (A,D,turnA,turnD,side) {
             val:healArr,
         });
     }
+	if(isNaN(turndmg)){ // workaround for NaN bug
+        //console.log("NaN");
+        turndmg = 0;
+    } 
     A.dmg += turndmg;
     if (retturn.other!==undefined) {
         retturn.other.buff.sdefPerc = turnD.buff.sdefPerc;
@@ -10317,7 +10692,7 @@ function killUnits (A,side,turn) {
         }
     }
     if (any) {
-        for (var i = 0; i < turn.length; ++i) {
+        for (var i = 0; i < Math.min(turn.length,1); ++i) {
             cleanTurn(turn[i],kills);
         }
         gBattle.steps.push({

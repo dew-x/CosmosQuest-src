@@ -3405,7 +3405,7 @@ var HERO = [
       },
       upgrade: {
         pg: 1,
-        cc: 1,
+        cc: 0,
         as: 0,
         um: 0,
         none: 0
@@ -5880,7 +5880,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "TETRA",
@@ -6761,7 +6762,8 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
-      }
+      },
+      pve: true
     },
     {
       name: "ROB",
@@ -6961,7 +6963,8 @@ var HERO = [
         as: 1,
         um: 0,
         none: 0
-      }
+      },
+      pve: true
     },
     {
       name: "YURI",
@@ -7164,7 +7167,7 @@ var HERO = [
       }
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       type: 4,
       rarity: 0,
       img: "ohsj",
@@ -7261,11 +7264,212 @@ var HERO = [
         as: 0,
         um: 0,
         none: 1
+      },
+      pve: true
+    },
+	{
+      name: "STENCH",
+      type: 0,
+      rarity: 2,
+      img: "1hit",
+      hp: 58,
+      atk: 64,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.15,
+        hid: 230
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "RUMBLE",
+      type: 2,
+      rarity: 2,
+      img: "6sgk",
+      hp: 59,
+      atk: 65,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.20,
+        hid: 231
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "VERMIN",
+      type: 1,
+      rarity: 2,
+      img: "1j53",
+      hp: 60,
+      atk: 66,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.25,
+        hid: 232
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+	},
+	{
+      name: "REAPER",
+      type: 4,
+      rarity: 3,
+      img: "h5w2",
+      hp: 110,
+      atk: 120,
+      skill: {
+        type: "horseman",
+        target: 1,
+        value: 0.35,
+        hid: 233
+      },
+      passive: {
+        type: 10,
+        value: 100
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
+      }
+    },
+	{
+      name: "ESMERALDA",
+      type: 0,
+      rarity: 0,
+      img: "34ox",
+      hp: 41,
+      atk: 27,
+      skill: {
+        type: "amplify",
+        target: 9,
+        value: 0.025,
+        hid: 234
+      },
+      passive: {
+        type: 3,
+        value: 0.25
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "MARIONETTE",
+      type: 3,
+      rarity: 1,
+      img: "v2q5",
+      hp: 72,
+      atk: 30,
+      skill: {
+        type: "rico",
+        target: 3,
+        value: 0.9,
+        hid: 235
+      },
+      passive: {
+        type: 3,
+        value: 0.27
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "ANTOINETTE",
+      type: 2,
+      rarity: 2,
+      img: "tbac",
+      hp: 38,
+      atk: 128,
+      skill: {
+        type: "revgnerf",
+        target: -1,
+        value: 0.1,
+        hid: 236
+      },
+      passive: {
+        type: 3,
+        value: 0.29
+      },
+      upgrade: {
+        pg: 1,
+        cc: 0,
+        as: 0,
+        um: 0,
+        none: 0
+      }
+    },
+    {
+      name: "LADY MALIGRYN",
+      type: 1,
+      rarity: 3,
+      img: "w4cm",
+      hp: 164,
+      atk: 98,
+      skill: {
+        type: "overload",
+        target: -1,
+        value: 1.5,
+        hid: 237
+      },
+      passive: {
+        type: 3,
+        value: 0.35
+      },
+      upgrade: {
+        pg: 0,
+        cc: 0,
+        as: 1,
+        um: 0,
+        none: 0
       }
     }
   ];
 
-  var promoData = [
+var promoData = [
     {
       name: "LADY OF TWILIGHT",
       atk: 25,
@@ -8876,7 +9080,7 @@ var HERO = [
       atk: 40,
       hp: 40,
       both: 40,
-      skill: 1,
+      skill: 0.2021,
       quest: 63
     },
     {
@@ -9072,7 +9276,7 @@ var HERO = [
       quest: 133
     },
     {
-      name: "EMMISARY JALROK",
+      name: "EMISSARY JALROK",
       atk: 4,
       hp: 26,
       both: 18,
@@ -9102,6 +9306,70 @@ var HERO = [
       both: 108,
       skill: 0.01,
       quest: 168
+    },
+    {
+      name: "STENCH",
+      atk: 84,
+      hp: 58,
+      both: 56,
+      skill: 0.05,
+      quest: 140
+    },
+    {
+      name: "RUMBLE",
+      atk: 86,
+      hp: 60,
+      both: 58,
+      skill: 0.05,
+      quest: 141
+    },
+    {
+      name: "VERMIN",
+      atk: 88,
+      hp: 62,
+      both: 60,
+      skill: 0.05,
+      quest: 142
+    },
+    {
+      name: "REAPER",
+      atk: 258,
+      hp: 234,
+      both: 180,
+      skill: 0.05,
+      quest: 163
+    },
+	{
+      name: "ESMERALDA",
+      atk: 38,
+      hp: 68,
+      both: 16,
+      skill: 0.005,
+      quest: 122
+    },
+	{
+      name: "MARIONETTE",
+      atk: 22,
+      hp: 58,
+      both: 32,
+      skill: 0.1,
+      quest: 134
+    },
+	{
+      name: "ANTOINETTE",
+      atk: 188,
+      hp: 42,
+      both: 64,
+      skill: 0.05,
+      quest: 146
+    },
+	{
+      name: "LADY MALIGRYN",
+      atk: 136,
+      hp: 228,
+      both: 128,
+      skill: 0.5,
+      quest: 158
     }
   ];
 
@@ -9135,9 +9403,9 @@ function playfab(params) {
 
 var bids = [
     {id:20,time:172800,price:454},
-    {id:33,time:86400,price:181},
+    /*{id:33,time:86400,price:181},
     {id:34,time:86400,price:181},
-    {id:35,time:86400,price:181},
+    {id:35,time:86400,price:181},*/
     {id:51,time:21600,price:9},
     {id:52,time:43200,price:45},
     {id:53,time:86400,price:181},
@@ -9149,17 +9417,17 @@ var bids = [
     {id:97,time:43200/2,price:9},
     {id:98,time:86400/2,price:45},
     {id:99,time:172800/2,price:181},
-    {id:48,time:86400,price:181},
+    /*{id:48,time:86400,price:181},
     {id:49,time:86400,price:181},
-    {id:50,time:86400,price:181},
+    {id:50,time:86400,price:181},*/
     {id:101,time:172800,price:454},
     {id:107,time:21600,price:9},
     {id:108,time:43200,price:45},
     {id:109,time:86400,price:181},
     {id:113,time:86400,price:4545},
-    {id:59,time:86400,price:181},
+    /*{id:59,time:86400,price:181},
     {id:60,time:86400,price:181},
-    {id:61,time:86400,price:181},
+    {id:61,time:86400,price:181},*/
     {id:127,time:21600,price:9},
     {id:128,time:43200,price:45},
     {id:129,time:86400,price:181},
@@ -9185,7 +9453,7 @@ var bids = [
     {id:135,time:86400,price:181},
     {id:147,time:86400*3,price:3637},
     {id:132,time:86400*3,price:3637},
-    {id:168,time:48*60*60,price:7273},
+    {id:168,time:48*60*60,price:4545}, //mother
     {id:180,time:48*60*60,price:7273},
     {id:175,time:86400,price:4545},
     {id:144,time:86400,price:181},
@@ -9205,7 +9473,19 @@ var bids = [
     {id:206,time:21600,price:9}, //egg
     {id:207,time:43200,price:45}, //baby
     {id:208,time:86400,price:181}, //young
-    {id:209,time:86400*2,price:909} //king
+    {id:209,time:86400*2,price:909}, //king
+    {id:214,time:86400/4,price:9}, //pluvia
+    {id:215,time:86400/2,price:45}, //silex
+    {id:216,time:86400,price:181}, //caeli
+    {id:217,time:86400*2,price:909}, //ignis
+    {id:226,time:86400/4,price:9}, //jalrok
+    {id:227,time:86400/2,price:45}, //sylnir
+    {id:228,time:86400,price:181}, //raelan
+    {id:229,time:86400*2,price:909}, //arathon
+    {id:170,time:86400,price:181}, //agatha
+    {id:171,time:86400,price:181}, //ophelia
+    {id:172,time:86400,price:181}, //helga
+    {id:190,time:86400*3,price:3637} //retia
 ];
 
 var working=0;
@@ -9225,6 +9505,8 @@ function doUpdate(row) {
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":3}\');', function (error, results, fields) {});
             } else if (row.hero==206||row.hero==207||row.hero==208||row.hero==209) { //pyros
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":33}\');', function (error, results, fields) {});
+            } else if (row.hero==226||row.hero==227||row.hero==228||row.hero==229) { //eternals
+                connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+',\"LVL\":9}\');', function (error, results, fields) {});
             } else {
                 connection.query('INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, \'0\', \'0\', CURRENT_TIMESTAMP, \''+row.holder+'\', \''+'{\"HERO\":'+row.hero+'}\');', function (error, results, fields) {});
             }
@@ -9652,14 +9934,22 @@ connection.query('SELECT COUNT(*) as `wip`, MAX(tid) AS `mtid` FROM tournaments2
         var heroes = Array(HERO.length).fill(0);
         var promo = Array(HERO.length).fill(0);
         var picks = [];
-        while (picks.length<50) {
+		var res = [];
+        while (picks.length<70) {
             var hid = Math.floor(Math.random()*HERO.length);
             if (HERO[hid].rarity<=3 && picks.indexOf(hid)===-1) picks.push(hid);
         }
         var lvls = [1,10,25,50,99,1000,2000,3000,4000,5000,6000,7000,8000,9000];
         for (var i=0; i<picks.length; ++i) {
-            heroes[picks[i]]=lvls[Math.floor(Math.random()*lvls.length)];
+		    heroes[picks[i]]=lvls[Math.max(0, Math.min(lvls.length-1, Math.floor(Math.random()*lvls.length) + 3 - 2*HERO[picks[i]].rarity))];
             promo[i]=Math.floor(Math.random()*6);
+			let stats=level2stats(picks[i], heroes[picks[i]], promo[i]);
+			res.push({score: stats.hp*stats.atk, id: picks[i], name: hnames[baseIndex-picks[i]-2]+":"+heroes[picks[i]]+"."+promo[i]});
+        }
+		res.sort((a,b) => (a.score < b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
+        for (var i=50; i<res.length; ++i) {
+			heroes[res[i].id]=0;
+			promo[res[i].id]=0;
         }
         var followers = Math.floor(Math.random()*Math.pow(2,41));
         var grid = Array(30).fill(-1);

@@ -210,7 +210,7 @@ function tid2fol($tid) {
         $num = $rnd%50;
         $num = ($num+30)/floatval(100);
         return round(($fols/$amount)*10*$num);
-    } else {
+    } else if ($tid<=18558) {
         $arr = array();
         $parr = array();
         for ($i=0; $i<count($HERO); ++$i) {
@@ -230,6 +230,27 @@ function tid2fol($tid) {
         if ($fols==0) return doRandomLog2(30000,1000000000,$tid);
         $base = ($fols/$amount);
         $vals = array(4,9,20);
+        return round($base*$vals[$tid%count($vals)]);
+    } else { // S12
+        $arr = array();
+        $parr = array();
+        for ($i=0; $i<count($HERO); ++$i) {
+            $arr[]=99;
+            $parr[]=2;
+        }
+        $hero = tid2heroes($tid,$arr);
+        $promo = tid2promo($tid,$parr);
+        $fols = 0;
+        $amount = 0;
+        for ($i=0; $i<count($hero); ++$i) {
+            if ($hero[$i]>0) {
+                $fols+=hero2fol($i,$hero[$i],$promo[$i]);
+                ++$amount;
+            }
+        }
+        if ($fols==0) return doRandomLog2(30000,1000000000,$tid);
+        $base = ($fols/$amount);
+        $vals = array(3,8,13,19);
         return round($base*$vals[$tid%count($vals)]);
     }
 }
@@ -1062,7 +1083,7 @@ function tid2heroes($tid,$hero) {
             for ($i=0; $i<count($HERO); ++$i) $ret[]=0;
             return $ret;
         }
-    } else if ($tid<=18373) {
+    } else if ($tid<=18373) { // S10
         // ycommon,rrarelegends,yhero,rcommonrare,rlegendsascended,yrare,rsuper,rpromo5,ylegends,rsupera,none
         if ($tid%11==0) { //"Your Common",
             $ret=array();
@@ -1113,11 +1134,11 @@ function tid2heroes($tid,$hero) {
             for ($i=0; $i<count($HERO); ++$i) $ret[]=0;
             return $ret;
         }
-    } else {
-        // "Your Heroes","No Heroes","Super Ascended","Your Legendary","Random P6","Your Common","Random","Random Legendary", "Your Rare","Random Common","Super Rare",
+    } else if ($tid<=18558) { // S11
+        // "Your Heroes","No Heroes","Super Ascended","Your Legendary","Random P6","Your Common","Random","Random Legendary","Your Rare","Random Common","Super Rare",
         seedRNG($tid);
         $tmp = getRNG()%4;
-        if ($tid%11==0) { //"Your Common",
+        if ($tid%11==0) { // "Your Heroes"
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1125,13 +1146,13 @@ function tid2heroes($tid,$hero) {
                 else $ret[]=0;
             }
             return $ret;
-        } else if ($tid%11==1) { //"Random Legendary",
+        } else if ($tid%11==1) { // "No Heroes"
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=0;
             return $ret;
-        } else if ($tid%11==2) { // "Your Hero",
+        } else if ($tid%11==2) { // "Super Ascended"
             return doHeros3($tid,[3],1000);
-        } else if ($tid%11==3) { //"Random common rare",
+        } else if ($tid%11==3) { // "Your Legendary"
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1139,9 +1160,9 @@ function tid2heroes($tid,$hero) {
                 else $ret[]=0;
             }
             return $ret;
-        } else if ($tid%11==4) { // "Random legends ascended",
+        } else if ($tid%11==4) { // "Random P6"
             return doHeros3($tid,[$tmp]);
-        } else if ($tid%11==5) { //"Your Rare",
+        } else if ($tid%11==5) { // "Your Common"
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1149,11 +1170,11 @@ function tid2heroes($tid,$hero) {
                 else $ret[]=0;
             }
             return $ret;
-        } else if ($tid%11==6) { //"Random Super",
+        } else if ($tid%11==6) { // "Random"
             return doHeros3($tid,[0,1,2,3]);
-        } else if ($tid%11==7) { //"Random promo5",
+        } else if ($tid%11==7) { // "Random Legendary"
             return doHeros3($tid,[2]);
-        } else if ($tid%11==8) { //"Your Legends",
+        } else if ($tid%11==8) { // "Your Rare"
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1161,11 +1182,59 @@ function tid2heroes($tid,$hero) {
                 else $ret[]=0;
             }
             return $ret;
-            
-        } else if ($tid%11==9) { //"Random Super A",
+        } else if ($tid%11==9) { // "Random Common"
             return doHeros3($tid,[0]);
-        } else if ($tid%11==10) { //"No heroes"
+        } else if ($tid%11==10) { // "Super Rare"
             return doHeros3($tid,[1],1000);
+        }
+    } else { // S12
+        // "Your Heroes","Boring Common & Rare","Tanks","Your Legendary","Air & Fire","Your Common","Random Rare","Super Legendary","Your Rare","Random Chest","Water & Earth",
+        if ($tid%11==0) { // "Your Heroes"
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($HERO[$i]["rarity"]<=3 and $i<count($hero)) $ret[]=$hero[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+        } else if ($tid%11==1) { // "Boring Common & Rare"
+            return doHeros4($tid,-1,-1,-1,[0, 3, 4, 5, 6, 7, 10, 13, 16, 21, 24, 30, 36, 45, 51, 62, 73, 77, 93, 107, 137, 149, 161, 165, 176, 181, 191, 195, 222, 226, 1, 8, 11, 14, 17, 19, 22, 25, 27, 28, 29, 31, 37, 39, 40, 41, 46, 52, 54, 63, 74, 78, 94, 108, 111, 141, 150, 162, 182, 192, 196, 199, 223, 227]);
+        } else if ($tid%11==2) { // "Tanks"
+            return doHeros4($tid,-1,-1,-1,[65, 66, 67, 68, 69, 70, 71, 80, 81, 82, 86, 92, 100, 119, 130, 131, 132, 147, 156, 157, 158, 159, 160, 174, 179, 184, 190, 194, 198, 213, 221, 229, 2, 9, 12, 15, 18, 20, 23, 26, 33, 34, 35, 38, 42, 47, 48, 49, 50, 53, 56, 59, 60, 61, 64, 75, 79, 83, 84, 85, 96, 99, 101, 112, 113, 114, 115, 116, 117, 129, 133, 134, 135, 139, 148, 152, 155, 163, 168, 175, 178, 180, 193, 220, 228]);
+        } else if ($tid%11==3) { // "Your Legendary"
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($HERO[$i]["rarity"]==2 and $i<count($hero)) $ret[]=$hero[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+        } else if ($tid%11==4) { // "Air & Fire"
+            return doHeros4($tid,-1,[0,2]);
+        } else if ($tid%11==5) { // "Your Common"
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($HERO[$i]["rarity"]==0 and $i<count($hero)) $ret[]=$hero[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+        } else if ($tid%11==6) { // "Random Rare"
+            return doHeros4($tid,[1]);
+        } else if ($tid%11==7) { // "Super Legendary"
+            return doHeros4($tid,[2],-1,1000);
+        } else if ($tid%11==8) { // "Your Rare"
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($HERO[$i]["rarity"]==1 and $i<count($hero)) $ret[]=$hero[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+        } else if ($tid%11==9) { // "Random Chest"
+            return doHeros4($tid,-1,-1,-1,[7,8,9,65,10,11,12,66,13,14,15,67,16,17,18,68,21,22,23,69,24,25,26,70,30,31,32,71,36,37,38,81,45,46,47,82,62,63,64,86,77,78,79,92,93,94,95,100,110,111,112,131,140,141,142,143,149,150,151,174,165,166,167,169,176,177,178,179,181,182,183,184,191,192,193,194]);
+        } else if ($tid%11==10) { // "Water & Earth"
+            return doHeros4($tid,-1,[1,3]);
         }
     }
 }
@@ -1219,6 +1288,7 @@ function doHeros_($tid,$rarity) {
     }
     return $ret;
 }
+
 function doHeros2($tid,$rarity=-1,$level=-1) {
     global $HERO;
     $POOLS = array(
@@ -1284,6 +1354,46 @@ function doHeros3($tid,$rarity=-1,$level=-1) {
         $rnd = getRNG()%count($pool);
         $hid = $pool[$rnd];
         if ($ret[$hid]==0 && (($rarity==-1&&$HERO[$hid]["rarity"]<5) || (in_array($HERO[$hid]["rarity"],$rarity)))) {
+            if ($amount==0) {
+                $ret[$hid]=(getRNG()%99)+1;
+                if ($level!==-1) $ret[$hid]=$level;
+                ++$amount;
+                $base = hero2score($hid,$ret[$hid]);
+            } else {
+                $lvl = (getRNG()%99)+1;
+                if ($level!==-1) $lvl=$level;
+                $score = hero2score($hid,$lvl);
+                $ratio = max($score/$base,$base/$score);
+                if ($ratio<2 || $times>4000) {
+                    $ret[$hid]=$lvl;
+                    ++$amount;
+                }
+            }
+        }
+        ++$times;
+    }
+    return $ret;
+}
+
+function doHeros4($tid,$rarity=-1,$elements=-1,$level=-1,$setpool=-1) { // S12
+    global $HERO;
+    $AMOUNTS = array(10,15,20,25,30);
+    $limit = $AMOUNTS[$tid%count($AMOUNTS)];
+    $pool = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,73,74,75,76,77,78,79,80,81,82,83,84,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229];
+	if ($setpool!==-1) $pool = $setpool;
+	$ret = array();
+    for ($i=0; $i<count($HERO); ++$i) {
+        $ret[$i]=0;
+    }
+    $amount = 0;
+    $base = 0;
+    $times = 0;
+    $max = 5000;
+    seedRNG($tid);
+    while ($amount<$limit && --$max) {
+        $rnd = getRNG()%count($pool);
+        $hid = $pool[$rnd];
+        if ($ret[$hid]==0 && (($rarity==-1&&$HERO[$hid]["rarity"]<5) || (in_array($HERO[$hid]["rarity"],$rarity))) && ($elements==-1 || in_array($HERO[$hid]["type"],$elements))) {
             if ($amount==0) {
                 $ret[$hid]=(getRNG()%99)+1;
                 if ($level!==-1) $ret[$hid]=$level;
@@ -1493,11 +1603,11 @@ function tid2promo($tid,$promo) {
             for ($i=0; $i<count($HERO); ++$i) $ret[]=0;
             return $ret;
         }
-    } else {
-        // ycommon,rrarelegends,yhero,rcommonrare,rlegendsascended,yrare,rsuper,rpromo5,ylegends,rsupera,none
+	} else if ($tid<=18558) { // S11
+        // yhero,none,rsupera,ylegends,rpromo6,ycommon,rfull,rlegend,yrare,rcommon,rsuperr
         seedRNG($tid);
         $rnd = getRNG()%6;
-        if ($tid%11==0) { //"Your Common",
+        if ($tid%11==0) { // yhero
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1506,15 +1616,15 @@ function tid2promo($tid,$promo) {
             }
             return $ret;
             
-        } else if ($tid%11==1) { //"rrarelegends",
+        } else if ($tid%11==1) { // none
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=0;
             return $ret;
-        } else if ($tid%11==2) { // "Your Hero",
+        } else if ($tid%11==2) { // rsupera
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
             return $ret;
-        } else if ($tid%11==3) { //"common rare",
+        } else if ($tid%11==3) { // ylegends
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1522,11 +1632,11 @@ function tid2promo($tid,$promo) {
                 else $ret[]=0;
             }
             return $ret;
-        } else if ($tid%11==4) { // "legend ascended",
+        } else if ($tid%11==4) { // rpromo6
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=6;
             return $ret;
-        } else if ($tid%11==5) { //"Your rare",
+        } else if ($tid%11==5) { // ycommon
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1534,15 +1644,15 @@ function tid2promo($tid,$promo) {
                 else $ret[]=0;
             }
             return $ret;
-        } else if ($tid%11==6) { //"rsuper",
+        } else if ($tid%11==6) { // rfull
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=getRNG()%6;
             return $ret;
-        } else if ($tid%11==7) { //"Random promo 5",
+        } else if ($tid%11==7) { // rlegend
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
             return $ret;
-        } else if ($tid%11==8) { //"Your Legends",
+        } else if ($tid%11==8) { // yrare
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) {
                 if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
@@ -1550,11 +1660,78 @@ function tid2promo($tid,$promo) {
                 else $ret[]=0;
             }
             return $ret;
-        } else if ($tid%11==9) { //"Random Super",
+        } else if ($tid%11==9) { // rcommon
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
             return $ret;
-        } else if ($tid%11==10) { //"None"
+        } else if ($tid%11==10) { // rsuperr
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
+            return $ret;
+        }
+    } else { // S12
+        // yhero,rborcommon,rasctank,ylegends,rfireair,ycommon,rrare,rsuperl,yrare,rchest,rearthwater
+        seedRNG($tid);
+        $rnd = getRNG()%7;
+        $rnd4 = getRNG()%4;
+        if ($tid%11==0) { // yhero
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($i<count($promo)) $ret[]=$promo[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+            
+        } else if ($tid%11==1) { // rborcommon
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) $ret[]=($rnd4==0)?0:(7-$rnd4-2*$HERO[$i]["rarity"]);
+            return $ret;
+        } else if ($tid%11==2) { // rasctank
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
+            return $ret;
+        } else if ($tid%11==3) { // ylegends
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($i<count($promo)) $ret[]=$promo[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+        } else if ($tid%11==4) { // rfireair
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
+            return $ret;
+        } else if ($tid%11==5) { // ycommon
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($i<count($promo)) $ret[]=$promo[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+        } else if ($tid%11==6) { // rrare
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
+            return $ret;
+        } else if ($tid%11==7) { // rsuperl
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) $ret[]=(getRNG()%2)+5;
+            return $ret;
+        } else if ($tid%11==8) { // yrare
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) {
+                if (!isset($HERO[$i]["rarity"])) error_log("HERO $i undefined rarity");
+                else if ($i<count($promo)) $ret[]=$promo[$i];
+                else $ret[]=0;
+            }
+            return $ret;
+        } else if ($tid%11==9) { // rchest
+            $ret=array();
+            for ($i=0; $i<count($HERO); ++$i) $ret[]=getRNG()%7;
+            return $ret;
+        } else if ($tid%11==10) { // rearthwater
             $ret=array();
             for ($i=0; $i<count($HERO); ++$i) $ret[]=$rnd;
             return $ret;
