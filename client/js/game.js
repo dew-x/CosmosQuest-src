@@ -13040,12 +13040,16 @@ function Game() {
         text(ctx,"",W*0.5-bw*0.5+20,H*0.3+160,"36px"+FONT,"white","left","middle");
         
         //Discord link
-        var grect=(new Rect(W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2,T.width("091m"),T.height("091m"))).small();
+        var grect=(new Rect(W*0.5-T.width("091m")/2,H*0.65-T.height("091m")/2,T.width("091m"),T.height("091m"))).small();
         if (grect.isInside(GM.x,GM.y)){
-            T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
+            T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.65-T.height("091m")/2);
             this.addZone("cqlink_0",grect,"cqlink");
-        } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
-        text(ctx,"VISIT OUR DISCORD",W*0.5,H*0.7,"36px"+FONT,"white","center","middle");
+        } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.65-T.height("091m")/2);
+        text(ctx,"VISIT OUR DISCORD",W*0.5,H*0.65,"36px"+FONT,"white","center","middle");
+        
+        var tid=Math.floor(Date.now()/(24*60*60*1000));
+        var events=["Lucky Followers","Cosmic Catcher","Match Pairs","Adventure","Lottery","Flash Tournaments","Extra AS","CQ Dungeon","Key Tower"];
+        text(ctx,"Tomorrows event: " + events[(tid+1)%9],W*0.5,H*0.3+290,"32px"+FONT,"gold","center","middle");
     }
     this.drawSeasonShop = function (ctx) {
         var shopData=getStarDustData();
