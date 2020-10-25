@@ -14977,7 +14977,7 @@ function Game() {
 
                 text(ctx,"- Every day you will earn 100 Shadow Gems",W*0.13,H*0.25+75,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- Every floor you beat awards 20 Shadow Gems",W*0.13,H*0.25+100,"32px"+HFONT,"white","left","middle");
-                text(ctx,"- For every kred spent, you will receive one Shadow Gem",W*0.13,H*0.25+125,"32px"+HFONT,"white","left","middle");
+                //text(ctx,"- For every kred spent, you will receive one Shadow Gem",W*0.13,H*0.25+125,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- Every time that you spend a Shadow Gem on level up a Hero, you will receive PG/AS",W*0.13,H*0.25+150,"32px"+HFONT,"white","left","middle");
                 text(ctx,"  Common Level: 1PG, Rare Level: 3PG, Legendary Level: 12PG and Ascended Level: 30AS.",W*0.13,H*0.25+175,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- The event will be available till 2nd of November at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
