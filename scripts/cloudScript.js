@@ -1319,7 +1319,7 @@ function loadData(id,kid) {
             data.city.halloween.hero[209]=0;
         }
         if (tid>=18562 && tid<=18568 && data.city.halloween.dailyClaimed != tid) {
-			award(currentPlayerId,"ZG",10);
+			award(currentPlayerId,"ZG",100);
             data.city.halloween.dailyClaimed = tid;
         }
         var tid2 = Math.min(18206,tid);
