@@ -1302,19 +1302,6 @@ function loadData(id,kid) {
             else data.city.pvp.next+=toGrant*(60*60*1000);
         }
         var tid=Math.floor(Date.now()/DAY);
-        if (tid>=17830 && tid<=17837) {
-            if (data.city.hllwn===undefined || data.city.hllwn.next==undefined) {
-                data.city.hllwn = {
-                    UM:400,
-                    gain: data.city.pass.isGold?11500:0,
-                    next: tid,
-                }
-            }
-            while (data.city.hllwn.next!=tid) {
-                data.city.hllwn.next=tid;
-                data.city.hllwn.UM += 400;
-            }
-        }
         if (data.city.halloween === undefined || data.city.halloween.dailyClaimed < 18561) {
             data.city.halloween = {
                 hero: Array(HERO.length).fill(1),
@@ -1330,6 +1317,10 @@ function loadData(id,kid) {
             data.city.halloween.hero[207]=0;
             data.city.halloween.hero[208]=0;
             data.city.halloween.hero[209]=0;
+        }
+        if (tid>=18562 && tid<=18568 && data.city.halloween.dailyClaimed != tid) {
+			award(currentPlayerId,"ZG",100);
+            data.city.halloween.dailyClaimed = tid;
         }
         var tid2 = Math.min(18206,tid);
         /*if (data.city.pass.isSilver==1) {
