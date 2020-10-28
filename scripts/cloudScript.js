@@ -1302,10 +1302,10 @@ function loadData(id,kid) {
             else data.city.pvp.next+=toGrant*(60*60*1000);
         }
         var tid=Math.floor(Date.now()/DAY);
-        if (data.city.halloween === undefined || data.city.halloween.dailyClaimed < 18562) {
+        if (data.city.halloween === undefined || data.city.halloween.dailyClaimed < 18563) {
             data.city.halloween = {
                 hero: Array(HERO.length).fill(1),
-                dailyClaimed: 18562,
+                dailyClaimed: 18563,
             } 
             data.city.halloween.hero[96]=0; // lep
             data.city.halloween.hero[72]=0; // loc
@@ -1318,7 +1318,7 @@ function loadData(id,kid) {
             data.city.halloween.hero[208]=0;
             data.city.halloween.hero[209]=0;
         }
-        if (tid>=18563 && tid<=18568 && data.city.halloween.dailyClaimed != tid) {
+        if (tid>=18564 && tid<=18570 && data.city.halloween.dailyClaimed != tid) {
 			award(currentPlayerId,"ZG",100);
             data.city.halloween.dailyClaimed = tid;
         }
