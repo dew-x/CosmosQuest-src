@@ -48,7 +48,7 @@
     $res1->free();
     $limit=wbHitsRequired($bid, $isSuper);
     $data=array(
-        "version"=>"v4.9.0.0",
+        "version"=>"v4.9.0.1",
         "tournament"=>array(
             "pool"=>$pool
         ),
@@ -56,8 +56,8 @@
             "id"=>$bid,
             "uid"=>$unid,
             "name"=>$wbname,
-            "atk"=>$limit-$wbatk,
-            "dmg"=>$wbdmg,
+            "atk"=>intval($limit-$wbatk),
+            "dmg"=>intval($wbdmg),
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),

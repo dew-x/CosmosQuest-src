@@ -514,6 +514,7 @@ function doWB($bid,$uid,$damage,$wbhp,$isSuper) {
 }
 
 function ensureUserExists($pid, $kid, $name="") {
+    global $sql;
 	$uid=-1;
 	$res=$sql->query("SELECT * FROM users WHERE pid='$pid' LIMIT 1");
 	if ($res) {

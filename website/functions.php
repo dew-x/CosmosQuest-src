@@ -304,7 +304,7 @@ function doHero($i) {
             "Super Ascended",
             "No Heroes"
         );
-    } else if ($tid<=18558) { //S11
+    } else if ($i<=18558) { //S11
         $res=array(
             "Your Heroes",
             "No Heroes",
@@ -696,7 +696,7 @@ function wbName($id,$isSuper=false) {
 
 function wbHitsRequired($wbId, $isSuper=false) {
     global $sql;
-	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < ".(int)$wbId." GROUP BY bid ORDER BY bid DESC LIMIT 20");
+	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < (SELECT MAX(bid) FROM WBD) GROUP BY bid ORDER BY bid DESC LIMIT 20");
 	$avg = 0;
 	while ($row=$res->fetch_assoc()) {
 		$avg += $row["p"];
@@ -788,7 +788,7 @@ function bint($num, $mode = 0) {
 		if ($num>=1e6) return floor($num/1e3).$prefixes[$mode][0];
 		else return round($num/1e3, 2).$prefixes[mode][0];
 	} else {
-		return num;
+		return $num;
 	}
 }
 ?>

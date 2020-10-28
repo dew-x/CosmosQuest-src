@@ -158,9 +158,9 @@ if (isset($_GET["id"]) && ctype_digit($_GET["id"])) { // show specific wb
             $cells[]=number_format(wbReward($row["level"],$row["id"]),0,",",".");
         } else {
             //$cells[]=number_format($row["damage"],0,",",".");
-			$cells[]=bint($row["damage"]);
+			$cells[]=bint(isset($row["damage"]) ? $row["damage"] : 0);
 			$modifier = wbRewardModifier($row["id"]);
-			$rewardBase = round(log($row["damage"]/$modifier)*$modifier);
+			$rewardBase = isset($row["damage"])?round(log($row["damage"]/$modifier)*$modifier):0;
 			$reward = $rewardBase*750;
 			if ($row["mode"]%2==0) {
 				$reward = $rewardBase*1700;

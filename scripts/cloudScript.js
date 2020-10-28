@@ -2789,7 +2789,7 @@ function doDaily(lvl) { // DQ
 	var picks=[];
 	while (picks.length<30) {
 		var hid=Math.floor(Math.random()*HERO.length);
-		if(type == 0 && favor.indexOf(hid)===-1 && Math.random()<0.1) {
+		if(favor.indexOf(hid)===-1 && Math.random()<0.1) {
 			hid=Math.floor(Math.random()*favor.length);
 		}
 		if (picks.length<7) {

@@ -34,7 +34,7 @@ function kongstat(kid,score) {
             headers: {       
                 'content-type': 'application/x-www-form-urlencoded'
             },
-            body: "api_key="+KONGAPI+"&user_id="+kid+"&tournaments11="+score
+            body: "api_key="+KONGAPI+"&user_id="+kid+"&tournaments12="+score
         });
     }
 }

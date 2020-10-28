@@ -22,7 +22,7 @@ function Presentation() {
         
         var gameKey = "984ddd9061dc185617de5c449fa4146f"; //Your gamekey
         var secretKey = "690da15ce90ba97df890c656226b08f9aa2a4ca7"; //Your secret key
-        var build = "4.8.4.0"; //The current version of your game, it's wise to bump this with every analytics/game change
+        var build = "4.9.0.1"; //The current version of your game, it's wise to bump this with every analytics/game change
         var user = new GA.User();
         //Create an instance
         var gaan = GA.getInstance();
