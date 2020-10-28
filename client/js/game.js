@@ -23515,7 +23515,7 @@ function Game() {
             }
         } else if (skill.type=="horseman") {
             return {
-                short: "Empowered - Start of Battle/nSteals "+(value*100).toFixed(0)+"% of opposing enemy units base stats",
+                short: "Empowered - Start of Battle/nSteals "+(value*100).toFixed(0)+"% of opposing enemy unit's base stats",
                 long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will steal attack and health from the enemy unit at the same position at the start of the battle. It won't consider additional health or attack gained by skills. It won't work against world bosses."
             }
         } else if (skill.type=="revgnerf") {
