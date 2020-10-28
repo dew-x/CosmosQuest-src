@@ -696,7 +696,7 @@ function wbName($id,$isSuper=false) {
 
 function wbHitsRequired($wbId, $isSuper=false) {
     global $sql;
-	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < ".(int)$wbId." GROUP BY bid ORDER BY bid DESC LIMIT 20");
+	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < (SELECT MAX(bid) FROM WBD) GROUP BY bid ORDER BY bid DESC LIMIT 20");
 	$avg = 0;
 	while ($row=$res->fetch_assoc()) {
 		$avg += $row["p"];
