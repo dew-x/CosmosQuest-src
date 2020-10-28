@@ -304,7 +304,7 @@ function doHero($i) {
             "Super Ascended",
             "No Heroes"
         );
-    } else {
+    } else if ($tid<=18558) { //S11
         $res=array(
             "Your Heroes",
             "No Heroes",
@@ -317,6 +317,20 @@ function doHero($i) {
             "Your Rare",
             "Random Common",
             "Super Rare",
+        );
+    } else {
+        $res=array(
+            "Your Heroes",
+            "Boring Common & Rare",
+            "Tanks",
+            "Your Legendary",
+            "Air & Fire",
+            "Your Common",
+            "Random Rare",
+            "Super Legendary",
+            "Your Rare",
+            "Random Chest",
+            "Water & Earth",
         );
     }
     return $res[$i%count($res)];
