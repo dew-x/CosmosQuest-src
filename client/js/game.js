@@ -4082,7 +4082,7 @@ function Game() {
                                 T.draw(ctx,"0j14",ix+(W*0.15/2)+i*W*0.2+W*0.02,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                                 T.draw(ctx,"0ap1",ix+(W*0.15/2)+i*W*0.2+W*0.04,y0+H*0.265-T.height("0j14")*0.6*0.5,T.width("0j14")*0.6,T.height("0j14")*0.6);
                             }
-                            else if (hid==130||hid==102||hid==132||hid==147||hid==198||hid==173) {
+                            else if (hid==130||hid==102||hid==132||hid==147||hid==198||hid==173||hid==190||hid==217) { //AS
                                 text(ctx,"Level up with: ",ix+(W*0.15/2)+i*W*0.2-W*0.013,y0+H*0.265,"24px"+FONT,"rgba(201,244,255,1)","center","middle");
                                 T.draw(ctx,"08y7",ix+(W*0.15/2)+i*W*0.2+W*0.024,y0+H*0.265-T.height("08y7")*0.5*0.6,T.width("08y7")*0.5,T.height("08y7")*0.5);
                             }
