@@ -60,12 +60,7 @@
     }
     $version=json_decode(file_get_contents("data.json"),true);
     
-    if (file_exists("ranking.json")) {
-        $seasons=json_decode(file_get_contents("ranking.json"),true);
-        $data=array_merge($version,$seasons);
-    } else {
-        $data=$version;
-    }
+    $data=$version;
     $qid = floor(time()/(24*60*60));
     if (isset($questions[$qid])) {
         $res = $sql->query("SELECT vote,COUNT(*) as `amount` FROM poll WHERE qid=$qid GROUP BY vote");

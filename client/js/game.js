@@ -848,6 +848,7 @@ function Game() {
     var pranaPage=0;
     var tdata=undefined;
     var CQW=undefined;
+    var CQWS=undefined;
     var bdata=undefined;
     var otooltip=undefined;
     var pollVote=0;
@@ -1188,6 +1189,7 @@ function Game() {
         }
         onPurchaseResult({success:true});
         this.wsync();
+        this.wsync2();
     }
     this.update = function (delta) {
         if (fbattleSync+2*60*1000<Date.now()) this.fsync();
@@ -1621,7 +1623,7 @@ function Game() {
                 }
             }
         }
-        if (CQW!==undefined && CQW.seasons!==undefined && rTopSeason===undefined) this.doTopSeason();
+        if (CQW!==undefined && CQWS!==undefined && rTopSeason===undefined) this.doTopSeason();
         if (trendLine.length == 0) {
             var x = 50;
             for (var i = 0; i < 105; ++i) {
@@ -11160,8 +11162,8 @@ function Game() {
         var numberOfSeasons=0;
         var trophies = ["1hng","a0jn","nppo","cx52","d3vp"];
 
-        if (CQW!==undefined && CQW.seasons!==undefined) {
-            numberOfSeasons=CQW.seasons.length;
+        if (CQW!==undefined && CQWS!==undefined) {
+            numberOfSeasons=CQWS.length;
         }
 
         if (ranquing==undefined || Date.now()-ranquing.time>5*60*1000) this.updateRanking();
@@ -11378,24 +11380,24 @@ function Game() {
                 this.spinner(ctx,1024*rxplayer,640*0.5,40);
             }
         } else {
-            if (CQW!==undefined && CQW.seasons!==undefined) {
-                if (CQW.seasons[showRanking-1].ranking!==undefined) {
-                    var begin=Math.min(CQW.seasons[showRanking-1].ranking.length,rankingPage*10);
-                    var end=Math.min(CQW.seasons[showRanking-1].ranking.length,(rankingPage+1)*10);
+            if (CQW!==undefined && CQWS!==undefined) {
+                if (CQWS[showRanking-1].ranking!==undefined) {
+                    var begin=Math.min(CQWS[showRanking-1].ranking.length,rankingPage*10);
+                    var end=Math.min(CQWS[showRanking-1].ranking.length,(rankingPage+1)*10);
                     for (var i=0;i<Math.min(end-begin);++i) {
-                        if (pfdata.PlayFabId == CQW.seasons[showRanking-1].ranking[begin+i].PlayFabId){
+                        if (pfdata.PlayFabId == CQWS[showRanking-1].ranking[begin+i].PlayFabId){
                             text(ctx,i+10*rankingPage+1,(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,CQW.seasons[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
+                            text(ctx,CQWS[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
+                            text(ctx,bint(CQWS[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
                         }
                         else {
                             text(ctx,i+10*rankingPage+1,(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,CQW.seasons[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
+                            text(ctx,CQWS[showRanking-1].ranking[begin+i][0],numSpace+(1024*rxtop)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
+                            text(ctx,bint(CQWS[showRanking-1].ranking[begin+i][1],data.bintmode),(1024*rxtop)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
                         }
                         if (rTopSeason !== undefined) {
                             for (var j = 0; j < rTopSeason.length; ++j) {
-                                if (CQW.seasons[showRanking-1].ranking[begin+i][0] == rTopSeason[j].name) {
+                                if (CQWS[showRanking-1].ranking[begin+i][0] == rTopSeason[j].name) {
                                     var best = 0;
                                     rtoppos = j;
                                     if (rTopSeason[j].top[0] == 0) {
@@ -11424,7 +11426,7 @@ function Game() {
                         ctx.restore();
                         this.addZone("rank_p",(new Rect(x-ew/2,125+y-eh/2,ew,eh)).small(),"rankP",{target: rankingPage-1});
                     }
-                    if ((rankingPage+1)*10<CQW.seasons[showRanking-1].ranking.length) {
+                    if ((rankingPage+1)*10<CQWS[showRanking-1].ranking.length) {
                         var x=1024*0.02+T.width("0c2k")/2-ew/2;
                         var y=640*0.165+T.height("0c2k")-eh;
                         T.draw(ctx,"0f9n",x,y-10);
@@ -11434,19 +11436,19 @@ function Game() {
                     this.spinner(ctx,1024*rxtop,640*0.5,40);
                 }
 
-                if (CQW.seasons[showRanking-1].tournament!==undefined) {
-                    var begin=Math.min(CQW.seasons[showRanking-1].tournament.length,rankingPageT*10);
-                    var end=Math.min(CQW.seasons[showRanking-1].tournament.length,(rankingPageT+1)*10);
+                if (CQWS[showRanking-1].tournament!==undefined) {
+                    var begin=Math.min(CQWS[showRanking-1].tournament.length,rankingPageT*10);
+                    var end=Math.min(CQWS[showRanking-1].tournament.length,(rankingPageT+1)*10);
                     for (var i=0;i<Math.min(end-begin);++i) {
-                        if (pfdata.PlayFabId == CQW.seasons[showRanking-1].tournament[begin+i].PlayFabId){
+                        if (pfdata.PlayFabId == CQWS[showRanking-1].tournament[begin+i].PlayFabId){
                             text(ctx,i+10*rankingPageT+1,(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,CQW.seasons[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
+                            text(ctx,CQWS[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","left","middle");
+                            text(ctx,bint(CQWS[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"rgb(3,80,150)","right","middle");
                         }
                         else {
                             text(ctx,i+10*rankingPageT+1,(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,CQW.seasons[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
-                            text(ctx,bint(CQW.seasons[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
+                            text(ctx,CQWS[showRanking-1].tournament[begin+i][0],numSpace+(1024*rxplayer)-T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","left","middle");
+                            text(ctx,bint(CQWS[showRanking-1].tournament[begin+i][1],data.bintmode),(1024*rxplayer)+T.width("0c2k")/2.2,(640*(rystart+i*rydistance)),fSize+FONT,"black","right","middle");
                         }
                     }
                     var ew=T.width("0f9n");
@@ -11461,7 +11463,7 @@ function Game() {
                         ctx.restore();
                         this.addZone("rank_pT",(new Rect(x-ew/2,125+y-eh/2,ew,eh)).small(),"rankPT",{target: rankingPageT-1});
                     }
-                    if ((rankingPageT+1)*10<CQW.seasons[showRanking-1].tournament.length) {
+                    if ((rankingPageT+1)*10<CQWS[showRanking-1].tournament.length) {
                         var x=1024*0.66+T.width("0c2k")/2-ew/2;
                         var y=640*0.165+T.height("0c2k")-eh;
                         T.draw(ctx,"0f9n",x,y-10);
@@ -21890,16 +21892,16 @@ function Game() {
     }
     this.doTopSeason = function () {
         rTopSeason = [];
-        for (var i = 0; i < CQW.seasons.length; ++i) {
+        for (var i = 0; i < CQWS.length; ++i) {
             for (var j = 0; j < 10; ++j) {
                 var found = false;
                 for (var k = 0; k < rTopSeason.length && found == false; ++k) {
-                    if (rTopSeason[k].name == CQW.seasons[i].ranking[j][0]) {
+                    if (rTopSeason[k].name == CQWS[i].ranking[j][0]) {
                         found = true;
                         rTopSeason[k].top.push(j);
                     }
                 }
-                if (!found) rTopSeason.push({name: CQW.seasons[i].ranking[j][0], top: [j]});
+                if (!found) rTopSeason.push({name: CQWS[i].ranking[j][0], top: [j]});
             }
         }
         for (var i = 0; i < rTopSeason.length; ++i) rTopSeason[i].top.sort(sortNumber);
@@ -23590,6 +23592,31 @@ function Game() {
         };
         xmlHTTP.onerror = function(e) {
             wsynking=false;
+        }
+        xmlHTTP.send();
+    }
+    var wsynking2=false;
+    this.wsync2 = function () {
+        if (wsynking2) return;
+        wsynking2=true;
+        var url = "https://cosmosquest.net/ranking.json?v="+VERSION;
+        var xmlHTTP = new XMLHttpRequest();
+        xmlHTTP.open( 'GET', url , true );
+        
+        xmlHTTP.onload = function( e ) {
+            wsynking2=false;
+            var wdata2=undefined;
+            try {
+                wdata2=JSON.parse(this.response);
+            } catch (e) {
+
+            }
+            if (wdata2!==undefined) {
+                CQWS=wdata2;
+            }
+        };
+        xmlHTTP.onerror = function(e) {
+            wsynking2=false;
         }
         xmlHTTP.send();
     }
