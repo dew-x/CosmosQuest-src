@@ -10333,7 +10333,7 @@ function doTurn (A,D,turnA,turnD,side) {
     }
 
     for (var i=0;i<D.setup.length;++i) {
-    	if (turnD.revg.nerfAtk !== 0) {
+    	if (turnD.revg !== undefined && turnD.revg.nerfAtk !== 0) {
         	var atkval = -Math.round(D.setup[i].atk*turnD.revg.nerfAtk);
             D.setup[i].atk+=atkval;
             D.setup[i].matk+=atkval;

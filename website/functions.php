@@ -696,7 +696,7 @@ function wbName($id,$isSuper=false) {
 
 function wbHitsRequired($wbId, $isSuper=false) {
     global $sql;
-	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < (SELECT MAX(bid) FROM WBD) GROUP BY bid ORDER BY bid DESC LIMIT 20");
+	$res = $sql->query("SELECT bid, COUNT(DISTINCT uid) AS p FROM WBD WHERE bid < $wbId GROUP BY bid ORDER BY bid DESC LIMIT 20");
 	$avg = 0;
 	while ($row=$res->fetch_assoc()) {
 		$avg += $row["p"];
@@ -768,6 +768,19 @@ function getAlias($u) {
 	$u = strtolower(str_replace("SUPER: ", "super ", $u));
 	$u2 = explode(":", $u);
 	return (array_key_exists($u2[0], $aliases) ? $aliases[$u2[0]] : $u2[0]).(count($u2) > 1 ? ":".$u2[1] : "");
+}
+
+function bigintval($value) {
+	$value = trim($value);
+	if (ctype_digit($value)) {
+		return $value;
+	}
+	$value = str_replace('.', '', $value);
+	$value = preg_replace("/[^0-9](.*)$/", '', $value);
+	if (ctype_digit($value)) {
+		return $value;
+	}
+	return 0;
 }
 
 function bint($num, $mode = 0) {

@@ -99,18 +99,6 @@
     $data["WB"]["dealt"]=0;
 	$data["WB"]["modifier"]=1;
     $res2 = $sql->query("SELECT WBD.bid, SUM(WBD.damage) AS dealt FROM WBD, WB, users WHERE users.kid=$kid AND WB.status=0 AND WB.id=WBD.bid AND WBD.uid=users.id GROUP BY WBD.bid");
-	function bigintval($value) {
-		$value = trim($value);
-		if (ctype_digit($value)) {
-			return $value;
-		}
-		$value = str_replace('.', '', $value);
-		$value = preg_replace("/[^0-9](.*)$/", '', $value);
-		if (ctype_digit($value)) {
-			return $value;
-		}
-		return 0;
-	}
     if ($row2 = $res2->fetch_assoc()) {
         $data["WB"]["dealt"]=bigintval($row2["dealt"]);
 		$data["WB"]["modifier"]=wbRewardModifier($row2["bid"]);
