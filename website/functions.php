@@ -774,7 +774,7 @@ function bint($num, $mode = 0) {
 		if ($num>=1e6) return floor($num/1e3).$prefixes[$mode][0];
 		else return round($num/1e3, 2).$prefixes[mode][0];
 	} else {
-		return num;
+		return $num;
 	}
 }
 ?>
