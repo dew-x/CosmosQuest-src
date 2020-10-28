@@ -304,7 +304,7 @@ function doHero($i) {
             "Super Ascended",
             "No Heroes"
         );
-    } else if ($tid<=18558) { //S11
+    } else if ($i<=18558) { //S11
         $res=array(
             "Your Heroes",
             "No Heroes",

@@ -8,7 +8,7 @@ function Game() {
     var THERO = computeTHERO(THEROtid);
     var TPROMO = computeTPROMO(THEROtid);
     var DIMENSION = getDimensions();
-    var VERSION = "v4.9.0.0";
+    var VERSION = "v4.9.0.1";
     var _this = this;
     var data = undefined;
     var production = 0;

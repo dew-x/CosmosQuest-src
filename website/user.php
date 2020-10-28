@@ -209,7 +209,7 @@ if ($uid!==-1) {
         </thead>
         <tbody>
     ';
-    $res->free();
+    $res1->free();
     $res1=$sql->query("SELECT t.tid AS rtid,b.tid,b.rid,b.aid,b.bid,b.result,
             u1.name AS an,u1.public AS ap,u2.name AS bn,u2.public AS bp,
             s1.setup AS `as`, s2.setup AS `bs`,

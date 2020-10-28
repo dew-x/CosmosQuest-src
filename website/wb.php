@@ -1,7 +1,6 @@
 <?php
 include_once("sql.php");
 include_once("functions.php");
-include_once("data.php");
 doHeader("Cosmos Quest - World Bosses");
 doMenu("wb.php");
 $offset=0;

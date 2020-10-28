@@ -48,7 +48,7 @@
     $res1->free();
     $limit=wbHitsRequired($bid, $isSuper);
     $data=array(
-        "version"=>"v4.9.0.0",
+        "version"=>"v4.9.0.1",
         "tournament"=>array(
             "pool"=>$pool
         ),
