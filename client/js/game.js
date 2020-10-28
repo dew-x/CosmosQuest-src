@@ -14980,7 +14980,7 @@ function Game() {
                 //text(ctx,"- For every kred spent, you will receive one Shadow Gem",W*0.13,H*0.25+125,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- Every time that you spend a Shadow Gem on level up a Hero, you will receive PG/AS",W*0.13,H*0.25+150,"32px"+HFONT,"white","left","middle");
                 text(ctx,"  Common Level: 1PG, Rare Level: 3PG, Legendary Level: 12PG and Ascended Level: 30AS.",W*0.13,H*0.25+175,"32px"+HFONT,"white","left","middle");
-                text(ctx,"- The event will be available till 2nd of November at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
+                text(ctx,"- The event will be available till 4th of November at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
 
                 text(ctx,"EVENT REWARDS:",W*0.5,H*0.65,"40px"+HFONT,"white","center","middle");
                 var floors = [100,250,500,1000];
@@ -23617,7 +23617,7 @@ function Game() {
     }
     this.isHalloween = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
-        return tid>=18563 && tid<=18568;
+        return tid>=18564 && tid<=18570;
     }
     this.isChristmas = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
