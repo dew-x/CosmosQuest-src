@@ -14977,7 +14977,7 @@ function Game() {
 
                 text(ctx,"- Every day you will earn 100 Shadow Gems",W*0.13,H*0.25+75,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- Every floor you beat awards 20 Shadow Gems",W*0.13,H*0.25+100,"32px"+HFONT,"white","left","middle");
-                text(ctx,"- For every kred spent, you will receive one Shadow Gem",W*0.13,H*0.25+125,"32px"+HFONT,"white","left","middle");
+                //text(ctx,"- For every kred spent, you will receive one Shadow Gem",W*0.13,H*0.25+125,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- Every time that you spend a Shadow Gem on level up a Hero, you will receive PG/AS",W*0.13,H*0.25+150,"32px"+HFONT,"white","left","middle");
                 text(ctx,"  Common Level: 1PG, Rare Level: 3PG, Legendary Level: 12PG and Ascended Level: 30AS.",W*0.13,H*0.25+175,"32px"+HFONT,"white","left","middle");
                 text(ctx,"- The event will be available till 2nd of November at 23:59 GMT",W*0.13,H*0.25+200,"32px"+HFONT,"white","left","middle");
@@ -15651,6 +15651,7 @@ function Game() {
         var bgw = W*0.85;
         var bgh = H*0.8;
         var milestonesTooltip = false;
+        var rankingTooltip = false;
 
         if (eventRanking==undefined || Date.now()-eventRanking.time>5*60*1000) this.updateLoopEventRanking("games");
 
@@ -15707,11 +15708,26 @@ function Game() {
                 text(ctx,eventRanking.player.Position+1,W*0.125,H*0.735+bgh*0.07*0.5,"32px"+FONT,"white","left","middle");
                 text(ctx,eventRanking.player.DisplayName,W*0.165,H*0.735+bgh*0.07*0.5,"32px"+FONT,"white","left","middle");
                 text(ctx,eventRanking.player.StatValue+" Favours",W*0.335,H*0.735+bgh*0.07*0.5,"32px"+FONT,"white","left","middle");
+                
+                //Ranking
+                roundedRect(ctx,W*0.5-bgw*0.475+bgw*0.45*0.5+120,H*0.265-T.height("1hng")*0.5,W*0.03,W*0.03,5,"rgba(0,0,0,0.6)");
+                T.draw(ctx,"1hng",W*0.5-bgw*0.475+bgw*0.45*0.5+120,H*0.265-T.height("1hng")*0.5);
+                var rrect=(new Rect(W*0.5-bgw*0.475+bgw*0.45*0.5+120,H*0.265-T.height("1hng")*0.5,W*0.03,W*0.03)).small();
+                if (rrect.isInside(GM.x,GM.y)) {
+                    rankingTooltip = true;
+                }
+
+                //Milestones
+                roundedRect(ctx,W*0.5-bgw*0.475+bgw*0.45*0.5+120+T.height("1hng")*1.2,H*0.265-T.height("1hng")*0.5,W*0.03,W*0.03,5,"rgba(0,0,0,0.6)");
+                T.draw(ctx,"l1qq",W*0.5-bgw*0.475+bgw*0.45*0.5+120+T.height("1hng")*1.2,H*0.265-T.height("1hng")*0.5);
+                var mlrect=(new Rect(W*0.5-bgw*0.475+bgw*0.45*0.5+120+T.height("1hng")*1.2,H*0.265-T.height("1hng")*0.5,W*0.03,W*0.03)).small();
+                if (mlrect.isInside(GM.x,GM.y)) {
+                    milestonesTooltip = true;
+                }
             }
 
             text(ctx,"Your event playtime has expired. Please wait for the end of the event.",W*0.5+bgw*0.5*0.5,H*0.5,"24px"+FONT,"white","center","middle");
             text(ctx,"*Your final results can change after the last claim on Event End",W*0.5+bgw*0.5*0.5,H*0.55,"22px"+FONT,"white","center","middle");
-
             var timerResult = mdata.city.games.end - Date.now();
             if (timerResult>86400000) text(ctx,"General Event Time Left: "+Math.ceil(timerResult/86400000)+" Days",W*0.5+bgw*0.5*0.5,H*0.65,"26px"+FONT,"white","center","middle");
             else text(ctx,"General Event Time Left: "+timer(timerResult/1000),W*0.5+bgw*0.5*0.5,H*0.65,"26px"+FONT,"white","center","middle");
@@ -15737,7 +15753,7 @@ function Game() {
             var victimized = [
                 { text: "Hunted ("+timer((mdata.city.games.victim[0]-Date.now())/1000)+") -> ", value: (25+(25*10*mdata.city.games.upgrades[0]/100))+" Stamina"},
                 { text: "Looted ("+timer((mdata.city.games.victim[1]-Date.now())/1000)+") -> ", value: "-4 Activity" },
-                { text: "Killed ("+timer((mdata.city.games.victim[2]-Date.now())/1000)+") -> ", value: (200+(200*10*mdata.city.games.upgrades[0]/100))+" Tick Value"},
+                { text: "Killed ("+timer((mdata.city.games.victim[2]-Date.now())/1000)+") -> ", value: (205+(205*10*mdata.city.games.upgrades[0]/100))+" Tick Value"},
             ];
             
             var buttonHeight = H*0.7;
@@ -15972,48 +15988,7 @@ function Game() {
                     T.draw(ctx,"1hng",W*0.5-bgw*0.475+bgw*0.45*0.5+120,H*0.265-T.height("1hng")*0.5);
                     var rrect=(new Rect(W*0.5-bgw*0.475+bgw*0.45*0.5+120,H*0.265-T.height("1hng")*0.5,W*0.03,W*0.03)).small();
                     if (rrect.isInside(GM.x,GM.y)) {
-                        T.draw(ctx,"0ko4",W*0.5-bgw*0.5-6,H*0.5-bgh*0.5-6,bgw+12,bgh+12);
-                        ctx.fillStyle="rgba(0, 0, 0, 0.7)";
-                        ctx.fillRect(W*0.5-bgw*0.5+4,H*0.5-bgh*0.5+3,bgw-8,bgh-7);
-    
-                        text(ctx,"REWARDS TABLE",W*0.5,H*0.5-bgh*0.425,"90px"+FONT,"white","center","middle");
-                        text(ctx,"Top 1 -> 36 Levels of Ascended, Legendary, Rare, Common + 750 AS + 400 PG + 750 CC + 2500 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top 2 -> 27 Levels of Ascended, Legendary, Rare, Common + 500 AS + 250 PG + 500 CC + 1500 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+30,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top 3 -> 18 Levels of Ascended, Legendary, Rare, Common + 250 AS + 150 PG + 250 CC + 1000 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+60,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top 4:10 -> 15 Levels of Ascended, Legendary, Rare, Common + 150 AS + 100 PG + 150 CC + 750 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+90,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top 10:25 -> 12 Levels of Ascended, Legendary, Rare, Common + 100 AS + 75 PG + 100 CC + 500 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+120,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top 26:50 -> 9 Levels of Ascended, Legendary, Rare, Common + 50 AS + 50 PG + 50 CC + 300 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+150,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top 51:100 -> 6 Levels of Ascended, Legendary, Rare, Common + 35 AS + 35 PG + 35 CC + 200 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+180,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top 101:500 -> 3 Levels of Ascended, Legendary, Rare, Common + 20 AS + 20 PG + 20 CC + 100 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+210,"33px"+FONT,"white","left","middle");
-                        text(ctx,"Top +500 -> 1 Levels of Ascended, Legendary, Rare, Common + 10 AS + 10 PG + 10 CC + 50 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+240,"33px"+FONT,"white","left","middle");
-                        if (Math.floor(Date.now()/(24*60*60*1000)) >= 18431 && Math.floor(Date.now()/(24*60*60*1000)) <= 18435) {
-                            text(ctx,"* The event will end on Monday at 23:59:59. This event will be active for one week every 6 weeks.",W*0.5-bgw*0.47,H*0.5-bgh*0.30+380,"33px"+FONT,"white","left","middle");
-                        } else text(ctx,"* The event will end on Sunday at 23:59:59. This event will be active for one week every 6 weeks.",W*0.5-bgw*0.47,H*0.5-bgh*0.30+380,"33px"+FONT,"white","left","middle");
-                        this.drawMonster(ctx,-2-222,W*0.2,H*0.85-35,undefined,false,1);
-                        this.drawMonster(ctx,-2-223,W*0.4,H*0.85-35,undefined,false,1);
-                        this.drawMonster(ctx,-2-224,W*0.6,H*0.85-35,undefined,false,1);
-                        this.drawMonster(ctx,-2-225,W*0.8,H*0.85-35,undefined,false,1);
-                    }
-    
-                    if (milestonesTooltip) {
-                        T.draw(ctx,"0ko4",W*0.5-bgw*0.5-6,H*0.5-bgh*0.5-6,bgw+12,bgh+12);
-                        ctx.fillStyle="rgba(0, 0, 0, 0.7)";
-                        ctx.fillRect(W*0.5-bgw*0.5+4,H*0.5-bgh*0.5+3,bgw-8,bgh-7);
-    
-                        text(ctx,"PERSONAL MILESTONES (MAX FAVOUR)",W*0.5,H*0.5-bgh*0.425,"90px"+FONT,"white","center","middle");
-                        text(ctx,"500,000 Favour - 5 Cosmic Coins / 5 Prana / 5 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30,"33px"+FONT,"white","left","middle");
-                        text(ctx,"1,500,000 Favour - 10 Cosmic Coins / 10 Prana / 10 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30+30,"33px"+FONT,"white","left","middle");
-                        text(ctx,"3,000,000 Favour - 15 Cosmic Coins / 15 Prana / 15 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30+60,"33px"+FONT,"white","left","middle");
-                        text(ctx,"6,000,000 Favour - 25 Cosmic Coins / 25 Prana / 25 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30+90,"33px"+FONT,"white","left","middle");
-                        text(ctx,"10,000,000 Favour - 35 Cosmic Coins / 35 Prana / 35 Ascension Spheres / 1x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+120,"33px"+FONT,"white","left","middle");
-                        text(ctx,"15,500,000 Favour - 50 Cosmic Coins / 50 Prana / 50 Ascension Spheres / 2x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+150,"33px"+FONT,"white","left","middle");
-                        text(ctx,"22,500,000 Favour - 75 Cosmic Coins / 75 Prana / 75 Ascension Spheres / 3x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+180,"33px"+FONT,"white","left","middle");
-                        text(ctx,"31,000,000 Favour - 100 Cosmic Coins / 100 Prana / 100 Ascension Spheres / 5x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+210,"33px"+FONT,"white","left","middle");
-                        text(ctx,"40,500,000 Favour - 150 Cosmic Coins / 125 Prana / 150 Ascension Spheres / 7x EM / 100 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+240,"33px"+FONT,"white","left","middle");
-                        text(ctx,"50,500,000 Favour - 225 Cosmic Coins / 180 Prana / 225 Ascension Spheres / 10x EM / 150 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+270,"33px"+FONT,"white","left","middle");
-                        text(ctx,"62,500,000 Favour - 350 Cosmic Coins / 250 Prana / 550 Ascension Spheres / 15x EM / 250 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+300,"33px"+FONT,"white","left","middle");
-                        text(ctx,"80,000,000 Favour - 500 Cosmic Coins / 325 Prana / 500 Ascension Spheres / 20x EM / 400 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+330,"33px"+FONT,"white","left","middle");
-                    
+                        rankingTooltip = true;
                     }
                 } else {
                     this.spinner(ctx,W*0.5-bgw*0.475*0.5-20,H*0.5,40);
@@ -16021,7 +15996,48 @@ function Game() {
             }
         }
 
-        
+        if (rankingTooltip) {
+        	T.draw(ctx,"0ko4",W*0.5-bgw*0.5-6,H*0.5-bgh*0.5-6,bgw+12,bgh+12);
+            ctx.fillStyle="rgba(0, 0, 0, 0.7)";
+            ctx.fillRect(W*0.5-bgw*0.5+4,H*0.5-bgh*0.5+3,bgw-8,bgh-7);
+
+            text(ctx,"REWARDS TABLE",W*0.5,H*0.5-bgh*0.425,"90px"+FONT,"white","center","middle");
+            text(ctx,"Top 1 -> 36 Levels of Ascended, Legendary, Rare, Common + 750 AS + 400 PG + 750 CC + 2500 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top 2 -> 27 Levels of Ascended, Legendary, Rare, Common + 500 AS + 250 PG + 500 CC + 1500 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+30,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top 3 -> 18 Levels of Ascended, Legendary, Rare, Common + 250 AS + 150 PG + 250 CC + 1000 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+60,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top 4:10 -> 15 Levels of Ascended, Legendary, Rare, Common + 150 AS + 100 PG + 150 CC + 750 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+90,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top 10:25 -> 12 Levels of Ascended, Legendary, Rare, Common + 100 AS + 75 PG + 100 CC + 500 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+120,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top 26:50 -> 9 Levels of Ascended, Legendary, Rare, Common + 50 AS + 50 PG + 50 CC + 300 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+150,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top 51:100 -> 6 Levels of Ascended, Legendary, Rare, Common + 35 AS + 35 PG + 35 CC + 200 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+180,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top 101:500 -> 3 Levels of Ascended, Legendary, Rare, Common + 20 AS + 20 PG + 20 CC + 100 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+210,"33px"+FONT,"white","left","middle");
+            text(ctx,"Top +500 -> 1 Levels of Ascended, Legendary, Rare, Common + 10 AS + 10 PG + 10 CC + 50 UM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+240,"33px"+FONT,"white","left","middle");
+            if (Math.floor(Date.now()/(24*60*60*1000)) >= 18431 && Math.floor(Date.now()/(24*60*60*1000)) <= 18435) {
+                text(ctx,"* The event will end on Monday at 23:59:59. This event will be active for one week every 6 weeks.",W*0.5-bgw*0.47,H*0.5-bgh*0.30+380,"33px"+FONT,"white","left","middle");
+            } else text(ctx,"* The event will end on Sunday at 23:59:59. This event will be active for one week every 6 weeks.",W*0.5-bgw*0.47,H*0.5-bgh*0.30+380,"33px"+FONT,"white","left","middle");
+            this.drawMonster(ctx,-2-222,W*0.2,H*0.85-35,undefined,false,1);
+            this.drawMonster(ctx,-2-223,W*0.4,H*0.85-35,undefined,false,1);
+            this.drawMonster(ctx,-2-224,W*0.6,H*0.85-35,undefined,false,1);
+            this.drawMonster(ctx,-2-225,W*0.8,H*0.85-35,undefined,false,1);
+        }
+        if (milestonesTooltip) {
+            T.draw(ctx,"0ko4",W*0.5-bgw*0.5-6,H*0.5-bgh*0.5-6,bgw+12,bgh+12);
+            ctx.fillStyle="rgba(0, 0, 0, 0.7)";
+            ctx.fillRect(W*0.5-bgw*0.5+4,H*0.5-bgh*0.5+3,bgw-8,bgh-7);
+
+            text(ctx,"PERSONAL MILESTONES (MAX FAVOUR)",W*0.5,H*0.5-bgh*0.425,"90px"+FONT,"white","center","middle");
+            text(ctx,"500,000 Favour - 5 Cosmic Coins / 5 Prana / 5 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30,"33px"+FONT,"white","left","middle");
+            text(ctx,"1,500,000 Favour - 10 Cosmic Coins / 10 Prana / 10 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30+30,"33px"+FONT,"white","left","middle");
+            text(ctx,"3,000,000 Favour - 15 Cosmic Coins / 15 Prana / 15 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30+60,"33px"+FONT,"white","left","middle");
+            text(ctx,"6,000,000 Favour - 25 Cosmic Coins / 25 Prana / 25 Ascension Spheres",W*0.5-bgw*0.47,H*0.5-bgh*0.30+90,"33px"+FONT,"white","left","middle");
+            text(ctx,"10,000,000 Favour - 35 Cosmic Coins / 35 Prana / 35 Ascension Spheres / 1x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+120,"33px"+FONT,"white","left","middle");
+            text(ctx,"15,500,000 Favour - 50 Cosmic Coins / 50 Prana / 50 Ascension Spheres / 2x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+150,"33px"+FONT,"white","left","middle");
+            text(ctx,"22,500,000 Favour - 75 Cosmic Coins / 75 Prana / 75 Ascension Spheres / 3x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+180,"33px"+FONT,"white","left","middle");
+            text(ctx,"31,000,000 Favour - 100 Cosmic Coins / 100 Prana / 100 Ascension Spheres / 5x EM",W*0.5-bgw*0.47,H*0.5-bgh*0.30+210,"33px"+FONT,"white","left","middle");
+            text(ctx,"40,500,000 Favour - 150 Cosmic Coins / 125 Prana / 150 Ascension Spheres / 7x EM / 100 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+240,"33px"+FONT,"white","left","middle");
+            text(ctx,"50,500,000 Favour - 225 Cosmic Coins / 180 Prana / 225 Ascension Spheres / 10x EM / 150 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+270,"33px"+FONT,"white","left","middle");
+            text(ctx,"62,500,000 Favour - 350 Cosmic Coins / 250 Prana / 550 Ascension Spheres / 15x EM / 250 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+300,"33px"+FONT,"white","left","middle");
+            text(ctx,"80,000,000 Favour - 500 Cosmic Coins / 325 Prana / 500 Ascension Spheres / 20x EM / 400 VIP Points",W*0.5-bgw*0.47,H*0.5-bgh*0.30+330,"33px"+FONT,"white","left","middle");
+        }
         
         // Close
         var stgcloserect=(new Rect(W*0.5+bgw*0.5-T.width("cjq4")*0.5-14,H*0.5-bgh*0.5,T.width("cjq4")*0.75,T.height("cjq4")*0.75)).small(); 
@@ -23601,7 +23617,7 @@ function Game() {
     }
     this.isHalloween = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
-        return tid>=18562 && tid<=18568;
+        return tid>=18563 && tid<=18568;
     }
     this.isChristmas = function () {
         var tid=Math.floor(Date.now()/(24*60*60*1000));
