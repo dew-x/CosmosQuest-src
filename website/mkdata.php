@@ -56,7 +56,7 @@
             "id"=>$bid,
             "uid"=>$unid,
             "name"=>$wbname,
-            "atk"=>$limit-$wbatk,
+            "atk"=>parseInt($limit-$wbatk),
             "dmg"=>$wbdmg,
             "lvl"=>$wblvl,
             "mode"=>$wbmode
