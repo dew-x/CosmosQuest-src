@@ -15066,7 +15066,7 @@ function Game() {
                 if (halllvlmode == 1) price*=10 ;
                 if (halllvlmode == 2) {
                     var maxreachable=Math.floor(ZG/price);
-                    if (maxreachable+halloweenHero[halloweenHero[halloweenLevelUp].id].level>98) maxreachable=98;
+                    if (maxreachable+halloweenHero[halloweenLevelUp].level>98) maxreachable = 99 - halloweenHero[halloweenLevelUp].level;
                     price*=maxreachable;
                 }
 
