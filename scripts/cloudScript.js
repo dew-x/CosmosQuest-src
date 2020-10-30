@@ -1379,12 +1379,12 @@ function loadData(id,kid) {
             refresh=true;
         }
         if (refresh) {
-            if (data.city.daily!==undefined && data.city.daily.v==2) maxdq=Math.min(250,maxdq);
+            if (data.city.daily!==undefined && data.city.daily.v==3) maxdq=Math.min(250,maxdq);
             var daily=doDaily(maxdq);
             data.city.daily={
                 max: maxdq,
                 lvl: maxdq,
-                v: 3,
+                v: 4,
                 setup: daily.setup,
                 timer: now*2,
                 timer2: timer,
