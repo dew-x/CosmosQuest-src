@@ -57,7 +57,7 @@
             "uid"=>$unid,
             "name"=>$wbname,
             "atk"=>intval($limit-$wbatk),
-            "dmg"=>bigintval($wbdmg),
+            "dmg"=>$wbdmg,
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),
