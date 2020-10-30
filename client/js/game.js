@@ -10663,14 +10663,15 @@ function Game() {
                             if (promPrice[i][0][HERO[promHero].rarity] == "WB") currentPrice=promPrice[i][1][HERO[promHero].rarity] - ((promPrice[i][1][HERO[promHero].rarity]/(HERO[promHero].rarity+1))*mdata.city.herowb[promHero]);
                             if (promPrice[i][0][HERO[promHero].rarity] == "WB" && mdata.city.easter.points>=125000) currentPrice=0;
 
-                            if (umrect.isInside(GM.x,GM.y) && (UM >= currentPrice) && !promsync) {
+                            var useToken = (i == 3 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) || (i == 5 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1);
+                            if (umrect.isInside(GM.x,GM.y) && !promsync && ((UM >= currentPrice) || useToken)) {
                                 T.draw(ctx,"5k8m",x+T.width(tab)*0.5-T.width("5k8m")*0.5,y+T.height(tab)*0.4-T.height("5k8m")*0.5);
                                 if (i !== 5)  this.addZone("umprom",umrect,"promo",{target:promHero,mode:true});
                                 else this.addZone("umprom",umrect,"train",{target:promHero,mode:true});
                             } else T.draw(ctx,"nskb",x+T.width(tab)*0.5-T.width("nskb")*0.5,y+T.height(tab)*0.4-T.height("nskb")*0.5);
-                            if (i == 3 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) {
+                            if (i == 3 && useToken) {
                             	text(ctx,"Free Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
-                            } else if (i == 5 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1) {
+                            } else if (i == 5 && useToken) {
                             	text(ctx,"Instant Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
                             } else {
 		                        text(ctx,"Unlock by ",x+T.width(tab)*0.225,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","left","middle");
