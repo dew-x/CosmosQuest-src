@@ -9373,7 +9373,39 @@ var promoData = [
     }
   ];
 
-
+  function level2stats (hero,level,promotion,ratio) {
+    var hp = HERO[hero].hp;
+    var atk =  HERO[hero].atk;
+    var points = level - 1;
+    if (promotion===undefined) promotion=0;
+    
+    if (ratio===undefined) ratio=1;
+    
+    if (HERO[hero].rarity==1) points *= 2*ratio+(HERO[hero].rarity+1)*(promotion>=3);
+    else if (HERO[hero].rarity==2) points *= 6*ratio+(HERO[hero].rarity+1)*(promotion>=3);
+    else if (HERO[hero].rarity==3) points *= 12*ratio+(HERO[hero].rarity+1)*(promotion>=3);
+    else if (HERO[hero].rarity==0) points *= 1*ratio+(HERO[hero].rarity+1)*(promotion>=3);
+    points = Math.floor(points);
+    if (promotion===0) {
+        return {
+            hp:hp + Math.round(points*hp/(hp+atk)),
+            atk:atk + Math.round(points*atk/(hp+atk))
+        };
+    } else {
+        var _hp = hp + Math.round(points*hp/(hp+atk));
+        var _atk = atk + Math.round(points*atk/(hp+atk));
+        if (promotion>=1) _hp+=promoData[hero].hp;
+        if (promotion>=2) _atk+=promoData[hero].atk;
+        if (promotion>=4) {
+            _hp+=promoData[hero].both;
+            _atk+=promoData[hero].both;
+        }
+        return {
+            hp : _hp,
+            atk : _atk
+        };
+    } 
+}
 var PVEHERO = Array(HERO.length).fill(1);
 
 var start=Date.now();
@@ -9624,14 +9656,14 @@ function doDaily(lvl) {
 	if(lvl < 100)
 		heroProbaModifier = 0;
 	for (var pos=0; pos<=4; ++pos) {
-		var todo=target-(bcost-MONSTERS[root[pos]].cost);
+		var todo2=target-(bcost-MONSTERS[root[pos]].cost);
 		var bestid=-1;
 		var bestlvl=0;
 		for (var i=0;i<picks.length;++i) {
 			if (placed.indexOf(picks[i])===-1) {
-				if (hval(picks[i],1)<todo) {
+				if (hval(picks[i],1)<todo2) {
 					var lvl=1;
-					while (lvl<9000 && hval(picks[i],lvl<99?lvl+1:(lvl<1000?1000:lvl+1000))<todo) {
+					while (lvl<9000 && hval(picks[i],lvl<99?lvl+1:(lvl<1000?1000:lvl+1000))<todo2) {
 						lvl=lvl<99?lvl+1:(lvl<1000?1000:lvl+1000);
 					}
 					if (bestid==-1 || hval(picks[bestid],bestlvl)<hval(picks[i],lvl)) {
@@ -9944,7 +9976,7 @@ connection.query('SELECT COUNT(*) as `wip`, MAX(tid) AS `mtid` FROM tournaments2
 		    heroes[picks[i]]=lvls[Math.max(0, Math.min(lvls.length-1, Math.floor(Math.random()*lvls.length) + 3 - 2*HERO[picks[i]].rarity))];
             promo[i]=Math.floor(Math.random()*6);
 			let stats=level2stats(picks[i], heroes[picks[i]], promo[i]);
-			res.push({score: stats.hp*stats.atk, id: picks[i], name: hnames[baseIndex-picks[i]-2]+":"+heroes[picks[i]]+"."+promo[i]});
+			res.push({score: stats.hp*stats.atk, id: picks[i], name: HERO[picks[i]].name+":"+heroes[picks[i]]+"."+promo[i]});
         }
 		res.sort((a,b) => (a.score < b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
         for (var i=50; i<res.length; ++i) {
