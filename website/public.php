@@ -280,15 +280,14 @@
                 if ($ended<time() and $ended>0) {
                     $sql->query("UPDATE followers SET `status`=1 WHERE id=$fid LIMIT 1");
                 }
-            } 
+            }
+			$res2 = $sql->query("SELECT COUNT(*) as `amount` FROM followers f, users u WHERE f.eid = $eid AND f.uid=u.id AND u.kid = $kid");
+			$row2 = $res2->fetch_assoc();
+			$amount = $row2["amount"];
             if ($res->num_rows==0 or ($ended<time() and $ended>0)) {
                 $res1 = $sql->query("SELECT id FROM users WHERE kid = $kid LIMIT 1");
                 $row1 = $res1->fetch_assoc();
                 $uid = $row1["id"];
-
-                $res2 = $sql->query("SELECT COUNT(*) as `amount` FROM followers f, users u WHERE f.eid = $eid AND f.uid=u.id AND u.kid = $kid");
-                $row2 = $res2->fetch_assoc();
-                $amount = $row2["amount"];
                 if ($amount<8) {
                     $seed = random_int(0,pow(2,32)-1);
                     $ended=0;
