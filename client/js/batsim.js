@@ -10527,6 +10527,7 @@ function doTurn (A,D,turnA,turnD,side) {
         // new turns
         if (D.setup[i].hp<=0 && initHp>0) {
         	var killUnit = true;
+        	var allowOverload = true;
             if (buff.angel[i]>0) {
             	killUnit = false;
             	var overkill = -D.setup[i].hp;
@@ -10554,6 +10555,7 @@ function doTurn (A,D,turnA,turnD,side) {
 	                    val:tmpArr2,
 	                });
                 	if (D.setup[i].hp <= 0) killUnit = true;
+                	allowOverload = false;
                 }
             }
             if (killUnit) {
@@ -10569,7 +10571,7 @@ function doTurn (A,D,turnA,turnD,side) {
                     retturn.self.buff.fheal[0]+=turnA.onkill.absorb;
                     retturn.self.buff.cond=turnA.units;
                 }
-                if (i == 0  && A.setup[0] !== undefined && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                if (i == 0  && A.setup[0] !== undefined && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload" && allowOverload) {
                 	var factor = A.setup[0].skill.value;
                 	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
                 	if (atk.flatAoe.length > i+1) atk.flatAoe[i+1] -= Math.round(D.setup[i].hp*factor);
