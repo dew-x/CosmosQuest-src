@@ -425,7 +425,8 @@ function getPG($cid,$pos) {
     if ($cid<=160) return doPG($pos);
     else if ($cid<=208) return doPG1($pos);
     else if ($cid<=18039-17347) return doPG2($pos,$cid+17347);
-    else return doPG3($pos,$cid+17347);
+    else if ($cid<=1211) return doPG3($pos,$cid+17347);
+    else return doPG3($pos,$cid+17347+4); // S12 delay
 }
 
 function doReward($pos,$total,$price) {
