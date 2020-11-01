@@ -1245,10 +1245,12 @@ function Game() {
         if (data.flash.setup == undefined) data.flash.setup=Array(18).fill(-1);
         if (Date.now()-data.saved>30*1000) {
             this.save();
-            var ctid=tournamentid==0?Math.floor(Date.now()/(24*60*60*1000)):Math.floor((Date.now()+12*60*60*1000)/(24*60*60*1000));
-            if (data.tour.tid[tournamentid] != ctid) {
-                data.tour.setup[tournamentid] = Array(30).fill(-1);
-                data.tour.tid[tournamentid] = ctid;
+            for (var i = 0; i < 2; i++) {
+	            var ctid=i==0?Math.floor(Date.now()/(24*60*60*1000)):Math.floor((Date.now()+12*60*60*1000)/(24*60*60*1000));
+	            if (data.tour.tid[i] != ctid) {
+	                data.tour.setup[i] = Array(30).fill(-1);
+	                data.tour.tid[i] = ctid;
+	            }
             }
         }
         if (Date.now()-data.wsync>5*60*1000) {
@@ -18101,7 +18103,10 @@ function Game() {
                 mode: "confirm",
                 action: function () {
                     if (scene=="city" && cityPage=="hourly") _this.clearall();
-                    else if (scene=="tournaments") data.tour.setup[tournamentid]=Array(30).fill(-1);
+                    else if (scene=="tournaments") {
+                    	data.tour.setup[tournamentid]=Array(30).fill(-1);
+                    	data.tour.tid[tournamentid] = tournamentid==0?Math.floor(Date.now()/(24*60*60*1000)):Math.floor((Date.now()+12*60*60*1000)/(24*60*60*1000));
+                    }
                     else if (scene=="pve" || scene=="pved" || inDungeon==true) data.pve[data.pveline]=[-1,-1,-1,-1,-1,-1];
                     else if (scene=="worldboss") data.wb[data.wbline]=[-1,-1,-1,-1,-1,-1];
                     else if (flashOpen) data.flash.setup=Array(18).fill(-1);
