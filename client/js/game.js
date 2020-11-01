@@ -14925,7 +14925,7 @@ function Game() {
                 text(ctx,"FIGHT",mid,H*0.65-2,"64px"+HFONT,"black","center","middle");
             } else {
                 text(ctx,"Congratulations! You have completed the Halloween Event!",mid,H*0.37,"40px"+HFONT,"white","center","middle");
-                text(ctx,"Thanks to participate on it! GaiaByte Team.",mid,H*0.37+25,"40px"+HFONT,"white","center","middle");
+                text(ctx,"Thanks for participating in it! GaiaByte Team.",mid,H*0.37+25,"40px"+HFONT,"white","center","middle");
             }
             
 
