@@ -23311,7 +23311,7 @@ function Game() {
             }
         } else if (skill.type=="amplify") {
             return {
-                short: "Amplify/nAttacks deal +"+(value*100).toFixed(0)+"% ("+(lvl/skill.target*value*100).toFixed(1)+")% of targets Health per "+(skill.target)+" levels",
+                short: "Amplify/nAttacks deal +"+(value*100).toFixed(1)+"% ("+(lvl/skill.target*value*100).toFixed(1)+")% of targets Health per "+(skill.target)+" levels",
                 long: "Amplify causes this units attacks to deal damage to the enemy unit that is equal to a percentage of the enemy units health.",
             }
         } else if (skill.type=="guardian") {
