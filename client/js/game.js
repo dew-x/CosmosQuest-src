@@ -7871,7 +7871,6 @@ function Game() {
                         }    
                         if (!swapping) {
                             var joined = this.joinedTour();
-                            if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                             if (!joined) {
                                 this.addZone("swap_"+mp,(new Rect(x,y,80,80)).small(),"swap",{target: mp,initGMx: GM.x,initGMy: GM.y,initPos: mp});
                                 this.addZone("mSetup_"+mp,(new Rect(x,y,80,80)).small(),"mSetup",{target: mp});
@@ -8143,7 +8142,6 @@ function Game() {
                     }
                     else {
                         var joined = this.joinedTour();
-                        if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                         if (!(mode=="tournaments" && joined)) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-fullHeroArray[i].pos});
                         }
@@ -8199,7 +8197,6 @@ function Game() {
                             }
                             else{
                                 var joined = this.joinedTour();
-                                if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                                 if (!(mode=="tournaments" && joined)) {
                                     this.addZone("sMon_"+i,mrect,"sMon",{target: i*1+monstersPage[typeTab]*20});
                                 } 
@@ -8405,7 +8402,6 @@ function Game() {
                     }
                     else {
                         var joined = this.joinedTour();
-                        if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                         if (!(mode=="tournaments" && joined)) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-myHeroPos[realpos]});
                         }
@@ -9244,7 +9240,6 @@ function Game() {
             }
             T.draw(ctx,"0gws",W*0.173-T.width("0gws"),H*0.10+T.height("08g3")-T.height("0gws"));
             var joined = this.joinedTour();
-            if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
             if (placeSync==undefined && any && !joined) {
                 this.addZone("clGrid",(new Rect(W*0.185-T.width("0gws"),H*0.105+T.height("08g3")-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid");
             }
@@ -22075,15 +22070,7 @@ function Game() {
     }
     this.joinedTour = function () {
         if (tournamentid==0) {
-            if (_this.isEnabled("tournaments")) {
-                var tid=Math.floor(Date.now()/(24*60*60*1000));
-                var found=false;
-                for (var i=0; i<mdata.city.tour.length; ++i) {
-                    if (mdata.city.tour[i].tid==tid) found=true;
-                }
-                return found;
-            }
-
+        	return CQW.tournament!==undefined&&CQW.tournament.joined!==undefined&&CQW.tournament.joined;
         } else if (tournamentid==1) {
             return CQW.tour!==undefined&&CQW.tour.current!==undefined&&CQW.tour.current.joined;
         }
