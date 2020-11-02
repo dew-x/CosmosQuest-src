@@ -10527,7 +10527,7 @@ function doTurn (A,D,turnA,turnD,side) {
         // new turns
         if (D.setup[i].hp<=0 && initHp>0) {
         	var killUnit = true;
-        	var allowOverload = true;
+        	var allowOverload = (finalDamage > 0);
             if (buff.angel[i]>0) {
             	killUnit = false;
             	var overkill = -D.setup[i].hp;
@@ -10542,7 +10542,7 @@ function doTurn (A,D,turnA,turnD,side) {
                     target:side?"you":"other",
                     val:tmpArr,
                 });
-                if (i == 0 && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                if (i == 0 && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload" && allowOverload) {
                 	var factor = A.setup[0].skill.value;
                 	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
                 	D.setup[i].hp -= Math.round(overkill*factor);
