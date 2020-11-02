@@ -3982,35 +3982,36 @@ function Game() {
                 temporalArray=temporalArray.sort(function(a, b) {return  a.timer - b.timer; } );
                 // Add the remaining elements to our Draw Array
                 for (var i=0;i<temporalArray.length;++i) drawArray.push(temporalArray[i]);
-                // Remove Maxed Heroes if data.showMaxed is false
-                if (!data.showMaxed) {
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99) {
-                            drawArray.splice(i,1);
-                            i=0;
+                
+                //Filter
+                if (data.showAH > 0) {
+                	if (data.showAH == 1) {//all non-maxed
+                		for (var i=0;i<drawArray.length;++i) {
+                            if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99) {
+                                drawArray.splice(i,1);
+                                i--;
+                            }
                         }
-                    }
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99) {
-                            drawArray.splice(i,1);
-                            i=0;
+                	} else if (data.showAH == 2) { //all that you need to win in auction to max
+            			var hidOfAH = [73,74,75,97,98,99,137,138,139,153,154,155,156,200,201,202,203,206,207,208,209,226,227,228,229];
+                		for (var i=0;i<drawArray.length;++i) {
+                			var leveldByAH = false;
+                			for (var j = 0; j < hidOfAH.length; j++) {
+                				if (CQW.auction[drawArray[i].id].hero == hidOfAH[j]) leveldByAH = true;
+                			}
+                            if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99 || (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0 && !leveldByAH)) {
+                                drawArray.splice(i,1);
+                                i--;
+                            }
                         }
-                    }
-                }
-                // Remove Owned Heroes if data.showOwned is false
-                if (!data.showOwned) {
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0) {
-                            drawArray.splice(i,1);
-                            i=0;
+                	} else {//only non-owned
+                		for (var i=0;i<drawArray.length;++i) {
+                            if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0) {
+                                drawArray.splice(i,1);
+                                i--;
+                            }
                         }
-                    }
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0) {
-                            drawArray.splice(i,1);
-                            i=0;
-                        }
-                    }
+                	}
                 }
                 if (drawArray.length>=1) {
                     var aucPages = Math.ceil(drawArray.length/3);
@@ -4145,9 +4146,9 @@ function Game() {
                 }
                 else text(ctx,"YOU ALREADY HAVE ALL THE HEROES AT LEVEL 99!",W*0.64,y0+H*0.5,"30px"+FONT,"white","center","middle");
 
-                this.checkBox(ctx,W*0.85,y0+H*0.089,data.showMaxed,"ahshow_0","toggle","showMaxed","Show Maxed Heroes","left","Hide/Show the Heroes you already have at 99");
-                this.checkBox(ctx,W*0.64,y0+H*0.089,data.showOwned,"ahshow_1","toggle","showOwned","Show Owned Heroes","left","Hide/Show the Heroes you already own");
-
+                text(ctx,"Show heroes:",W*0.78,y0+74,"32px"+FONT,"black","right","middle");
+                this.rectButton(ctx,W*0.79,y0+60,"ahshow","ahshow",undefined,undefined,["All","Not maxed","\"Needed\"","Not owned"],data.showAH,"Set auction filter");
+                
                 if (aucPage>=aucPages) aucPage=aucPages-1;
             }
             else {
@@ -17652,6 +17653,8 @@ function Game() {
             this.cloudSave();
         } else if (action=="cload") {
             this.cloudLoad();
+        } else if (action=="ahshow") {
+            data.showAH=extra.target;
         } else if (action=="bet") {
             electron=undefined;
             GA.getInstance().addEvent(new GA.Events.Design("Quantum:Start"));
@@ -20636,6 +20639,17 @@ function Game() {
             data.wb.push(promo_lineup);
             data.bintmode = 0;
             data.showDisabled = false;
+        }
+        if (data.version==46) {
+        	data.version=47;
+        	if (!data.showOwned) {
+        		data.showAH = 3;
+        	} else {
+        		if (data.showMaxed) data.showAH = 0;
+        		else data.showAH = 1;
+        	}
+        	delete data.showMaxed;
+        	delete data.showOwned;
         }
         if (data.heroInfo !== undefined) while (data.heroInfo.length < HERO.length) data.heroInfo.push(true);
         for (var i=0; i<EVENTS.length; ++i) {
