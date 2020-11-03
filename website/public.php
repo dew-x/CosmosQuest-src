@@ -103,11 +103,14 @@
         $data["WB"]["dealt"]=bigintval($row2["dealt"]);
 		$data["WB"]["modifier"]=wbRewardModifier($row2["bid"]);
     }
-    $res3 = $sql->query("SELECT score,public FROM users WHERE kid=$kid LIMIT 1");
+    $res3 = $sql->query("SELECT id,score,public FROM users WHERE kid=$kid LIMIT 1");
     if ($row3 = $res3->fetch_assoc()) {
         $data["tournament"]["score"]=intval($row3["score"]);
         $data["isPublic"]=$row3["public"]?true:false;
+		$res3b = $sql->query("SELECT * FROM setups WHERE uid=".intval($row3["id"])." AND tid=".intval($data["tournament"]["tid"])." LIMIT 1");
+		$data["tournament"]["joined"]=$row3b=$res3b->fetch_assoc() ? true : false;
     }
+	
     $res4 = $sql->query("SELECT A.id,A.ends,A.hero,A.bid,A.flash,U.name FROM auction A, users U WHERE A.`status`=0 AND U.id=A.holder");
     $now=time();
     $data["auction"]=array();
