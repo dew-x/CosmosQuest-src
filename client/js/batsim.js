@@ -9770,7 +9770,7 @@ function getTurnData (AL,BL) {
         },
     };
     return turn;
-} 
+}
 
 function doMask(target,value,setup) {
     var ret = [];
@@ -10547,7 +10547,6 @@ function doTurn (A,D,turnA,turnD,side) {
                 	D.setup[i].hp -= Math.round(overkill*factor);
                 	var tmpArr2 = Array(D.setup.length).fill(0);
 	                tmpArr2[i]= Math.round(overkill*factor);
-	                console.log(tmpArr2);
 	                gBattle.steps.push({
 	                    action:"EXPLO",
 	                    target:side?"you":"other",
@@ -10624,7 +10623,7 @@ function doTurn (A,D,turnA,turnD,side) {
                             retturn.other.atk.flatAoe[j]+=(skillVal*Math.min(99,D.setup[i].lvl));
                         }
                     } else if (D.setup[i].skill.type=="revgnerf") {
-                        if (retturn.self===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
+                        if (retturn.self===undefined || retturn.self.revg===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
                         retturn.self.revg.nerfAtk = skillVal;
                     }
                 }
