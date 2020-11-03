@@ -2275,8 +2275,10 @@ function Game() {
             else if (code==97 && this.isEnabled("galaxies")) this.doAction("scene",{target:"galaxies"});
             else if (code==109 && this.isEnabled("miracles")) this.doAction("scene",{target:"miracles"});
             else if (code==107 && this.isEnabled("ranking")) this.doAction("scene",{target:"ranking"});
-            else if (code==114 && this.isEnabled("roulette")) this.doAction("scene",{target:"roulette"});
-            else if (code==116 && this.isEnabled("milestones")) this.doAction("scene",{target:"milestones"});
+            else if (code==114) {
+            	if (eventCCopen && cc_data.start) this.doAction("ccrs");
+            	else if (this.isEnabled("roulette")) this.doAction("scene",{target:"roulette"});
+            } else if (code==116 && this.isEnabled("milestones")) this.doAction("scene",{target:"milestones"});
             else if (code==112) {
                 if (scene!="city" && this.isEnabled("city")) this.doAction("scene",{target:"city"});
                 else if (scene=="city" && this.isEnabled("pve")) this.doAction("scene",{target:"pve"});
@@ -12782,10 +12784,10 @@ function Game() {
             roundedRect(ctx,W*0.5-W*0.72*0.5,H*0.5-H*0.6*0.5,W*0.72,H*0.6,10,"rgba(255,255,255,0.3)");
             roundedRect(ctx,W*0.5-W*0.72*0.5+2,H*0.5-H*0.6*0.5+2,W*0.72-4,H*0.6-4,10,"rgba(0,0,0,0.5)");
             text(ctx,"Cosmic Coins Catcher",W*0.5,H*0.3,"115px"+FONT,"white","center","middle");
-            text(ctx,"Use arrow keys to catch Cosmic Coins by running over them",W*0.5,H*0.42,"42px"+FONT,"white","center","middle");
-            text(ctx,"You have 120 seconds and 3 lives to catch as many Cosmic Coins as you can",W*0.5,H*0.42+30,"42px"+FONT,"white","center","middle");
-            text(ctx,"Running in to yourself will consume a life",W*0.5,H*0.42+60,"42px"+FONT,"white","center","middle");
-            text(ctx,"You can run through walls",W*0.5,H*0.42+90,"42px"+FONT,"white","center","middle");
+            text(ctx,"Use arrow keys to catch Cosmic Coins by running over them.",W*0.5,H*0.42,"42px"+FONT,"white","center","middle");
+            text(ctx,"You have 140 seconds and 3 lives to catch as many Cosmic Coins as you can.",W*0.5,H*0.42+30,"42px"+FONT,"white","center","middle");
+            text(ctx,"Running into yourself will consume a life.",W*0.5,H*0.42+60,"42px"+FONT,"white","center","middle");
+            text(ctx,"You can run through walls. Use R to reset.",W*0.5,H*0.42+90,"42px"+FONT,"white","center","middle");
             text(ctx,"You can play as many times as you want today,",W*0.5,H*0.42+120,"42px"+FONT,"white","center","middle");
             text(ctx,"but you will only be awarded once (the best one).",W*0.5,H*0.42+150,"42px"+FONT,"white","center","middle");
             text(ctx,"Press any Arrow Key to start the game",W*0.5,H*0.75,"70px"+FONT,"white","center","middle");
