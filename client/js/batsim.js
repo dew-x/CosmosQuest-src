@@ -10547,7 +10547,6 @@ function doTurn (A,D,turnA,turnD,side) {
                 	D.setup[i].hp -= Math.round(overkill*factor);
                 	var tmpArr2 = Array(D.setup.length).fill(0);
 	                tmpArr2[i]= Math.round(overkill*factor);
-	                //console.log(tmpArr2);
 	                gBattle.steps.push({
 	                    action:"EXPLO",
 	                    target:side?"you":"other",
