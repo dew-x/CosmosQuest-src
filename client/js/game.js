@@ -4147,7 +4147,7 @@ function Game() {
                 else text(ctx,"YOU ALREADY HAVE ALL THE HEROES AT LEVEL 99!",W*0.64,y0+H*0.5,"30px"+FONT,"white","center","middle");
 
                 text(ctx,"Show heroes:",W*0.78,y0+74,"32px"+FONT,"black","right","middle");
-                this.rectButton(ctx,W*0.79,y0+60,"ahshow","ahshow",undefined,undefined,["All","Not maxed","\"Needed\"","Not owned"],data.showAH,"Set auction filter");
+                this.rectButton(ctx,W*0.79,y0+60,"ahshow","ahshow",undefined,undefined,["All","Not maxed","Relevant","Not owned"],data.showAH,"Set auction filter");
                 
                 if (aucPage>=aucPages) aucPage=aucPages-1;
             }
