@@ -22137,10 +22137,11 @@ function Game() {
         return c;
     }
     this.joinedTour = function () {
+    	if (CQW == undefined) this.wsync();
         if (tournamentid==0) {
-        	return CQW.tournament!==undefined&&CQW.tournament.joined!==undefined&&CQW.tournament.joined;
+        	return CQW!==undefined&&CQW.tournament!==undefined&&CQW.tournament.joined!==undefined&&CQW.tournament.joined;
         } else if (tournamentid==1) {
-            return CQW.tour!==undefined&&CQW.tour.current!==undefined&&CQW.tour.current.joined;
+            return CQW.tour!==undefined &&CQW.tour.current!==undefined&&CQW.tour.current.joined;
         }
         return false;
     }
