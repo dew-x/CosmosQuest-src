@@ -3158,7 +3158,7 @@ function Game() {
     var pixels = [];
     this.drawCameraD = function (ctx,zx,zy,zw,zh) {
         if (data.cdim==0) {
-            T.draw(ctx,"0a0y",zx,zy);
+            T.draw(ctx,"2xme",zx,zy);
             var pw = T.width("0cbr");
             var ph = T.height("0cbr");
             var plen=20;
@@ -3186,8 +3186,6 @@ function Game() {
                     }
                 }
             }
-            T.draw(ctx,"0gl7",zx,zy);
-            T.draw(ctx,"0huu",zx,zy);
             if (superClick!==undefined) {
                 if (superClick.phase==0) {
                     T.draw(ctx,"04o8",superClick.loc.x,superClick.loc.y);
@@ -19802,7 +19800,7 @@ function Game() {
         if (data.cdim==0) {
             superClick = {
                 loc: {
-                    x:randInt(0,T.width("0a0y")-T.width("04o8")),
+                    x:randInt(0,T.width("2xme")-T.width("04o8")),
                     y:-T.height("04o8")+randInt(-20,-1),
                     s: 0,
                     ss: randInt(5,15),
