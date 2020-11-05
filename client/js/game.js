@@ -12223,7 +12223,7 @@ function Game() {
 
                 if (CQW!==undefined && CQW.lottery!==undefined) {
                     text(ctx,"- Each lottery ticket costs 1 Ascension Sphere",W*0.5-bw*0.5+10,H*0.3,"36px"+FONT,"white","left","middle");
-                    text(ctx,"- You can buy 1000 lottery tickets; quick buy: ctrl x10, shift x100",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
+                    text(ctx,"- You can buy 1000 lottery tickets; quick buy: ctrl x10, alt x100",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
                     text(ctx,"- Prize Pool is 105% of total lottery tickets income. Currently: "+CQW.lottery.pool.toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+40,"36px"+FONT,"white","left","middle");
                     text(ctx,"* 40%/20%/10%/5%/5%/5%/5%/5%/5%/5% (10 winners).",W*0.5-bw*0.5+10,H*0.3+60,"36px"+FONT,"white","left","middle");
                     text(ctx,"* "+(0.4*CQW.lottery.pool).toFixed(0)+"/"+(0.2*CQW.lottery.pool).toFixed(0)+"/"+(0.1*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+80,"36px"+FONT,"white","left","middle");
