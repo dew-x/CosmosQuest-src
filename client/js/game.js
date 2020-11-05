@@ -9511,7 +9511,7 @@ function Game() {
                 this.addZone("web",webrect,"web");
             }
             else T.draw(ctx,"01nq",xpos-T.width("01nq")/2,H*0.77);
-            T.draw(ctx,"0h78",xpos-T.width("0jmt")/2,H*0.77);
+            text(ctx,"VISIT TOURNAMENT WEB",xpos,H*0.755+T.height("01nq")*0.70,"50px"+FONT,"white","center","middle");
 
             var ibrect = (new Rect(xpos-T.width("01nq")/2,H*0.87,T.width("01nq"),T.height("01nq"))).small();
             if (ibrect.isInside(GM.x,GM.y)) {
@@ -9519,7 +9519,7 @@ function Game() {
                 this.addZone("ibattle",ibrect,"ibattle");
             }
             else T.draw(ctx,"01nq",xpos-T.width("01nq")/2,H*0.87);
-            T.draw(ctx,"0ig7",xpos-T.width("0jmt")/2,H*0.87);
+           text(ctx,"IMPORT BATTLE",xpos,H*0.85+T.height("01nq")*0.75,"50px"+FONT,"white","center","middle");
         }
 
         T.draw(ctx,"0nww",W*0.925,H*0.196);
@@ -18320,7 +18320,7 @@ function Game() {
             else wbosspage="fight";
         } else if (action=="web") {
             // Visit web of tournaments
-            window.open("https://cosmosquest.net/");
+             window.open("https://cosmosquest.net/tournament.php");
         } else if (action=="ibattle") {
             // Import tournament battle
             document.getElementById("popup").style.display="block";
