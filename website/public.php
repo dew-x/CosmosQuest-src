@@ -379,7 +379,7 @@
         {"offer":6,"id":35,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":7,"id":48,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":8,"id":49,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
-        {"offer":50,"id":35,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
+        {"offer":9,"id":50,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":10,"id":59,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":11,"id":60,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":12,"id":61,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
