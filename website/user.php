@@ -244,7 +244,7 @@ if ($uid!==-1) {
 		for($i = 0; $i < 30; $i++) {
 			if($i % 6 == 0)
 				$g.="<tr>";
-			$g.="<td>".getAlias($setupa[$i])."&nbsp;</td>";
+			$g.="<td>".getAliasFromCode($setupa[$i])."&nbsp;</td>";
 			if($i % 6 == 5)
 				$g.="</tr>";
 		}
@@ -253,7 +253,7 @@ if ($uid!==-1) {
 		for($i = 0; $i < 30; $i++) {
 			if($i % 6 == 0)
 				$g.="<tr>";
-			$g.="<td>".getAlias($setupb[$i])."&nbsp;</td>";
+			$g.="<td>".getAliasFromCode($setupb[$i])."&nbsp;</td>";
 			if($i % 6 == 5)
 				$g.="</tr>";
 		}

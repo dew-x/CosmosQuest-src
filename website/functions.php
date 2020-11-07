@@ -755,6 +755,32 @@ function pos2perc2($pos,$total) {
     return 1/($pos*$k+$padding)/$sum;
 }
 
+$names = [
+		"ladymaligryn","antoinette","marionette","esmeralda","reaper","vermin","rumble","stench","arathon","sylnir","raelan","jalrok","sagittaria","will","merida","sully",
+		"john","valentina","alan","yuri","ignis","caeli","silex","pluvia","hetfield","lars","kirklee","rob","kingpyros","youngpyros","babypyros","egg","kilkenny","annie",
+		"mechamary","hans","yetithepostman","galla","yisus","adam","emily","adrian","casper","higgs","boson","electra","newt","retia","myrmillo","scinda","thrace","bornag",
+		"lili","achocoknight","chocoknight","sharkjellyn","mrcotton","smith","acrei","crei","catzar","cathos","tetra","awanderer","minerva","helga","ophelia","agatha",
+		"anerissa","mother","nerissa","murphy","bortles", "thumper", "daisy", "gizmo", "willow", "adybbuk", "aedana", "ajade", "amahatma",
+		"spike", "riptide", "ember", "cloud", "b-day", "thewanderer", "maunder", "transient", "cupid", "aurora", "orin", "flint", "blossom",
+		"aseethe", "seethe", "ruin", "raze", "kedari", "5-12-6", "fir", "frosty", "maraudermagnus", "corsaircharles", "buccaneerbeatrice", "raiderrose",
+		"adefile", "guy", "cliodhna", "sanqueen", "billy", "doyenne", "ahattori", "ahirate", "atakeda", "ahosokawa",
+		"aneptunius", "alordkirk", "athert", "ashygu", "dybbuk", "edana", "jade", "mahatma", "neil", "defile", "putrid", "taint",
+		"pokerface", "luxurious", "dicemaster", "kryton", "hidoka", "liucheng", "kumu-san", "masterlee", "hawking", "abavah",
+		"flynn", "leaf", "sparks", "leprechaun", "bavah", "boor", "bylar", "adagda", "hattori", "hirate", "takeda", "hosokawa", "moak", "arigr", "dorth",
+		"rua", "arshen", "aatzar", "apontus", "bubbles", "dagda", "ganah", "toth", "sexysanta", "santaclaus", "reindeer", "christmaself", "lordofchaos", "ageror",
+		"ageum", "atr0n1x", "aauri", "arei", "aathos", "aalpha", "rigr", "hallinskidi", "hama", "alvitr", "koldis", "sigrun", "neptunius", "lordkirk", "thert", "shygu",
+		"ladyodelith", "dullahan", "jackoknight", "werewolf", "gurth", "koth", "zeth", "atzar", "xarth", "oymos", "gaiabyte", "aoyuki", "spyke", "zaytus", "petry",
+		"chroma", "pontus", "erebus", "ourea", "groth", "brynhildr", "veildur", "geror", "aural", "rudean", "undine", "ignitor", "forestdruid", "geum", "aeris",
+		"aquortis", "tronix", "taurus", "kairy", "james", "nicte", "auri", "faefyr", "ailen", "rei", "geron", "jet", "athos", "nimue", "carl", "alpha", "shaman",
+		"hunter", "bewat", "pyromancer", "rokka", "valor", "nebra", "tiny", "ladyoftwilight", "",
+		"A1", "E1", "F1", "W1", "A2", "E2", "F2", "W2", "A3", "E3", "F3", "W3", "A4", "E4", "F4", "W4", "A5", "E5", "F5", "W5", "A6", "E6", "F6", "W6",
+		"A7", "E7", "F7", "W7", "A8", "E8", "F8", "W8", "A9", "E9", "F9", "W9", "A10", "E10", "F10", "W10", "A11", "E11", "F11", "W11", "A12", "E12", "F12", "W12",
+		"A13", "E13", "F13", "W13", "A14", "E14", "F14", "W14", "A15", "E15", "F15", "W15", "A16", "E16", "F16", "W16", "A17", "E17", "F17", "W17", "A18", "E18", "F18", "W18",
+		"A19", "E19", "F19", "W19", "A20", "E20", "F20", "W20", "A21", "E21", "F21", "W21", "A22", "E22", "F22", "W22", "A23", "E23", "F23", "W23", "A24", "E24", "F24", "W24",
+		"A25" ,"E25", "F25", "W25", "A26", "E26", "F26", "W26", "A27", "E27", "F27", "W27", "A28", "E28", "F28", "W28", "A29", "E29", "F29", "W29", "A30", "E30", "F30", "W30",
+		"A31", "E31", "F31", "W31", "A32", "E32", "F32", "W32", "A33", "E33", "F33", "W33", "A34", "E34", "F34", "W34", "A35", "E35", "F35", "W35", "A36", "E36", "F36", "W36",
+		"A37", "E37", "F37", "W37", "A38", "E38", "F38", "W38", "A39", "E39", "F39", "W39", "A40", "E40", "F40", "W40", "A41", "E41", "F41", "W41", "A42", "E42", "F42", "W42",
+		"A43", "E43", "F43", "W43", "A44", "E44", "F44", "W44", "A45", "E45", "F45", "W45"];
 $aliases = ['ladyoftwilight'=>'lot','pyromancer'=>'pyro','forestdruid'=>'fdruid','werewolf'=>'ww','jackoknight'=>'jack','ladyodelith'=>'odelith',
 		'lordkirk'=>'kirk','neptunius'=>'nep','hosokawa'=>'hoso','hallinskidi'=>'hall','christmaself'=>'elf','leprechaun'=>'lep',
 		'dicemaster'=>'dice','luxuriusmaximus'=>'lux','pokerface'=>'poker','alordkirk'=>'akirk','aneptunius'=>'anep','ahosokawa'=>'ahoso',
@@ -763,12 +789,19 @@ $aliases = ['ladyoftwilight'=>'lot','pyromancer'=>'pyro','forestdruid'=>'fdruid'
 		'babypyros'=>'bpyros','youngpyros'=>'ypyros','kingpyros'=>'kpyros','kirklee'=>'kyle',
 		'lordofchaos'=>'loc','motherofallkodamas'=>'moak','lord of chaos'=>'loc','mother of all kodamas'=>'moak','super lord of chaos'=>'super loc',
 		'super mother of all kodamas'=>'super moak','super kryton'=>'super kryton','super doyenne'=>'super doyenne','super bornag'=>'super bornag'];
+$baseIndex = array_search('ladyoftwilight', $names) + 2;
 
 function getAlias($u) {
 	global $aliases;
 	$u = strtolower(str_replace("SUPER: ", "super ", $u));
 	$u2 = explode(":", $u);
 	return (array_key_exists($u2[0], $aliases) ? $aliases[$u2[0]] : $u2[0]).(count($u2) > 1 ? ":".$u2[1] : "");
+}
+
+function getAliasFromCode($u) {
+	global $names, $baseIndex;
+	$unit = $names[$u + $baseIndex];
+	return getAlias($unit);
 }
 
 function bigintval($value) {
