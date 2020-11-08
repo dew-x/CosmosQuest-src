@@ -234,7 +234,6 @@ function etext(ctx,rtext,x,y,font,fill,align,valign,stroke,strokeWidth,space,dis
         } else {
             text2draw.push(ltext);
             ltext = "";
-            index++;
         }
     }
     if (ltext !== "") text2draw.push(ltext);
