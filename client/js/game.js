@@ -6273,8 +6273,9 @@ function Game() {
 
         text(ctx,"LUCY MINIONS",W*0.5,H*0.29,"80px"+FONT,"white","center","middle");
 
-        text(ctx,"- Auto-Claim Miracles",W*0.5,H*0.4,"46px"+FONT,"white","center","middle");
-        text(ctx,"- Auto-Fight Daily Quest until max. level reached",W*0.5,H*0.45,"46px"+FONT,"white","center","middle");
+        text(ctx,"- Auto-Claim Miracles",W*0.5,H*0.35,"46px"+FONT,"white","center","middle");
+        text(ctx,"- Auto-Fight Daily Quest until max. level reached",W*0.5,H*0.4,"46px"+FONT,"white","center","middle");
+        text(ctx,"(There will be seasonal resets if you reach high DQ levels)",W*0.5,H*0.44,"32px"+FONT,"white","center","middle");
         text(ctx,"- Reduce Miracle timers by 10%",W*0.5,H*0.5,"46px"+FONT,"white","center","middle");
         text(ctx,"- Reduce Daily Quest timer by 10%",W*0.5,H*0.55,"46px"+FONT,"white","center","middle");
 
@@ -13274,15 +13275,21 @@ function Game() {
                            // text(ctx,"receive: AS, Keys, Followers, PG, SD, CC, UM and Heroes.",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+350,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             //text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+400,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
-                            var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
-                            if (bprect.isInside(GM.x,GM.y)) {
-                                T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
-                                this.addZone("buypass1",bprect,"buy",{target:"SP"});
+                            if (this.getHC() >= 5000) {
+	                            var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
+	                            if (bprect.isInside(GM.x,GM.y)) {
+	                                T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+	                                this.addZone("buypass1",bprect,"buy",{target:"SP"});
+	                            } else {
+	                                T.draw(ctx,"091m",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+	                            }
+	                            T.draw(ctx,"0nfd",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+60,H*0.86-T.height("0eni")*0.5+15,T.width("0nfd")*1.7,T.height("0nfd")*1.7);
+	                            T.draw(ctx,"0mcj",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+125,H*0.86-T.height("0eni")*0.5,T.width("0mcj")*0.7,T.height("0mcj")*0.7);
                             } else {
-                                T.draw(ctx,"091m",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+                            	T.negative(ctx,"091m",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+                                T.negative(ctx,"0nfd",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+60,H*0.86-T.height("0eni")*0.5+15,T.width("0nfd")*1.7,T.height("0nfd")*1.7);
+                                T.negative(ctx,"0mcj",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+125,H*0.86-T.height("0eni")*0.5,T.width("0mcj")*0.7,T.height("0mcj")*0.7);
                             }
-                            T.draw(ctx,"0nfd",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+60,H*0.86-T.height("0eni")*0.5+15,T.width("0nfd")*1.7,T.height("0nfd")*1.7);
-                            T.draw(ctx,"0mcj",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+125,H*0.86-T.height("0eni")*0.5,T.width("0mcj")*0.7,T.height("0mcj")*0.7);
                             
                         } else if (i==2) {
                             var fSize = "27px";
