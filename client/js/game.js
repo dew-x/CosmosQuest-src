@@ -12714,9 +12714,9 @@ function Game() {
                                 if (CQW.flash.history[showFlash].players[num].name!==kongregate.services.getUsername()) {
 									var fcolor='white';
 									if(CQW.flash.history[showFlash].players[num].res!==undefined) {
-										if(CQW.flash.history[showFlash].players[num].res.w.indexOf(CQW.flash.history[showFlash].players[num].id))
-											fcolor='darkgreen';
-										else if(CQW.flash.history[showFlash].players[num].res.l.indexOf(CQW.flash.history[showFlash].players[num].id))
+										if(CQW.flash.history[showFlash].players[num].res.w.indexOf(CQW.flash.history[showFlash].players[num].id) !== -1)
+											fcolor='darkblue';
+										else if(CQW.flash.history[showFlash].players[num].res.l.indexOf(CQW.flash.history[showFlash].players[num].id) !== -1)
 											fcolor='darkred';
 									}
                                     text(ctx,(num+1)+"."+CQW.flash.history[showFlash].players[num].name,W*0.345+(W*0.11*i),H*0.19+(30*j),"28px"+FONT,fcolor,"center","middle");
