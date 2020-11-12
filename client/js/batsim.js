@@ -10435,14 +10435,14 @@ function doTurn (A,D,turnA,turnD,side) {
         // Buffs
         var tmpatk = D.setup[i].atk;
         D.setup[i].atk+=Math.floor(buff.iAtk[i]);
-        D.setup[i].hp+=Math.floor(buff.iHp[i]*buff.ratio);
-        D.setup[i].mhp+=Math.floor(buff.iHp[i]*buff.ratio);
-        if (Math.floor(buff.iHp[i]*buff.ratio)>0) {
+        D.setup[i].hp+=Math.floor(buff.iHp[i]);
+        D.setup[i].mhp+=Math.floor(buff.iHp[i]);
+        if (Math.floor(buff.iHp[i])>0) {
             gBattle.steps.push({
                 action:"HP2",
                 target:side?"you":"other",
                 pos:i,
-                value: Math.floor(buff.iHp[i]*buff.ratio)
+                value: Math.floor(buff.iHp[i])
             });
         }
         D.setup[i].atk*=buff.iAtkPerc[i];
