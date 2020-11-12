@@ -10434,7 +10434,7 @@ function doTurn (A,D,turnA,turnD,side) {
         }
         // Buffs
         var tmpatk = D.setup[i].atk;
-        D.setup[i].atk+=Math.floor(buff.iAtk[i]*buff.ratio);
+        D.setup[i].atk+=Math.floor(buff.iAtk[i]);
         D.setup[i].hp+=Math.floor(buff.iHp[i]*buff.ratio);
         D.setup[i].mhp+=Math.floor(buff.iHp[i]*buff.ratio);
         if (Math.floor(buff.iHp[i]*buff.ratio)>0) {
