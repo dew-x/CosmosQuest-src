@@ -4200,7 +4200,7 @@ function Game() {
                                     if (drawArray[item+n].start == -1 && drawArray[item+n].finish == -1) {
                                         text(ctx,"LIFETIME",ix+(W*0.2*i),H*0.354-50+(H*0.42*j),"48px "+FONT,"white","center","middle");
                                     } else {
-                                        var tidDifference = drawArray[item+n].finish - drawArray[item+n].start;
+                                        var tidDifference = drawArray[item+n].finish - tid;
                                         if (tidDifference == 0) {
                                             var midnight = new Date();
                                             midnight.setHours( 24 );
