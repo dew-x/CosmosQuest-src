@@ -10353,7 +10353,7 @@ function doTurn (A,D,turnA,turnD,side) {
             } else atk.flatAoe[i]+=atk.anarchy2;
         }
         // Damage
-        var attackDamage = atk.damageFactor[i]*Math.pow(buff.ratio,i)*atk.typeMul[i]*atk.damage;
+        var attackDamage = atk.damageFactor[i]*((i==0)?1:buff.ratio)*atk.typeMul[i]*atk.damage;
         if (D.setup[i].id>=0||(D.setup[i].id<-1&&HERO[-(2+D.setup[i].id)].rarity!==5)) attackDamage+=atk.damagePerc*D.setup[i].mhp*atk.damageFactor[i];
         if (buff.affinity[i]>0 && A.setup.length>0 && D.setup[i].type==A.setup[0].type) {
             attackDamage=Math.round(attackDamage*(1-buff.affinity[i]));
