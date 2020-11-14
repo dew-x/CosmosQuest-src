@@ -10353,7 +10353,7 @@ function doTurn (A,D,turnA,turnD,side) {
             } else atk.flatAoe[i]+=atk.anarchy2;
         }
         // Damage
-        var attackDamage = atk.damageFactor[i]*Math.pow(buff.ratio,i)*atk.typeMul[i]*atk.damage;
+        var attackDamage = atk.damageFactor[i]*((i==0)?1:buff.ratio)*atk.typeMul[i]*atk.damage;
         if (D.setup[i].id>=0||(D.setup[i].id<-1&&HERO[-(2+D.setup[i].id)].rarity!==5)) attackDamage+=atk.damagePerc*D.setup[i].mhp*atk.damageFactor[i];
         if (buff.affinity[i]>0 && A.setup.length>0 && D.setup[i].type==A.setup[0].type) {
             attackDamage=Math.round(attackDamage*(1-buff.affinity[i]));
@@ -10434,15 +10434,15 @@ function doTurn (A,D,turnA,turnD,side) {
         }
         // Buffs
         var tmpatk = D.setup[i].atk;
-        D.setup[i].atk+=Math.floor(buff.iAtk[i]*buff.ratio);
-        D.setup[i].hp+=Math.floor(buff.iHp[i]*buff.ratio);
-        D.setup[i].mhp+=Math.floor(buff.iHp[i]*buff.ratio);
-        if (Math.floor(buff.iHp[i]*buff.ratio)>0) {
+        D.setup[i].atk+=Math.floor(buff.iAtk[i]);
+        D.setup[i].hp+=Math.floor(buff.iHp[i]);
+        D.setup[i].mhp+=Math.floor(buff.iHp[i]);
+        if (Math.floor(buff.iHp[i])>0) {
             gBattle.steps.push({
                 action:"HP2",
                 target:side?"you":"other",
                 pos:i,
-                value: Math.floor(buff.iHp[i]*buff.ratio)
+                value: Math.floor(buff.iHp[i])
             });
         }
         D.setup[i].atk*=buff.iAtkPerc[i];
