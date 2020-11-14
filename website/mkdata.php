@@ -46,10 +46,11 @@
     $wbname = wbName($bid);
     if ($isSuper) $wbname="SUPER ".$wbname;
     $res1->free();
-    $limit=wbHitsRequired($bid, $isSuper);
+    $limit=wbHitsRequired($unid, $isSuper);
     $data=array(
         "version"=>"v4.9.0.1",
         "tournament"=>array(
+            "tid"=>$row["tid"],
             "pool"=>$pool
         ),
         "WB"=>array(
@@ -57,7 +58,7 @@
             "uid"=>$unid,
             "name"=>$wbname,
             "atk"=>intval($limit-$wbatk),
-            "dmg"=>intval($wbdmg),
+            "dmg"=>$wbdmg,
             "lvl"=>$wblvl,
             "mode"=>$wbmode
         ),

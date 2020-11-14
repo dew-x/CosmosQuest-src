@@ -9770,7 +9770,7 @@ function getTurnData (AL,BL) {
         },
     };
     return turn;
-} 
+}
 
 function doMask(target,value,setup) {
     var ret = [];
@@ -10333,7 +10333,7 @@ function doTurn (A,D,turnA,turnD,side) {
     }
 
     for (var i=0;i<D.setup.length;++i) {
-    	if (turnD.revg.nerfAtk !== 0) {
+    	if (turnD.revg !== undefined && turnD.revg.nerfAtk !== 0) {
         	var atkval = -Math.round(D.setup[i].atk*turnD.revg.nerfAtk);
             D.setup[i].atk+=atkval;
             D.setup[i].matk+=atkval;
@@ -10527,6 +10527,7 @@ function doTurn (A,D,turnA,turnD,side) {
         // new turns
         if (D.setup[i].hp<=0 && initHp>0) {
         	var killUnit = true;
+        	var allowOverload = (finalDamage > 0);
             if (buff.angel[i]>0) {
             	killUnit = false;
             	var overkill = -D.setup[i].hp;
@@ -10541,19 +10542,19 @@ function doTurn (A,D,turnA,turnD,side) {
                     target:side?"you":"other",
                     val:tmpArr,
                 });
-                if (i == 0 && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                if (i == 0 && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload" && allowOverload) {
                 	var factor = A.setup[0].skill.value;
                 	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
                 	D.setup[i].hp -= Math.round(overkill*factor);
                 	var tmpArr2 = Array(D.setup.length).fill(0);
 	                tmpArr2[i]= Math.round(overkill*factor);
-	                console.log(tmpArr2);
 	                gBattle.steps.push({
 	                    action:"EXPLO",
 	                    target:side?"you":"other",
 	                    val:tmpArr2,
 	                });
                 	if (D.setup[i].hp <= 0) killUnit = true;
+                	allowOverload = false;
                 }
             }
             if (killUnit) {
@@ -10569,7 +10570,7 @@ function doTurn (A,D,turnA,turnD,side) {
                     retturn.self.buff.fheal[0]+=turnA.onkill.absorb;
                     retturn.self.buff.cond=turnA.units;
                 }
-                if (i == 0  && A.setup[0] !== undefined && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload") {
+                if (i == 0  && A.setup[0] !== undefined && A.setup[0].skill !== undefined && A.setup[0].skill.type=="overload" && allowOverload) {
                 	var factor = A.setup[0].skill.value;
                 	if (A.setup[0].prom >= 5) factor += promoData[-2*1-A.setup[0].id].skill;
                 	if (atk.flatAoe.length > i+1) atk.flatAoe[i+1] -= Math.round(D.setup[i].hp*factor);
@@ -10624,7 +10625,7 @@ function doTurn (A,D,turnA,turnD,side) {
                             retturn.other.atk.flatAoe[j]+=(skillVal*Math.min(99,D.setup[i].lvl));
                         }
                     } else if (D.setup[i].skill.type=="revgnerf") {
-                        if (retturn.self===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
+                        if (retturn.self===undefined || retturn.self.revg===undefined) retturn.self=getTurnData(A.setup.length,D.setup.length);
                         retturn.self.revg.nerfAtk = skillVal;
                     }
                 }

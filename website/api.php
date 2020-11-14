@@ -903,8 +903,8 @@ if (isset($_POST["action"])) {
 					if ($isSuper) {
 						$res3=$sql->query("SELECT COUNT(*) as `atks` FROM WBD WHERE `uid`=$uid AND bid=$wbid");
 						if ($row3=$res3->fetch_assoc()) {
-							if ($row3["atks"]>=5) { // swb threshold
-								echo json_encode(array("success"=>false,"error"=>"Maximum 5 attacks"));
+							if ($row3["atks"]>=3) { // swb threshold
+								echo json_encode(array("success"=>false,"error"=>"Maximum 3 attacks for supers"));
 								exit();
 							}
 						}
@@ -1045,7 +1045,7 @@ if (isset($_POST["action"])) {
                     $sql->query("UPDATE dungeon SET `level`= $lvl WHERE eid = $eid AND `uid`='$uid' LIMIT 1");
                     $prize = json_encode(array("SD"=>2500*$wins));
                     $sql->query("INSERT INTO `prizes` (`id`, `tries`, `status`, `created`, `uid`, `prize`) VALUES (NULL, '0', '0', CURRENT_TIMESTAMP, '$uid', '$prize');");
-					--$lvl; //decrease lvl to send back the level actually fought and not the next one
+					if ($bres == 1) --$lvl; //decrease lvl to send back the level actually fought and not the next one
                 }
                 echo json_encode(array("success"=>true,"data"=>array(
                     "enemy"=> "Dungeon Floor[$lvl]",
