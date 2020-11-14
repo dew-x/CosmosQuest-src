@@ -9190,7 +9190,8 @@ function Game() {
                     text(ctx,bdata[viewbattle][keys[i]].winner+" WINS",x+zw*0.5,y+zh*0.8,fs+"px"+FONT,"white","center","middle");
                 }
             } else {
-                text(ctx,"No data",W*0.5,H*0.5,"60px"+FONT,"black","center","middle");                
+                text(ctx,"No data",W*0.5,H*0.5,"60px"+FONT,"black","center","middle");
+                this.bsync();
             }
             return;
         }
@@ -23647,8 +23648,9 @@ function Game() {
         xmlHTTP.send();
     }
     var bsynking=false;
+    var bsyncTime = Date.now() - 5*60*1000;
     this.bsync = function () {
-        if (bsynking) return;
+        if (bsynking || bsyncTime + 5*60*1000 > Date.now()) return;
         bsynking=true;
         var url = "https://cosmosquest.net/battles.php?kid="+(kid||0);
         var xmlHTTP = new XMLHttpRequest();
@@ -23661,6 +23663,7 @@ function Game() {
                 console.log(e);
             }
             bsynking=false;
+            bsyncTime = Date.now();
         };
         xmlHTTP.send();
     }
