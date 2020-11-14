@@ -23650,7 +23650,7 @@ function Game() {
     var bsynking=false;
     var bsyncTime = Date.now() - 5*60*1000;
     this.bsync = function () {
-        if (bsynking || bsyncTime + 5*6*1000 > Date.now()) return;
+        if (bsynking || bsyncTime + 5*60*1000 > Date.now()) return;
         bsynking=true;
         var url = "https://cosmosquest.net/battles.php?kid="+(kid||0);
         var xmlHTTP = new XMLHttpRequest();
