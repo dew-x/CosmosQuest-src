@@ -10688,7 +10688,7 @@ function Game() {
                             var currencies = [{icon:"0ap1",curr:"CC",scale:1.0,x:0.67,_c:CC},undefined,{icon:"0j14",curr:"PG",scale:1.0,x:0.67,_c:PG},undefined,{icon:"08y7",curr:"AS",scale:0.75,x:0.635,_c:AS}];
                             if (i == 5) {
                                 /*
-                                var p6c = [{icon:"0ap1",curr:"CC",scale:1.0,x:0.67,_c:CC},{icon:"0j14",curr:"PG",scale:1.0,x:0.67,_c:PG},{icon:"08y7",curr:"AS",scale:0.75,x:0.635,_c:AS},{icon:"sqtx",curr:"AS",scale:0.75,x:0.635}];
+                                var p6c = [{icon:"0ap1",curr:"CC",scale:1.0,x:0.67,_c:CC},{icon:"0j14",curr:"PG",scale:1.0,x:0.67,_c:PG},{icon:"08y7",curr:"AS",scale:0.75,x:0.635,_c:AS},{icon:"2gv4",curr:"AS",scale:0.75,x:0.635}];
                                 text(ctx,"Unlock by ",x+T.width(tab)*0.245,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","left","middle");
                                 text(ctx,promPrice[i][0][HERO[promHero].rarity],x+T.width(tab)*0.5,y+T.height(tab)*0.8,"38px"+FONT,"rgb(255,255,240)","left","middle");
                                 */
@@ -16430,7 +16430,7 @@ function Game() {
                                         text(ctx,step.value,pos[i].x+34*bscale,pos[i].y-116*bscale,Math.round(bscale*44)+"px"+FONT,"purple","center","middle","black",4);
                                     } else if (step.action=="EVO") {
                                         var scale=bscale*1.5;
-                                        T.draw(ctx,"v9i3",pos[i].x-T.width("v9i3")*scale/2,pos[i].y-105*bscale-T.height("v9i3")*scale/2,T.width("v9i3")*scale,T.height("v9i3")*scale);
+                                        T.draw(ctx,"o3xa",pos[i].x-T.width("o3xa")*scale/2,pos[i].y-105*bscale-T.height("o3xa")*scale/2,T.width("o3xa")*scale,T.height("o3xa")*scale);
                                         text(ctx,"x"+step.value,pos[i].x,pos[i].y-100*bscale,Math.round(bscale*44)+"px"+FONT,"black","center","middle","white",4);
                                     } else if (step.action=="RATK") {
                                         var scale=bscale*1.5;
