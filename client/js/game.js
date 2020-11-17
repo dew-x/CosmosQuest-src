@@ -13060,8 +13060,8 @@ function Game() {
         text(ctx,"VISIT OUR DISCORD",W*0.5,H*0.65,"36px"+FONT,"white","center","middle");
         
         var tid=Math.floor(Date.now()/(24*60*60*1000));
-        var events=["Lucky Followers","Cosmic Catcher","Match Pairs","Adventure","Lottery","Flash Tournaments","Extra AS","CQ Dungeon","Key Tower"];
-        text(ctx,"Tomorrows event: " + events[(tid+1)%9],W*0.5,H*0.3+290,"32px"+FONT,"gold","center","middle");
+        var events=["Cosmic Catcher","Match Pairs","Adventure","Lottery","Flash Tournaments","Extra AS","CQ Dungeon","Lucky Followers","Key Tower"];
+        text(ctx,"Tomorrows event: " + events[tid%9],W*0.5,H*0.3+290,"32px"+FONT,"gold","center","middle");
     }
     this.drawSeasonShop = function (ctx) {
         var shopData=getStarDustData();
