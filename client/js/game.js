@@ -996,8 +996,8 @@ function Game() {
     var scientistOpen=false;
     this.load = function () {
         // LILI
-        T.setCallback("e3gv",function (){lili=Date.now();});
-        //T.setMethod("0ao2","fadein");
+       // T.setCallback("8tvj",function (){lili=Date.now();});
+        T.setMethod("0ao2","fadein");
         T.setAnimation("0ao2",3);
         T.setCallback("0ao2",function (){relems[1].time=4});
 
@@ -21759,12 +21759,16 @@ function Game() {
                     var iimg=HERO[hid].img;
                     var fixx = 0;
                     var fixy = 0;
-                    if (iimg=="e3gv") {
-                        if (lili+1*10*1000>Date.now()) iimg +="_0";
-                    } else if (iimg=="hcxe") {
-                        fixx = -2*scale;
-                        fixy = 4*scale;
-                    }
+					if (iimg=="hcxe") {
+						fixx = -2*scale;
+						fixy = 4*scale;
+					}
+                   // if (iimg=="8tvj") {
+                        //if (lili+1*10*1000>Date.now()) iimg +="_0";
+                    //} else if (iimg=="hcxe") {
+                      //  fixx = -2*scale;
+                        //fixy = 4*scale;
+                    //}
                     if (available) T.draw(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     else T.negative(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     if (hid==185) {

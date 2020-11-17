@@ -6106,7 +6106,7 @@ var HERO = [
       name: "LILI",
       type: 2,
       rarity: 3,
-      img: "e3gv",
+      img: "8tvj",
       hp: 92,
       atk: 211,
       skill: {
