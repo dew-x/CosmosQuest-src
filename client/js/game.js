@@ -10492,9 +10492,11 @@ function Game() {
                     T.draw(ctx,"0dvo",btx+bw/4+38,bty+bh/3+320-T.height("0fp5")/2+12,T.width("0dvo")*0.6,T.height("0dvo")*0.6);
     
                     T.draw(ctx,"0bz6",btx+bw/4+15-T.width("0bz6"),bty+bh/3+320-T.height("0bz6")/2,T.width("0bz6")*0.9,T.height("0bz6"));
-    
-                    T.draw(ctx,"0ghk",btx+bw/4+4,bty+bh/3+320-T.height("0ghk")/2-3.8,T.width("0ghk"),T.height("0ghk")*1.5);
-                    
+					
+					// text for level hero with 750 um
+					text(ctx,"750",T.width("0bz6")+132,T.height("0bz6")+547,"46px"+FONT,"white","left","top");
+					
+					
                     if (mulLvl) {
                         T.draw(ctx,"06yd",btx+bw/4+15+60,bty+bh/3+250-T.height("0fp5")/2);
                         T.draw(ctx,"bs0n",btx+bw/4+15+60+T.width("bs0n")*0.5,bty+bh/3+250-T.height("0fp5")/2+T.height("bs0n")*0.7);
