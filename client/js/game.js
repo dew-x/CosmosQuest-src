@@ -23538,7 +23538,7 @@ function Game() {
             }
         } else if (skill.type=="antireflect") {
             return {
-                short: "Pierce/nReflects triggered by this hero are 2% ("+(value*lvl/skill.target*100).toFixed(1)+"%) less effective per "+(skill.target)+" levels",
+                short: "Pierce/nReflects triggered by this hero are "+(value*100).toFixed(0)+"% ("+(value*lvl/skill.target*100).toFixed(1)+"%) less effective per "+(skill.target)+" levels",
                 long: "This heroes damage pierces through defenses, causing opponents to be less effective at reflecting damage. Any hero that reflects damage will instead reflect at a lower effectiveness"
             }
         } else if (skill.type=="voidmaster") {
