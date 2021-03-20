@@ -1999,7 +1999,7 @@ function getDimensions(){
     var dimensionsData = [
         {
             name:"8-Bit",
-            bg:"0a0y",
+            bg:"2xme",
             pbonus: {
                 type: "popmul",
                 value: 1,

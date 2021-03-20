@@ -65,7 +65,7 @@ var SFX = [
 
 window.onload = function () {
     var v="4.9.0.0"
-    window.T1 = new Texer("img/gb.json?v="+v,SFX);
+    window.T1 = new Texer("img_web/gb.json?v="+v,SFX);
     if (localStorage.res==1) {
         window.T = new Texer("img/CosmosQuestLow.json?v="+v,SFX);
     } else if (localStorage.res==2) {

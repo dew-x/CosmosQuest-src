@@ -996,8 +996,8 @@ function Game() {
     var scientistOpen=false;
     this.load = function () {
         // LILI
-        T.setCallback("e3gv",function (){lili=Date.now();});
-        //T.setMethod("0ao2","fadein");
+       // T.setCallback("8tvj",function (){lili=Date.now();});
+        T.setMethod("0ao2","fadein");
         T.setAnimation("0ao2",3);
         T.setCallback("0ao2",function (){relems[1].time=4});
 
@@ -1245,10 +1245,12 @@ function Game() {
         if (data.flash.setup == undefined) data.flash.setup=Array(18).fill(-1);
         if (Date.now()-data.saved>30*1000) {
             this.save();
-            var ctid=tournamentid==0?Math.floor(Date.now()/(24*60*60*1000)):Math.floor((Date.now()+12*60*60*1000)/(24*60*60*1000));
-            if (data.tour.tid[tournamentid] != ctid) {
-                data.tour.setup[tournamentid] = Array(30).fill(-1);
-                data.tour.tid[tournamentid] = ctid;
+            for (var i = 0; i < 2; i++) {
+	            var ctid=i==0?Math.floor(Date.now()/(24*60*60*1000)):Math.floor((Date.now()+12*60*60*1000)/(24*60*60*1000));
+	            if (data.tour.tid[i] != ctid) {
+	                data.tour.setup[i] = Array(30).fill(-1);
+	                data.tour.tid[i] = ctid;
+	            }
             }
         }
         if (Date.now()-data.wsync>5*60*1000) {
@@ -2273,8 +2275,10 @@ function Game() {
             else if (code==97 && this.isEnabled("galaxies")) this.doAction("scene",{target:"galaxies"});
             else if (code==109 && this.isEnabled("miracles")) this.doAction("scene",{target:"miracles"});
             else if (code==107 && this.isEnabled("ranking")) this.doAction("scene",{target:"ranking"});
-            else if (code==114 && this.isEnabled("roulette")) this.doAction("scene",{target:"roulette"});
-            else if (code==116 && this.isEnabled("milestones")) this.doAction("scene",{target:"milestones"});
+            else if (code==114) {
+            	if (eventCCopen && cc_data.start) this.doAction("ccrs");
+            	else if (this.isEnabled("roulette")) this.doAction("scene",{target:"roulette"});
+            } else if (code==116 && this.isEnabled("milestones")) this.doAction("scene",{target:"milestones"});
             else if (code==112) {
                 if (scene!="city" && this.isEnabled("city")) this.doAction("scene",{target:"city"});
                 else if (scene=="city" && this.isEnabled("pve")) this.doAction("scene",{target:"pve"});
@@ -3154,7 +3158,7 @@ function Game() {
     var pixels = [];
     this.drawCameraD = function (ctx,zx,zy,zw,zh) {
         if (data.cdim==0) {
-            T.draw(ctx,"0a0y",zx,zy);
+            T.draw(ctx,"2xme",zx,zy);
             var pw = T.width("0cbr");
             var ph = T.height("0cbr");
             var plen=20;
@@ -3182,8 +3186,6 @@ function Game() {
                     }
                 }
             }
-            T.draw(ctx,"0gl7",zx,zy);
-            T.draw(ctx,"0huu",zx,zy);
             if (superClick!==undefined) {
                 if (superClick.phase==0) {
                     T.draw(ctx,"04o8",superClick.loc.x,superClick.loc.y);
@@ -3980,35 +3982,36 @@ function Game() {
                 temporalArray=temporalArray.sort(function(a, b) {return  a.timer - b.timer; } );
                 // Add the remaining elements to our Draw Array
                 for (var i=0;i<temporalArray.length;++i) drawArray.push(temporalArray[i]);
-                // Remove Maxed Heroes if data.showMaxed is false
-                if (!data.showMaxed) {
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99) {
-                            drawArray.splice(i,1);
-                            i=0;
+                
+                //Filter
+                if (data.showAH > 0) {
+                	if (data.showAH == 1) {//all non-maxed
+                		for (var i=0;i<drawArray.length;++i) {
+                            if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99) {
+                                drawArray.splice(i,1);
+                                i--;
+                            }
                         }
-                    }
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99) {
-                            drawArray.splice(i,1);
-                            i=0;
+                	} else if (data.showAH == 2) { //all that you need to win in auction to max
+            			var hidOfAH = [73,74,75,97,98,99,137,138,139,153,154,155,156,200,201,202,203,206,207,208,209,226,227,228,229];
+                		for (var i=0;i<drawArray.length;++i) {
+                			var leveldByAH = false;
+                			for (var j = 0; j < hidOfAH.length; j++) {
+                				if (CQW.auction[drawArray[i].id].hero == hidOfAH[j]) leveldByAH = true;
+                			}
+                            if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]==99 || (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0 && !leveldByAH)) {
+                                drawArray.splice(i,1);
+                                i--;
+                            }
                         }
-                    }
-                }
-                // Remove Owned Heroes if data.showOwned is false
-                if (!data.showOwned) {
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0) {
-                            drawArray.splice(i,1);
-                            i=0;
+                	} else {//only non-owned
+                		for (var i=0;i<drawArray.length;++i) {
+                            if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0) {
+                                drawArray.splice(i,1);
+                                i--;
+                            }
                         }
-                    }
-                    for (var i=0;i<drawArray.length;++i) {
-                        if (mdata.city.hero[CQW.auction[drawArray[i].id].hero]!=0) {
-                            drawArray.splice(i,1);
-                            i=0;
-                        }
-                    }
+                	}
                 }
                 if (drawArray.length>=1) {
                     var aucPages = Math.ceil(drawArray.length/3);
@@ -4143,9 +4146,9 @@ function Game() {
                 }
                 else text(ctx,"YOU ALREADY HAVE ALL THE HEROES AT LEVEL 99!",W*0.64,y0+H*0.5,"30px"+FONT,"white","center","middle");
 
-                this.checkBox(ctx,W*0.85,y0+H*0.089,data.showMaxed,"ahshow_0","toggle","showMaxed","Show Maxed Heroes","left","Hide/Show the Heroes you already have at 99");
-                this.checkBox(ctx,W*0.64,y0+H*0.089,data.showOwned,"ahshow_1","toggle","showOwned","Show Owned Heroes","left","Hide/Show the Heroes you already own");
-
+                text(ctx,"Show heroes:",W*0.78,y0+74,"32px"+FONT,"black","right","middle");
+                this.rectButton(ctx,W*0.79,y0+60,"ahshow","ahshow",undefined,undefined,["All","Not maxed","Relevant","Not owned"],data.showAH,"Set auction filter");
+                
                 if (aucPage>=aucPages) aucPage=aucPages-1;
             }
             else {
@@ -4197,7 +4200,7 @@ function Game() {
                                     if (drawArray[item+n].start == -1 && drawArray[item+n].finish == -1) {
                                         text(ctx,"LIFETIME",ix+(W*0.2*i),H*0.354-50+(H*0.42*j),"48px "+FONT,"white","center","middle");
                                     } else {
-                                        var tidDifference = drawArray[item+n].finish - drawArray[item+n].start;
+                                        var tidDifference = drawArray[item+n].finish - tid;
                                         if (tidDifference == 0) {
                                             var midnight = new Date();
                                             midnight.setHours( 24 );
@@ -6270,8 +6273,9 @@ function Game() {
 
         text(ctx,"LUCY MINIONS",W*0.5,H*0.29,"80px"+FONT,"white","center","middle");
 
-        text(ctx,"- Auto-Claim Miracles",W*0.5,H*0.4,"46px"+FONT,"white","center","middle");
-        text(ctx,"- Auto-Fight Daily Quest until max. level reached",W*0.5,H*0.45,"46px"+FONT,"white","center","middle");
+        text(ctx,"- Auto-Claim Miracles",W*0.5,H*0.35,"46px"+FONT,"white","center","middle");
+        text(ctx,"- Auto-Fight Daily Quest until max. level reached",W*0.5,H*0.4,"46px"+FONT,"white","center","middle");
+        text(ctx,"(There will be seasonal resets if you reach high DQ levels)",W*0.5,H*0.44,"32px"+FONT,"white","center","middle");
         text(ctx,"- Reduce Miracle timers by 10%",W*0.5,H*0.5,"46px"+FONT,"white","center","middle");
         text(ctx,"- Reduce Daily Quest timer by 10%",W*0.5,H*0.55,"46px"+FONT,"white","center","middle");
 
@@ -7886,7 +7890,6 @@ function Game() {
                         }    
                         if (!swapping) {
                             var joined = this.joinedTour();
-                            if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                             if (!joined) {
                                 this.addZone("swap_"+mp,(new Rect(x,y,80,80)).small(),"swap",{target: mp,initGMx: GM.x,initGMy: GM.y,initPos: mp});
                                 this.addZone("mSetup_"+mp,(new Rect(x,y,80,80)).small(),"mSetup",{target: mp});
@@ -8158,7 +8161,6 @@ function Game() {
                     }
                     else {
                         var joined = this.joinedTour();
-                        if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                         if (!(mode=="tournaments" && joined)) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-fullHeroArray[i].pos});
                         }
@@ -8214,7 +8216,6 @@ function Game() {
                             }
                             else{
                                 var joined = this.joinedTour();
-                                if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                                 if (!(mode=="tournaments" && joined)) {
                                     this.addZone("sMon_"+i,mrect,"sMon",{target: i*1+monstersPage[typeTab]*20});
                                 } 
@@ -8420,7 +8421,6 @@ function Game() {
                     }
                     else {
                         var joined = this.joinedTour();
-                        if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
                         if (!(mode=="tournaments" && joined)) {
                             this.addZone("sMon_"+i,mrect,"sMon",{target: inithero-myHeroPos[realpos]});
                         }
@@ -9190,7 +9190,8 @@ function Game() {
                     text(ctx,bdata[viewbattle][keys[i]].winner+" WINS",x+zw*0.5,y+zh*0.8,fs+"px"+FONT,"white","center","middle");
                 }
             } else {
-                text(ctx,"No data",W*0.5,H*0.5,"60px"+FONT,"black","center","middle");                
+                text(ctx,"No data",W*0.5,H*0.5,"60px"+FONT,"black","center","middle");
+                this.bsync();
             }
             return;
         }
@@ -9246,7 +9247,6 @@ function Game() {
             }
             T.draw(ctx,"0gws",W*0.173-T.width("0gws"),H*0.10+T.height("08g3")-T.height("0gws"));
             var joined = this.joinedTour();
-            if (CQW !== undefined && CQW.tour !== undefined && CQW.tour.current !== undefined && tournamentid==1) joined = CQW.tour.current.joined;
             if (placeSync==undefined && any && !joined) {
                 this.addZone("clGrid",(new Rect(W*0.185-T.width("0gws"),H*0.105+T.height("08g3")-T.height("0gws"),T.width("0gws")*0.85,T.height("0gws")*0.85)).small(),"clGrid");
             }
@@ -9511,7 +9511,7 @@ function Game() {
                 this.addZone("web",webrect,"web");
             }
             else T.draw(ctx,"01nq",xpos-T.width("01nq")/2,H*0.77);
-            T.draw(ctx,"0h78",xpos-T.width("0jmt")/2,H*0.77);
+            text(ctx,"VISIT TOURNAMENT WEB",xpos,H*0.755+T.height("01nq")*0.70,"50px"+FONT,"white","center","middle");
 
             var ibrect = (new Rect(xpos-T.width("01nq")/2,H*0.87,T.width("01nq"),T.height("01nq"))).small();
             if (ibrect.isInside(GM.x,GM.y)) {
@@ -9519,7 +9519,7 @@ function Game() {
                 this.addZone("ibattle",ibrect,"ibattle");
             }
             else T.draw(ctx,"01nq",xpos-T.width("01nq")/2,H*0.87);
-            T.draw(ctx,"0ig7",xpos-T.width("0jmt")/2,H*0.87);
+           text(ctx,"IMPORT BATTLE",xpos,H*0.85+T.height("01nq")*0.75,"50px"+FONT,"white","center","middle");
         }
 
         T.draw(ctx,"0nww",W*0.925,H*0.196);
@@ -10492,9 +10492,11 @@ function Game() {
                     T.draw(ctx,"0dvo",btx+bw/4+38,bty+bh/3+320-T.height("0fp5")/2+12,T.width("0dvo")*0.6,T.height("0dvo")*0.6);
     
                     T.draw(ctx,"0bz6",btx+bw/4+15-T.width("0bz6"),bty+bh/3+320-T.height("0bz6")/2,T.width("0bz6")*0.9,T.height("0bz6"));
-    
-                    T.draw(ctx,"0ghk",btx+bw/4+4,bty+bh/3+320-T.height("0ghk")/2-3.8,T.width("0ghk"),T.height("0ghk")*1.5);
-                    
+					
+					// text for level hero with 750 um
+					text(ctx,"750",T.width("0bz6")+132,T.height("0bz6")+547,"46px"+FONT,"white","left","top");
+					
+					
                     if (mulLvl) {
                         T.draw(ctx,"06yd",btx+bw/4+15+60,bty+bh/3+250-T.height("0fp5")/2);
                         T.draw(ctx,"bs0n",btx+bw/4+15+60+T.width("bs0n")*0.5,bty+bh/3+250-T.height("0fp5")/2+T.height("bs0n")*0.7);
@@ -10663,14 +10665,15 @@ function Game() {
                             if (promPrice[i][0][HERO[promHero].rarity] == "WB") currentPrice=promPrice[i][1][HERO[promHero].rarity] - ((promPrice[i][1][HERO[promHero].rarity]/(HERO[promHero].rarity+1))*mdata.city.herowb[promHero]);
                             if (promPrice[i][0][HERO[promHero].rarity] == "WB" && mdata.city.easter.points>=125000) currentPrice=0;
 
-                            if (umrect.isInside(GM.x,GM.y) && (UM >= currentPrice) && !promsync) {
+                            var useToken = (i == 3 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) || (i == 5 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1);
+                            if (umrect.isInside(GM.x,GM.y) && !promsync && ((UM >= currentPrice) || useToken)) {
                                 T.draw(ctx,"5k8m",x+T.width(tab)*0.5-T.width("5k8m")*0.5,y+T.height(tab)*0.4-T.height("5k8m")*0.5);
                                 if (i !== 5)  this.addZone("umprom",umrect,"promo",{target:promHero,mode:true});
                                 else this.addZone("umprom",umrect,"train",{target:promHero,mode:true});
                             } else T.draw(ctx,"nskb",x+T.width(tab)*0.5-T.width("nskb")*0.5,y+T.height(tab)*0.4-T.height("nskb")*0.5);
-                            if (i == 3 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo4 !== undefined && mdata.city.promotokens.promo4>=1) {
+                            if (i == 3 && useToken) {
                             	text(ctx,"Free Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
-                            } else if (i == 5 && mdata.city.promotokens !== undefined && mdata.city.promotokens.promo6 !== undefined && mdata.city.promotokens.promo6>=1) {
+                            } else if (i == 5 && useToken) {
                             	text(ctx,"Instant Promo",x+T.width(tab)*0.5,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","center","middle");
                             } else {
 		                        text(ctx,"Unlock by ",x+T.width(tab)*0.225,y+T.height(tab)*0.4,"28px"+FONT,"rgb(255,255,240)","left","middle");
@@ -10687,7 +10690,7 @@ function Game() {
                             var currencies = [{icon:"0ap1",curr:"CC",scale:1.0,x:0.67,_c:CC},undefined,{icon:"0j14",curr:"PG",scale:1.0,x:0.67,_c:PG},undefined,{icon:"08y7",curr:"AS",scale:0.75,x:0.635,_c:AS}];
                             if (i == 5) {
                                 /*
-                                var p6c = [{icon:"0ap1",curr:"CC",scale:1.0,x:0.67,_c:CC},{icon:"0j14",curr:"PG",scale:1.0,x:0.67,_c:PG},{icon:"08y7",curr:"AS",scale:0.75,x:0.635,_c:AS},{icon:"sqtx",curr:"AS",scale:0.75,x:0.635}];
+                                var p6c = [{icon:"0ap1",curr:"CC",scale:1.0,x:0.67,_c:CC},{icon:"0j14",curr:"PG",scale:1.0,x:0.67,_c:PG},{icon:"08y7",curr:"AS",scale:0.75,x:0.635,_c:AS},{icon:"2gv4",curr:"AS",scale:0.75,x:0.635}];
                                 text(ctx,"Unlock by ",x+T.width(tab)*0.245,y+T.height(tab)*0.8,"28px"+FONT,"rgb(255,255,240)","left","middle");
                                 text(ctx,promPrice[i][0][HERO[promHero].rarity],x+T.width(tab)*0.5,y+T.height(tab)*0.8,"38px"+FONT,"rgb(255,255,240)","left","middle");
                                 */
@@ -12222,7 +12225,7 @@ function Game() {
 
                 if (CQW!==undefined && CQW.lottery!==undefined) {
                     text(ctx,"- Each lottery ticket costs 1 Ascension Sphere",W*0.5-bw*0.5+10,H*0.3,"36px"+FONT,"white","left","middle");
-                    text(ctx,"- You can buy 1000 lottery tickets; quick buy: ctrl x10, shift x100",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
+                    text(ctx,"- You can buy 1000 lottery tickets; quick buy: ctrl x10, alt x100",W*0.5-bw*0.5+10,H*0.3+20,"36px"+FONT,"white","left","middle");
                     text(ctx,"- Prize Pool is 105% of total lottery tickets income. Currently: "+CQW.lottery.pool.toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+40,"36px"+FONT,"white","left","middle");
                     text(ctx,"* 40%/20%/10%/5%/5%/5%/5%/5%/5%/5% (10 winners).",W*0.5-bw*0.5+10,H*0.3+60,"36px"+FONT,"white","left","middle");
                     text(ctx,"* "+(0.4*CQW.lottery.pool).toFixed(0)+"/"+(0.2*CQW.lottery.pool).toFixed(0)+"/"+(0.1*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+"/"+(0.05*CQW.lottery.pool).toFixed(0)+" AS",W*0.5-bw*0.5+10,H*0.3+80,"36px"+FONT,"white","left","middle");
@@ -12713,7 +12716,14 @@ function Game() {
                         for (var j=0;j<13;++j) {
                             if (num<64) {
                                 if (CQW.flash.history[showFlash].players[num].name!==kongregate.services.getUsername()) {
-                                    text(ctx,(num+1)+"."+CQW.flash.history[showFlash].players[num].name,W*0.345+(W*0.11*i),H*0.19+(30*j),"28px"+FONT,"white","center","middle");
+									var fcolor='white';
+									if(CQW.flash.history[showFlash].players[num].res!==undefined) {
+										if(CQW.flash.history[showFlash].players[num].res.w.indexOf(CQW.flash.history[showFlash].players[num].id) !== -1)
+											fcolor='darkblue';
+										else if(CQW.flash.history[showFlash].players[num].res.l.indexOf(CQW.flash.history[showFlash].players[num].id) !== -1)
+											fcolor='darkred';
+									}
+                                    text(ctx,(num+1)+"."+CQW.flash.history[showFlash].players[num].name,W*0.345+(W*0.11*i),H*0.19+(30*j),"28px"+FONT,fcolor,"center","middle");
                                 }
                                 else {
                                     text(ctx,(num+1)+"."+CQW.flash.history[showFlash].players[num].name,W*0.345+(W*0.11*i),H*0.19+(30*j),"28px"+FONT,"black","center","middle");
@@ -12779,10 +12789,10 @@ function Game() {
             roundedRect(ctx,W*0.5-W*0.72*0.5,H*0.5-H*0.6*0.5,W*0.72,H*0.6,10,"rgba(255,255,255,0.3)");
             roundedRect(ctx,W*0.5-W*0.72*0.5+2,H*0.5-H*0.6*0.5+2,W*0.72-4,H*0.6-4,10,"rgba(0,0,0,0.5)");
             text(ctx,"Cosmic Coins Catcher",W*0.5,H*0.3,"115px"+FONT,"white","center","middle");
-            text(ctx,"Use arrow keys to catch Cosmic Coins by running over them",W*0.5,H*0.42,"42px"+FONT,"white","center","middle");
-            text(ctx,"You have 120 seconds and 3 lives to catch as many Cosmic Coins as you can",W*0.5,H*0.42+30,"42px"+FONT,"white","center","middle");
-            text(ctx,"Running in to yourself will consume a life",W*0.5,H*0.42+60,"42px"+FONT,"white","center","middle");
-            text(ctx,"You can run through walls",W*0.5,H*0.42+90,"42px"+FONT,"white","center","middle");
+            text(ctx,"Use arrow keys to catch Cosmic Coins by running over them.",W*0.5,H*0.42,"42px"+FONT,"white","center","middle");
+            text(ctx,"You have 140 seconds and 3 lives to catch as many Cosmic Coins as you can.",W*0.5,H*0.42+30,"42px"+FONT,"white","center","middle");
+            text(ctx,"Running into yourself will consume a life.",W*0.5,H*0.42+60,"42px"+FONT,"white","center","middle");
+            text(ctx,"You can run through walls. Use R to reset.",W*0.5,H*0.42+90,"42px"+FONT,"white","center","middle");
             text(ctx,"You can play as many times as you want today,",W*0.5,H*0.42+120,"42px"+FONT,"white","center","middle");
             text(ctx,"but you will only be awarded once (the best one).",W*0.5,H*0.42+150,"42px"+FONT,"white","center","middle");
             text(ctx,"Press any Arrow Key to start the game",W*0.5,H*0.75,"70px"+FONT,"white","center","middle");
@@ -13042,12 +13052,16 @@ function Game() {
         text(ctx,"",W*0.5-bw*0.5+20,H*0.3+160,"36px"+FONT,"white","left","middle");
         
         //Discord link
-        var grect=(new Rect(W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2,T.width("091m"),T.height("091m"))).small();
+        var grect=(new Rect(W*0.5-T.width("091m")/2,H*0.65-T.height("091m")/2,T.width("091m"),T.height("091m"))).small();
         if (grect.isInside(GM.x,GM.y)){
-            T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
+            T.draw(ctx,"0eni",W*0.5-T.width("091m")/2,H*0.65-T.height("091m")/2);
             this.addZone("cqlink_0",grect,"cqlink");
-        } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.7-T.height("091m")/2);
-        text(ctx,"VISIT OUR DISCORD",W*0.5,H*0.7,"36px"+FONT,"white","center","middle");
+        } else T.draw(ctx,"091m",W*0.5-T.width("091m")/2,H*0.65-T.height("091m")/2);
+        text(ctx,"VISIT OUR DISCORD",W*0.5,H*0.65,"36px"+FONT,"white","center","middle");
+        
+        var tid=Math.floor(Date.now()/(24*60*60*1000));
+        var events=["Cosmic Catcher","Match Pairs","Adventure","Lottery","Flash Tournaments","Extra AS","CQ Dungeon","Lucky Followers","Key Tower"];
+        text(ctx,"Tomorrows event: " + events[tid%9],W*0.5,H*0.3+290,"32px"+FONT,"gold","center","middle");
     }
     this.drawSeasonShop = function (ctx) {
         var shopData=getStarDustData();
@@ -13271,15 +13285,21 @@ function Game() {
                            // text(ctx,"receive: AS, Keys, Followers, PG, SD, CC, UM and Heroes.",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+350,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             //text(ctx,"*This Pass expires when the Season ends",W*0.17+(i*W*0.33),H*0.55-(bgh/2)+400,fSize+FONT,"rgba(255,255,255,1)","center","middle");
                             this.drawMonster(ctx,-215,W*0.17+(i*W*0.33),H*0.8,undefined,undefined,2);
-                            var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
-                            if (bprect.isInside(GM.x,GM.y)) {
-                                T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
-                                this.addZone("buypass1",bprect,"buy",{target:"SP"});
+                            if (this.getHC() >= 5000) {
+	                            var bprect=(new Rect(W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"))).small();
+	                            if (bprect.isInside(GM.x,GM.y)) {
+	                                T.draw(ctx,"0eni",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+	                                this.addZone("buypass1",bprect,"buy",{target:"SP"});
+	                            } else {
+	                                T.draw(ctx,"091m",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+	                            }
+	                            T.draw(ctx,"0nfd",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+60,H*0.86-T.height("0eni")*0.5+15,T.width("0nfd")*1.7,T.height("0nfd")*1.7);
+	                            T.draw(ctx,"0mcj",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+125,H*0.86-T.height("0eni")*0.5,T.width("0mcj")*0.7,T.height("0mcj")*0.7);
                             } else {
-                                T.draw(ctx,"091m",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+                            	T.negative(ctx,"091m",W*0.17+(i*W*0.33)-T.width("0eni")*0.5,H*0.86-T.height("0eni")*0.5,T.width("0eni"),T.height("0eni"));
+                                T.negative(ctx,"0nfd",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+60,H*0.86-T.height("0eni")*0.5+15,T.width("0nfd")*1.7,T.height("0nfd")*1.7);
+                                T.negative(ctx,"0mcj",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+125,H*0.86-T.height("0eni")*0.5,T.width("0mcj")*0.7,T.height("0mcj")*0.7);
                             }
-                            T.draw(ctx,"0nfd",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+60,H*0.86-T.height("0eni")*0.5+15,T.width("0nfd")*1.7,T.height("0nfd")*1.7);
-                            T.draw(ctx,"0mcj",W*0.17+(i*W*0.33)-T.width("0eni")*0.5+125,H*0.86-T.height("0eni")*0.5,T.width("0mcj")*0.7,T.height("0mcj")*0.7);
                             
                         } else if (i==2) {
                             var fSize = "27px";
@@ -14924,7 +14944,7 @@ function Game() {
                 text(ctx,"FIGHT",mid,H*0.65-2,"64px"+HFONT,"black","center","middle");
             } else {
                 text(ctx,"Congratulations! You have completed the Halloween Event!",mid,H*0.37,"40px"+HFONT,"white","center","middle");
-                text(ctx,"Thanks to participate on it! GaiaByte Team.",mid,H*0.37+25,"40px"+HFONT,"white","center","middle");
+                text(ctx,"Thanks for participating in it! GaiaByte Team.",mid,H*0.37+25,"40px"+HFONT,"white","center","middle");
             }
             
 
@@ -15066,7 +15086,7 @@ function Game() {
                 if (halllvlmode == 1) price*=10 ;
                 if (halllvlmode == 2) {
                     var maxreachable=Math.floor(ZG/price);
-                    if (maxreachable+halloweenHero[halloweenHero[halloweenLevelUp].id].level>98) maxreachable=98;
+                    if (maxreachable+halloweenHero[halloweenLevelUp].level>98) maxreachable = 99 - halloweenHero[halloweenLevelUp].level;
                     price*=maxreachable;
                 }
 
@@ -16412,7 +16432,7 @@ function Game() {
                                         text(ctx,step.value,pos[i].x+34*bscale,pos[i].y-116*bscale,Math.round(bscale*44)+"px"+FONT,"purple","center","middle","black",4);
                                     } else if (step.action=="EVO") {
                                         var scale=bscale*1.5;
-                                        T.draw(ctx,"v9i3",pos[i].x-T.width("v9i3")*scale/2,pos[i].y-105*bscale-T.height("v9i3")*scale/2,T.width("v9i3")*scale,T.height("v9i3")*scale);
+                                        T.draw(ctx,"o3xa",pos[i].x-T.width("o3xa")*scale/2,pos[i].y-105*bscale-T.height("o3xa")*scale/2,T.width("o3xa")*scale,T.height("o3xa")*scale);
                                         text(ctx,"x"+step.value,pos[i].x,pos[i].y-100*bscale,Math.round(bscale*44)+"px"+FONT,"black","center","middle","white",4);
                                     } else if (step.action=="RATK") {
                                         var scale=bscale*1.5;
@@ -17649,6 +17669,8 @@ function Game() {
             this.cloudSave();
         } else if (action=="cload") {
             this.cloudLoad();
+        } else if (action=="ahshow") {
+            data.showAH=extra.target;
         } else if (action=="bet") {
             electron=undefined;
             GA.getInstance().addEvent(new GA.Events.Design("Quantum:Start"));
@@ -18100,7 +18122,10 @@ function Game() {
                 mode: "confirm",
                 action: function () {
                     if (scene=="city" && cityPage=="hourly") _this.clearall();
-                    else if (scene=="tournaments") data.tour.setup[tournamentid]=Array(30).fill(-1);
+                    else if (scene=="tournaments") {
+                    	data.tour.setup[tournamentid]=Array(30).fill(-1);
+                    	data.tour.tid[tournamentid] = tournamentid==0?Math.floor(Date.now()/(24*60*60*1000)):Math.floor((Date.now()+12*60*60*1000)/(24*60*60*1000));
+                    }
                     else if (scene=="pve" || scene=="pved" || inDungeon==true) data.pve[data.pveline]=[-1,-1,-1,-1,-1,-1];
                     else if (scene=="worldboss") data.wb[data.wbline]=[-1,-1,-1,-1,-1,-1];
                     else if (flashOpen) data.flash.setup=Array(18).fill(-1);
@@ -18310,7 +18335,7 @@ function Game() {
             else wbosspage="fight";
         } else if (action=="web") {
             // Visit web of tournaments
-            window.open("https://cosmosquest.net/");
+             window.open("https://cosmosquest.net/tournament.php");
         } else if (action=="ibattle") {
             // Import tournament battle
             document.getElementById("popup").style.display="block";
@@ -19792,7 +19817,7 @@ function Game() {
         if (data.cdim==0) {
             superClick = {
                 loc: {
-                    x:randInt(0,T.width("0a0y")-T.width("04o8")),
+                    x:randInt(0,T.width("2xme")-T.width("04o8")),
                     y:-T.height("04o8")+randInt(-20,-1),
                     s: 0,
                     ss: randInt(5,15),
@@ -20630,6 +20655,17 @@ function Game() {
             data.wb.push(promo_lineup);
             data.bintmode = 0;
             data.showDisabled = false;
+        }
+        if (data.version==46) {
+        	data.version=47;
+        	if (!data.showOwned) {
+        		data.showAH = 3;
+        	} else {
+        		if (data.showMaxed) data.showAH = 0;
+        		else data.showAH = 1;
+        	}
+        	delete data.showMaxed;
+        	delete data.showOwned;
         }
         if (data.heroInfo !== undefined) while (data.heroInfo.length < HERO.length) data.heroInfo.push(true);
         for (var i=0; i<EVENTS.length; ++i) {
@@ -21725,12 +21761,16 @@ function Game() {
                     var iimg=HERO[hid].img;
                     var fixx = 0;
                     var fixy = 0;
-                    if (iimg=="e3gv") {
-                        if (lili+1*10*1000>Date.now()) iimg +="_0";
-                    } else if (iimg=="hcxe") {
-                        fixx = -2*scale;
-                        fixy = 4*scale;
-                    }
+					if (iimg=="hcxe") {
+						fixx = -2*scale;
+						fixy = 4*scale;
+					}
+                   // if (iimg=="8tvj") {
+                        //if (lili+1*10*1000>Date.now()) iimg +="_0";
+                    //} else if (iimg=="hcxe") {
+                      //  fixx = -2*scale;
+                        //fixy = 4*scale;
+                    //}
                     if (available) T.draw(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     else T.negative(ctx,iimg,-T.width(HERO[hid].img)*scale/2+fixx,-(T.height(HERO[hid].img)+15 )*scale+fixy,T.width(HERO[hid].img)*scale,T.height(HERO[hid].img)*scale);
                     if (hid==185) {
@@ -22116,18 +22156,11 @@ function Game() {
         return c;
     }
     this.joinedTour = function () {
+    	if (CQW == undefined) this.wsync();
         if (tournamentid==0) {
-            if (_this.isEnabled("tournaments")) {
-                var tid=Math.floor(Date.now()/(24*60*60*1000));
-                var found=false;
-                for (var i=0; i<mdata.city.tour.length; ++i) {
-                    if (mdata.city.tour[i].tid==tid) found=true;
-                }
-                return found;
-            }
-
+        	if (_this.isEnabled("tournaments")) return CQW!==undefined&&CQW.tournament!==undefined&&CQW.tournament.joined!==undefined&&CQW.tournament.joined;
         } else if (tournamentid==1) {
-            return CQW.tour!==undefined&&CQW.tour.current!==undefined&&CQW.tour.current.joined;
+            return CQW.tour!==undefined &&CQW.tour.current!==undefined&&CQW.tour.current.joined;
         }
         return false;
     }
@@ -23310,7 +23343,7 @@ function Game() {
             }
         } else if (skill.type=="amplify") {
             return {
-                short: "Amplify/nAttacks deal +"+(value*100).toFixed(0)+"% ("+(lvl/skill.target*value*100).toFixed(1)+")% of targets Health per "+(skill.target)+" levels",
+                short: "Amplify/nAttacks deal +"+(value*100).toFixed(1)+"% ("+(lvl/skill.target*value*100).toFixed(1)+")% of targets Health per "+(skill.target)+" levels",
                 long: "Amplify causes this units attacks to deal damage to the enemy unit that is equal to a percentage of the enemy units health.",
             }
         } else if (skill.type=="guardian") {
@@ -23505,7 +23538,7 @@ function Game() {
             }
         } else if (skill.type=="antireflect") {
             return {
-                short: "Pierce/nReflects triggered by this hero are 2% ("+(value*lvl/skill.target*100).toFixed(1)+"%) less effective per "+(skill.target)+" levels",
+                short: "Pierce/nReflects triggered by this hero are "+(value*100).toFixed(0)+"% ("+(value*lvl/skill.target*100).toFixed(1)+"%) less effective per "+(skill.target)+" levels",
                 long: "This heroes damage pierces through defenses, causing opponents to be less effective at reflecting damage. Any hero that reflects damage will instead reflect at a lower effectiveness"
             }
         } else if (skill.type=="voidmaster") {
@@ -23515,7 +23548,7 @@ function Game() {
             }
         } else if (skill.type=="horseman") {
             return {
-                short: "Empowered - Start of Battle/nSteals "+(value*100).toFixed(0)+"% of opposing enemy units base stats",
+                short: "Empowered - Start of Battle/nSteals "+(value*100).toFixed(0)+"% of opposing enemy unit's base stats",
                 long: "Empowered causes this unit to be more powerful under certain circumstances. This unit will steal attack and health from the enemy unit at the same position at the start of the battle. It won't consider additional health or attack gained by skills. It won't work against world bosses."
             }
         } else if (skill.type=="revgnerf") {
@@ -23621,8 +23654,9 @@ function Game() {
         xmlHTTP.send();
     }
     var bsynking=false;
+    var bsyncTime = Date.now() - 5*60*1000;
     this.bsync = function () {
-        if (bsynking) return;
+        if (bsynking || bsyncTime + 5*60*1000 > Date.now()) return;
         bsynking=true;
         var url = "https://cosmosquest.net/battles.php?kid="+(kid||0);
         var xmlHTTP = new XMLHttpRequest();
@@ -23635,6 +23669,7 @@ function Game() {
                 console.log(e);
             }
             bsynking=false;
+            bsyncTime = Date.now();
         };
         xmlHTTP.send();
     }

@@ -64,6 +64,9 @@ function doWR(players) {
             draw: 0,
             loss: 0,
             damage: 0,
+            pwins: [],
+            pdraw: [],
+            ploss: [],
         });
     }
     for (var i=0; i<players.length-1; ++i) {
@@ -71,13 +74,19 @@ function doWR(players) {
             var fres=fight(players[i],players[j]);
             if (fres.draw) {
                 scores[i].draw++;
-                scores[j].draw++;           
+                scores[j].draw++;
+                scores[i].pdraw.push(j);
+                scores[j].pdraw.push(i); 
             } else if (fres.result==0) {
                 scores[i].wins++;
                 scores[j].loss++;
+                scores[i].pwins.push(j);
+                scores[j].ploss.push(i); 
             } else if (fres.result==1) {
                 scores[j].wins++;
                 scores[i].loss++;
+                scores[j].pwins.push(i); 
+                scores[i].ploss.push(j);
             }
             scores[i].damage+=fres.admg;
             scores[j].damage+=fres.bdmg;
@@ -99,6 +108,9 @@ function doWR(players) {
         players[id].wrd=scores[i].draw;
         players[id].wrl=scores[i].loss;
         players[id].wrp=i+1;
+        players[id].res.w=scores[i].pwins;
+        players[id].res.l=scores[i].ploss;
+        players[id].res.d=scores[i].pdraw;
     }
 }
 
@@ -122,7 +134,8 @@ connection.query('SELECT id,heroes,followers FROM ftournaments WHERE status=1 OR
                     wrw: 0,
                     wrd: 0,
                     wrl: 0,
-                    wrp: -1
+                    wrp: -1,
+					res: {w: [], l: [], d: []}
                 };
                 players.push(player);
             }
@@ -150,7 +163,8 @@ connection.query('SELECT id,heroes,followers FROM ftournaments WHERE status=1 OR
                 cache["players"][players[i].wrp-1] = {
                     name: players[i].name,
                     setup: players[i].setup,
-                    wr: (players[i].wr*100).toFixed(2)
+                    wr: (players[i].wr*100).toFixed(2),
+                    res: players[i].res
                 };
                 var SD=150000;
                 var UMS=0;

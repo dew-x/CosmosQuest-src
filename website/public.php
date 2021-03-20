@@ -99,27 +99,18 @@
     $data["WB"]["dealt"]=0;
 	$data["WB"]["modifier"]=1;
     $res2 = $sql->query("SELECT WBD.bid, SUM(WBD.damage) AS dealt FROM WBD, WB, users WHERE users.kid=$kid AND WB.status=0 AND WB.id=WBD.bid AND WBD.uid=users.id GROUP BY WBD.bid");
-	function bigintval($value) {
-		$value = trim($value);
-		if (ctype_digit($value)) {
-			return $value;
-		}
-		$value = str_replace('.', '', $value);
-		$value = preg_replace("/[^0-9](.*)$/", '', $value);
-		if (ctype_digit($value)) {
-			return $value;
-		}
-		return 0;
-	}
     if ($row2 = $res2->fetch_assoc()) {
         $data["WB"]["dealt"]=bigintval($row2["dealt"]);
 		$data["WB"]["modifier"]=wbRewardModifier($row2["bid"]);
     }
-    $res3 = $sql->query("SELECT score,public FROM users WHERE kid=$kid LIMIT 1");
+    $res3 = $sql->query("SELECT id,score,public FROM users WHERE kid=$kid LIMIT 1");
     if ($row3 = $res3->fetch_assoc()) {
         $data["tournament"]["score"]=intval($row3["score"]);
         $data["isPublic"]=$row3["public"]?true:false;
+		$res3b = $sql->query("SELECT * FROM setups WHERE uid=".intval($row3["id"])." AND tid=".intval($data["tournament"]["tid"])." LIMIT 1");
+		$data["tournament"]["joined"]=$row3b=$res3b->fetch_assoc() ? true : false;
     }
+	
     $res4 = $sql->query("SELECT A.id,A.ends,A.hero,A.bid,A.flash,U.name FROM auction A, users U WHERE A.`status`=0 AND U.id=A.holder");
     $now=time();
     $data["auction"]=array();
@@ -292,15 +283,14 @@
                 if ($ended<time() and $ended>0) {
                     $sql->query("UPDATE followers SET `status`=1 WHERE id=$fid LIMIT 1");
                 }
-            } 
+            }
+			$res2 = $sql->query("SELECT COUNT(*) as `amount` FROM followers f, users u WHERE f.eid = $eid AND f.uid=u.id AND u.kid = $kid");
+			$row2 = $res2->fetch_assoc();
+			$amount = $row2["amount"];
             if ($res->num_rows==0 or ($ended<time() and $ended>0)) {
                 $res1 = $sql->query("SELECT id FROM users WHERE kid = $kid LIMIT 1");
                 $row1 = $res1->fetch_assoc();
                 $uid = $row1["id"];
-
-                $res2 = $sql->query("SELECT COUNT(*) as `amount` FROM followers f, users u WHERE f.eid = $eid AND f.uid=u.id AND u.kid = $kid");
-                $row2 = $res2->fetch_assoc();
-                $amount = $row2["amount"];
                 if ($amount<8) {
                     $seed = random_int(0,pow(2,32)-1);
                     $ended=0;
@@ -389,7 +379,7 @@
         {"offer":6,"id":35,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":7,"id":48,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":8,"id":49,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
-        {"offer":50,"id":35,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
+        {"offer":9,"id":50,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":10,"id":59,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":11,"id":60,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},
         {"offer":12,"id":61,"start":-1,"finish":-1,"curr":"UM","price":200,"level":1,"promo":0,"notify":false},

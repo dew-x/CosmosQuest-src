@@ -1379,12 +1379,12 @@ function loadData(id,kid) {
             refresh=true;
         }
         if (refresh) {
-            if (data.city.daily!==undefined && data.city.daily.v==2) maxdq=Math.min(250,maxdq);
+            if (data.city.daily!==undefined && data.city.daily.v==3) maxdq=Math.min(250,maxdq);
             var daily=doDaily(maxdq);
             data.city.daily={
                 max: maxdq,
                 lvl: maxdq,
-                v: 3,
+                v: 4,
                 setup: daily.setup,
                 timer: now*2,
                 timer2: timer,
@@ -4827,15 +4827,15 @@ handlers.ggclaim = function (args, context) {
                     log("[G.A.M.E.S] Won "+favourAmount+" favours");
                 }
                 
-                if (args.activity == 0) {
+                if (data.city.games.activities.activity == 0) {
                     if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(25+(25*10*data.city.games.upgrades[0]/100));
                     else data.city.games.stamina+=(50+(50*10*data.city.games.upgrades[0]/100));
                     if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=(50+(50*10*data.city.games.upgrades[0]/100));
                     else data.city.games.automatic.tickValue+=(100+(100*10*data.city.games.upgrades[0]/100));
-                } else if (args.activity == 1) {
+                } else if (data.city.games.activities.activity == 1) {
                 	if (Date.now() < data.city.games.victim[0]) data.city.games.stamina+=Math.ceil(55+(55*10*data.city.games.upgrades[0]/100));
                     else data.city.games.stamina+=(110+(110*10*data.city.games.upgrades[0]/100));
-                } else if (args.activity == 2) {
+                } else if (data.city.games.activities.activity == 2) {
                     if (Date.now() < data.city.games.victim[2]) data.city.games.automatic.tickValue+=Math.ceil(205+(205*10*data.city.games.upgrades[0]/100));
                     else data.city.games.automatic.tickValue+=(410+(410*10*data.city.games.upgrades[0]/100));
                 }
